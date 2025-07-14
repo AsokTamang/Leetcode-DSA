@@ -11,9 +11,9 @@ friends = {'John','Michael','Terry','Eric','Graham'}
 my_friends = {'Reg','Loretta','Colin','John','Graham'}
 print('Eric' in friends and 'John' in my_friends)
 cars =['900','420','V70','911','996','V90','911','911','S','328','900']
-sameNames=friends.intersection(my_friends)
+sameNames=friends.intersection(my_friends)   #here intersection will help to find the elements that are in both friends and my_friends.
 print('The names on both sets are:',sameNames)
-total=friends.union(my_friends)
+total=friends.union(my_friends)    #union will get the sum of elements in both friends and my_friends sets.
 print('The union of both sets :',total)
 
 onlyFriends=friends.difference(my_friends)  #this prints the name that are only in friends set
