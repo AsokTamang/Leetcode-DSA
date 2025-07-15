@@ -16,6 +16,6 @@ valueList=values.split(' ')
 dictzipped=(dict(zip(keyList,valueList)))
 print(dictzipped)
 print('The unzipped keys and values are: ',list(dictzipped.keys()),list(dictzipped.values()))
-
+print('The unzipped key and values from a dict is: ',list(zip(*dictzipped.items())))
 
 
