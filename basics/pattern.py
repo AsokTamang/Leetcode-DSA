@@ -121,24 +121,71 @@ def pattern11():
 
 pattern11()
 
+
 def pattern12(n):
-   
-    for i in range(1,n+1):
-        for j in range(1,i+1):
-            print(j,end='')
-        
-      
-         
-        print(' ' * 2*(n-i),end='')  #this code prints the number of spaces 
 
-        for j in range(i,0,-1):  #here we are making the loop to start from the i to 0 
-            print(j,end="")
-        print() 
-        
-pattern12(5)        
+    for i in range(1, n + 1):
+        for j in range(1, i + 1):
+            print(j, end="")
+
+        print(" " * 2 * (n - i), end="")  # this code prints the number of spaces
+
+        for j in range(
+            i, 0, -1
+        ):  # here we are making the loop to start from the i to 0
+            print(j, end="")
+        print()
 
 
+pattern12(5)
 
 
+def pattern13(n):
+    num = 1
+    for i in range(1, n + 1):
+        for j in range(1, i + 1):
+            print(num, end=" ")
+            num += 1
+        print()
 
 
+pattern13(5)
+
+
+def pattern14():
+    a = "ABCDE"
+    for i in range(1, 6):
+
+        print(a[0:i])
+
+
+pattern14()
+
+
+def pattern15():
+    a = "ABCDE"
+    for i in range(5, 0, -1):
+        print(a[0:i])
+
+
+pattern15()
+
+
+def pattern16():
+    a = "ABCDE"
+    for i in range(0, 5):
+        for j in range(0, i + 1):
+            print(a[i], end="")
+        print()
+
+
+pattern16()
+
+def pattern17():
+    a= 'ABCD'
+    k=3
+    for i in range(1,5):
+        print(' ' * k + a[0:i] + (a[i-2::-1] if i > 1 else '')  + ' ' * k)   #here we are using a[0:i] cause in the pattern every row is starting from letter A
+        k-=1
+#and we are also using if else condition here in this code  as for the 0 value of i the statement a[i-2:0:-1] deosnot match but for every other elements of i , the statement matches.
+pattern17()
