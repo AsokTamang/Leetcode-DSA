@@ -83,40 +83,62 @@ def pattern8(n):
 
 def pattern9(n):
 
-    for i in range(1, n + 1):  #this loop runs until the n  and in this loop the value of i starts from 1  
+    for i in range(
+        1, n + 1
+    ):  # this loop runs until the n  and in this loop the value of i starts from 1
         print(" " * (n - i) + "*" * (2 * i - 1) + " " * (n - i))
-   
-    for i in range(n, 0, -1):  #this loop runs from n+1 till 1  and in this loop the value of i starts from the exact value of n
-        print(" " * (n-i) + "*" * (2 * i - 1) + " " * (n-i))
-       
+
+    for i in range(
+        n, 0, -1
+    ):  # this loop runs from n+1 till 1  and in this loop the value of i starts from the exact value of n
+        print(" " * (n - i) + "*" * (2 * i - 1) + " " * (n - i))
 
 
 pattern9(5)
 
 
-
 def pattern10(n):
-    for i in range(1,n+1):
-        print(i * '*')
-    for i in range(n,0,-1):
-        print(i*'*')
+    for i in range(1, n + 1):
+        print(i * "*")
+    for i in range(n, 0, -1):
+        print(i * "*")
+
 
 pattern10(5)
 
 
 def pattern11():
-    for i in range(1,6):
-        if(i % 2 !=0):  #at the odd position of outer loop the start value is 1
-            start=1
+    for i in range(1, 6):
+        if i % 2 != 0:  # at the odd position of outer loop the start value is 1
+            start = 1
         else:
-            start=0   #but at the even position of outer loop the start value is 0
-        for j in range(1,i+1):
-         print(start,end=' ')
-         start=1-start
-        print() 
+            start = 0  # but at the even position of outer loop the start value is 0
+        for j in range(1, i + 1):
+            print(start, end=" ")
+            start = 1 - start
+        print()
 
 
-         
 pattern11()
+
+def pattern12(n):
+   
+    for i in range(1,n+1):
+        for j in range(1,i+1):
+            print(j,end='')
         
+      
+         
+        print(' ' * 2*(n-i),end='')  #this code prints the number of spaces 
+
+        for j in range(i,0,-1):  #here we are making the loop to start from the i to 0 
+            print(j,end="")
+        print() 
+        
+pattern12(5)        
+
+
+
+
+
 
