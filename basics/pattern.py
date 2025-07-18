@@ -189,3 +189,23 @@ def pattern17():
         k-=1
 #and we are also using if else condition here in this code  as for the 0 value of i the statement a[i-2:0:-1] deosnot match but for every other elements of i , the statement matches.
 pattern17()
+
+
+def pattern18():
+    a='ABCDE'
+    for i in range(5,-1,-1):
+        print(a[i::])
+pattern18()        
+
+
+def pattern19():
+    space1=0
+    space2=8
+    for i in range(5,0,-1):
+        print( int(i) * '*' + space1 * ' ' + int(i) * '*')
+        space1+=2
+    for i in range(1,6):
+         print( int(i) * '*' + space2 * ' ' + int(i) * '*')
+         space2-=2
+
+pattern19()
