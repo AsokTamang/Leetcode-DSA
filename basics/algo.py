@@ -48,3 +48,26 @@ def arms(n):
         print('not armstrong')    
   
 arms(153)    
+
+
+def allDivisors(n):
+  a=[int(i) for i in range(1,n+1) if n % i ==0]
+  print(sorted(a))
+allDivisors(10)  
+
+
+def prime(n):
+    s=True
+    if n==2:
+        print('prime number')
+    else:    
+     for i in range(2,n-1):
+        if(n % i != 0 and n!=1 and n!=0):
+           s=True
+        else:
+           s=False
+    if(s):
+        print('prime number')    
+    else:
+        print('Composite number')       
+prime(11)                
