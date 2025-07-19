@@ -84,7 +84,7 @@ def fibonacci(n):
     elif n == 1:
         return 1     #the fibonacci of 1 is 1
     else:
-        return fibonacci(n - 1) + fibonacci(n - 2)   
+        return fibonacci(n - 1) + fibonacci(n - 2)    #as in the fibonacci sequence the fibonacci of a number is the sum of its preveious two values in the series we are addinf f(n-1) and f(n-2) 
 
 
 print(fibonacci(8))
