@@ -198,14 +198,48 @@ def pattern18():
 pattern18()        
 
 
-def pattern19():
+def pattern19(n):
     space1=0
     space2=8
-    for i in range(5,0,-1):
+    for i in range(n,0,-1):
         print( int(i) * '*' + space1 * ' ' + int(i) * '*')
         space1+=2
-    for i in range(1,6):
+    for i in range(1,n+1):
          print( int(i) * '*' + space2 * ' ' + int(i) * '*')
          space2-=2
 
-pattern19()
+pattern19(5)
+
+def pattern20():
+    space1=8
+    space2=0
+    for i in range(1,6):
+        print ( i * '*' +space1 * ' ' + i * '*' )
+        space1-=2
+    for i in range(5,0,-1):
+         print ( i * '*' +space2 * ' ' + i * '*' )
+         space2+=2
+pattern20()        
+
+
+def pattern21():
+  
+    for i in range(1,5):
+        if(i==1 or i == 4):
+            print('*' * 4,end=' ')
+        else:
+            print('*' + ' ' * 2 + '*',end=' ' )
+        print()        # we are using this print() inorder to print the pattern in next line for each change in value of i
+pattern21()
+
+
+def pattern22(n):
+    for i in range(2*n - 1):
+        for j in range(2*n - 1):
+            value=max(abs(n-1-i),abs(n-1-j))+1
+            print(value,end='')
+        print()    
+pattern22(5)
+
+
+
