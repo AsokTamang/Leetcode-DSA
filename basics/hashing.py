@@ -47,6 +47,8 @@ def countCharac(array):
 countCharac(["v", "a", "v", "v", "b", "c", "b", "e", "v"])
 
 
+#Counting frequencies of array elements
+
 def complex(array):
     storage = {}
 
@@ -60,6 +62,8 @@ def complex(array):
 
 complex([5, 5])
 
+ 
+#Find the highest/lowest frequency element
 
 def complex2(array):
     hassmap = [0] * (
@@ -75,15 +79,17 @@ def complex2(array):
     min_freq = float(
         "inf"
     )  # then we are just assigning the min_freq is largest positive value
-  
+
     totalMax = []
     totalMin = []
     for i in range(len(hassmap)):
         if hassmap[i] > 0:  # we are using this condition to ignore the [0]
             if hassmap[i] > max_freq:
                 max_freq = hassmap[i]
-                #here we are resetting the array to i every time a highest freq is found
-                totalMax = [i]  # here we are assigning the i cause index is the actual denotion of the digit in a hassmap 
+                # here we are resetting the array to i every time a highest freq is found
+                totalMax = [
+                    i
+                ]  # here we are assigning the i cause index is the actual denotion of the digit in a hassmap
             elif (
                 hassmap[i] == max_freq
             ):  # here we ever find the element having the freq equal to the highest freq then we append them into the new list
@@ -100,7 +106,6 @@ def complex2(array):
                 )  # and ofcourse the  index is the actual denotion of the value or digit of an array
     print("the element with the highest freq is:", min(totalMax))
     print("the element with the lowest freq is:", min(totalMin))
-   
 
 
 complex2([1, 2, 2, 2, 3, 3, 3])
