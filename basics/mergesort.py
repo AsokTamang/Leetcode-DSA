@@ -2,7 +2,7 @@
 # to the middle point and then middle point +1 to the end point and then we call the same merge sort function on these two arrays. till the base case when the starting point is equal to or greater than the ending point.
 # and inside this main merge sort function there is separate merging function where we merge the arrays returned from the dividing merge function and the sorting will happen based on the order asked by the question either ascending or descending.
 
-import math
+
 
 
 # this is the function for merging
@@ -23,7 +23,7 @@ def merge(array, low, mid_index, high):
     while right <= high:
         tempo.append(array[right])
     for i in range(len(tempo)):
-        array[i] = tempo[i]
+        array[low + i] = tempo[i]
     print(array)
 
 
@@ -31,7 +31,7 @@ def merge(array, low, mid_index, high):
 def mergesort(array, low, high):
 
     mid_index = (low + high) // 2  # here we are finding the min-index of an array
-    if low == high:
+    if low >= high:
         return
     mergesort(
         array, low, mid_index
@@ -46,6 +46,7 @@ def ms(array, low, n):
     mergesort(array, low, n - 1)
 
 
+arr = [0, 2, 4, 1, 6, 6, 7, 1]
 ms(
-    [0, 2, 4, 1, 6, 6, 7, 1], 0, 8
+    arr, 0, len(arr)
 )  # here we are passing the array and the low which is 0 and the n-1 which is the lenght of an array-1
