@@ -27,12 +27,12 @@ bubbleSort([9,27,11,5,7,1])
 
 #insertion sort method
 def insertionSort(a):
-    for i in range(len(a)):  #this loop runs for the length of array.
-       j=i
-       while j>0 and a[j-1]>a[j]:
-           a[j-1],a[j]=a[j],a[j-1]
-           j-=1
-    print('The sorted array is:', a)       
+    for i in range(len(a)):   #here this is the loop that runs upto the length of an array
+        j=i
+        while j>0 and j[j-1]>a[j]:
+            a[j-1],a[j]=a[j],a[j-1]
+            j-=1
+    print(a)              
 insertionSort([9,27,11,5,7,1])    
 
 
