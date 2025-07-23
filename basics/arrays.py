@@ -153,6 +153,37 @@ def union(array1,array2):
 
 (union( [1, 2, 3, 4, 5],[1, 2, 7]))
             
+#next solution of union of two sorted arrays
+def union2(array1,array2):
+    i=0
+    j=0
+    l1=len(array1)-1
+    l2=len(array2)-1
+    tempo=[]
+    while i<=l1 and  j<=l2:   #here we are using the two pointers method to append the smaller value in the tempo var by comparing the value between the two arrays
+        if (array1[i]<array2[j]):
+            if( len(tempo)==0 or  tempo[-1]!=array1[i])  :
+                tempo.append(array1[i])
+            i+=1
+        else:
+            if( len(tempo)==0 or tempo[-1]!=array2[j] ):
+                tempo.append(array2[j])
+            j+=1
+    while i<=l1:
+       
+            if(len(tempo)==0 or tempo[-1]!=array1[i]):
+                tempo.append(array1[i])
+            i+=1
+    while j<=l2:
+       
+            if(len(tempo)==0  or tempo[-1]!=array2[j] ):
+                tempo.append(array2[j])
+            j+=1
+    print(tempo)
+union2([1, 2, 3, 4, 5],[1, 2, 7])            
+
+
+
 
 
 
