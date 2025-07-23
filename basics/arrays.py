@@ -13,8 +13,8 @@ maxelem([5,4,10,2,1])
 #better approach  
 #its time complexity will be O(N) and space complexity will also be O(2) which is constant
 def secondLargest(array):
-    largest=1  #here we are just assigning the positive inf float value to the largest variable
-    seclarge=-1  #same with the seclarge variable
+    largest=float('-inf')  #here we are just assigning the positive inf float value to the largest variable
+    seclarge=float('-inf') #same with the seclarge variable
     for i in range(len(array)):
         if(array[i]> largest):
             largest=array[i]
@@ -31,8 +31,8 @@ secondLargest([10,11,4,2,1,11,9])
 #optimal approach
 
 def seclrgest(array):
-    largest=1
-    seclargests=-1
+    largest=float('-inf')
+    seclargests=float('-inf')
     for i in range(len(array)):
         if array[i]>seclargests and array[i]>largest:   #here when the i index array value is greater than seclargest and also greater than the largest 
             seclargests=largest   #then ofcourse the largest will be the seclargest and the  array[i] will be the largest
@@ -43,3 +43,23 @@ def seclrgest(array):
     print(largest)
     print(seclargests) 
 seclrgest([10,11,4,2,1,11,9])            
+
+def secondsmallest(array):
+    smallest=float('inf')
+    secsmallest=float('inf')
+    for i in range(len(array)):
+        if(array[i]< smallest and array[i]<secsmallest ):  #here if the indexed i array elem is lesser than both smallest and the secsmallest then of course the smallest will be array[i] and the second smallest will be the smallest
+            secsmallest=smallest
+            smallest=array[i]
+        elif (array[i] > smallest or array[i]!=smallest) and array[i]<secsmallest:
+            secsmallest=array[i]   #then if the array[i] element is greater than the smallest and smaller than the second smallest then ofcourse the second elem will change to the index array elem
+    print(smallest)
+    print(secsmallest)
+secondsmallest([10,11,4,2,1,11,9])            
+
+
+
+
+            
+            
+  
