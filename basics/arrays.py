@@ -86,7 +86,18 @@ def sorting2(array):
             tempo[i]='_'    
     print(tempo[0:])
 sorting2([0, 0, 3, 3, 5, 6])    
-    
+
+#Given an integer array nums, rotate the array to the left by one.
+def rotatearray(array,n):
+    first=array[0]
+    for i in range(n):
+        if i == n-1:
+         array[i]=first
+        else:
+            array[i]=array[i+1] 
+    print(array)
+rotatearray([10, 0, 3, 3, 5, 6],6)        
+
 
 
 
