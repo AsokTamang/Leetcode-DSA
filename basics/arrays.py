@@ -98,6 +98,61 @@ def rotatearray(array,n):
     print(array)
 rotatearray([10, 0, 3, 3, 5, 6],6)        
 
+def rotatentimes(array,n):
+    for i in range(n):
+        first=array[0]
+        for j in range(len(array)):
+            if j == len(array)-1:
+             array[j]=first
+            else:
+             array[j]=array[j+1] 
+        print(array)
+rotatentimes([10, 0, 3, 3, 5, 6],2)
+
+
+#Given an integer array nums, move all the 0's to the end of the array. The relative order of the other elements must remain the same. This must be done in place, without making a copy of the array.
+def movezeros(array):
+   j=0
+   for i in range(len(array)):    
+       if (array[i]!=0):
+           array[i],array[j]=array[j],array[i]
+           j+=1
+   print(array)       
+movezeros([10, 0, 3, 3, 5, 6])     
+
+
+#Given an array of integers nums and an integer target, find the smallest index (0 based indexing) where the target appears in the array. If the target is not found in the array, return -1
+                 
+def findnum(nums,target):
+    for i in range(len(nums)) :
+        if nums[i]==target:
+            return i
+     
+    return -1 
+        
+print(findnum([10, 0, 3, 3, 5, 6],3))
+
+
+
+#Given two sorted arrays nums1 and nums2, return an array that contains the union of these two arrays. The elements in the union must be in ascending order.
+
+def sum(array):
+    if (len(array)<=1):
+        return array
+
+    pivot=array[0]
+    left=[num for num in array[1:] if num<pivot]
+    right=[num for num in array[1:] if num>=pivot]
+    return sum(left) + [pivot] + sum(right)
+
+
+
+def union(array1,array2):
+    tempo=list(set(array1+array2))
+    print(sum(tempo))
+
+(union( [1, 2, 3, 4, 5],[1, 2, 7]))
+            
 
 
 
