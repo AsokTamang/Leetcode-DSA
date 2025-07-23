@@ -58,6 +58,38 @@ def secondsmallest(array):
 secondsmallest([10,11,4,2,1,11,9])            
 
 
+#Given an array nums of n integers, return true if the array nums is sorted in non-decreasing order or else false.
+
+def sorting(array,n):
+   
+    for i in range(n):
+        if (array[i]>array[i+1]):
+            return False
+        else:
+            return True
+
+      
+                
+print(sorting([9,1,6,11,7,8],6))
+
+#Given an integer array nums sorted in non-decreasing order, remove all duplicates in-place so that each unique element appears only once. Return the number of unique elements in the array.
+
+#If the number of unique elements be k, then,#Change the array nums such that the first k elements of nums contain the unique values in the order that they were present originally.
+#The remaining elements, as well as the size of the array does not matter in terms of correctness.
+def sorting2(array):
+    storage=list(set(array))
+    tempo=[0] * len(array)
+    for i in range(len(tempo)):
+        if i < len(storage):
+            tempo[i]=storage[i]
+        else:
+            tempo[i]='_'    
+    print(tempo[0:])
+sorting2([0, 0, 3, 3, 5, 6])    
+    
+
+
+
 
 
             
