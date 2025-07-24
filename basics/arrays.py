@@ -222,9 +222,59 @@ def optimalonce(array):
     for num in array:
         x^=num      #this code will run xor or ^ for every numbers in an array
     print('The number in an array which appears only one time in an array is:', x)
-optimalonce([1, 2, 3, 4, 3, 1, 4])        
+optimalonce([1, 2, 3, 4, 3, 1, 4]) 
+
+#Given an array nums of size n and an integer k, find the length of the longest sub-array that sums to k. If no such sub-array exists, return 0.
+def summing(array,n,k):    #here n is the length of an array and k is the target element
+    s= 0
+    sub_Array=[] 
+    for i in range(n):
+        if array[i]<=k/2 and s<k:     #here to find the longest subarrays we need to have more nums inside a subarray so for that the numbers inside this subarray must be certainly very low compared with the target value
+         s+=array[i]
+         sub_Array.append(array[i])
+    if s == k:
+     print(sub_Array)
+     print(len(sub_Array))
+    else:
+        print(0) 
+summing( [10, 5, 2, 7, 1, 9],6,15)    
+
+#sliding window approach
+def slider(array,k):
+    left = 0
+    subarray=[]
+    max_len=0
+    s= 0
+    for right in range(len(array)):   #this right goes through every elements in an array.
+       
+        s+=array[right]
+           
+        if s > k :   #but if the sum is too big then we subtract the sum with the arrays left most element and we move the left pointer towards right
+            s-=array[left]   
+            left+=1
+            max_len=right-left+1     #here we are calculating the length of a subarray as suppose when the window's length is decreased
+        elif s == k:
+            if right - left +1 > max_len:   #and if the sum is equal to the target element and the valeu of current lenght which is right - left +1 is greater than the previous max lenght then we assign the current one to the max length 
+                subarray=array[left:right+1]   #so that the new sub array becomes the array from array[left:right+1]
+                max_len=right-left+1
+    
+              
+    
+    if max_len>0:   #and ofcourse if the final max_length is greater than 0 we print the maximum length as well as the subarray otherwise we print 0
+     print(max_len)
+     print(subarray)
+    else:
+        print(0)                 
+
+slider([10, 5, 2, 7, 1, 9],15)
 
 
+
+
+
+
+          
+    
 
 
 
