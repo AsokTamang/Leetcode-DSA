@@ -183,7 +183,46 @@ def union2(array1,array2):
 union2([1, 2, 3, 4, 5],[1, 2, 7])            
 
 
+#Given an integer array of size n containing distinct values in the range from 0 to n (inclusive), return the only number missing from the array within this range.
 
+def findmiss(array,n):
+    for i in range(n+1):
+        if i not in array:
+            print(i)
+findmiss( [0, 5, 3, 1, 4],5)
+
+#Given a binary array nums, return the maximum number of consecutive 1s in the array.
+
+def findconsecutive(array):
+    count = 0
+    maximum=0
+    for i in range(len(array)):
+        if array[i] == 1:   
+            count+=1   #for every found of element 1 , we increase the count by 1
+        else:
+            count=0
+        maximum=max(count,maximum)     #then for every loop we calculate the maximum even if the count is 0 or greater than 0
+    print('The maximum consecutives of 1 is:', maximum)           
+findconsecutive([1, 1, 0, 0, 1, 1, 1, 0])
+
+#Given an array of nums of n integers. Every integer in the array appears twice except one integer. Find the number that appeared once in the array.  
+def findonce(array,n):  #here n is the length of an array
+    tempo=[0] * (max(array)+1)     #as for the hass map the length of an array must be greater than 1 value of the maximum digit in an array
+    for i in range(n):
+        tempo[array[i]]+=1
+    for j in range(len(tempo)):
+        if tempo[j]==1:
+            print(j)
+findonce([1, 2, 3, 4, 3, 1, 4],7)      
+
+
+#but the most optimal method to find the number which appears only one time in an array can be found using xor cause xor means the a ^ a is 0 but 0 ^ a is a so if we use xor for every numbers in an array only the number left will be the number which appears only one time in an array
+def optimalonce(array):
+    x=0
+    for num in array:
+        x^=num      #this code will run xor or ^ for every numbers in an array
+    print('The number in an array which appears only one time in an array is:', x)
+optimalonce([1, 2, 3, 4, 3, 1, 4])        
 
 
 
