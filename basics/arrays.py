@@ -405,3 +405,38 @@ def betterapproach(array,k):
         print(subarrays)
 betterapproach([1, -1, 5, -2, 3], 3)                      
        
+
+#Given an array of integers nums and an integer target. Return the indices(0 - indexed) of two elements in nums such that they add up to target.
+def twosum(array,k):
+    for i in range(len(array)):
+        for j in range(i+1,len(array)):
+            if array[i] + array [j] == k:
+                return [i,j]
+print(twosum([1, 3, 5, -7, 6, -3],0))
+
+#better approach
+def bettwosum(array,k):
+    m={}
+    for i in range(len(array)):
+        if i not in m :
+            m[array[i]]=i  #we are storing the number as the key and the index as the value of the key
+        if array[i] - k in  m:   #here we are checking if the required number which adds to the current indexed value to get k is stored in our dict as key or not.
+            return (i , m[array[i]-k])      #if yes then we return the current index and that particular index 
+bettwosum( [1, 3, 5, -7, 6, -3],0)
+
+
+#optimal approach
+def optitwosum(array,k):
+    sortedarray=sorted(array)   #here we are sorting the array first in an ascending order
+    left = 0  #this is the lefthand side pointer which starts at the 0 index
+    right=len(array)-1   #this is the right hand side pointer which starts at the end of the array
+    s = 0
+    while left < right:
+        s = sortedarray[left] + sortedarray[right]
+        if s == k:
+         return sorted([array.index(sortedarray[left]),array.index(sortedarray[right])]) 
+        elif s < k:   #if the sum is smaller than k then we move the left pointer towards the right direction or greater indexed value
+            left +=1
+        elif s > k:     #if the sum is greater than k then we move the left pointer towards the right direction or greater indexed value
+            right -=1    
+print(optitwosum([1, 3, 5, -7, 6, -3],0))
