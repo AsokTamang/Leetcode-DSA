@@ -447,28 +447,26 @@ print(optitwosum([1, 3, 5, -7, 6, -3],0))
 
 
 #Given an array nums consisting of only 0, 1, or 2. Sort the array in non-decreasing order. The sorting must be done in-place, without making a copy of the original array.
-#bruteforce
-def sorting02(array):
+#betterapproach
+def bettersort(array):
     count0=0
     count1=0
     count2=0
-    for num in array:  #here by checking every numbers in an array we are counting the number of appearances in an array. 
-        #so that we can know where to place the 0s,1s and 2s in an array
+    for num in array:
         if num == 0:
             count0+=1
         elif num == 1:
             count1+=1
-        else:
-            count2+=1          
-
-    for i in range(count0):
-        array[i]=0
-    for i in range(count0,count1+count0):
+        elif num == 2:
+            count2+=1
+    for i in range(count0):   #for the range of count0 excluding the count0 index , it fills with the number 0
+        array[i]=0  
+    for i in range(count0,count0+count1):   #as the part of index before count0 index is already passed so we add the index of count1 to count0 to fill with 1s                  
         array[i]=1
-    for i in range(count1+count0,len(array)):
-        array[i]=2    
-    print(array)
-sorting02([1,0,2,1,0])    
+    for i in range(count0+count1,len(array)):   #as the part of index just before the sum of  both count 0 and count 1 is already passed or used then we start from that sum to the length of an array    
+        array[i]=2
+    print(array) 
+bettersort([1,0,2,1,0])    
 
     
 
@@ -496,11 +494,13 @@ def dutchalgo(array):
          array[low],array[mid]=array[mid],array[low]   #then we swap the low index with the mid index
          mid+=1    #then we move the comparing pointer towards inclination
          low+=1   #as the most left part is already sorted cause it only consists of series of 0
-     if array[mid] == 1:
+     elif array[mid] == 1:
         mid+=1    #as the series from low+1 to mid consists of only the series of 1 so if the current indexed value is 1 then we decrease the range from mid+1
-     if array[mid]==2:
+     elif array[mid]==2:
         array[mid],array[high]=array[high],array[mid]   #if the current index number is 2 then we push it to the end of an array as the extreme right only consists of 2    
         high-=1   #as the extreme right already consists of 2 after swapping so it is already sorted so thats why we are decreasing the range of mid+1 to high
     print(array)
 dutchalgo([1,0,0,2,2,1,1,0])        
+
+
 
