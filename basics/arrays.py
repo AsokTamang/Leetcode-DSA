@@ -344,163 +344,261 @@ slider([10, 5, 2, 7, 1, 9], 15)
 
 # brute approach
 def bruteapp(array, k):
-    max_len = 0 
-   
+    max_len = 0
+
     subarray = []
 
     for i in range(len(array)):
         s = 0
         for j in range(i, len(array)):
-            s += array[j]     
-            if s == k and j - i + 1 > max_len:  #we will check the sum for every possible sub arrays and if the sum is equal to k and the length is greater than the maximum length then we take that specific max lenght and that sub array
+            s += array[j]
+            if (
+                s == k and j - i + 1 > max_len
+            ):  # we will check the sum for every possible sub arrays and if the sum is equal to k and the length is greater than the maximum length then we take that specific max lenght and that sub array
                 max_len = j - i + 1
                 subarray = array[i : j + 1]
 
     print(subarray)
     print(max_len)
+
+
 bruteapp([10, 5, 2, 7, 1, 9], 15)
 
-#better approach
-def betterapp(array,k):
+
+# better approach
+def betterapp(array, k):
     s = 0
     j = 0
-    length =0  #this calculates the length  of an array
+    length = 0  # this calculates the length  of an array
     for i in range(len(array)):
-        s+=array[i]
-        if s > k :
-            s-=array[j]
-            j+=1    
+        s += array[i]
+        if s > k:
+            s -= array[j]
+            j += 1
 
-        elif s == k and i-j+1>length:
-            length = i -j +1    
-            subarray=array[j:i+1]    #this calculates the subarray
-            
-       
-    
+        elif s == k and i - j + 1 > length:
+            length = i - j + 1
+            subarray = array[j : i + 1]  # this calculates the subarray
+
     print(subarray)
     print(length)
+
+
 betterapp([10, 5, 2, 7, 1, 9], 15)
-#so for the optimal approach to find the target element from the longest subarrays, what we can do is use the dictionary and store the prefix sum of all the subarrays with the corresponding index and if we ever find the prefix sum at any index which is  the value that we can get by subtracting a k from it in a map then we find the maximum length 
-#by comparing its curreent index with the index at that specific index in a map or dict then we keep on running this loop till we hit the next maximum length.
+# so for the optimal approach to find the target element from the longest subarrays, what we can do is use the dictionary and store the prefix sum of all the subarrays with the corresponding index and if we ever find the prefix sum at any index which is  the value that we can get by subtracting a k from it in a map then we find the maximum length
+# by comparing its curreent index with the index at that specific index in a map or dict then we keep on running this loop till we hit the next maximum length.
 
-def betterapproach(array,k):
-    s=0  #this variable stores the sum of all the possible subarrays
-    m={} #this variable stores the prefix sums and its corresponding indexes
 
-    length=0
+def betterapproach(array, k):
+    s = 0  # this variable stores the sum of all the possible subarrays
+    m = {}  # this variable stores the prefix sums and its corresponding indexes
+
+    length = 0
     for i in range(len(array)):
-        s+=array[i]
-        
-        if s == k:
-            length=i+1      #as the loop is starting from 0 the length is ofcourse index+1
-        if s not in m:
-            m[s] = i    #we are storing the sum as a key and the current index as a value
+        s += array[i]
 
-        if s - k in m :  #in any possible cases if we ever find the number which can give us the value of k by subtracting this particluar number inside our map which is the collection of the prefix sums then we calcualte the lenght here
-          length = max(length, i - m[s-k]) 
-          subarrays=array[i-m[s-k]:i+1]
-    print(length)      
+        if s == k:
+            length = (
+                i + 1
+            )  # as the loop is starting from 0 the length is ofcourse index+1
+        if s not in m:
+            m[s] = i  # we are storing the sum as a key and the current index as a value
+
+        if (
+            s - k in m
+        ):  # in any possible cases if we ever find the number which can give us the value of k by subtracting this particluar number inside our map which is the collection of the prefix sums then we calcualte the lenght here
+            length = max(length, i - m[s - k])
+            subarrays = array[i - m[s - k] : i + 1]
+    print(length)
     if length > 0:
         print(length)
         print(subarrays)
-betterapproach([1, -1, 5, -2, 3], 3)                      
-       
 
-#Given an array of integers nums and an integer target. Return the indices(0 - indexed) of two elements in nums such that they add up to target.
-def twosum(array,k):
+
+betterapproach([1, -1, 5, -2, 3], 3)
+
+
+# Given an array of integers nums and an integer target. Return the indices(0 - indexed) of two elements in nums such that they add up to target.
+def twosum(array, k):
     for i in range(len(array)):
-        for j in range(i+1,len(array)):
-            if array[i] + array [j] == k:
-                return [i,j]
-print(twosum([1, 3, 5, -7, 6, -3],0))
+        for j in range(i + 1, len(array)):
+            if array[i] + array[j] == k:
+                return [i, j]
 
-#better approach
-def bettwosum(array,k):
-    m={}
+
+print(twosum([1, 3, 5, -7, 6, -3], 0))
+
+
+# better approach
+def bettwosum(array, k):
+    m = {}
     for i in range(len(array)):
-        if array[i] not in m :
-            m[array[i]]=i  #we are storing the number as the key and the index as the value of the key
-        if array[i] - k in  m:   #here we are checking if the required number which adds to the current indexed value to get k is stored in our dict as key or not.
-            return (i , m[array[i]-k])      #if yes then we return the current index and that particular index 
-bettwosum( [1, 3, 5, -7, 6, -3],0)
+        if array[i] not in m:
+            m[array[i]] = (
+                i  # we are storing the number as the key and the index as the value of the key
+            )
+        if (
+            array[i] - k in m
+        ):  # here we are checking if the required number which adds to the current indexed value to get k is stored in our dict as key or not.
+            return (
+                i,
+                m[array[i] - k],
+            )  # if yes then we return the current index and that particular index
 
 
-#optimal approach
-def optitwosum(array,k):
-    sa=[(num,index) for index,num in enumerate(array)]   
-    sortedarray=sorted(sa)# while sorting the list consiting of tuples sorted will automatically sort the list based on the first value inside a tuple of the list
-   #here we are sorting the array first in an ascending order
-    left = 0  #this is the lefthand side pointer which starts at the 0 index
-    right=len(array)-1   #this is the right hand side pointer which starts at the end of the array
+bettwosum([1, 3, 5, -7, 6, -3], 0)
+
+
+# optimal approach
+def optitwosum(array, k):
+    sa = [(num, index) for index, num in enumerate(array)]
+    sortedarray = sorted(
+        sa
+    )  # while sorting the list consiting of tuples sorted will automatically sort the list based on the first value inside a tuple of the list
+    # here we are sorting the array first in an ascending order
+    left = 0  # this is the lefthand side pointer which starts at the 0 index
+    right = (
+        len(array) - 1
+    )  # this is the right hand side pointer which starts at the end of the array
     s = 0
     while left < right:
         s = sortedarray[left][0] + sortedarray[right][0]
         if s == k:
-         return sorted([sortedarray[left][1],sortedarray[right][1]]) 
-        elif s < k:   #if the sum is smaller than k then we move the left pointer towards the right direction or greater indexed value
-            left +=1
-        elif s > k:     #if the sum is greater than k then we move the left pointer towards the right direction or greater indexed value
-            right -=1
+            return sorted([sortedarray[left][1], sortedarray[right][1]])
+        elif (
+            s < k
+        ):  # if the sum is smaller than k then we move the left pointer towards the right direction or greater indexed value
+            left += 1
+        elif (
+            s > k
+        ):  # if the sum is greater than k then we move the left pointer towards the right direction or greater indexed value
+            right -= 1
         else:
-            return 0        
-print(optitwosum([1, 3, 5, -7, 6, -3],0))
+            return 0
 
 
-#Given an array nums consisting of only 0, 1, or 2. Sort the array in non-decreasing order. The sorting must be done in-place, without making a copy of the original array.
-#betterapproach
+print(optitwosum([1, 3, 5, -7, 6, -3], 0))
+
+
+# Given an array nums consisting of only 0, 1, or 2. Sort the array in non-decreasing order. The sorting must be done in-place, without making a copy of the original array.
+# betterapproach
 def bettersort(array):
-    count0=0
-    count1=0
-    count2=0
+    count0 = 0
+    count1 = 0
+    count2 = 0
     for num in array:
         if num == 0:
-            count0+=1
+            count0 += 1
         elif num == 1:
-            count1+=1
+            count1 += 1
         elif num == 2:
-            count2+=1
-    for i in range(count0):   #for the range of count0 excluding the count0 index , it fills with the number 0
-        array[i]=0  
-    for i in range(count0,count0+count1):   #as the part of index before count0 index is already passed so we add the index of count1 to count0 to fill with 1s                  
-        array[i]=1
-    for i in range(count0+count1,len(array)):   #as the part of index just before the sum of  both count 0 and count 1 is already passed or used then we start from that sum to the length of an array    
-        array[i]=2
-    print(array) 
-bettersort([1,0,2,1,0])    
+            count2 += 1
+    for i in range(
+        count0
+    ):  # for the range of count0 excluding the count0 index , it fills with the number 0
+        array[i] = 0
+    for i in range(
+        count0, count0 + count1
+    ):  # as the part of index before count0 index is already passed so we add the index of count1 to count0 to fill with 1s
+        array[i] = 1
+    for i in range(
+        count0 + count1, len(array)
+    ):  # as the part of index just before the sum of  both count 0 and count 1 is already passed or used then we start from that sum to the length of an array
+        array[i] = 2
+    print(array)
 
-    
+
+bettersort([1, 0, 2, 1, 0])
 
 
-
-
-#better approach
+# better approach
 def sorting01(array):
     if len(array) <= 1:
         return array
-    pivot=array[0]
-    left=[num for num in array[1:] if num<pivot]
-    right=[num for num in array[1:] if num>=pivot]
-    return sorting01(left) + [pivot] + sorting01(right)   #recursion
-print(sorting01([1,0,2,1,0]))
+    pivot = array[0]
+    left = [num for num in array[1:] if num < pivot]
+    right = [num for num in array[1:] if num >= pivot]
+    return sorting01(left) + [pivot] + sorting01(right)  # recursion
 
 
-#optimal approach or known as dutch national flag algorithm
+print(sorting01([1, 0, 2, 1, 0]))
+
+
+# optimal approach or known as dutch national flag algorithm
 def dutchalgo(array):
-    high=len(array)-1  #as the high is the last index in an array so we are doing this 
+    high = (
+        len(array) - 1
+    )  # as the high is the last index in an array so we are doing this
     low = 0
-    mid = 0   #in dutch algo mid to high is the part where the unsorted algo sits. so , as the whole given array is unsorted , we are setting the mid to 0
-    while mid <= high :    #in dutch algo if the mid overlaps the high then it is garaunted that the whole array is sorted
-     if array[mid] == 0:
-         array[low],array[mid]=array[mid],array[low]   #then we swap the low index with the mid index
-         mid+=1    #then we move the comparing pointer towards inclination
-         low+=1   #as the most left part is already sorted cause it only consists of series of 0
-     elif array[mid] == 1:
-        mid+=1    #as the series from low+1 to mid consists of only the series of 1 so if the current indexed value is 1 then we decrease the range from mid+1
-     elif array[mid]==2:
-        array[mid],array[high]=array[high],array[mid]   #if the current index number is 2 then we push it to the end of an array as the extreme right only consists of 2    
-        high-=1   #as the extreme right already consists of 2 after swapping so it is already sorted so thats why we are decreasing the range of mid+1 to high
+    mid = 0  # in dutch algo mid to high is the part where the unsorted algo sits. so , as the whole given array is unsorted , we are setting the mid to 0
+    while (
+        mid <= high
+    ):  # in dutch algo if the mid overlaps the high then it is garaunted that the whole array is sorted
+        if array[mid] == 0:
+            array[low], array[mid] = (
+                array[mid],
+                array[low],
+            )  # then we swap the low index with the mid index
+            mid += 1  # then we move the comparing pointer towards inclination
+            low += 1  # as the most left part is already sorted cause it only consists of series of 0
+        elif array[mid] == 1:
+            mid += 1  # as the series from low+1 to mid consists of only the series of 1 so if the current indexed value is 1 then we decrease the range from mid+1
+        elif array[mid] == 2:
+            array[mid], array[high] = (
+                array[high],
+                array[mid],
+            )  # if the current index number is 2 then we push it to the end of an array as the extreme right only consists of 2
+            high -= 1  # as the extreme right already consists of 2 after swapping so it is already sorted so thats why we are decreasing the range of mid+1 to high
     print(array)
-dutchalgo([1,0,0,2,2,1,1,0])        
 
 
+dutchalgo([1, 0, 0, 2, 2, 1, 1, 0])
+
+
+# Given an integer array nums of size n, return the majority element of the array.
+# The majority element of an array is an element that appears more than n/2 times in the array. The array is guaranteed to have a majority element.
+
+
+# brute approach
+def majority(array, n):
+    tempo = [0] * (
+        max(array) + 1
+    )  # here we are making a temporary array with all elements of 0 upto the lenght of just one value greater than the maximum value in an array
+    for i in range(len(array)):
+        tempo[
+            array[i]
+        ] += 1  # this counts the total number of appearance of a number of an array but using temporary array
+    for i in range(len(tempo)):
+        if (
+            tempo[i] > n // 2
+        ):  # then we are comparing each  of tempo with the half of length of an array
+            print(
+                i
+            )  # and as the index is the actual value of an array in a tempo we are printing the index when we find the number
+            return
+    print("no such majority numbers")
+
+
+majority([7, 0, 0, 1, 7, 7, 2, 7, 7], 9)
+
+# timecomplexity:  O(N+M)
+# spacecomplexity: O(M)
+
+
+# better approach
+def bettermajority(array, n):
+    m = {}
+    for i in range(len(array)):
+        if array[i] not in m:
+            m[array[i]] = 1
+        else:
+            m[array[i]] += 1
+    for key, value in m.items():
+        if value > n // 2:
+            print(key)   #as the key is the actual denotion of a number so thats why we are printing the key
+            return
+    print("no such majority numbers")
+#timecomplexity: O(N)
+#spacecomplexity: O(N)
+bettermajority([7, 0, 0, 1, 7, 7, 2, 7, 7], 9)
 
