@@ -558,26 +558,25 @@ dutchalgo([1, 0, 0, 2, 2, 1, 1, 0])
 # Given an integer array nums of size n, return the majority element of the array.
 # The majority element of an array is an element that appears more than n/2 times in the array. The array is guaranteed to have a majority element.
 
-#brute approach 1
-def brutemajority(array,n):      
-    for i in range(n):   #n is the length of an array
+
+# brute approach 1
+def brutemajority(array, n):
+    for i in range(n):  # n is the length of an array
         count = 0
-        for j in range(i,n):
+        for j in range(i, n):
             if array[i] == array[j]:
-                count+=1
-        if count > n//2:
+                count += 1
+        if count > n // 2:
             print(array[i])
             return
         else:
             continue
-    print('No such majority element')    
-brutemajority([7, 0, 0, 1, 7, 7, 2, 7, 7], 9)    
-#timecomplexity: O(N^2)
-#spacecomplexity: O(1)
-                    
+    print("No such majority element")
 
 
-
+brutemajority([7, 0, 0, 1, 7, 7, 2, 7, 7], 9)
+# timecomplexity: O(N^2)
+# spacecomplexity: O(1)
 
 
 # brute approach2
@@ -616,43 +615,168 @@ def bettermajority(array, n):
             m[array[i]] += 1
     for key, value in m.items():
         if value > n // 2:
-            print(key)   #as the key is the actual denotion of a number so thats why we are printing the key
+            print(
+                key
+            )  # as the key is the actual denotion of a number so thats why we are printing the key
             return
     print("no such majority numbers")
-#timecomplexity: O(N)
-#spacecomplexity: O(N)
+
+
+# timecomplexity: O(N)
+# spacecomplexity: O(N)
 bettermajority([7, 0, 0, 1, 7, 7, 2, 7, 7], 9)
 
 
-#optimal approach for finding the element which has a majority occurence in an array.
-#Moore's voting algorithm
-#in this algorithm what we do is we make the count to 1, as  we take a number from an array and consider it as an element then if the next element is the same numebr then we increase the value of count .
-#if the next element is the different number then we decrease the count by 1.
-#while doing so , if in any case the count becomes 0, then we change the element which means we take the next number as an element and repeat the process, then we get the last man standing number as an element.
-#then for that particular number we must count its occurence in an array cause in some cases its occurence might be lesser than n//2.
-def optimalmajority(array,n):
+# optimal approach for finding the element which has a majority occurence in an array.
+# Moore's voting algorithm
+# in this algorithm what we do is we make the count to 1, as  we take a number from an array and consider it as an element then if the next element is the same numebr then we increase the value of count .
+# if the next element is the different number then we decrease the count by 1.
+# while doing so , if in any case the count becomes 0, then we change the element which means we take the next number as an element and repeat the process, then we get the last man standing number as an element.
+# then for that particular number we must count its occurence in an array cause in some cases its occurence might be lesser than n//2.
+def optimalmajority(array, n):
+    count = 0
+    count1 = 0
     element = 0
-    count = 0    
-    #this first loop gives us the number which is the potential majority element 
+    # only the element which has a higher majority in an array stays alive
     for i in range(n):
         if count == 0:
-            count = 1 
+            count = 1
             element = array[i]
         elif array[i] == element:
-            count+=1
+            count += 1
         else:
-            count-=1        
-    
-
-
-    count2=0
-    for i in range(n):
-        if array[i] == element:
-            count2+=1
-    if count2 > n//2:
+            count -= 1
+    for j in range(n):
+        if (array[i]) == element:
+            count1 += 1
+    if count1 > n // 2:  # here n is the length of an array
         print(element)
     else:
-        print(-1)    
+        print(0)
 
-optimalmajority([7, 0, 0, 1, 7, 7, 2, 7, 7], 9)   
+
+optimalmajority([7, 0, 0, 1, 7, 7, 2, 7, 7], 9)
+
+
+# Given an integer array nums, find the subarray with the largest sum and return the sum of the elements present in that subarray.
+# bruteapproach
+def largestsum(array):
+    maxsum = 0
+    subarray = []
+    for i in range(len(array)):
+        s = 0
+        for j in range(i, len(array)):
+            s += array[j]
+            if s > maxsum:
+                maxsum = s
+                subarray = [i, j]
+
+    print(maxsum)
+    print(subarray)
+
+
+largestsum([2, 3, 5, -2, 7, -4])
+
+# timecomplexity is O(N^2)
+# spacecomplexity is O(1)  cause we are just using one maxsum varibale which is constant and another is subarray which is made by the indices and it is also constant
+
+
+# optimal approach :
+# also known as kadane's algorithm
+# kadane's algorithm is a tpe where we keep on adding to the sum for every element in an array but we dont take the element where the sum becomes negative , and if the sum becomes negative
+# then we just reset the sum to 0
+def optimalsum(array):
+    s = 0
+    temp_start = start = end = 0
+
+    maxsum = float("-inf")  # the most smallest float number
+
+    for i in range(len(array)):
+        s += array[i]
+        if s > maxsum:
+            maxsum = s
+            start = temp_start
+            end = i  # as our loop is starting from the 0 index, we are making change in our ending position when the sum is greater than the maximum sum
+            # and for the starting position our first if condition takes care of it
+
+        if s < 0:
+            s = 0
+            temp_start = (
+                i + 1
+            )  # as we skip the element which makes the sum less than 0 , thats why we are making change in the starting postion
+
+    if maxsum != float("-inf"):
+        print(maxsum)
+        print([start, end])
+    else:
+        print([])
+
+
+optimalsum([-2, -3, -7, -2, -10, -4])
+
+
+# Given an array arr of n integers, where arr[i] represents price of the stock on the ith day. Determine the maximum profit achievable by buying and selling the stock at most once.
+# The stock should be purchased before selling it, and both actions cannot occur on the same day.
+
+
+def brutebuysell(array):
+    maxdiff = float("-inf")
+    diff = 0
+    buyday = 0
+    sellday = 0
+    for i in range(len(array)):
+        for j in range(i, len(array)):
+            if array[j] > array[i]:
+                diff = array[j] - array[i]
+                if diff > maxdiff:
+                    maxdiff = diff
+                    sellday = j
+                    buyday = i
+            elif array[i] > array[j]:
+                diff = array[i] - array[j]
+                if diff > maxdiff:
+                    maxdiff = diff
+                    sellday = i
+                    buyday = j
+    print(
+        [buyday + 1, sellday + 1]
+    )  # as our loop runs from o index so to catch the correct day we are adding 1 to both buyday and sellday
+    print("the maximum profit is:", maxdiff)
+
+
+brutebuysell([10, 7, 5, 8, 11, 9])
+# timecomplexity is O(N^2) cause both outer and inner loop runs for every elements in an array, to calculate the subtraction for every elements
+# spacecomplexity is O(1)
+
+
+def betterbuysell(array):
+
+    array = [(num, index + 1) for index, num in enumerate(array)]
+    sa = sorted(array)   #its sorted based on the number 
+    diff = (
+        sa[len(sa) - 1][0] - sa[0][0]
+    )  # then we are making the difference between the first and the last element in an sa
+    print("the maximum difference is :", diff)
+    print(
+        [sa[0][1], sa[len(sa) - 1][1]]
+    )  # then we print the indices of the first and last element in a sorted array
+betterbuysell([10, 7, 5, 8, 11, 9])
+#timecomplexity is O(N) cause the loop runs only once for every elements in an array
+#spacecomplexity is O(1)
+def optimalbuysell(array):
+   minprice = array[0]
+   buyday=sellday=tempobuyday=0
+   maxprofit = 0
+   for i in range(1,len(array)):
+      profit = array[i] - minprice
+      if profit > maxprofit:
+          maxprofit=profit
+          buyday=tempobuyday
+          sellday=i
+      if array[i] < minprice:
+          minprice=array[i]
+          tempobuyday=i    
        
+   print(buyday+1,sellday+1)
+   print(maxprofit)
+optimalbuysell([10, 7, 5, 8, 11, 9])    
