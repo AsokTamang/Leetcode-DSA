@@ -628,11 +628,12 @@ bettermajority([7, 0, 0, 1, 7, 7, 2, 7, 7], 9)
 #Moore's voting algorithm
 #in this algorithm what we do is we make the count to 1, as  we take a number from an array and consider it as an element then if the next element is the same numebr then we increase the value of count .
 #if the next element is the different number then we decrease the count by 1.
-#while doing so , if in any case the count becomes 0, then we change the element which means we take the next number as an element and repeat the process, then the last man standing number as an element is the one which 
-#has the majority of occerence in an array. cause no any numbers can cancel out eachother.
+#while doing so , if in any case the count becomes 0, then we change the element which means we take the next number as an element and repeat the process, then we get the last man standing number as an element.
+#then for that particular number we must count its occurence in an array cause in some cases its occurence might be lesser than n//2.
 def optimalmajority(array,n):
     element = 0
-    count = 0
+    count = 0    
+    #this first loop gives us the number which is the potential majority element 
     for i in range(n):
         if count == 0:
             count = 1 
@@ -642,10 +643,16 @@ def optimalmajority(array,n):
         else:
             count-=1        
     
-    if(element):
-       print(element)
-    else:    
-     print(-1)
+
+
+    count2=0
+    for i in range(n):
+        if array[i] == element:
+            count2+=1
+    if count2 > n//2:
+        print(element)
+    else:
+        print(-1)    
 
 optimalmajority([7, 0, 0, 1, 7, 7, 2, 7, 7], 9)   
        
