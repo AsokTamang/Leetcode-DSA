@@ -558,8 +558,28 @@ dutchalgo([1, 0, 0, 2, 2, 1, 1, 0])
 # Given an integer array nums of size n, return the majority element of the array.
 # The majority element of an array is an element that appears more than n/2 times in the array. The array is guaranteed to have a majority element.
 
+#brute approach 1
+def brutemajority(array,n):      
+    for i in range(n):   #n is the length of an array
+        count = 0
+        for j in range(i,n):
+            if array[i] == array[j]:
+                count+=1
+        if count > n//2:
+            print(array[i])
+            return
+        else:
+            continue
+    print('No such majority element')    
+brutemajority([7, 0, 0, 1, 7, 7, 2, 7, 7], 9)    
+#timecomplexity: O(N^2)
+#spacecomplexity: O(1)
+                    
 
-# brute approach
+
+
+
+# brute approach2
 def majority(array, n):
     tempo = [0] * (
         max(array) + 1
@@ -601,4 +621,6 @@ def bettermajority(array, n):
 #timecomplexity: O(N)
 #spacecomplexity: O(N)
 bettermajority([7, 0, 0, 1, 7, 7, 2, 7, 7], 9)
+
+
 
