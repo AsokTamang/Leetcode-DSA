@@ -752,7 +752,7 @@ brutebuysell([10, 7, 5, 8, 11, 9])
 def betterbuysell(array):
 
     array = [(num, index + 1) for index, num in enumerate(array)]
-    sa = sorted(array)   #its sorted based on the number 
+    sa = sorted(array)  # its sorted based on the number
     diff = (
         sa[len(sa) - 1][0] - sa[0][0]
     )  # then we are making the difference between the first and the last element in an sa
@@ -760,22 +760,102 @@ def betterbuysell(array):
     print(
         [sa[0][1], sa[len(sa) - 1][1]]
     )  # then we print the indices of the first and last element in a sorted array
-betterbuysell([10, 7, 5, 8, 11, 9])
-#timecomplexity is O(N) cause the loop runs only once for every elements in an array
-#spacecomplexity is O(1)  
-def optimalbuysell(array):
-    minprice=array[0]
-    maxprofit = buyday=sellday=tempbuy_day=0
 
-    for i in range(1,len(array)):
-        profit = array[i] - minprice       #we are supposing the first element in our array as the minmum price of stock in a day    
-        if profit >maxprofit :    
+
+betterbuysell([10, 7, 5, 8, 11, 9])
+
+
+# timecomplexity is O(N) cause the loop runs only once for every elements in an array
+# spacecomplexity is O(1)
+def optimalbuysell(array):
+    minprice = array[0]
+    maxprofit = buyday = sellday = tempbuy_day = 0
+
+    for i in range(1, len(array)):
+        profit = (
+            array[i] - minprice
+        )  # we are supposing the first element in our array as the minmum price of stock in a day
+        if profit > maxprofit:
             maxprofit = profit
-            buyday=tempbuy_day
-            sellday=i
-        if array[i] < minprice : 
-            minprice = array [i]
-            tempbuy_day=i
+            buyday = tempbuy_day
+            sellday = i
+        if array[i] < minprice:
+            minprice = array[i]
+            tempbuy_day = i
     print(maxprofit)
-    print([buyday+1,sellday+1])  #here we are adding 1 to both buyday and sellday as our loop is starting from 0
-optimalbuysell( [10, 7, 5, 8, 11, 9])           
+    print(
+        [buyday + 1, sellday + 1]
+    )  # here we are adding 1 to both buyday and sellday as our loop is starting from 0
+
+
+optimalbuysell([10, 7, 5, 8, 11, 9])
+
+# Given an integer array nums of even length consisting of an equal number of positive and negative integers.Return the answer array in such a way that the given conditions are met:
+# Every consecutive pair of integers have opposite signs.
+# For all integers with the same sign, the order in which they were present in nums is preserved.
+# The rearranged array begins with a positive integer.
+
+
+# brute force approach
+# in this approach what we do is we make two diff arrays containing only the positve and the negative integers which are in the array
+def rearrangebysign(array):
+    neg = [
+        num for num in array if num < 0
+    ]  # first of all we are making an array of only the negative numbers
+    pos = [
+        num for num in array if num > 0
+    ]  # then we are making an array of the positive numbers only
+    for i in range(len(neg)):
+        array[2 * i + 1] = neg[
+            i
+        ]  # and as the negative integers in the final output are placed in the odd indexes we are starting it from 1 index
+    for j in range(len(pos)):
+        array[2 * j] = array[
+            j
+        ]  # also as the positive integers in the final output are placed in the even indexes, we are starting it from the 0 index
+    print(array)
+
+
+rearrangebysign([2, 4, 5, -1, -3, -4])
+# time complexity: O(N)
+# space complexity : O(N) as N/2 + N/2 is N as we are using the two arrays which are half of the original array
+
+
+# optimal approach
+# in the optimal approach , what we do is we try to rearrange an array in one go by using the indices of both positive and negative integers.
+def optimalarrange(array):
+    posindex = 0
+    negindex = 1
+    output = [0] * len(array)
+    for i in range(len(array)):
+        if array[i] < 0:
+            output[negindex] = array[i]
+            negindex += 2
+        else:
+            output[posindex] = array[i]
+            posindex += 2
+    print(output)
+
+
+optimalarrange([2, 4, 5, -1, -3, -4])
+# timecomplexity is : O(N)
+# space complexity is : O(N)
+
+
+# if the array has unequal number of positive and negative integers
+def optimalarrange2(array):
+    pos = [num for num in array if num > 0]
+    neg= [num for num in array if num < 0 ]
+    negindex=2 * len(neg)
+    posindex = 2 * len(pos)
+    output=[0] * len(array)
+    if len(neg) < len(pos):    #here if the length of the positive intergers is lesser than we loop through its range to make the ouput arrange until that point
+        for i in range(len(neg)):
+            output[i*2] = pos[i]
+            output[i*2+1] = neg[i]
+      
+        for i in range(len(neg),len(pos)):
+            output[negindex] = pos[i]
+            negindex+=1
+    print(array)
+optimalarrange2()    
