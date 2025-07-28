@@ -762,21 +762,20 @@ def betterbuysell(array):
     )  # then we print the indices of the first and last element in a sorted array
 betterbuysell([10, 7, 5, 8, 11, 9])
 #timecomplexity is O(N) cause the loop runs only once for every elements in an array
-#spacecomplexity is O(1)
+#spacecomplexity is O(1)  
 def optimalbuysell(array):
-   minprice = array[0]
-   buyday=sellday=tempobuyday=0
-   maxprofit = 0
-   for i in range(1,len(array)):
-      profit = array[i] - minprice
-      if profit > maxprofit:
-          maxprofit=profit
-          buyday=tempobuyday
-          sellday=i
-      if array[i] < minprice:
-          minprice=array[i]
-          tempobuyday=i    
-       
-   print(buyday+1,sellday+1)
-   print(maxprofit)
-optimalbuysell([10, 7, 5, 8, 11, 9])    
+    minprice=array[0]
+    maxprofit = buyday=sellday=tempbuy_day=0
+
+    for i in range(1,len(array)):
+        profit = array[i] - minprice       #we are supposing the first element in our array as the minmum price of stock in a day    
+        if profit >maxprofit :    
+            maxprofit = profit
+            buyday=tempbuy_day
+            sellday=i
+        if array[i] < minprice : 
+            minprice = array [i]
+            tempbuy_day=i
+    print(maxprofit)
+    print([buyday+1,sellday+1])  #here we are adding 1 to both buyday and sellday as our loop is starting from 0
+optimalbuysell( [10, 7, 5, 8, 11, 9])           
