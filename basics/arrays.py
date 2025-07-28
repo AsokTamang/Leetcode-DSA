@@ -853,9 +853,27 @@ def optimalarrange2(array):
         for i in range(len(neg)):
             output[i*2] = pos[i]
             output[i*2+1] = neg[i]
-      
         for i in range(len(neg),len(pos)):
             output[negindex] = pos[i]
             negindex+=1
-    print(array)
-optimalarrange2()    
+    
+    elif len(pos) < len(neg):
+        for i in range(len(pos)):
+            output[i*2] = pos[i]
+            output[i*2+1] = neg[i]
+        for i in range(len(pos),len(neg)):
+            output[posindex]=array[i]
+            posindex+=1 
+    else:
+        for i in range(len(array)):
+            output[i*2]=array[i]   
+            output[i*2+1]=array[i]        
+
+    print(output)           
+optimalarrange2([2, 4, 5, -1, -3, -4,-8,11,12,13,14])
+
+
+
+
+
+
