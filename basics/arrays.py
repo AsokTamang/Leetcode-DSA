@@ -977,16 +977,36 @@ def betterconsec(array):
             #if yes then we increase the count by 1 then we make the current element as the  last smallest element
             count+=1
             smallest=array[i]
-        elif array[i] >=smallest+2:      #but for other elements if they are greater than the last element by more than 2 then we make the current smallest as the last smallest and again make the count to 1 
+        elif array[i] >smallest+1:      #but for other elements if they are greater than the last element by more than 2 then we make the current smallest as the last smallest and again make the count to 1 
             #cause as our array is already sorted .so if the current element is greater by more than 2 than the last smallest element then it means that our consec is broken 
             smallest = array[i]
             count = 1
         
         elif array[i] == smallest:
-            smallest=array[i]  
+            continue 
         length=max(length,count)   #then for each loop we keep on calculating the maxumum length using the max between length and the count
     print(length)
 betterconsec([1, 1, 1, 2, 2, 2,3,3,3,3,4,5,6,101,102,103,104])    
+#time complexity : O(N)
+#space complexity : O(N)  cause we are using the sorted function
+
+#optimal solution
+def optimalconsec(array):
+    
+    length=0
+    s= list(set(array))  #here we are converting our array into a set inorder to remove the duplicates from an array
+    for num in s:
+        if num - 1 not in s:     #if there are elements in a set which is just one value smaller than the current element then we skip that element
+            #otherwise what we do is we start finding the values just one greater than the current element using while loop on set
+            count=1
+            x = num
+            while x+1 in s:
+                x+=1
+                count+=1
+            length=max(length,count)
+    print(length)
+optimalconsec([1, 1, 1, 2, 2, 2,3,3,3,3,4,5,6,101,102,103,104])
+
 
 
 
