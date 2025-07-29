@@ -21,45 +21,86 @@ def dutchnationalalgo(array):
 
 dutchnationalalgo([1, 0, 2, 1, 0])
 
-#timecomplexity: O(N) as the loop runs only once for every elemnents
-#spacecomplexity:O(1) as the memeory used is just one
+# timecomplexity: O(N) as the loop runs only once for every elemnents
+# spacecomplexity:O(1) as the memeory used is just one
 
 
-
-#brute approach
+# brute approach
 def bruteapp(array):
     for i in range(len(array)):
-        minindex=i
-        for j in range(i,len(array)):
-            if array[j]<array[minindex]:
-                minindex=j
-        array[minindex],array[i]=array[i],array[minindex]
+        minindex = i
+        for j in range(i, len(array)):
+            if array[j] < array[minindex]:
+                minindex = j
+        array[minindex], array[i] = array[i], array[minindex]
     print(array)
-bruteapp([1, 0, 2, 1, 0])
-#timecomplexity: O(N^2) as the loop runs only twice for every elemnents
-#spacecomplexity:O(1) as the memeory used is just one  cause we are not using additional arrays , or dict or any storing properties
 
-#better approach
+
+bruteapp([1, 0, 2, 1, 0])
+# timecomplexity: O(N^2) as the loop runs only twice for every elemnents
+# spacecomplexity:O(1) as the memeory used is just one  cause we are not using additional arrays , or dict or any storing properties
+
+# better approach
+
 
 def betterapproach(array):
-    #the variables down below are used for storing the number of counts of 0,1 and 2 in an array
-    count0=0
-    count1=0
-    count2=0
-    #what we are doing is couting the number of 0s,1s and 2s then we start putthing them according to the indexes
+    # the variables down below are used for storing the number of counts of 0,1 and 2 in an array
+    count0 = 0
+    count1 = 0
+    count2 = 0
+    # what we are doing is couting the number of 0s,1s and 2s then we start putthing them according to the indexes
     for num in array:
         if num == 0:
-            count0+=1    
+            count0 += 1
         elif num == 1:
-            count1+=1
+            count1 += 1
         elif num == 2:
-            count2+=1
+            count2 += 1
     for i in range(count0):
-        array[i]=0
-    for i in range(count0,count1+count0):
-        array[i]=1
-    for i in range(count1+count0,len(array)):
-        array[i]=2 
+        array[i] = 0
+    for i in range(count0, count1 + count0):
+        array[i] = 1
+    for i in range(count1 + count0, len(array)):
+        array[i] = 2
     print(array)
-betterapproach([1, 0, 2, 1, 0])                              
 
+
+betterapproach([1, 0, 2, 1, 0])
+
+
+# permutatiosn
+# approach 1
+def optimalpermutation(array, ds, m, ans):
+    if len(ds) == len(array):
+        ans.append(ds[:])
+        return
+    for i in range(len(array)):
+        if i not in m:
+            m[i] = True
+            ds.append(array[i])
+            optimalpermutation(array, ds, m, ans)
+            ds.pop()
+            del m[i]
+
+
+ans = []
+optimalpermutation([1, 2, 3], [], {}, ans)
+print(ans)
+
+
+# approach2
+def optimalapproach(array,ans,index):
+    if index == len(array) - 1:
+        ans.append(array[:])
+        return
+    
+    for i in range(index,len(array)):
+        array[index],array[i] = array[i] , array[index]
+        optimalapproach(array,ans,index+1)
+        array[index],array[i] = array[i] , array[index]
+ans=[]
+optimalapproach([1,2,3],ans,0) 
+print(ans)       
+        
+        
+    
