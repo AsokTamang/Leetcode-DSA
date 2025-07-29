@@ -963,6 +963,31 @@ def consecutive(array):
         length = max(length,count)
     print(length)
 consecutive([100, 4, 200, 1, 3, 2])            
+#time complexity : O(N) * O(N) for the worst case which means O(N^2)
+#space complexity: O(1) a constant
+
+#better approach
+def betterconsec(array):
+    array=sorted(array)
+    smallest = float('-inf')
+    count=0
+    length = 1
+    for i in range(len(array)):
+        if array[i] == smallest + 1:    #for the first condition we are checking whether the current element is just greater by 1 than the last smallest elemetnt
+            #if yes then we increase the count by 1 then we make the current element as the  last smallest element
+            count+=1
+            smallest=array[i]
+        elif array[i] >=smallest+2:      #but for other elements if they are greater than the last element by more than 2 then we make the current smallest as the last smallest and again make the count to 1 
+            #cause as our array is already sorted .so if the current element is greater by more than 2 than the last smallest element then it means that our consec is broken 
+            smallest = array[i]
+            count = 1
+        
+        elif array[i] == smallest:
+            smallest=array[i]  
+        length=max(length,count)   #then for each loop we keep on calculating the maxumum length using the max between length and the count
+    print(length)
+betterconsec([1, 1, 1, 2, 2, 2,3,3,3,3,4,5,6,101,102,103,104])    
+
 
 
 
