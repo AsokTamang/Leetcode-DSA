@@ -89,18 +89,17 @@ print(ans)
 
 
 # approach2
-def optimalapproach(array,ans,index):
-    if index == len(array) - 1:
-        ans.append(array[:])
-        return
-    
+def optimalapproach(array,index,ans):
+    if index == len(array)-1:
+       ans.append(array[:])
+       return
     for i in range(index,len(array)):
         array[index],array[i] = array[i] , array[index]
-        optimalapproach(array,ans,index+1)
-        array[index],array[i] = array[i] , array[index]
+        optimalapproach(array,index+1,ans)
+        array[index],array[i]=array[i],array[index]
 ans=[]
-optimalapproach([1,2,3],ans,0) 
-print(ans)       
+optimalapproach([1,2,3],0,ans)
+print(ans)              
         
         
     

@@ -897,6 +897,35 @@ def permutation(array,m,ds,ans):
 ans=[]
 permutation([1,2,3],{},[],ans)
 print(ans)
+#timecomplexity is :N! * N
+
+
+#Given an integer array nums, return a list of all the leaders in the array.
+#A leader in an array is an element whose value is strictly greater than all elements to its right in the given array. The rightmost element is always a leader. The elements in the leader array must appear in the order they appear in the nums array.
+#brute approach
+def leader(array):
+    leaders=[]
+    for i in range(len(array)):
+        if array[i] ==max(array[i:]):
+            leaders.append(array[i])
+    print(leaders)
+leader([1, 2, 5, 3, 1, 2])  
+#time complexity: O(N^2) as we are using the array from the i index in each iteration.
+#space complexity: O(N) for the worst case
+     
+     
+#optimal approach
+def optimalleader(array):
+    maximum=float('-inf')
+    leaders=[]
+    for i in range(len(array)-1,-1,-1):
+        if array[i] > maximum:    #as the right most element in an array is already a leaders thats why we are comparing it with the most minimum value.
+            leaders.append(array[i])
+            maximum=array[i]   #then we change the value of maximum to this last element
+            #so that only when the element is greater than the right most element we append it to the leaders list.
+    print(leaders[::-1])   #we are using leaders[::-1] to print the output in correct order.
+optimalleader([1, 2, 5, 3, 1, 2])            
+
 
 
 
