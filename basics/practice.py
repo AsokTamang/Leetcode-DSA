@@ -101,5 +101,38 @@ ans=[]
 optimalapproach([1,2,3],0,ans)
 print(ans)              
         
+
+
+#permutation 
+def permutation(array,index,ans):
+    if index == len(array)-1:
+        ans.append(array[:])
+        return
+    for i in range(index,len(array)):
+        array[index],array[i] = array [i], array[index]
+        permutation(array,index+1,ans)
+        array[index],array[i] = array [i], array[index]
+ans=[]
+permutation([1,2,3],0,ans)
+print(ans)
+
         
-    
+#longest consecutive number
+def linearsearch(array,num):
+    for i in range(len(array)):
+        if array[i] == num:
+            return True
+    return False    
+
+def consec(array):
+    length=1
+    for i in range(len(array)):
+        x = array[i]
+        count = 1    #for every value of x we make the count to 1
+        while linearsearch(array,x+1):   #then for every value of x we are trying to find x+1 using linear search function
+            #if found we increase the count by 1
+            x+=1
+            count+=1
+        length=max(length,count)
+    print(length)
+consec([5,4,3,2,1,100,200,101,201])                  
