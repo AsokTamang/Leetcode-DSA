@@ -926,6 +926,55 @@ def optimalleader(array):
     print(leaders[::-1])   #we are using leaders[::-1] to print the output in correct order.
 optimalleader([1, 2, 5, 3, 1, 2])            
 
+#Given an array nums of n integers, return the length of the longest sequence of consecutive integers. The integers in this sequence can appear in any order.
+def longestconsec(array):
+   consec=[]
+   array=sorted(array)
+   i = 0
+   while i < len(array)-1:
+       if array[i] - array[i+1] == 1 or array[i+1] - array[i] == 1:
+           if array[i] not in consec:
+            consec.append(array[i])
+           if array[i+1] not in consec:
+               consec.append(array[i+1]) 
+       i+=1    
+   print(consec)
+   print(len(consec))
+longestconsec( [0, 3, 7, 2, 5, 8, 4, 6, 0, 1])   
+#time complexity: O(N)
+#space complexity: O(N) for worst case     
+
+#brute approach
+def linearsearch(array,n):
+    for i in range(len(array)):
+        if array[i] == n:
+            return True
+    return False    
+
+
+def consecutive(array):
+    length=1
+    for i in range(len(array)):
+        x=array[i]
+        count = 1
+        while linearsearch(array,x+1):
+            x=x+1
+            count+=1
+        length = max(length,count)
+    print(length)
+consecutive([100, 4, 200, 1, 3, 2])            
+
+
+
+
+
+
+        
+
+
+       
+
+
 
 
 
