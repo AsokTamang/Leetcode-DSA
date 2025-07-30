@@ -1095,7 +1095,70 @@ def optimalmatrix(array,n,m):
     print(array)
 optimalmatrix([[1, 0, 1], [0, 0, 1], [1, 1, 1]],3,3)    
 
+#brute approach 
 
+#Given an N * N 2D integer matrix, rotate the matrix by 90 degrees clockwise.
+#The rotation must be done in place, meaning the input 2D matrix must be modified directly.
+def matrix2(array,n,m):   #n is the number of rows and m is the number of columns
+    ans=[]
+    for i in range(n):
+      ans.append([0]*m)
+    for i in range(n):
+        for j in range(m):
+            ans[j][(n-1)-i]= array[i][j]
+    print(ans)
+matrix2([[1,2,3],[4,5,6],[7,8,9]],3,3)
+#time complexity is : O(N * M)  or in worst case O(N^2)
+# space complexity is : O(N*M)  in worst case O(N^2)
+            
+#better approach
+#in the better approach for tranversing the matrix in place what we do is swap the rows and columns 
+#and in this process as the diagonal remains same, we dont touch it
+
+def bettermatrix2(array,n,m):
+    for i in range(0,n-1):
+        for j in range(i+1,m):
+            array[i][j],array[j][i] = array[j][i],array[i][j]
+        
+    
+    #now for the final output we just reverse the rows
+    for i in range(n):
+        array[i] = array[i][::-1]
+    print(array)    
+bettermatrix2([[1,2,3],[4,5,6],[7,8,9]],3,3)    
+#time complexity is O(N^2)
+#space complexity is O(1) as we are doing the transverse method as well as the reverse method inplace of the array
+
+
+#Given an M * N matrix, print the elements in a clockwise spiral manner. Return an array with the elements in the order of their appearance when printed in a spiral manner.
+#so the method spiral is we start moving from the top-left most part of the array and keep going on circular clockwise direction in a loop covering the outer
+#layers first and then going inward till we append all the elements from the original array
+
+
+#only one solution
+#n is the number of rows and m is the number of columns
+def spiralmatrix(array,n,m):
+    ans = []
+    right=m-1
+    bottom=n-1
+    left=0
+    top=0
+    while len(ans)!=n * m:
+        for i in range(top,right+1):   #this loop is for printing the first row
+            ans.append(array[top][i])
+        top+=1
+        for i in range(top,bottom+1):   #this loop is for printing the last column
+            ans.append(array[i][right])
+        right-=1
+        for i in range(right,left-1,-1):  #this loop is for printing the last row but from the second last position, from an opposite direction horizontally
+            ans.append(array[bottom][i])
+        bottom-=1
+        for i in range(bottom,top-1,-1):  #this loop is for printing the first column but from the second last position, from  an opposite direction vertically till the second position of first column
+            ans.append(array[i][left])
+        left+=1
+        #then we repeat this position till the ans varibale is equal to the n*m
+    print(ans)
+spiralmatrix([[1,2,3,4],[14,15,16,5],[13,20,17,6],[12,19,18,7],[11,10,9,8]],5,4)                         
 
 
 
