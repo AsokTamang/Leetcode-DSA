@@ -1063,9 +1063,37 @@ def bettermatrix(array,n,m):  #here n is the number of rows and m is the number 
             if rows[i]==1 or cols[j]==1:
                 array[i][j] = 0   
     print(array)  
-bettermatrix( [[1,1,1],[1,0,1],[1,1,1]],3,3)                         
+bettermatrix( [[1,1,1],[1,0,1],[1,1,1]],3,3)   
+#timecomplexity :    O(N*M)  as we are using two loops which are N for the rows and M for the columns
+# spacecomplexity : O(N+M)      n is the number of rows and m is the number of columns    
 
-
+def optimalmatrix(array,n,m):
+    firstrowhaszero=False
+    firstcolhaszero=False
+    for i in range(n):
+        if array[i][0]==0:
+            firstcolhaszero=True
+    for j in range(m):
+        if array[0][j] == 0:
+            firstrowhaszero=True
+    for i in range(1,n):
+        for j in range(1,m):
+            if array[i][j] == 0:   #if we find the 0 element in the inside matrix then we make its corresponding element in the first row and the first column 0
+                array[i][0] = 0
+                array[0][j] = 0               
+    for i in range(1,n):
+        for j in range(1,m):
+            if array[i][0]==0 or array[0][j] == 0:   #then we check in the first column and the first row if 0 exists
+                # if exists then we make the every elements in the corresponding position 0
+                array[i][j] = 0
+    if firstcolhaszero:
+        for i in range(n):
+            array[i][0]=0
+    if firstrowhaszero:
+        for j in range(m):
+            array[0][j]=0        
+    print(array)
+optimalmatrix([[1, 1, 1], [1, 0, 1], [1, 1, 1]],3,3)    
 
 
 
