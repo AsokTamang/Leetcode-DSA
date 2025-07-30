@@ -1093,7 +1093,7 @@ def optimalmatrix(array,n,m):
         for j in range(m):
             array[0][j]=0        
     print(array)
-optimalmatrix([[1, 1, 1], [1, 0, 1], [1, 1, 1]],3,3)    
+optimalmatrix([[1, 0, 1], [0, 0, 1], [1, 1, 1]],3,3)    
 
 
 

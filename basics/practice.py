@@ -157,4 +157,45 @@ def matrixzero(array,n,m):
 matrixzero([[0,1,1],[1,0,1],[1,1,0]],3,3)    
 
 
+def optimalapproach(array,n,m):  #here n is the number of rows and m is the number of columns
+    first_row_haszero=False
+    first_col_haszero=False
+
+    for j in range(m):
+        if array[0][j] == 0:
+            first_row_haszero=True
+    for i in range(n):
+        if array[i][0] == 0:
+            first_col_haszero=True
+    #then we make a mark in the first row and first column  based on the zero element which lies inside the matrix
+    for i in range(1,n):
+        for j in range(1,m):
+            if array[i][j] == 0:       
+                array[0][j]=0
+                array[i][0]=0
+    #then based on the marker on the first row or first column, we start making elements zero in the inside matrix
+    for i in range(1,n):
+        for j in range(1,m):
+            if array[i][0] == 0 or array[0][j] == 0:
+                array[i][j] = 0
+    
+    #then based on the first row and first column, we start making its other elements 0l
+    
+    if first_col_haszero:
+        for i in range(n):
+            array[i][0] = 0
+
+    if first_row_haszero:
+        for j in range(m):
+            array[0][j] = 0
+    print(array)        
+optimalapproach([[1,0,1],[0,1,1],[1,1,0]],3,3)        
+
+                           
+
+
+
+    
+
+
     
