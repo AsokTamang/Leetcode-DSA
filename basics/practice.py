@@ -189,13 +189,67 @@ def optimalapproach(array,n,m):  #here n is the number of rows and m is the numb
         for j in range(m):
             array[0][j] = 0
     print(array)        
-optimalapproach([[1,0,1],[0,1,1],[1,1,0]],3,3)        
-
-                           
+optimalapproach([[1,0,1],[0,1,1],[1,1,0]],3,3) 
 
 
+outer = []
+n=3
+for i in range(n):
+    outer.append([0] * 3)
+print(outer)
 
+def rotatematrrix(array,n,m): 
+    outer = []
+    for i in range(n):
+        outer.append([0]*m)
     
+   
+    for i in range(n):
+        k=2
+        for j in range(m):
+            outer[i][j] = array[k][i]    
+            k-=1
+    print(outer)                          
+rotatematrrix([[1,2,3],[4,5,6],[7,8,9]],3,3)
+#time complexity: O(N*M)
+#space complexity: O(N*M)  
 
+
+
+#brute approach 
+
+#Given an N * N 2D integer matrix, rotate the matrix by 90 degrees clockwise.
+#The rotation must be done in place, meaning the input 2D matrix must be modified directly.
+def matrix2(array,n,m):   #n is the number of rows and m is the number of columns
+    ans=[]
+    for i in range(n):
+      ans.append([0]*m)
+    for i in range(n):
+        for j in range(m):
+            ans[j][(n-1)-i]= array[i][j]
+    print(ans)
+matrix2([[1,2,3],[4,5,6],[7,8,9]],3,3)
+#time complexity is : O(N * M)  or in worst case O(N^2)
+# space complexity is : O(N*M)  in worst case O(N^2)
+            
+#better approach
+#in the better approach for tranversing the matrix in place what we do is swap the rows and columns 
+#and in this process as the diagonal remains same, we dont touch it
+
+def bettermatrix2(array,n,m):
+    for i in range(0,n-1):
+        for j in range(i+1,m):
+            array[i][j],array[j][i] = array[j][i],array[i][j]
+        
+    
+    #now for the final output we just reverse the rows
+    for i in range(n):
+        array[i] = array[i][::-1]
+    print(array)    
+bettermatrix2([[1,2,3],[4,5,6],[7,8,9]],3,3)    
+#time complexity is O(N^2)
+#space complexity is O(1) as we are doing the transverse method as well as the reverse method inplace of the array
+    
+  
 
     
