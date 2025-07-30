@@ -135,4 +135,26 @@ def consec(array):
             count+=1
         length=max(length,count)
     print(length)
-consec([5,4,3,2,1,100,200,101,201])                  
+consec([5,4,3,2,1,100,200,101,201])        
+
+# n is the number of rows and m is the number of columns
+#or n is the number of elements in an outer array while m is the number of elements in an inner arrays
+def matrixzero(array,n,m): 
+    rows = [0] * n #here we are making the zero matrices called rows having n number of elements 
+    cols = [0] * m #same with this one but with m number of elements
+    #we are running the loop below to find the index on both row based as well as column based to make its corresponding elements 0
+    for i in range(n):  #looping through outer loop or outer array
+        for j in range(m):  #looping through inner loop 
+            if array[i][j] == 0:  #here we are checking for each and every element inside the matrix that if they are equal to 0 or not
+                #if yes then 
+                rows[i] = 1
+                cols[j] = 1   #then we find that particular index from row based index as well as column based index
+    for i in range(n):
+        for j in range(m):
+            if rows[i] == 1 or cols[j] == 1:
+                array[i][j] = 0
+    print(array)
+matrixzero([[0,1,1],[1,0,1],[1,1,0]],3,3)    
+
+
+    

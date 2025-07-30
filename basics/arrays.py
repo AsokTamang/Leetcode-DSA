@@ -1042,7 +1042,28 @@ def brutematrix(array,n,m):  #here n is the length of an outer array and m is th
                 array[i][j] = 0
     print(array)
 brutematrix([[1,1,1],[0,1,0],[1,0,1],[1,1,1]],4,3)
+#timecomplexity : 
 
+#better approach
+#in the better approach what we do is we start making the arrays of lenght of both rows and cols so if the 0 lies in that specifix index of rows or columns
+#then we make the change in the previously made array with the index and value
+#which can be shown as below
+def bettermatrix(array,n,m):  #here n is the number of rows and m is the number of columns
+    rows = [0] * n
+    cols= [0] * m
+    for i in range(n):
+        for j in range(m):  #while looping through the rows and columns
+            #what we try to do is finding the 0 element
+            #and if we find the 0 element then we catch that particular index in the form of row position as well as column position then we store them in our rows and cols array
+            if array[i][j] ==0:
+                rows[i] = 1     #storing the i position in row
+                cols[j] = 1     #storign the j position in columns
+    for i in range(n):
+        for j in range(m):
+            if rows[i]==1 or cols[j]==1:
+                array[i][j] = 0   
+    print(array)  
+bettermatrix( [[1,1,1],[1,0,1],[1,1,1]],3,3)                         
 
 
 
