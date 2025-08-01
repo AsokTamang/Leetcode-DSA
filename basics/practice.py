@@ -216,39 +216,21 @@ rotatematrrix([[1,2,3],[4,5,6],[7,8,9]],3,3)
 
 
 
-#brute approach 
+def betterapproach(array,k):
+   m = {0:1}   #and here we are using the first prefix sum of 0 with repition 1 cause there might be a case where the first continuous subarray gives us the result k
+   count = 0
+   s = 0
+   for num in array:
+       s+=num
+       if s - k in m:
+           count+=m.get(s-k,0)+1  #what we are doing is finding the number of subarrays until the current index which  has a sum of s-k because those subarray's gives the target k 
+       m.get(s,0) + 1  
+   print(count)        
 
-#Given an N * N 2D integer matrix, rotate the matrix by 90 degrees clockwise.
-#The rotation must be done in place, meaning the input 2D matrix must be modified directly.
-def matrix2(array,n,m):   #n is the number of rows and m is the number of columns
-    ans=[]
-    for i in range(n):
-      ans.append([0]*m)
-    for i in range(n):
-        for j in range(m):
-            ans[j][(n-1)-i]= array[i][j]
-    print(ans)
-matrix2([[1,2,3],[4,5,6],[7,8,9]],3,3)
-#time complexity is : O(N * M)  or in worst case O(N^2)
-# space complexity is : O(N*M)  in worst case O(N^2)
-            
-#better approach
-#in the better approach for tranversing the matrix in place what we do is swap the rows and columns 
-#and in this process as the diagonal remains same, we dont touch it
+betterapproach([1,1,1],2) 
+#timecomplexity is : O(N)
+#spacecomplexity is : O(N) for worst case if all the subarrays give the target k            
 
-def bettermatrix2(array,n,m):
-    for i in range(0,n-1):
-        for j in range(i+1,m):
-            array[i][j],array[j][i] = array[j][i],array[i][j]
-        
-    
-    #now for the final output we just reverse the rows
-    for i in range(n):
-        array[i] = array[i][::-1]
-    print(array)    
-bettermatrix2([[1,2,3],[4,5,6],[7,8,9]],3,3)    
-#time complexity is O(N^2)
-#space complexity is O(1) as we are doing the transverse method as well as the reverse method inplace of the array
     
   
 

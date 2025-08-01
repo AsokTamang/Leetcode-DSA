@@ -1161,8 +1161,38 @@ def spiralmatrix(array,n,m):
 spiralmatrix([[1,2,3,4],[14,15,16,5],[13,20,17,6],[12,19,18,7],[11,10,9,8]],5,4)                         
 
 
+#Given an array of integers nums and an integer k, return the total number of subarrays whose sum equals to k.
+#brute approach
+def brutesubarray(array,k):
+    count = 0
+    for i in range(len(array)):
+        s = 0
+        for j in range(i,len(array)):
+            s+=array[j]
+            if s == k:
+             count+=1
+    print(count)
+brutesubarray([1,1,1],2)      
+#timecomplexity: O(N^2)
+# spacecomplexity: O(1) the space complexity is O(1) cause we arenot using any other memory storage like lists or maps.
+#    
 
+#better approach
+def betterapproach(array,k):
+   m = {0:1}   #and here we are using the first prefix sum of 0 with repition 1 cause there might be a case where the first continuous subarray gives us the result k
+   count = 0
+   s = 0
+   for num in array:
+       s+=num
+       if s - k in m:
+           count+=m.get(s-k,0)+1  #what we are doing is finding the number of subarrays until the current index which  has a sum of s-k because those subarray's gives the target k 
+       m.get(s,0) + 1  
+   print(count)        
 
+betterapproach([1,1,1],2) 
+#timecomplexity is : O(N)
+#spacecomplexity is : O(N) for worst case if all the subarrays give the target k   
+        
 
 
 
