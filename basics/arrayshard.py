@@ -1,4 +1,4 @@
-#Given an integer array nums of size n. Return all elements which appear more than n/3 times in the array. The output can be returned in any order.
+#1#Given an integer array nums of size n. Return all elements which appear more than n/3 times in the array. The output can be returned in any order.
 #brute approach
 def bruteeleme(array,n): #here n is the length of an array
     a = []
@@ -82,6 +82,42 @@ def optimalelem2(array):
         
     print(a)
 optimalelem2([1,1,1,2,2,2,2,0])    
+
+
+
+#2#This problem has 3 variations. They are stated below:
+#Variation 1: Given row number r and column number c. Print the element at position (r, c) in Pascal’s triangle.
+#variation 2: Given the row number n. Print the n-th row of Pascal’s triangle.
+#Variation 3: Given the number of rows n. Print the first n rows of Pascal’s triangle.
+
+#variation 1 answer
+#brute approach
+#here the formula we are using is NcR 
+#which is factorial of N divided by (N-R) factorial and R factorial where N is the number of rows - 1 and R is the number of columns - 1.
+def var1(r,c):  #here r is the number of rows and c is the number of columns
+    res=1
+    for i in range(0,c):
+        res = res * (r-i) // (i+1)   #here i acts c value
+    print(res)
+var1(10,3) 
+#time complexity is O(C)
+# space complexity is O(1)   
+
+def var2(r,c):
+    res = 1
+    for i in range(1,c+1):    #c is the number of columns
+        print(res,end=' ')
+        res = (res * (r-i))//i
+    print()        
+var2(6,6)    
+#time complexity: O(N)   here N is the number of columns 
+#space complexity: O(1)   it is constant
+
+
+
+
+
+
          
 
 
