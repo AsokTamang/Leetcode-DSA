@@ -131,6 +131,93 @@ var3(5)
 
 
 
+#3#Given an integer array nums. Return all triplets such that:
+#i != j, i != k, and j != k
+#nums[i] + nums[j] + nums[k] == 0.
+#Notice that the solution set must not contain duplicate triplets. One element can be a part of multiple triplets. The output and the triplets can be returned in any order.
+
+#bruteapproach
+def triplets3sum(array):
+    a = []
+    for i in range(len(array)):
+        for j in range(i+1,len(array)):   #to find the second element we are starting the loop from i+1
+            for k in range(j+1,len(array)):  #to find the third element we are starting the loop from j+1
+                if array[i] + array[j] + array[k] == 0:
+                    a.append([array[i],array[j],array[k]])
+    print(a)
+  
+triplets3sum([2, -2, 0, 3, -3, 5])
+#timecomplexity: O(N^3) as we are using 3 nested loops
+#spacecomplexity : O(1) constant
+
+#better approach
+# now for better approach what we do is we dont use the third loop, we just use the reverse math which is 
+# as to get the sum of triplets to 0 then of course the third element is the negative of sum of first and second element
+# as an example
+# if a + b + c =0 then c = -(a+b)
+#so we gonna use this reverse math technique to remove the third loop and get the value of third element
+#and also as we cannot randomly insert the required third element as it must be in the array. So waht we do is we use dictionary 
+#to store j elements.
+def bettertriplet(array):
+    s=set()
+  
+    for i in range(len(array)):
+        m={}
+        for j in range(i+1,len(array)):
+            thirdelement=-(array[i]+array[j])
+            if thirdelement in m:   #if the required third element is not in the m then it means that we havenot found the third element to meet the condition right now , but it can be met in the future 
+                #if its in the array otherwise not
+                s.add(tuple([array[i],array[j],thirdelement]))   #inorder to prevent the duplicate insertion of the triplet we are usign the set.add method
+            m[array[j]]=array[j]   #this code runs whether the if else condition is true or false3
+    print(list(s))
+bettertriplet([2, -2, 0, 3, -3, 5])            
+#timecomplexity: O(N^2 + log(M))
+#spacecomplexity: O(M)
+
+
+#optimal approach
+def optimaltriplet(array):
+    array=sorted(array)
+    s = []
+    for i in range(len(array)):
+        if i>0 and array[i] == array[i-1]: continue 
+        left = i+1  # left most part
+        right = len(array) - 1   # right most part
+        while left < right:
+            sum = array[i] + array[left] + array[right]
+            if sum == 0:
+                s.append([array[i],array[left],array[right]])
+                left +=1
+                right -=1
+                while left < right and array[left] == array[left+1]: left+=1  #if the next left element is equal to the previous left element then theres no point in using the current element as left thats why we are incrementing by 1
+                
+                while left < right and array[right]== array[right-1]: right-=1  #if the next right element is equal to the previous right then theres no point in using the current element as right      
+
+
+                
+            elif sum < 0:
+                left+=1
+                while left < right and array[left] == array[left+1]: left+=1
+                
+            elif sum> 0 :
+                right-=1
+                while left < right and array[right]== array[right-1]: right-=1
+    print(s)            
+optimaltriplet([2, -2, 0, 3, -3, 5])                 
+
+
+
+
+
+
+
+
+
+            
+
+
+
+
 
 
 

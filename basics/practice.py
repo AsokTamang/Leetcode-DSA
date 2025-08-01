@@ -237,3 +237,70 @@ def practice(r,c): #r is the number of rows and c is the number of columns
         print(res,end=' ')
         res =( res * (c - i)) // i
 practice(5,5)        
+
+
+
+#brute approach
+def majorityeleme(array,n):
+    s= []
+    for i in range(len(array)):
+        if array[i] in s:  #if the majority element is already in the list then we just continue or move into the another loop or another value of i
+            continue    
+        count = 1
+        for j in range(i+1,len(array)):
+            if array[i] == array[j]:
+                count+=1
+        if count > n/3:
+            s.append(array[i]) 
+    print(s)
+majorityeleme( [1, 2, 1, 1, 3, 2, 2],7) 
+#timecomplexity is O(N^2) as we are using the two nested loops
+# space complexity is O(1) which is constant       
+
+#better approach
+def betterapproach(array,n):
+    m = {}
+    ans=[]
+    for num in array:
+        m[num] = m.get(num,0) +  1   #here the default value of the key in m is 0
+    for key,value in m.items():
+        if value > n/3:
+            ans.append(key)
+    print(ans)  
+betterapproach( [1, 2, 1, 1, 3, 2, 2],7)    
+#time complexity is : O(N) + O(M)
+# space complexity is : O(M)   
+
+#optimal approach 
+#for the optimal approach what we do is use booyer's algorithm which is based on the last man standing
+#as the question is asking to find the numbers which appear more than n/3 times where n is the length of an array. so , there must be or there is higher chance that alteast 2 elements satisy this condition
+def optimalapproach(array,n):
+    count1=0
+    count2=0
+    can1=0
+    can2=0
+    for num in array:
+        if num == can1:
+            count1+=1
+        elif num == can2:
+            count2+=1
+        elif count1==0:
+            count1=1
+            can1=num
+        elif count2==0:
+            count2+=1
+            can2=num
+        else:
+            count1-=1
+            count2-=1
+    print([can1,can2])
+optimalapproach( [1, 2, 1, 1, 3, 2, 2],7)
+#time complexity is : O(N)
+#spacecomplexity is :O(1)  which is constant             
+
+    
+                  
+    
+
+
+   
