@@ -1185,8 +1185,8 @@ def betterapproach(array,k):
    for num in array:
        s+=num
        if s - k in m:
-           count+=m.get(s-k,0)+1  #what we are doing is finding the number of subarrays until the current index which  has a sum of s-k because those subarray's gives the target k 
-       m.get(s,0) + 1  
+           count+=m.get(s-k,0)  #what we are doing is finding the number of subarrays until the current index which  has a sum of s-k because those subarray's gives the target k 
+       m[s]=m.get(s,0) + 1  
    print(count)        
 
 betterapproach([1,1,1],2) 
