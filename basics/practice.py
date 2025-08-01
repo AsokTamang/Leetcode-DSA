@@ -231,7 +231,9 @@ betterapproach([1,1,1],2)
 #timecomplexity is : O(N)
 #spacecomplexity is : O(N) for worst case if all the subarrays give the target k            
 
-    
-  
-
-    
+def practice(r,c): #r is the number of rows and c is the number of columns
+    res= 1
+    for i in range(1,c+1):
+        print(res,end=' ')
+        res =( res * (c - i)) // i
+practice(5,5)        
