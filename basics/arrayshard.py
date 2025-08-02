@@ -295,19 +295,21 @@ brutesubarrays([15, -2, 2, -8, 1, 7, 10, 23],8)
 #as the subarray is the continous array inside an array thats why we cant sort the array
 
 #better approach
-def bettersubarrays(array):
+def bettersubarrays(array,n):
     s=0
     length = 0
-    count = 0
-    m={0:1}   #here we are making a dictionary having a prefix sum of 0 and its count is 1
-    for num in array:
-        s+=num
-        if s - 0 in m:
-            count+=m.get(s-0,0)    
-        m[s] = m.get(s,0) + 1  #here 0 is the initial value  and we keep on adding 1 if we find the same s
-    print(count)
-bettersubarrays([15, -2, 2, -8, 1, 7, 10, 23]) 
-       
+    m={}   
+    for i in range(n) :
+        s+=array[i]
+        if s == 0:
+            length=max(length,i+1)   #here i+1 gives us the number of elements in a subarray as our i is starting from 0 or we can also write i-0+1
+        elif s in m:   #if the same sum exists in the current i index then ofcoure there exists a subarray that gives the sum 0
+            length = max(length,i-m[s] )    #here i - m[s] gives us the length of subarray or the number of elements as we are storing the prefix sum with their respective indexes.       
+        else:  #only if the sum doesnot exists then we store the prfix sum with its current index
+         m[s] = i   #here we are storing the current born sum with the current index so that we can use this postion later as shown in the upper code
+    print(length)
+bettersubarrays([15, -2, 2, -8, 1, 7, 10, 23],8) 
+
 
 
 
