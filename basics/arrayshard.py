@@ -275,6 +275,45 @@ optimalsum( [1, -2, 3, 5, 7, 9],7)
 #space complexity is : O(1) or O(K) where K is the number of unique quadruplets   as we are not using any dicts or sets to store the input variables rather just to give the output
 
 
+#You are given an integer array arr of size n which contains both positive and negative integers. Your task is to find the length of the longest contiguous subarray with sum equal to 0.
+def brutesubarrays(array,n):
+    length = 0
+    for i in range(n):
+        s = 0  #here for every value of i we makes the sum or s = 0 cause the new subarray is being creater in every value of i
+        for j in range(i,n):
+            s+=array[j]   #then we calculate the sum for every value of i
+            if s == 0:   #if we found the sum or s  == 0 then we start calculating the lenght using max between the previous length where we got the sum 0 and the current length as the question is asking us the maximum length
+                length = max(length , j-i+1)   #here j-i+1 gives us the number of elements in an array
+    if length!=0:
+        print(length)
+    else:
+        print(0)
+brutesubarrays([15, -2, 2, -8, 1, 7, 10, 23],8)    
+#time complexity is : O(N^2)
+# space complexity is : O(1)    
+
+#as the subarray is the continous array inside an array thats why we cant sort the array
+
+#better approach
+def bettersubarrays(array):
+    s=0
+    length = 0
+    count = 0
+    m={0:1}   #here we are making a dictionary having a prefix sum of 0 and its count is 1
+    for num in array:
+        s+=num
+        if s - 0 in m:
+            count+=m.get(s-0,0)    
+        m[s] = m.get(s,0) + 1  #here 0 is the initial value  and we keep on adding 1 if we find the same s
+    print(count)
+bettersubarrays([15, -2, 2, -8, 1, 7, 10, 23]) 
+       
+
+
+
+
+
+
 
 
 
