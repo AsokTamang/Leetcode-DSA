@@ -206,6 +206,38 @@ def optimaltriplet(array):
 optimaltriplet([2, -2, 0, 3, -3, 5])                 
 
 
+#Given an integer array nums and an integer target. Return all quadruplets [nums[a], nums[b], nums[c], nums[d]] such that:
+#a, b, c, d are all distinct valid indices of nums.
+#nums[a] + nums[b] + nums[c] + nums[d] == target.
+def brutea4sum(array,target):
+    s= set()
+    for i in range(len(array)):
+        for j in range(i+1,len(array)):
+            for k in range(j+1,len(array)):
+                for l in range(k+1,len(array)):
+                    if (array[i] + array[j] + array[k] + array[l] ==target):
+                        s.add(tuple([array[i],array[j],array[k],array[l]]))
+    print(list(s))  #then we convert the set into the final list
+brutea4sum(  [1, -2, 3, 5, 7, 9],7)   
+#time complexity is : O(N^4)
+# space complexity is : O(1) which is constant
+
+def better4sum(array,target):
+    s=set()
+    m={}
+    for i in range(len(array)):
+        for j in range(i+1,len(array)):
+            for k in range(j+1,len(array)):
+                fourthelem=target - (array[i]+array[j]+array[k])
+                if fourthelem in m:
+                    s.add(tuple([array[i],array[j],array[k],fourthelem]))
+                m[array[k]]=m.get(array[k],0) + 1    #then we store the third element in a dictionary called m
+    print(list(s))
+better4sum([1, -2, 3, 5, 7, 9],7)  
+#time complexity is : O(N^3)
+# space complexity is : O(M) + O(K)   where M is the unique quadruplets which denotes the set and K is the number of necessary third and fourth elements which denotes the dictionary m                                   
+  
+
 
 
 
