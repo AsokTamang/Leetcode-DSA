@@ -298,9 +298,77 @@ optimalapproach( [1, 2, 1, 1, 3, 2, 2],7)
 #time complexity is : O(N)
 #spacecomplexity is :O(1)  which is constant             
 
-    
-                  
-    
+#Given row number r and column number c. Print the element at position (r, c) in Pascal’s triangle.
+def var1(r,c):  #here r is the row position and c is the column postion
+    res=1
+    for i in range(c):
+        res = (res * (r-i) )/ (c- i)
+    print(int(res))
+var1(5,2)    
+#time complexity is : O(N)
+#space complexity is : O(1)
 
+#Given the row number n. Print the n-th row of Pascal’s triangle.
+def var2(n):  #here n is the rowth number and the question is asking us to print all the elements of n
+   res = 1
+   for i in range(n+1):
+       print(res,end=' ')
+       res = (res * (n-i)) 
+       res = res // (i+1)
+   print()   
+var2(5)   
+#timecomplexity : O(N+1)  or O(N) here N is the row number
+#spacecomplexity : O(1)
 
+#var3 Given the number of rows n. Print the first n rows of Pascal’s triangle.
+def var3(n):  #here instead of printing the nth row we are printing the first n rows
+    
+    for i in range(n):
+        res = 1
+        for j in range(i):  #here i acts as the rowth number and j acts as the number of columns 
+            print(res,end= ' ')
+            res = res * (i-j)
+            res = res // (j+1)
+        print(res)
+var3(5)
+#time complexity : O(N^2)
+#space complexity : O(1)
+
+#brute approach
+def brutetriplet(array):
+    a = set()
+    #here we are using set so that there wont be duplicate triplets
+    for i in range(len(array)):
+        for j in range(i+1,len(array)):
+            for k in range(j+1,len(array)):
+                if array[i] + array[j] + array[k] == 0:
+                    a.add(tuple(sorted([array[i],array[j],array[k]])))
+    print(list(a))
+brutetriplet( [2, -2, 0, 3, -3, 5]) 
+#time complexity O(N^3)
+#space complexity O(1) or O(N) in worst case 
+
+#better approach for which we use hash map or dictionary
+def betterapproach(array):
    
+    a = set()
+    for i in range(len(array)):
+        m = {}  #we must include the m inside the for loop of i as for every value of i , there must be new hasmap so it wont repeat the previously used elements
+        for j in range(i+1,len(array)):
+            thirdelem = -(array[i] + array[j])
+            if thirdelem in m:
+                a.add(tuple(sorted([array[i],array[j],thirdelem])))
+            m[array[j]] = m.get(array[j],0) + 1   #here if the array j exist we increase by one otherwise the initial value will become 1
+    print(list(a))
+betterapproach([2, -2, 0, 3, -3, 5])                
+#time complexity : O(N^2)
+#space complexity :  O(k) where k is the number of unique triplets
+
+
+
+
+
+
+
+
+       

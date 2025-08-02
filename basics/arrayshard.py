@@ -167,7 +167,7 @@ def bettertriplet(array):
             thirdelement=-(array[i]+array[j])
             if thirdelement in m:   #if the required third element is not in the m then it means that we havenot found the third element to meet the condition right now , but it can be met in the future 
                 #if its in the array otherwise not
-                s.add(tuple([array[i],array[j],thirdelement]))   #inorder to prevent the duplicate insertion of the triplet we are usign the set.add method
+                s.add(tuple(sorted([array[i],array[j],thirdelement])))   #inorder to prevent the duplicate insertion of the triplet we are usign the set.add method
             m[array[j]]=array[j]   #this code runs whether the if else condition is true or false3
     print(list(s))
 bettertriplet([2, -2, 0, 3, -3, 5])            
@@ -204,6 +204,8 @@ def optimaltriplet(array):
                 while left < right and array[right]== array[right-1]: right-=1
     print(s)            
 optimaltriplet([2, -2, 0, 3, -3, 5])                 
+
+
 
 
 
