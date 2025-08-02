@@ -197,11 +197,11 @@ def optimaltriplet(array):
                 
             elif sum < 0:
                 left+=1
-                while left < right and array[left] == array[left+1]: left+=1
+               
                 
-            elif sum> 0 :
+            else :
                 right-=1
-                while left < right and array[right]== array[right-1]: right-=1
+                
     print(s)            
 optimaltriplet([2, -2, 0, 3, -3, 5])                 
 
@@ -224,19 +224,56 @@ brutea4sum(  [1, -2, 3, 5, 7, 9],7)
 
 def better4sum(array,target):
     s=set()
-    m={}
+   
     for i in range(len(array)):
         for j in range(i+1,len(array)):
+            hasset=set()  #this hasset must be inside the j loop cause we are using this hasset to store the k indexed elements that must be unique for every loop of j
             for k in range(j+1,len(array)):
                 fourthelem=target - (array[i]+array[j]+array[k])
-                if fourthelem in m:
-                    s.add(tuple([array[i],array[j],array[k],fourthelem]))
-                m[array[k]]=m.get(array[k],0) + 1    #then we store the third element in a dictionary called m
-    print(list(s))
+                if fourthelem in hasset:
+                    s.add(tuple(sorted([array[i],array[j],array[k],array[fourthelem]])))
+                hasset.add(array[k])    
+
+    print(s)        
+            
+   
 better4sum([1, -2, 3, 5, 7, 9],7)  
 #time complexity is : O(N^3)
 # space complexity is : O(M) + O(K)   where M is the unique quadruplets which denotes the set and K is the number of necessary third and fourth elements which denotes the dictionary m                                   
   
+
+#optimal approach
+#in this approach what we do is we use four pointers 
+#where the two pointers are i and j are made fixed where j = i+1 and the other two pointers k and l are made moving.
+def optimalsum(array,target):
+    s =set()  #this set s is for storing the final quadruplets
+    array=sorted(array)
+    for i in range(len(array)): 
+        if i > 0 and array[i] == array[i-1]:   #this condition is to prevent the use of same i indexed element or number cause the question is asking for the unique quadruplets
+            continue      #if the next i indexed number is also same then we just skip and continue with the next iteration of i
+        for j in range(i+1,len(array)):   #same case here for j
+            if j >i+1 and array[j] == array[j-1]:
+                continue
+            k=j+1   
+            l=len(array)-1   #it is the last index
+            while k < l:    #these two moving pointers mustnot cross eachother or become equal
+                suum=array[i] + array[j] +array[k] + array[l]
+                if suum == target:
+                    #if we found the  sum then we just change value of k by increasing as it goes towars west side and the value of l by decreasing as it move towars east side
+                    s.add(tuple(sorted([array[i],array[j],array[k],array[l]])))
+                    k+=1
+                    l-=1
+                    while k < l and array[k] == array[k-1]: k+=1    #Same here the changed value must not be equal to the previous value
+                    while k < l and array[l] == array[l+1]: l-=1
+                elif suum<target:
+                    k+=1
+                else:
+                    l-=1   
+    print('The unique quadruplets using the optimal solution is:',s)
+optimalsum( [1, -2, 3, 5, 7, 9],7)                       
+#time complexity is : O(N^3)  its N^3 cause we are using the two nested loops and inside them we also have a while loop that runs after every index of J so the time complexity of this particular loop will be O(N)
+#space complexity is : O(1) or O(K) where K is the number of unique quadruplets   as we are not using any dicts or sets to store the input variables rather just to give the output
+
 
 
 
