@@ -362,8 +362,38 @@ def betterapproach(array):
     print(list(a))
 betterapproach([2, -2, 0, 3, -3, 5])                
 #time complexity : O(N^2)
-#space complexity :  O(k) where k is the number of unique triplets
+#space complexity :  O(k) where k is the number of unique triplets as we are using the dictionary
 
+#optimal approach where we use two pointers
+def optimaltriplet(array):
+    s= set()
+    array=sorted(array)
+    for i in range(len(array)):
+        if i > 0 and array[i] == array[i-1]:    #if the next i indexed number is equal to the previous one then we just go with the next iteration of i
+            continue
+        left = i + 1
+        right = len(array) - 1
+        
+        while left < right:
+            total=array[i] + array[left] + array[right]
+            if total==0:
+                s.add(tuple([array[i],array[left],array[right]]))
+                left+=1
+                right-=1
+                while array[left] == array[left-1]: left+=1
+                while array[right] == array[right+1] : right-=1
+            elif total < 0:
+                left+=1
+                while array[left] == array[left-1]: left+=1
+
+            elif total > 0:
+                right-=1
+                while array[right] == array[right+1] : right-=1         
+
+    print(list(s))
+optimaltriplet([2, -2, 0, 3, -3, 5]) 
+#time complexity : O(N)
+# space complexity :  O(1)   
 
 
 
