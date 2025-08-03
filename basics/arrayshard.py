@@ -304,7 +304,7 @@ def bettersubarrays(array,n):
         if s == 0:
             length=max(length,i+1)   #here i+1 gives us the number of elements in a subarray as our i is starting from 0 or we can also write i-0+1
         elif s in m:   #if the same sum exists in the current i index then ofcoure there exists a subarray that gives the sum 0
-            length = max(length,i-m[s] )    #here i - m[s] gives us the length of subarray or the number of elements as we are storing the prefix sum with their respective indexes.       
+            length = max(length,i-m[s] )    #here i - m[s] gives us the length of subarray or the number of elements as we are storing the prefix sum with their respective indexes. so the subtraction of the current index with that stored index gives us the length of the required subarray     
         else:  #only if the sum doesnot exists then we store the prfix sum with its current index
          m[s] = i   #here we are storing the current born sum with the current index so that we can use this postion later as shown in the upper code
     print(length)

@@ -395,6 +395,21 @@ optimaltriplet([2, -2, 0, 3, -3, 5])
 #time complexity : O(N)
 # space complexity :  O(1)   
 
+def bettersubarray(array,n):
+    s = 0
+    m={}
+    length = 0
+    for i in range(n):
+        s+=array[i]
+        if s == 0:
+            length = max(length,i+1)   #here we are coding i+1 as the i starts from 0
+        elif s in m:  #if the sum is not zero but the same sum is seen previously or in the previous subarray then we calculate the subtraction of current index where we get this common sum and the index where we saw this common sum, as 
+            #this subtraction gives us the length of the subarray which gives us the sum 0
+            length = max(length,i-m[s])
+        else:
+            m[s] = i    #we are storing the index     
+    print(length)
+bettersubarray([15, -2, 2, -8, 1, 7, 10, 23],8)             
 
 
 
