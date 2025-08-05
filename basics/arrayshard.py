@@ -310,6 +310,62 @@ def bettersubarrays(array,n):
     print(length)
 bettersubarrays([15, -2, 2, -8, 1, 7, 10, 23],8) 
 
+#Given an array of integers nums and an integer k, return the total number of subarrays whose XOR equals to k.
+def bruteapproach(array,k): 
+    count = 0 
+    for i in range(len(array)):
+        xor = 0
+        for j in range(i,len(array)):
+            xor ^=array[j]
+            if xor == k:   #we only count the subarray if the xor matches the target element k
+                count+=1  #here we are calculating the count cause the qustion is asking us to find the number of subarrays
+    print(count)  
+bruteapproach([4, 2, 2, 6, 4], 6)
+#time complexity : O(N^2)
+# space complexity : O(1) 
+
+#better approach
+def betterapproach(array,k):
+    m={0:1}  #and we are declaring the key to 0 and its count 1 cause the whole subarray or first subarray might have a xor which gives a target element k
+    count = 0
+    x = 0
+    for i in range(len(array)):
+        x ^=array[i]
+        if x^k in m:
+            count+=m.get(x^k)  #here we are increasing the count based on the number of x^k available on the subarrays until the index i.
+        m[x] = m.get(x,0) + 1     
+    print(count)
+betterapproach([4, 2, 2, 6, 4], 6)  
+#time complexity : O(N)
+#space complexity : O(N) in worst case if all the elements' xors are stored in the dictionary m.
+
+   
+
+
+def brutemerging(array):
+    
+    array=sorted(array)
+    print('The sorted array is', array)
+    ans = []  #this is the list where we store all those overlapped start and ending of the nested array
+    for i in range(len(array)):
+        start,end = array[i][0],array[i][1]
+        if ans and end <=ans[-1][1]:  #here we are comparing if the current end is less than or equal to the one stored in a list,
+            #if the current end is lesser or equal then its no need to do the comparison for the already merged element
+            continue
+        for j in range(i+1,len(array)):
+            if array[j][0] <= end:
+                end = max(end,array[j][1])
+        ans.append([start,end])
+    print(ans)
+brutemerging([[5,7],[1,3],[4,6],[8,10]])
+
+#time complexity is :O(N^2logN)
+#space complexity is : O(1)  which is constant
+
+
+             
+
+   
 
 
 
