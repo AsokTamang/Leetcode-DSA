@@ -412,6 +412,8 @@ def bettersubarray(array,n):
 bettersubarray([15, -2, 2, -8, 1, 7, 10, 23],8)             
 
 
+#Given an array of integers nums and an integer k, return the total number of subarrays whose XOR equals to k.
+
 def xork(array,k):
     count = 0
     ans = []
@@ -444,7 +446,122 @@ betterxork([4, 2, 2, 6, 4],6)
 #time complexity : O(N)
 # space complexity : O(N) in worst case3
 # 3
-#   
+
+#Given an array of intervals where intervals[i] = [starti, endi], merge all overlapping intervals and return an array of the non-overlapping intervals that cover all the intervals in the input.
+
+#brute approach
+def merging(array):
+    array=sorted(array)
+    ans = []
+    for i in range(len(array)):
+        start,end = array[i][0] , array[i][1]
+        if ans and end<=ans[-1][1]:  #if the current i index scond postion or the current end is lesser than or equal to the end of the last element of ans , then we just continue with another iteration of i. 
+            continue
+        for j in range(i+1,len(array)):
+            if array[j][0] <= array[i][1]:
+                end = max(end,array[j][1])   #in this j loop what we are doing is comparing the first index number of the second array with the last index of the first array, make the necessry changes in the end index element. 
+            else:
+                break  #here we are breaking the loop if the condition doesnot meet because we sorted the array in an ascending order and if the first comparison doesnot meet then ofcourse the later condition also won't meet.    
+        ans.append([start,end])
+    print(ans)
+merging([[5,7],[1,3],[4,6],[8,10]])
+#time complexity : O(N^2)  because there are two nested loops
+# space complexity : O(N) for the worst case because the answer might be very close to the number of N  
+
+#betterapproach
+def optimalmerging(array):
+    array=sorted(array)
+    ans=[array[0]]  #we are making the first array of the original array a comparing array at first
+    for i in range(1,len(array)):
+        if array[i][0] <= ans[-1][1]:
+            ans[-1][1] = max(ans[-1][1],array[i][1])
+        else:
+            ans.append(array[i])
+    print(ans)
+optimalmerging([[5,7],[1,3],[4,6],[8,10]])  
+#time complexity : O(NlogN+N)
+# space complexity : O(N) for worst case.
+
+#Given two integer arrays nums1 and nums2. Both arrays are sorted in non-decreasing order.
+#Merge both the arrays into a single array sorted in non-decreasing order.
+#The final sorted array should be stored inside the array nums1 and it should be done in-place.
+# #nums1 has a length of m + n, where the first m elements denote the elements of nums1 and rest are 0s.
+#nums2 has a length of n.
+def mergetwosortedarrays(array1,array2,m,n):   #here m is the length of the first array1 and n is the length of the second array2
+    left=right= 0
+    ans = []
+    while left <m and right<n:
+        if array1[left] <=array2[right]:
+            ans.append(array1[left])
+            left+=1
+        else:
+            ans.append(array2[right])
+            right+=1
+    while left<m:
+        ans.append(array1[left])
+        left+=1 
+    while right<n:
+        ans.append(array2[right])
+        right+=1  
+    print(ans)
+mergetwosortedarrays([-5, -2, 4, 5], [-3, 1, 8],4,3)      
+#time complexity : O(N + M)
+# space complexity : O(N + M)
+
+#better approach
+def bettermerging(array1,array2,m,n):
+    left = len(array1) - 1   #here we are taking the last index of the first array1
+    right = 0      
+    while left>=0 and right < n:  #this loop is for making the two arrays array1 and array2 to have a specific numbers as array1 will have the first half of numbers and array2 will have the second half of nummbers.
+        if array1[left] > array2[right]:
+            array1[left],array2[right] = array2[right],array1[left]
+            left-=1
+            right+=1
+        else:
+            left-=1
+            right+=1
+    print(sorted(array1)+sorted(array2))
+bettermerging([-5, -2, 4, 5], [-3, 1, 8],4,3)    
+#time complexity : O(NlogN)
+#space complexity : O(1)  which is constant.
+
+#find the missing and repeating number from an array
+def bruteapp(array):
+    A=B=0
+    for i in range(1,len(array)+1):
+        count = 0
+        for j in range(len(array)):
+            if i == array[j]:
+                count += 1
+        if count == 2:
+            A=i   #A is the repeating number
+        elif count == 0:
+            B=i    #B is the missing number
+    print([A,B])
+bruteapp([3, 5, 4, 1, 1])   
+#time complexity : O(N^2)
+# space complexity : O(1)
+
+#better approach 
+# in this better approach we will use hashmap
+def betterapp(array):
+    m= {}
+    A=B=0
+    for num in array:   #this first loop is for calculating the number of occurences of number of an array
+        m[num] = m.get(num,0) + 1
+    for i in range(1,len(array)+1):   #this loop is for calculating the number of occurences of number between the range of 1 and n which is the length of an array.
+        if i not in m:  #and ofcourse if the count is 0 or no i is in m,then this i is the missing number.
+            B=i
+        elif m[i] == 2:   #else if this particular i occurs more than 1 times then it is the repeating number
+            A=i 
+    print([A,B]) 
+betterapp([3, 5, 4, 1, 1])              
+
+
+
+
+
+
 
 
 
