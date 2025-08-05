@@ -380,7 +380,14 @@ def optimalmerging(array):
 optimalmerging([[5,7],[1,3],[4,6],[8,10]])   
 #time complexity is : O(NlogN) as we are also using the sorting method in this array.
 #space complexity is : O(N)  for the worst case         
-             
+
+
+#Given two integer arrays nums1 and nums2. Both arrays are sorted in non-decreasing order.
+#Merge both the arrays into a single array sorted in non-decreasing order.
+#The final sorted array should be stored inside the array nums1 and it should be done in-place.
+#nums1 has a length of m + n, where the first m elements denote the elements of nums1 and rest are 0s.
+#nums2 has a length of n.
+
 def mergetwoarrays(array1,array2,m,n):  #here m is the length of an array1 and n is the length of an array2
     #here array1 is already sorted what we need to do is insert the elements of array 2 in its respective places in an array1
    left = 0 
@@ -403,6 +410,21 @@ def mergetwoarrays(array1,array2,m,n):  #here m is the length of an array1 and n
 mergetwoarrays( [-5, -2, 4, 5], [-3, 1, 8],4,3)                       
 #time complexity : O(N+M)  
 #space complexity : O(N+M)
+
+#better approach
+def bettermerge(array1,array2,m,n):  #here m is the length of an array1 and n is the length of an array2
+    left = len(array1) -1   #here this left is the last index of array1
+    right = 0          #this is the first postion of the array2
+    while left >=0 and right < n:
+        if array1[left] > array2[right]:
+            array1[left],array2[right] = array2[right],array1[left]
+            left-=1
+            right+=1
+        else:
+            break
+
+    print(sorted(array1)+sorted(array2))      
+bettermerge([-5, -2, 4, 5], [-3, 1, 8],4,3)            
             
 
 
