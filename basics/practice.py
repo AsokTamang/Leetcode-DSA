@@ -412,6 +412,44 @@ def bettersubarray(array,n):
 bettersubarray([15, -2, 2, -8, 1, 7, 10, 23],8)             
 
 
+def xork(array,k):
+    count = 0
+    ans = []
+    for i in range(len(array)):
+        xor = 0
+        for j in range(i,len(array)):
+            xor^=array[j]
+            if xor == k:
+                count+=1
+                ans.append(array[i:j+1])
+    print('The count is :',count)
+    print(ans)
+xork([4, 2, 2, 6, 4],6)    
+#time complexity : O(N^2)
+#space complexity : O(1)  
+
+
+#better approach
+def betterxork(array,k):
+    m={0:1}  #here we are making the base case of 0 whose count is 1 cause there might be the first subarray whose xor can gives us the value k
+    count = 0
+    xor=0
+    for i in range(len(array)):
+        xor^=array[i]
+        if xor^k in m :
+            count += m.get(xor^k)    
+        m[xor] = m.get(xor,0) + 1  
+    print(count) 
+betterxork([4, 2, 2, 6, 4],6)  
+#time complexity : O(N)
+# space complexity : O(N) in worst case3
+# 3
+#   
+
+
+
+
+
 
 
 
