@@ -476,6 +476,33 @@ findingtwo([3, 5, 4, 1, 1],5)
 #time complexity : O(N)
 # space complexity : O(N) is the worst case
 
+#optimal solution 
+#in this optimal solution what we do is we try to solve it with using the math equation
+def optimalfindingtwo(array,n):
+    sn=(n*(n+1)) / 2  #this gives us the sum of the numbers from 1 to n which is the formula of calculating the sum of natural numbers
+    s = 0
+    s2 = 0
+    for i in range(n):
+        s+=array[i]   #this gives us the sum of the numbers in an array
+        s2+=array[i] * array[i]  #we are adding the square of numbers of an array
+    #now the subtraction of s-sn gives us the x-y where x is the repeating number and y is the missing piece
+    s2n=(n * (n+1)) * (2*n+1) / 6     #this is the formula of sum of square of numbers upto n
+    
+   
+    #the equation below comes from the mathmatical approach    
+    calc1 = s - sn   #this is x-y which is considered as eqn 1
+    mathematics = s2 - s2n
+    cal2 = mathematics // calc1  #this is x+y which is considered as eqn 2
+    #now adding the eqn 1 and eqn 2
+    x = int((calc1 + cal2) /2)
+    y = int(x - calc1)
+    print([x,y])  #here x is the repeating number and y is the missing piece
+optimalfindingtwo([3, 5, 4, 1, 1],5)    
+#time complexity : O(N)
+#space complexity : O(1)
+  
+
+
 
 
 
