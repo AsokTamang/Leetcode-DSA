@@ -359,10 +359,21 @@ def brutemerging(array):
     print(ans)
 brutemerging([[5,7],[1,3],[4,6],[8,10]])
 
-#time complexity is :O(N^2logN)
-#space complexity is : O(1)  which is constant
-
-
+#time complexity is :O(N^2)
+#space complexity is : O(N)  which is grows with the number of data in the original array ans is O(N) in the worst case.
+def optimalmerging(array):
+  
+    array=sorted(array)
+    ans = [array[0]]
+    for i in range(1,len(array)):
+        if array[i][0] <=ans[-1][1]:
+            ans[-1][1] = max (ans[-1][1],array[i][1])  #then we find the maximum ending and make the element in our ans list change by making the start same but changing the end.
+        else:
+            ans.append(array[i])     #if the condition doesnot meet then we just append the nested array.
+    print(ans)
+optimalmerging([[5,7],[1,3],[4,6],[8,10]])   
+#time complexity is : O(NlogN) as we are also using the sorting method in this array.
+#space complexity is : O(N)  for the worst case         
              
 
    
