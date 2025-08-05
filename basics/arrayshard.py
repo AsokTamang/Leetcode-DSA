@@ -388,6 +388,9 @@ optimalmerging([[5,7],[1,3],[4,6],[8,10]])
 #nums1 has a length of m + n, where the first m elements denote the elements of nums1 and rest are 0s.
 #nums2 has a length of n.
 
+#the trick here is we use the two pointers
+#for the brute approach we use the two pointers left and right which start from the 0 index of both left and right.
+
 def mergetwoarrays(array1,array2,m,n):  #here m is the length of an array1 and n is the length of an array2
     #here array1 is already sorted what we need to do is insert the elements of array 2 in its respective places in an array1
    left = 0 
@@ -412,6 +415,9 @@ mergetwoarrays( [-5, -2, 4, 5], [-3, 1, 8],4,3)
 #space complexity : O(N+M)
 
 #better approach
+#and for the better approach , what we use is also a two pointers and the first pointer starts from the last index of array1 and the second pointer starts from the first index of array2,
+#so using the conditional comparison we swap them , so at the end of the while loop the array1 will have all the smaller values and the array2 will have the larger values ,and
+#after sorting them individually we will add the arrays and get the result.
 def bettermerge(array1,array2,m,n):  #here m is the length of an array1 and n is the length of an array2
     left = len(array1) -1   #here this left is the last index of array1
     right = 0          #this is the first postion of the array2
@@ -424,7 +430,68 @@ def bettermerge(array1,array2,m,n):  #here m is the length of an array1 and n is
             break
 
     print(sorted(array1)+sorted(array2))      
-bettermerge([-5, -2, 4, 5], [-3, 1, 8],4,3)            
+bettermerge([-5, -2, 4, 5], [-3, 1, 8],4,3)  
+#time complexity is : O(NlogN + MlogM + O(min(M,N)))
+# space complexity is : O(1) as we are not using the extra spaces
+
+#Given an integer array nums of size n containing values from [1, n] and each value appears exactly once in the array, except for A, which appears twice and B which is missing.
+#Return the values A and B, as an array of size 2, where A appears in the 0-th index and B in the 1st index.
+#Note: You are not allowed to modify the original array.
+
+#brute approach
+def brutefindingtwo(array,n):
+    A=B=0
+    for i in range(1,n+1):  #here we are running the outer loop from 1 to n as our given array consists of the elements from 1 to n
+        count = 0 
+        for j in range(n):
+            if i == array[j]:
+                count+=1
+        if count == 0:
+            B=i
+        elif count == 2:
+            A=i 
+    print([A,B])
+brutefindingtwo([3, 5, 4, 1, 1],5) 
+#time complexity : O(N^2)
+#space complexity : O(1)
+                      
+
+
+
+
+#better approach
+def findingtwo(array,n):
+    m={}
+    A=B=0
+    for num in array: #this loop is for counting the number of occurences of number in an array
+        m[num] = m.get(num,0) + 1
+    for i in range(1,n+1):
+        if i not in m:   #if the count of this paricular index is 0 then we store this missing number in B
+            B=i    
+        elif m[i]==2:
+            A=i   #if the count of this particular index i which is a number in an array is 2 then we store it in A
+        
+    print([A,B])
+findingtwo([3, 5, 4, 1, 1],5)
+#time complexity : O(N)
+# space complexity : O(N) is the worst case
+
+
+
+
+
+
+
+        
+
+              
+
+
+
+
+
+
+
             
 
 
