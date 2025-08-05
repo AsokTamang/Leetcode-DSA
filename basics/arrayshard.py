@@ -341,7 +341,11 @@ betterapproach([4, 2, 2, 6, 4], 6)
 
    
 
-
+#Given an array of intervals where intervals[i] = [starti, endi], merge all overlapping intervals and return an array of the non-overlapping intervals that cover all the intervals in the input.
+#You can return the intervals in any order.
+#the trick for this question is to compare the ending value of the first array with the starting value of the second array,
+#if the starting value of the second array is lesser or equal to that of ending value of first array,then we merge those two arrays 
+#and we repeat this process for every elements in an array.
 def brutemerging(array):
     
     array=sorted(array)
@@ -355,16 +359,18 @@ def brutemerging(array):
         for j in range(i+1,len(array)):
             if array[j][0] <= end:
                 end = max(end,array[j][1])
+            else:
+                break   #as we have already sorted the array and if the current j index doesnot match the condition then we just break out of the j loop.    
         ans.append([start,end])
     print(ans)
 brutemerging([[5,7],[1,3],[4,6],[8,10]])
 
-#time complexity is :O(N^2)
+#time complexity is :O(2N + NlogN)   #here the time complexity is 2N cause even though we are using two nested loops we are usingthe continue and break method which reduces the loop effect 
 #space complexity is : O(N)  which is grows with the number of data in the original array ans is O(N) in the worst case.
 def optimalmerging(array):
   
     array=sorted(array)
-    ans = [array[0]]
+    ans = [array[0]]   #for the first comparison or the base comparison we are using the first array of our sorted array
     for i in range(1,len(array)):
         if array[i][0] <=ans[-1][1]:
             ans[-1][1] = max (ans[-1][1],array[i][1])  #then we find the maximum ending and make the element in our ans list change by making the start same but changing the end.
@@ -375,8 +381,30 @@ optimalmerging([[5,7],[1,3],[4,6],[8,10]])
 #time complexity is : O(NlogN) as we are also using the sorting method in this array.
 #space complexity is : O(N)  for the worst case         
              
+def mergetwoarrays(array1,array2,m,n):  #here m is the length of an array1 and n is the length of an array2
+    #here array1 is already sorted what we need to do is insert the elements of array 2 in its respective places in an array1
+   left = 0 
+   right = 0
+   ans = [] 
+   while left < m and right < n :
+       if array1[left] < array2[right]:
+           ans.append(array1[left])
+           left+=1
+       else:
+           ans.append(array2[right])
+           right+=1
+   while left < m:
+       ans.append(array1[left])
+       left+=1
+   while right < n:
+       ans.append(array2[right])
+       right+=1
+   print(ans)
+mergetwoarrays( [-5, -2, 4, 5], [-3, 1, 8],4,3)                       
+#time complexity : O(N+M)  
+#space complexity : O(N+M)
+            
 
-   
 
 
 
