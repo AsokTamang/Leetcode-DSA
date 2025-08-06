@@ -580,6 +580,48 @@ def optimalapp(array,n):
 optimalapp([3, 5, 4, 1, 1],5)  
 #time complexity : O(N)
 # space complexity : O(1)
+
+
+#counting the inversion where a[i] > a[j] as i < j 
+
+def merge(array,low,mid,high):
+    left = low
+    right = mid + 1 
+    tempo=[]
+    count = 0
+    while left<=mid and right<=high:
+        if array[left] <=array[right]:
+            tempo.append(array[left])   #this code is sorting the array in ascending order
+        else:
+            tempo.append(array[right])
+            count+=mid - left + 1 #as the array is sorted in an ascending order , if the first preceding number in the left half is greater than the number in the right half then it is sure that
+            # the rest of the numbers in the left half is also greater than the numbers in the right half
+    while left<=mid:
+        tempo.append(array[left])
+        left+=1
+    while right<=high:
+        tempo.append(array[right])
+        right+=1    
+    array[low:high+1] = tempo
+    return count        
+
+
+
+
+def mergesort(array,low,high):
+    mid =( low + high ) // 2
+    if low >=high :
+        return 0
+    cl=mergesort(array,low,mid)  #we are splitting the left half of an array
+    cr=mergesort(array,mid+1,high)    #we are splitting the right half of an array
+    #then if the all of the splitted arrays are splitted into single element array then we just merge them which has its own function
+    cm=merge(array,low,mid,high)
+    return cl+cr+cm   #we are returning the count of left half ,right half and merging
+a=[2, 3, 7, 1, 3, 5]
+print(mergesort(a[:],0,len(a)-1))
+   
+
+
   
 
 

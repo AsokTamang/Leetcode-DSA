@@ -700,7 +700,10 @@ def mergesort(array,low,high):  #here the low will be ofcourse 0 and the high wi
     countm=merge(array,low,mid,high)
     return countl + countm + countr
 
-print(mergesort([2, 3, 7, 1, 3, 5],0,5))
+
+arrayy=[2,3,7,1,3,5]
+print(mergesort(arrayy[:],0,5))  #we are just passing the copy of an array not an original array
+
 
 
 
