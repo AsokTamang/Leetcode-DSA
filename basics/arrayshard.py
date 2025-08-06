@@ -500,7 +500,28 @@ def optimalfindingtwo(array,n):
 optimalfindingtwo([3, 5, 4, 1, 1],5)    
 #time complexity : O(N)
 #space complexity : O(1)
-  
+
+
+#Given an integer array nums. Return the number of inversions in the array.
+#Two elements a[i] and a[j] form an inversion if a[i] > a[j] and i < j.
+#It indicates how close an array is to being sorted.
+#A sorted array has an inversion count of 0.
+#An array sorted in descending order has maximum inversion.
+
+def bruteinversion(array):
+    count= 0 
+    for i in range(len(array)):
+      for j in range(i+1,len(array)):
+            if array[i] > array[j]:
+                count+=1
+            else:
+                continue    
+        
+    print(count)
+bruteinversion([-10, -5, 6, 11, 15, 17])  
+#time complexity : O(N^2)
+#space complexity : O(1)
+
 
 
 
