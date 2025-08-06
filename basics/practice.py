@@ -555,9 +555,32 @@ def betterapp(array):
         elif m[i] == 2:   #else if this particular i occurs more than 1 times then it is the repeating number
             A=i 
     print([A,B]) 
-betterapp([3, 5, 4, 1, 1])              
+betterapp([3, 5, 4, 1, 1])  
+#time complexity : O(N)
+# space complexity : O(N) in the worst case            
 
 
+#optimal approach
+#for the optimal appr(oach of finding the repeating number and the missing number , what we will do is use the mathematical equations.
+def optimalapp(array,n):
+   s = (n * (n+1)) // 2
+   s2 = n*(n+1)*(2*n + 1) // 6
+   s1 = 0
+   s2n = 0
+   for num in array:
+       s1 +=num
+       s2n+=num * num
+   val1 = s - s1
+   val2 = (s2 - s2n) // val1 
+   x =  (val1 + val2) // 2
+   y = x - val1 
+   print([y,x]) 
+   #here x is the missing number and y is the repeating number  
+       
+optimalapp([3, 5, 4, 1, 1],5)  
+#time complexity : O(N)
+# space complexity : O(1)
+  
 
 
 
