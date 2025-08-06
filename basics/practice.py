@@ -619,7 +619,10 @@ def mergesort(array,low,high):
     return cl+cr+cm   #we are returning the count of left half ,right half and merging
 a=[2, 3, 7, 1, 3, 5]
 print(mergesort(a[:],0,len(a)-1))
-   
+
+#time complexity : O(NlogN)
+#space compelxity : O(1)
+
 
 
   
@@ -628,7 +631,14 @@ print(mergesort(a[:],0,len(a)-1))
 
 
 
-
+def brutereverse(array):
+    count = 0
+    for i in range(len(array)):
+        for j in range(i+1,len(array)):
+            if array[i] > 2 * array[j]:
+                count+=1
+    print(count)
+brutereverse([6, 4, 1, 2, 7]) 
 
 
 

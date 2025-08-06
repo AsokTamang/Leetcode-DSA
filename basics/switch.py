@@ -15,3 +15,51 @@ class Solution:
          
           
 
+def finalmerge(array, low, mid, high):
+    left = low
+    right = mid + 1
+    tempo = []
+
+    while left <= mid and right <= high:
+        if array[left] <= array[right]:
+            tempo.append(array[left])
+            left += 1
+        else:
+            tempo.append(array[right])
+            right += 1
+
+    while left <= mid:
+        tempo.append(array[left])
+        left += 1
+    while right <= high:
+        tempo.append(array[right])
+        right += 1
+
+    array[low:high + 1] = tempo
+    return 0
+
+
+def countpairs(array, low, mid, high):
+    count = 0
+    right = mid + 1
+    for i in range(low, mid + 1):
+        while right <= high and array[i] > 2 * array[right]:
+            right += 1
+        count += right - (mid + 1)  # ✅ FIXED
+    return count
+
+
+def mergereverse(array, low, high):
+    if low >= high:
+        return 0
+    mid = (low + high) // 2
+    cl = mergereverse(array, low, mid)
+    cr = mergereverse(array, mid + 1, high)
+    cc = countpairs(array, low, mid, high)
+    finalmerge(array, low, mid, high)
+
+    return cl + cr + cc
+
+
+ar = [6, 4, 1, 2, 7]
+print(mergereverse(ar[:], 0, 4))  # ✅ Correct Output

@@ -702,11 +702,68 @@ def mergesort(array,low,high):  #here the low will be ofcourse 0 and the high wi
 
 
 arrayy=[2,3,7,1,3,5]
-print(mergesort(arrayy[:],0,5))  #we are just passing the copy of an array not an original array
+print(mergesort(arrayy[:],0,5))  #we are just passing the copy of an array not an ot
+
+#Given an integer array nums. Return the number of reverse pairs in the array.
+#An index pair (i, j) is called a reverse pair if:
+#0 <= i < j < nums.length
+#nums[i] > 2 * nums[j]
+
+def brutereverse(array):
+    count = 0
+    for i in range(len(array)):
+        for j in range(i+1,len(array)):
+            if array[i] > 2 * array[j]:
+                count+=1
+    print(count)
+brutereverse([6, 4, 1, 2, 7]) 
+#time complexity : O(N^2)
+#space complexity : O(1)
 
 
 
+#better approach
+#lets do with the merging
+def finalmerge(array,low,mid,high):
+    left = low
+    right = mid + 1 
+    tempo = []
+    while left <=mid and right<=high:
+        if array[left]<=array[right]:
+            tempo.append(array[left])
+            left+=1
+        else:
+            tempo.append(array[right])
+            count+=mid-left+1
+    while left<=mid:
+        tempo.append(array[left])
+        left+=1
+    while right<=high:
+        tempo.append(array[right])
+        right+=1
+    array[low:high+1] = tempo
 
+def countpairs(array,low,mid,high):
+    count = 0
+    right = mid+1
+    for i in range(low,mid+1):   #as the left part ranges from low to mid so we are using mid+1 as the last index
+        while right <=high and array[i] > 2 * array[right]:
+            right+=1
+        count+=right - mid+1
+    return count      
+         
 
+def mergereverse(array,low,high):
+    count = 0
+    if low>=high:
+        return 0 
+    mid = (low + high) // 2 
+    count+=mergereverse(array,low,mid)
+    count+=mergereverse(array,mid+1,high)
+    count+= countpairs(array,low,mid,high)
+    finalmerge(array,low,mid,high)
 
+    return count
+ar=[6, 4, 1, 2, 7]
+print(mergereverse(ar[:],0,4))
 
