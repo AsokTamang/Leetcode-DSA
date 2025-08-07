@@ -659,111 +659,181 @@ bruteinversion([-10, -5, 6, 11, 15, 17])
 # space complexity : O(1)
 
 
-#optimal approach
-#in the optimal approach what we will do is we use the merge sort method and in the merge sort method as the merging of the arrays are done in ascending order
-#so if the first number in the first array is greater than the number in the second array then of course the rest of the numbers in the  first array will be greater than that number of the second array.
-#and in this approach we increase the count and to get the length of the numbers or lets say the value of count we will do mid -left which gives us the value of count or the lenght of a first array
+# optimal approach
+# in the optimal approach what we will do is we use the merge sort method and in the merge sort method as the merging of the arrays are done in ascending order
+# so if the first number in the first array is greater than the number in the second array then of course the rest of the numbers in the  first array will be greater than that number of the second array.
+# and in this approach we increase the count and to get the length of the numbers or lets say the value of count we will do mid -left which gives us the value of count or the lenght of a first array
 
-def merge(array,low,mid,high):
+
+def merge(array, low, mid, high):
     tempo = []
     left = low
-    right = mid + 1 
+    right = mid + 1
     count = 0
-    while left<=mid and right<=high:
-        if array[left] <=array[right]:
+    while left <= mid and right <= high:
+        if array[left] <= array[right]:
             tempo.append(array[left])
-            left+=1
+            left += 1
         else:
             tempo.append(array[right])
-            count+=mid - left + 1
-            right+=1
-    while left<=mid:
+            count += (
+                mid - left + 1
+            )  # here we are coding mid-left+1 cause if the preceding number is greater than the right array number then ofcourse the remaining numbers in the left array will also be greater than that specific right array number , so the number of pairs will be the length of the left array
+            right += 1
+    while left <= mid:
         tempo.append(array[left])
-        left+=1
-    while right<=high:
+        left += 1
+    while right <= high:
         tempo.append(array[right])
-        right+=1
+        right += 1
 
-    array[low:high+1] = tempo
-    
-    return count        
+    array[low : high + 1] = tempo
+
+    return count
 
 
-
-def mergesort(array,low,high):  #here the low will be ofcourse 0 and the high will be the length of an array - 1 or the last index in an array
+def mergesort(
+    array, low, high
+):  # here the low will be ofcourse 0 and the high will be the length of an array - 1 or the last index in an array
     mid = (low + high) // 2
-    if low>=high:
+    if low >= high:
         return 0
-    
-    countl=mergesort(array,low,mid)    #mid will act as the new high
-    countr=mergesort(array,mid+1,high)    #mid+1 will act as the new low
-    countm=merge(array,low,mid,high)
+
+    countl = mergesort(array, low, mid)  # mid will act as the new high
+    countr = mergesort(array, mid + 1, high)  # mid+1 will act as the new low
+    countm = merge(array, low, mid, high)
     return countl + countm + countr
 
 
-arrayy=[2,3,7,1,3,5]
-print(mergesort(arrayy[:],0,5))  #we are just passing the copy of an array not an ot
+arrayy = [2, 3, 7, 1, 3, 5]
+print(mergesort(arrayy[:], 0, 5))  # we are just passing the copy of an array not an ot
 
-#Given an integer array nums. Return the number of reverse pairs in the array.
-#An index pair (i, j) is called a reverse pair if:
-#0 <= i < j < nums.length
-#nums[i] > 2 * nums[j]
+# Given an integer array nums. Return the number of reverse pairs in the array.
+# An index pair (i, j) is called a reverse pair if:
+# 0 <= i < j < nums.length
+# nums[i] > 2 * nums[j]
+
 
 def brutereverse(array):
     count = 0
     for i in range(len(array)):
-        for j in range(i+1,len(array)):
+        for j in range(i + 1, len(array)):
             if array[i] > 2 * array[j]:
-                count+=1
+                count += 1
     print(count)
-brutereverse([6, 4, 1, 2, 7]) 
-#time complexity : O(N^2)
-#space complexity : O(1)
 
 
+brutereverse([6, 4, 1, 2, 7])
+# time complexity : O(N^2)
+# space complexity : O(1)
 
-#better approach
-#lets do with the merging
-def finalmerge(array,low,mid,high):
-    left = low
-    right = mid + 1 
+
+# better approach
+# lets do with the merging
+# counting the reverse pair of an array which means a[i] > 2 * a[j]
+def finalmerge(
+    array, low, mid, high
+):  # this function is for merging the splitted arrays and converting them into ascending order
     tempo = []
-    while left <=mid and right<=high:
-        if array[left]<=array[right]:
+    left = low
+    right = mid + 1
+    while left <= mid and right <= high:
+        if array[left] <= array[right]:
             tempo.append(array[left])
-            left+=1
+            left += 1
         else:
             tempo.append(array[right])
-            count+=mid-left+1
-    while left<=mid:
+            right += 1
+    while left <= mid:
         tempo.append(array[left])
-        left+=1
-    while right<=high:
+        left += 1
+    while right <= high:
         tempo.append(array[right])
-        right+=1
-    array[low:high+1] = tempo
+        right += 1
+    array[low : high + 1] = (
+        tempo  # then we are making the change in the array at that specific index
+    )
 
-def countpairs(array,low,mid,high):
+
+def countpairs(array, low, mid, high):
+    right = mid + 1
     count = 0
-    right = mid+1
-    for i in range(low,mid+1):   #as the left part ranges from low to mid so we are using mid+1 as the last index
-        while right <=high and array[i] > 2 * array[right]:
-            right+=1
-        count+=right - mid+1
-    return count      
-         
-
-def mergereverse(array,low,high):
-    count = 0
-    if low>=high:
-        return 0 
-    mid = (low + high) // 2 
-    count+=mergereverse(array,low,mid)
-    count+=mergereverse(array,mid+1,high)
-    count+= countpairs(array,low,mid,high)
-    finalmerge(array,low,mid,high)
-
+    for i in range(low, mid + 1):
+        while right <= high and array[i] > 2 * array[right]:
+            right += 1
+        count += right - (mid + 1)
     return count
-ar=[6, 4, 1, 2, 7]
-print(mergereverse(ar[:],0,4))
 
+
+def mergesort(
+    array, low, high
+):  # here low will be the first index of an array and high will be the last index of an array
+    if low >= high:
+        return 0
+    mid = (low + high) // 2
+    # here we are splitting the array into half
+    cl = mergesort(array, low, mid)
+    cr = mergesort(array, mid + 1, high)
+    # and for these each splitted arrays,before merging them we are counting the matched reverse pairs where a[i] > 2 *a[j] for which we need separate function
+    cc = countpairs(array, low, mid, high)
+    finalmerge(array, low, mid, high)
+    return cl + cr + cc
+
+
+array = [6, 4, 1, 2, 7]
+print(mergesort(array[:], 0, len(array) - 1))
+
+
+# Given an integer array nums. Find the subarray with the largest product, and return the product of the elements present in that subarray.
+# A subarray is a contiguous non-empty sequence of elements within an array.
+
+
+def bruteprod(array):
+    maxp = 1
+    for i in range(len(array)):
+        p = 1
+        for j in range(i, len(array)):
+            p *= array[j]
+        maxp = max(maxp, p)
+    print(maxp)
+
+
+bruteprod([4, 5, 3, 7, 1, 2])
+# time complexity : O(N^2)
+# space complexity : O(1)
+
+
+def optimalproduct(array):
+    maxx = float("-inf")
+    prefix = 1
+    suffix = 1
+    for i in range(len(array)):
+        if (
+            prefix == 0
+        ):  # if the multiplication from the start becomes 0 then what we will do is we just turn the product of the subarray but from the  prefix direction 1 or renew it in other language.
+            prefix = 1
+        if suffix == 0:
+            suffix = 1
+        prefix *= array[i]
+        suffix *= array[len(array) - i - 1]
+        maxx = max(
+            maxx, max(prefix, suffix)
+        )  # then we calculate the maximum value between the prefix and the suffix and the maxx which stores the previous maximum value.
+    print(maxx)
+
+
+optimalproduct([-5, 0, -2])
+
+
+def optimalpart2(array):
+    p = 1
+    maxx = float("-inf")
+    for i in range(len(array)):
+        if p == 0:
+            p = 1
+        p *= array[i]
+        maxx = max(maxx, p)
+    print(maxx)
+optimalpart2([-2, 0, -1])
+#time complexity : O(N)
+#space complexity : O(1)
