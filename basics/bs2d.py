@@ -138,9 +138,59 @@ def ceill(array,x):
    else:
       return -1     
 print('The ceil is :', ceill([3, 4, 4, 7, 8, 10], 8))
+#time complexity : O(logN)  we are using the binary search method so it takes logN time complex
+#space complexity : O(1)
 
 
-   
+#Given an array of integers nums sorted in non-decreasing order, find the starting and ending position of a given target value. If the target is not found in the array, return [-1, -1].
+def firstlast(array,x):
+ def firstpos():
+   left =first = 0 
+   right = len(array) - 1
+   while left<=right:
+      mid = (left + right) // 2
+      if array[mid] == x :  #as we are trying to find the first position where the target number exists , if we find the index which maybe the later position then we move the right pointer towards left side
+         first = mid 
+         right-=1   #as the array is already sorted we are moving the right towards the left direction to get the initial index
+      elif array[mid] < x :
+         left = mid + 1
+      else:
+         right = mid - 1
+   if first > 0 :
+    return first
+   else:
+      return -1
+       
+
+ def endpos():
+   left = 0
+   right = len(array) - 1
+   end = 0
+   while left<=right:
+      mid = (left + right) // 2
+      if array[mid] == x:
+         end = mid
+         left+=1   #as the array is already sorted we are moving the left towards the right direction to get the later index
+      elif array[mid] < x:
+         left = mid  + 1
+      else:
+         right = mid - 1   
+   if end > 0 :
+    return end
+   else:
+      return -1
+ firstt=firstpos()
+ lastt=endpos()
+ return [firstt,lastt]  
+print(firstlast([5, 7, 7, 8, 8, 10],6))    
+
+
+
+
+
+
+
+
 
 
         
