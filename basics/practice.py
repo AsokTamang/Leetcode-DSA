@@ -664,7 +664,30 @@ print(practicesearch([4, 5, 6, 7, 0, 1, 2],3))
 
 
 
-
+#the question is asking us to find the number of rotation of the array consisting of the distinct numbers 
+#and this array is also sorted in ascending order
+#now to determine the number of rotations of an array
+#waht we need to do is find the smallest number in an array and determine its index which will gives us the number of rotation of an array
+def rotation(array):
+    left = 0
+    right = len(array) - 1
+    mini=float('inf')
+    while left<=right:
+        mid = (left + right) // 2 
+        if array[left] < array[mid]:    #here we are checking if the left most number is lesser than the mid indexed nnumber then of course the most smallest number in the subarray before the mid index will be the first number in an array
+          if array[left]<mini:
+              index = left       #as we need the index of the smallest number , we are retrieving the index here
+          left  = mid + 1 #as we have already determined the smallest number from the left subarray now we move the left pointer towards the right half.
+        elif array[mid]<array[right]: #now what if the right half is sorted
+            #then of course the mid indexed number will be the smallest here in this right half 
+            #then we check the current smallest with the last smallest numebr that we found out
+            if array[mid]<mini:
+                index=mid   #then if the current smallest number is smaller than the last one then of course we change the value of index also
+            right=mid - 1  #as we already found out the smallest fromn the right half there is no point in dealing with this half now , so we move the right pointer to the left half    
+    return index
+print('The number of rotation in an array is :', rotation( [3, 4, 5, 1, 2]))
+#time complexity : O(logN)
+#space complexity : O(1)
 
 
 

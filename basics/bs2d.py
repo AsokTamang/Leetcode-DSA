@@ -303,3 +303,55 @@ def searchrotated2(array,x):
             right=mid - 1 
    return False
 print(searchrotated2([7, 8, 1, 2, 3, 3, 3, 4, 5, 6],1))
+
+
+#Given an integer array nums of size N, sorted in ascending order with distinct values, and then rotated an unknown number of times (between 1 and N), find the minimum element in the array.
+
+def minimumrotated(array):
+   left = 0
+   right = len(array) - 1
+   ans=float('inf')   #the highest positive number in python
+   while left<=right:
+      mid=(left+right) // 2
+      #but in the edge case if the whole given array is sorted then we just dont need to do the bs as the left index number will be the most minimum
+      if array[left]<array[right]:
+         ans=min(ans,array[left])
+         break
+      elif array[left]<array[mid]:     #first of all we are checking whether the left subarray is sorted or not,if yes then ofcourse the most minimum till now will be the first number in the left subarray
+          ans=min(ans,array[left])
+          #As we find out the most minimum number from the left sorted subarray till the index mid we destroy this subarray and move the left to mid+1
+          left=mid + 1
+      elif array[mid]<array[right]:  #but if the right subarray is sorted then of course the mid indexed number will be the most minimum
+          ans=min(ans,array[mid])
+          right=mid-1
+   return ans
+print(minimumrotated( [4, 5, 6, 7, 0, 1, 2, 3]))     
+#time compelxity : O(logN)
+#space complexity : O(1)
+     
+#Given an integer array nums of size n, sorted in ascending order with distinct values. The array has been right rotated an unknown number of times, between 0 and n-1 (including). Determine the number of rotations performed on the array.
+#to calculate the number of rotations we must find the index of the smallest number in an array
+def numberrotation(array):
+   left = 0
+   right = len(array) - 1
+   mini=float('inf')
+   index = 0
+   while left<=right:
+      mid = (left + right) // 2 
+      if array[left]<array[mid]:  #if the left arrays is sorted then of course the first number in the left subarray will be the smallest
+         if array[left]<mini: 
+          index = left
+          mini=array[left]
+         left=mid+1
+         
+      elif array[mid]<array[right]:
+         if array[mid]<mini: 
+          index = mid
+          mini=array[mid]
+         right=mid-1
+        
+   return index
+print(numberrotation([4, 5, 6, 7, 0, 1, 2, 3]))
+
+         
+
