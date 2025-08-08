@@ -641,8 +641,27 @@ def insertpos(array,k):
 print(insertpos( [1, 3, 5, 6],2))            
 
 
+def practicesearch(array,x):
+    left = 0
+    right = len(array) - 1
+    while left<=right:
+        mid = (left + right) // 2  
+        if array[mid] == x :
+            return mid
+        elif array[left]<array[mid]:   #here we are checking whethter the subarray before the index mid is sorted or not
+            if array[left]<=x and x<=array[mid]:  #here we are checking whether the target number exists in this preceding sorted array or not
+                right=mid - 1 #if the target number lies then we just move the right half into the left half
+            else:
+                left=mid + 1  #if it doesnot lie then of course it will lie in the right half
+        else:
+            if array[mid]<=x and x<=array[right]:   #then if the target number lies in the later sorted subarray which lies after index mid then
+                left=mid + 1 #then we just move the left half into right
+            else:
+                right = mid - 1 
+    #then this whole sequence keeps on repeating till we find the target number in the mid index
+    return -1
+print(practicesearch([4, 5, 6, 7, 0, 1, 2],3))                
 
-  
 
 
 

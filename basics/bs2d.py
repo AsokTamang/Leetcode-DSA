@@ -183,16 +183,123 @@ def firstlast(array,x):
  lastt=endpos()
  return [firstt,lastt]  
 print(firstlast([5, 7, 7, 8, 8, 10],6))    
+#time complexity : O(logN)
+#space complexity : O(1)
+
+#You are given a sorted array of integers arr and an integer target. Your task is to determine how many times target appears in arr.
+#Return the count of occurrences of target in the array.
 
 
+def countoccurence(array,x):
+   left = 0
+   right = len(array) - 1
+   count = 0
+   a=[]
+   while left<=right:
+      mid = (left + right) // 2
+      if array[mid] == x:
+         a.append(mid)
+         if mid not in a:
+          count+=1
+          left+=1
+         else:
+            left+=1 
+      elif array[mid]<x:   #if the mid indexed number is lesser than x then we just increase the left to mid + 1
+         left = mid + 1
+      else:
+         right = mid - 1
+   return count
+print(countoccurence( [0, 0, 1, 1, 1, 2, 3],1))      
+   
+
+#You are given a sorted array of integers arr and an integer target. Your task is to determine how many times target appears in arr.
+#Return the count of occurrences of target in the array.
+
+def countoccurance(array,x):
+   def firstoccurance():
+      left = 0
+      first=-1
+      right = len(array) - 1 
+      while left<=right:
+         mid = (left + right) // 2
+         if array[mid] == x:
+            first=mid
+            right=mid - 1  #As we are trying to find the first index for the target number we are moving the right pointer towards the left path
+         elif array[mid]>x:
+            right = mid - 1
+         else:
+            left=mid + 1
+      return first
+   def lastoccurance():
+      left = 0
+      last=-1
+      right = len(array) - 1 
+      while left<=right:
+         mid = (left + right) // 2
+         if array[mid] == x:
+            last=mid
+            left=mid + 1  #As we are trying to find the first index for the target number we are moving the right pointer towards the left path
+         elif array[mid]>x:
+            right = mid - 1
+         else:
+            left=mid + 1
+      return last
+   first=firstoccurance()
+   last=lastoccurance()
+   count = last-first+1  #as our array is already sorted so thats why we are using this formula to calculate the number of occurences of a number.
+   return count
+print('The number of occurences of a number is :',countoccurance([0, 0, 1, 1, 1, 2, 3],1))
 
 
+#Given an integer array nums, sorted in ascending order (with distinct values) and a target value k. The array is rotated at some pivot point that is unknown. Find the index at which k is present and if k is not present return -1.
+#in this problem what we do is we check the previous or the after array either they are sorted or not , if th
+def searchtarget(array,k):
+   left = 0
+   right = len(array) - 1
+   while left<=right:
+      mid = (left + right) // 2 
+      if array[mid] == k:
+         return mid
+      else:
+        if array[left]< array[mid]:  #here first of all we are checking whether the preceding array before the midindex is sorted or not
+           if array[left]<=k and k<=array[mid]:     
+             right = mid - 1
+           else:
+              left=mid + 1
+        else:
+           if array[mid]<=k and k<=array[right]:    #if the preceding array is not sorted then ofcourse the later array is sorted , then we check whether the target number exists between mid and right
+              left = mid + 1   #thats why we cancel the left part
+           else:
+              right = mid - 1           
+   return -1
+print(searchtarget([4, 5, 6, 7, 0, 1, 2],0))  
+#time complexity : O(logN)   
+# space complexity : O(1)    
 
 
-
-
-
-
-        
-            
-
+#Problem Statement: Given an integer array arr of size N, sorted in ascending order (may contain duplicate values) and a target value k. Now the array is rotated at some pivot point unknown to you. Return True if k is present and otherwise, return False. 
+#as the question is stating that the array may consists of the duplicate values
+#so our edge case is what if the first number and mid and last indexed numbers are same 
+#in that edge case what we will do is we just decrease the range of an array by 1 , if the midindexd number is not equal to the target number , then of course the first index and the last index number will also wont be equal to the target number.
+def searchrotated2(array,x):
+   left = 0
+   right = len(array) - 1
+   while left<=right:
+      mid = (left + right) // 2 
+      if array[mid] == x:
+         return True
+      elif array[mid] == array[left] ==array[right]:   #if all of these are equal but arenot equal to the target number as the question states that the array may consists the duplicate number
+         left+=1
+         right-=1
+      elif array[left]<=array[mid]:   #if the left subarray before the mid index is sorted
+         if array[left]<=x<=array[mid]:   #if the target number lies in this  left subarray which is sorted then we just destroy the right half.
+            right=mid - 1
+         else:
+            left=mid + 1 
+      else:
+         if array[mid]<=x<=array[right]:   #if the target number lies in this right subarray which is sorted then we just destroy the left half.
+            left=mid + 1
+         else:
+            right=mid - 1 
+   return False
+print(searchrotated2([7, 8, 1, 2, 3, 3, 3, 4, 5, 6],1))
