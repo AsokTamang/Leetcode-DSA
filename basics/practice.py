@@ -592,9 +592,11 @@ def merge(array,low,mid,high):
     while left<=mid and right<=high:
         if array[left] <=array[right]:
             tempo.append(array[left])   #this code is sorting the array in ascending order
+            left+=1
         else:
             tempo.append(array[right])
             count+=mid - left + 1 #as the array is sorted in an ascending order , if the first preceding number in the left half is greater than the number in the right half then it is sure that
+            right+=1
             # the rest of the numbers in the left half is also greater than the numbers in the right half
     while left<=mid:
         tempo.append(array[left])
@@ -624,6 +626,21 @@ print(mergesort(a[:],0,len(a)-1))
 #space compelxity : O(1)
 
 
+def insertpos(array,k):
+    left = 0
+    right = len(array) - 1
+    while left<=right:
+        mid = (left + right) // 2 
+        if array[mid] == k:
+            return mid
+        elif k>array[mid]:   #if the target number is way greater then we just make our range within the right half
+            left=mid + 1
+        else:
+            right = mid - 1
+    return left    #if the target number is not found then the destination  index will be left
+print(insertpos( [1, 3, 5, 6],2))            
+
+
 
   
 
@@ -631,14 +648,7 @@ print(mergesort(a[:],0,len(a)-1))
 
 
 
-def brutereverse(array):
-    count = 0
-    for i in range(len(array)):
-        for j in range(i+1,len(array)):
-            if array[i] > 2 * array[j]:
-                count+=1
-    print(count)
-brutereverse([6, 4, 1, 2, 7]) 
+
 
 
 

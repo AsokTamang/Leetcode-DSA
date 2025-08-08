@@ -37,17 +37,21 @@ print(brutelowerbound( [3,5,8,15,19],9))
 #the down below is the better approach
 def lowerbound(array,k):
    left = 0
+   ans = 0
    right = len(array) - 1
    while left<=right:
       mid = (left + right) // 2
       if array[mid] >= k :
-         return mid
-      elif k>array[mid]:
-         left+=1
+         ans= mid
+         right = mid - 1
+      
       else:
-         right-=1
-   return len(array)
-print(lowerbound( [3,5,8,15,19],9))    
+         left=mid + 1
+   if ans > 0 :
+      return ans
+   else:
+      return len(array)
+print('the lowerbound is ',lowerbound( [1,2,2,3],2))    
 #time complexity : O(logN)
 # space complexity : O(1) 
 
@@ -55,18 +59,26 @@ print(lowerbound( [3,5,8,15,19],9))
 def upperbound(array,k):
    left = 0
    right = len(array) - 1
+   ans = 0
    while left<=right:
       mid = (left + right) // 2
       if array[mid] > k :
-         return mid
-      elif k>array[mid]:
-         left+=1
+         ans = mid
+         right = mid - 1
+
+         
       else:
-         right-=1
-   return len(array)
-print(upperbound( [3,5,8,15,19],9))    
+        left = mid + 1
+   if ans > 0 :
+      return ans 
+   else:
+      return len(array)
+print('The upperbound is : ',upperbound( [3,5,8,15,19],9))    
 #time complexity : O(logN)
 # space complexity : O(1) 
+
+
+
 
 
 #Given a sorted array of nums consisting of distinct integers and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.
@@ -87,7 +99,47 @@ def insertposition(array,k):
 print(insertposition([1, 3, 5, 6], 7))   
 #time complexity : O(logN) 
 # space complexity : O(1)
-   
+
+
+#Given a sorted array nums and an integer x. Find the floor and ceil of x in nums. The floor of x is the largest element in the array which is smaller than or equal to x. The ceiling of x is the smallest element in the array greater than or equal to x. If no floor or ceil exists, output -1.
+def floorr(array,x):
+   left = 0
+   right = len(array) - 1 #last index
+   ans = 0
+   while left<=right:
+      mid = (left + right) // 2
+      if array[mid]<=x :
+         ans =array[mid] #as the floor is the largest element in the array which is less than or equal to the target number. and
+         #if the mid index number is lesser than or equal to x then we move the rane towars right half as we need to find the largest possible number lesser than or equal to the target number
+         left = mid + 1
+      else:
+         right = mid - 1
+   if ans > 0:
+    return ans
+   else:
+      return -1
+print('The floor is :', floorr([3, 4, 4, 7, 8, 10], 8))
+
+
+def ceill(array,x):
+   left = 0
+   right = len(array) - 1 
+   ans = 0  #here we are just declaring the variable ans
+   while left<=right:
+      mid = (left + right) // 2
+      if array[mid]>=x:
+         ans=array[mid]  
+         right = mid - 1 #as we are trying to find the smallest number possible which is  greater than the x and if the mid indexed number is greater than or equal to the target number of course we are searching the required number in the left half for the smallest value possible
+      else:
+         #but if the mid indexed number is too small then 
+         left = mid + 1
+   if ans > 0:
+    return ans
+   else:
+      return -1     
+print('The ceil is :', ceill([3, 4, 4, 7, 8, 10], 8))
+
+
    
 
 

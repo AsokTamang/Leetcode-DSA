@@ -5,7 +5,7 @@ def maxprod(array):
     maxi=float('-inf')
     p = 1
     for i in range(len(array)):
-        if p == 0:  #if in anycase the counting product becomes 0 then we remake it to 1 again to find the maximum products
+        if p == 0:  #if in anycase the counting product becomes 0 then we remake it to 1 to start a new subarray again. 
             p=1
         p*=array[i]
         maxi=max(maxi,p)   #then for each product we evaluate the maximum product
