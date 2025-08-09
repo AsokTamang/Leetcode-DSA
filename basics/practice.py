@@ -690,6 +690,25 @@ print('The number of rotation in an array is :', rotation( [3, 4, 5, 1, 2]))
 #space complexity : O(1)
 
 
+def singleelem(array):
+    left = 0 
+    right = len(array) - 1
+    ans = 0
+    while left<=right:
+        mid = (left + right) // 2
+        if array[left]==array[left+1] and array[right] == array[right -1] and array[left]!=array[mid]!=array[right]:
+            ans=array[mid]
+            left+=2
+            right-=2
+        elif array[left+1] !=array[left]:
+            ans=array[left+1]
+            left+=2
+        elif array[right]!=array[right-1]:
+            ans=array[right+1] 
+            right-=2  
+    return ans
+print(singleelem( [1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 6]))
+
 
 
 

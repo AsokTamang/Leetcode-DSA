@@ -354,4 +354,47 @@ def numberrotation(array):
 print(numberrotation([4, 5, 6, 7, 0, 1, 2, 3]))
 
          
-
+#Given an array nums sorted in non-decreasing order. Every number in the array except one appears twice. Find the single number in the array.
+#brute approach
+def findsingle(array):
+   ans = 0
+   for i in range(len(array)):
+      if i == 0 :
+         if array[i]!=array[i+1]:
+            ans = array[i]
+      elif i ==len(array) - 1:  #if the i is at the last index
+         if array[i]!=array[i-1]:
+            ans = array[i] 
+      else:  #if the i is not at the first index as well as not at the last index then
+         if array[i]!=array[i+1] and array[i]!=array[i-1]:
+            ans=array[i]
+   return ans
+print(findsingle([1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 6]))         
+#time complexity : O(N)
+#space complexity : O(1)
+#optimal approach
+def optimalsingle(array):
+   ans = 0
+   left = 1
+   right = len(array) - 2
+   if array[0]!=array[1]: 
+       ans=array[0] 
+       return ans
+   elif array[len(array)-1]!=array[len(array)-2]:
+      ans = array[len(array)-1]   #then our answer will the last indexed number
+      return ans
+   while left<=right:
+      mid = (left + right) // 2
+      if array[mid]!=array[mid-1] and array[mid]!=array[mid+1]:
+         ans=array[mid]
+         return ans
+      else:
+         if mid % 2 == 0 and array[mid] == array[mid+1] or array[mid]==array[mid-1]:  #here we are declaring the condition that if the mid index is at even index and mid indexed number is equal to the later index number then, 
+            #our answer lies on the right half , so we must destroy the left half
+            left = mid +1 
+         elif mid%2 != 0 and array[mid] == array[mid+1] or array[mid]==array[mid-1]:  #but if the mid index is at odd position and if this indexed number is equal to the previous one or the later one then, of course our 
+            #answer lies in the preceding half so we must destroy the right half
+            right=mid-1 
+   return ans
+print(optimalsingle( [1, 1, 3, 5, 5]))              
+   
