@@ -396,5 +396,32 @@ def optimalsingle(array):
             #answer lies in the preceding half so we must destroy the right half
             right=mid-1 
    return ans
-print(optimalsingle( [1, 1, 3, 5, 5]))              
+print(optimalsingle( [1, 1, 3, 5, 5]))     
+
+
+def peakelem(array):
+   left = 1
+   right = len(array)-2
+   ans= 0
+   if array[0]>array[1]:
+      return 0 
+   elif array[len(array)-1]>array[len(array)-2]:
+      return len(array)-1
+   while left<=right:
+      mid =(left + right) // 2
+      if array[mid - 1]<array[mid] and array[mid+1]<array[mid]:
+         ans=mid
+         left+=1
+         right-=1
+         
+      elif array[mid]>array[mid-1]:    #then it means our peak number lies in the right side of the midindex ,  if the preceding number is lesser then ofcourse the peak lies in the right direction
+         #thats why we move the left pointer towards the right direction
+         left=mid+1
+      elif array[mid]<array[mid-1]:   #then it means our peak number lies in the left side of the mid index, if the later number is greater then of course the peak lies in the left direction      
+         #thats why we move the right pointer towards the left direction
+         right=mid-1
+   
+   return ans
+print(peakelem( [1, 2, 1, 3, 5, 6, 4]))            
+
    
