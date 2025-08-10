@@ -752,5 +752,68 @@ print(peakeleme( [1, 2, 1, 3, 5, 6, 4]))
 
 
 
+#Find minimum in Rotated Sorted Array
+def minimumro(array):
+    left = 0
+    right = len(array) - 1
+    small=0
+    while left<=right:
+        mid = (left + right) // 2
+        if array[left]<array[mid]:
+            small=min(small,array[left])
+            left=mid+1
+        elif array[mid]<array[right]:
+            small=min(small,array[mid])
+            right=mid-1
+    return small
+print(minimumro([4, 5, 6, 7, 0, 1, 2, 3]))        
+#time complexity : O(logN)
+#space complexity : O(1)
 
-       
+#Find out how many times the array is rotated
+def numberrotation(array):
+    small = float('inf')
+    ans=0
+    if len(array)==1:
+        ans = 0
+        return ans
+    left = 0
+    right = len(array) -1
+    while left<=right:
+        mid = (left + right) // 2
+        if array[left]<=array[mid]:
+            if array[left]<small:
+                small=array[left]
+                ans=left
+            left=mid+1
+        elif array[mid]<=array[right]:
+            if array[mid]<small:
+                small=array[mid]
+                ans=mid
+            right=mid-1
+    return ans
+print('The number of rotation is:', numberrotation([3, 4, 5, 1, 2]))                    
+
+
+#Search in rotated sorted array-I
+def searchrotated(array,k):
+    left = 0
+    right = len(array) -1
+    while left<=right:
+        mid = (left + right) //2
+        if array[mid] == k:
+            return mid
+
+        elif array[left]<=array[mid]:   #here we are checking if the left half of the array is sorted or not
+            if array[left]<=k and k<=array[mid]:   #and then we are checking if the target number lies in the left sorted array, if yes then we destroy the right half.
+                right=mid-1
+            else:  #otherwise the target might exists in the right half, so we move the left pointer
+                left = mid + 1    
+        elif array[mid]<=array[right]:
+            if array[mid]<=k and k<=array[right]:   
+                left=mid+1
+            else:
+                right = mid - 1     
+    return -1
+print(searchrotated( [4, 5, 6, 7, 0, 1, 2],3))                
+
