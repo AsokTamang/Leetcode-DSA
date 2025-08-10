@@ -690,29 +690,65 @@ print('The number of rotation in an array is :', rotation( [3, 4, 5, 1, 2]))
 #space complexity : O(1)
 
 
-def singleelem(array):
-    left = 0 
-    right = len(array) - 1
+
+
+
+
+def oneelem(array):
     ans = 0
+    if len(array) == 1:  #if the length of an array is just one then the answer will be that single element
+        ans = array[0]
+        return ans
+    elif array[0]!=array[1]:
+        ans=array[0]
+        return ans
+    elif array[len(array)-1]!=array[len(array)-2]:
+        ans=array[len(array)-1]
+        return ans
+    
+    left = 1
+    right = len(array)-2 
+    while left<=right:
+     mid = (left + right) // 2   
+     if array[mid]!=array[mid-1] and array[mid]!=array[mid+1]:
+         ans=array[mid]
+         return ans
+     elif mid % 2 == 0 and array[mid]==array[mid+1] or array[mid]==array[mid-1]:  #if the mid index is at even index and the next element from the mid is equal to the mid index then our
+                #answer lies in the right half so , we move the left pointer to right half
+           left=mid+1
+     elif mid % 2!=0 and array[mid]==array[mid+1] or array[mid]==array[mid-1]:    #if the mid index is at odd index and the next elemnt is equal to the midindex element then 
+                #our answer lies in the left half
+                right=mid-1    
+print(oneelem( [1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 6]))    
+#time complexity : O(logN)
+#space complexity : O(1)
+
+
+
+#peak element
+def peakeleme(array):
+    ans=0
+    if len(array)==1:
+        ans=array[0]
+        return ans
+    elif array[0] > array[1]:
+        ans=array[0]
+        return ans
+    elif array[len(array)-1]>array[len(array)-2]:
+        ans=array[len(array)-1]
+        return ans
+    left = 1
+    right = len(array) - 2
     while left<=right:
         mid = (left + right) // 2
-        if array[left]==array[left+1] and array[right] == array[right -1] and array[left]!=array[mid]!=array[right]:
-            ans=array[mid]
-            left+=2
-            right-=2
-        elif array[left+1] !=array[left]:
-            ans=array[left+1]
-            left+=2
-        elif array[right]!=array[right-1]:
-            ans=array[right+1] 
-            right-=2  
-    return ans
-print(singleelem( [1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 6]))
-
-
-
-
-
+        if array[mid]>array[mid-1] and array[mid]>array[mid+1]:
+            ans=mid
+            return ans
+        elif array[mid]<array[mid+1]:   #else if the mid index number is smaller than the later number then of course the peak number is in the right half
+            left=mid+1
+        elif array[mid]>array[mid+1]:   #else if the mid index number is greater than the later number then of course the peak number lies in the left half
+            right=mid-1    
+print(peakeleme( [1, 2, 1, 3, 5, 6, 4]))            
 
 
 
