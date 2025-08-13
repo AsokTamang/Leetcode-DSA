@@ -96,6 +96,7 @@ print(brutekoko([25, 12, 8, 14, 19],5))
 def betterkoko(array,h):
     left = 1
     right = max(array)   #as our answer lies between 1 and the maximum number in an array
+    #and the fact that the answer lies between 1 and the maximum number in an array is,as 0 cannot be used for the number of banana to be eaten per hr, and for maximum case whichever number higher than the maximum number of array , the dividor will be the same for every left value
     while left<=right:
         mid = (left + right) //2
         totaltime=0

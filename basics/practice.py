@@ -1,3 +1,4 @@
+import math
 # Given an array nums consisting of only 0, 1, or 2. Sort the array in non-decreasing order. The sorting must be done in-place, without making a copy of the original array.
 def dutchnationalalgo(array):
     low = 0  # the left index or the most extreme left
@@ -813,7 +814,43 @@ def searchrotated(array,k):
             if array[mid]<=k and k<=array[right]:   
                 left=mid+1
             else:
-                right = mid - 1     
+                right = mid - 1    
     return -1
 print(searchrotated( [4, 5, 6, 7, 0, 1, 2],3))                
+
+
+
+def brutekoko(array,h):
+    for i in range(1,max(array)+1):  #As the required answer which is the minimum number of bananas to be eaten lie between 1 and the maximum number in an array,
+        total = 0
+        for num in array:
+            total+=math.ceil(num/i)   #we are calculating the time taken to finish all bananas in each pile if we take i as the number of banans eaten by monkey in 1 hr.
+        if total==h:
+            return i 
+    return -1
+print(brutekoko( [7, 15, 6, 3],8))   
+#time complexity : O(N * max(array))
+# space complexity : O(1)
+
+
+
+def optimalkoko(array,h):
+    left = 1
+    right = max(array)
+    ans=max(array)
+    while left<=right:
+        mid = (left + right) // 2 
+        total = 0
+        for num in array:   #here we are doing the same assuming mid as the requireed number of bananas to be eaten by monkey in 1 hr so that the monkey can finish all the bananas in h hours
+            
+            total+=math.ceil(num/mid)
+        if total<=h:   #if our total is way lesser then we just decrease the value of dividor
+            right=mid-1
+            ans=mid
+        else:
+            left=mid+1   
+    return ans
+print(optimalkoko(  [25, 12, 8, 14, 19],5))   
+#time complexity : O(N * max(array))
+#space complexity : O(1)           
 
