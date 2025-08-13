@@ -893,8 +893,9 @@ def optimalbloom(array,m,k):
         for num in array:
             if mid>=num:
                 roses+=1
-                if roses == k:
-                    bouquets+=1
+                if roses == k:   #as soon as we found out that there are k adjacent roses then 
+                    # we can make one bouquets ,
+                    bouquets+=1  #so we increase the bouquets by 1 and again make the count of roses to 0 
                     roses=0
             else:
                 roses = 0
