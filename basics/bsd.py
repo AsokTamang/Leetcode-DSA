@@ -114,3 +114,62 @@ print(betterkoko( [25, 12, 8, 14, 19], 5))
 #space complexity : O(1)
 
 
+
+#Given n roses and an array nums where nums[i] denotes that the 'ith' rose will bloom on the nums[i]th day, only adjacent bloomed roses can be picked to make a bouquet. Exactly k adjacent bloomed roses are required to make a single bouquet. Find the minimum number of days required to make at least m bouquets, each containing k roses. Return -1 if it is not possible.
+#what we need to do in this algorithm is that, we need to find the minimum number of days or minimum value of day when the adjacent number of roses to make one bouquet is 3 and we need to make 2 such bouquet using this minimum value of day\
+#as given in question , the array is [7, 7, 7, 7, 13, 11, 12, 7]  so the range of our answer lies between 7 and 13 cause below day 7 no flowers are bloomed
+def brutebloom(array,m,k):   #here m is the number of bouquet and k is the number of adjacent roses
+    if len(array)<m*k:   #if there is no enough number of roses in an array then of course we return -1
+        return -1
+    for i in range(min(array),max(array)+1):
+        #for each day we check the number of days in the given array
+        roses = 0
+        bouquets=0
+        for num in array:
+            if i>=num: 
+                roses+=1
+                if roses == k:
+                 bouquets+=1
+                 roses=0   #after making one complete bouquets from 3 roses or k roses we reset the count or the number of roses to 0 again
+            else:   #as soon as the  taken day is smaller than the given day in an array we reset the count or number of roses to 0 cause we need the adjacent roses
+                roses=0     
+        if bouquets >= m:
+            return i 
+    return -1  #we return -1 when there arenot 2 '3 adjacent roses'   as  roses bloomed on 3 adjacent days are required to make the bouquet            
+print(brutebloom([7, 7, 7, 7, 13, 11, 12, 7],2,3))
+#time complexity : O((max(array)-min(array) +1 )*N)  #as our outer loop is running between the range of maximum value in the given array and the minimum value so we add 1 to include the minimum value too
+#space complexity : O(1)
+
+
+
+def optimalbloom(array,m,k):  #m is the number of bouquets and k is the number of adjacent roses
+    left = min(array)
+    right = max(array)
+    ans = 0
+    while left<=right:
+        bouquets = 0
+        roses = 0
+        mid = (left + right) //2
+        for num in array:
+            if mid >=num:
+                roses+=1
+                if roses==k:  #as soon as the adjacent roses count becomes k then we can make one complete bouquet ,and after making one complete bouquet we reset the roses to 0
+                    bouquets+=1
+                    roses = 0
+            else:  #as soon as the mid is lesser than the number in an array then we reset the count of roses to 0
+                roses=0    
+            
+        if bouquets>=m:
+            ans = mid
+            right = mid -1
+        else:
+            left = mid +1
+      
+    if ans > 0:
+        return ans
+    else: 
+     return -1
+print(optimalbloom([1, 10, 3, 10, 2],3,2))
+#time complexity : O((max(array)-min(array)+1) * log(N))
+#space compplexity : O(1)
+                 

@@ -854,3 +854,55 @@ print(optimalkoko(  [25, 12, 8, 14, 19],5))
 #time complexity : O(N * max(array))
 #space complexity : O(1)           
 
+
+
+#bouquets 
+def brutebloom(array,m,k): #here m is the number of bouquets and k is the required number of adjacent roses to make one bouquet
+    #as our required minimum number of days lie between the smallest and the largest number of day in an array, we use this range of loop
+    if (len(array)<m*k):
+        return -1
+    for i in range(min(array),max(array)+1):
+        roses =0
+        bouquets=0
+        for num in array:
+            if i>=num:
+                roses+=1     #if the taken number of day is greater than the given days in an array then it means the flower is already bloomed and we increase the count of roses by 1
+                if roses==k:
+                    bouquets+=1
+                    roses=0
+            else:
+                roses = 0
+        if bouquets>=m:
+            return i 
+    return -1  
+print(brutebloom([7, 7, 7, 7, 13, 11, 12, 7],2,3))
+#time complexity : O(N * (max(array)-min(array)+1))
+# space complexity : O(1)  
+
+#optimal approach
+def optimalbloom(array,m,k):
+    if(len(array)<m*k):
+        return -1
+    left = min(array)
+    right=max(array)
+    ans = 0
+    while left<=right:
+        roses=0
+        bouquets=0
+        mid = (left + right) // 2   
+        for num in array:
+            if mid>=num:
+                roses+=1
+                if roses == k:
+                    bouquets+=1
+                    roses=0
+            else:
+                roses = 0
+        if bouquets>=m:  #if the obtainer bouquets is greater than or equal to the given number of bouquets then we move the right pointer towards left side to decrease the number of days
+            #as we need to find the minimum number of days
+            ans=mid
+            right=mid - 1
+        else:
+            left = mid +1  
+    return ans
+print(optimalbloom([7, 7, 7, 7, 13, 11, 12, 7],2,3))        
