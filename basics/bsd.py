@@ -234,8 +234,9 @@ print(brutedivisor( [1, 2, 3, 4, 5],8))
 
 #optimal approach
 def optimaldivisor(array,l):
-    left = min(array)
+    left = 1
     right = max(array)
+    ans=-1
     while left<=right:
         mid = (left + right) // 2
         s=0
@@ -250,5 +251,62 @@ def optimaldivisor(array,l):
 print(optimaldivisor([1, 2, 3, 4, 5],8))
 #time complexity : O(N * (max(array) - min(array)+1))
 #space complexity : O(1)
+
+
+#Capacity to Ship Packages Within D Days
+
+#You are given an array weights where weights[i] represents the weight of the i-th package on a conveyor belt. All the packages must be shipped in the order given from one port to another within days days.
+#Each day, the ship can carry a contiguous sequence of packages, as long as the total weight does not exceed its maximum capacity.
+#Your task is to find the minimum possible capacity of the ship so that all packages can be shipped within the given number of days.
+
+#what the question has given us 
+#the question has given us the packages , each one having their own weights which can be shipped in one day
+#what we need to find
+# 1. the minimum weight capacity that is greater than the weight capacity of each given packages so that the shipping can be done in given number of days
+
+
+#brute approach
+def brutepackage(array,n):  #here n is the number of days
+    summ =sum(array)  #here we are getting the total sum of an array
+    #our loop ranges between the maximum number in an array and the sum of an array cause we need to find the minimum capacity which can hold all the given packages to be shipped with in given numebr of days
+    #so the ranges belowe the maximum of array cannot include the packages like the max in an array and the number ranging after the summation of an array remains the same
+    for i in range(max(array),summ+1): 
+        days = 1
+        totalweights=0
+        for j in range(0,len(array)):
+            if totalweights+array[j]<=i:   #we keep on shipping the packages where the total weights of those packages is lesser than or equal to the taken weight capacity to be shipped per days
+
+                totalweights+=array[j]
+            else:   #if the weights to be shipped are exceeded then we just move to next days
+                days+=1
+                totalweights=array[j]
+        if days<=n:
+            return i  
+print(brutepackage( [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],5))     
+
+
+
+#optimal approach
+def optimalpackage(array,n):
+    left = max(array)
+    right=sum(array)
+    ans=0
+    while left<=right:
+        mid = (left + right) // 2 
+        weights = 0
+        days = 1
+        for num in array:   
+            if weights + num <=mid:
+                weights+=num
+            else:
+                days+=1
+                weights=num
+        if days<=n:
+            ans=mid
+            right=mid - 1 #to find the required minimum capacity    
+        else:
+            left = mid + 1             
+    return ans
+print(optimalpackage( [3, 2, 2, 4, 1, 4],3))
 
 
