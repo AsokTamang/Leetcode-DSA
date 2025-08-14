@@ -907,3 +907,34 @@ def optimalbloom(array,m,k):
             left = mid +1  
     return ans
 print(optimalbloom([7, 7, 7, 7, 13, 11, 12, 7],2,3))        
+
+#divisor 
+def brutedivisor(array,l):
+    for i in range(1,max(array)+1):  #the main loop runs from 1 to the maximum value in an array
+        s = 0
+        for num in array:
+            s+=math.ceil(num/i)
+        if s<=l:
+            return i
+print(brutedivisor([1, 2, 3, 4, 5],8))            
+#time complexity : O(max(array) * O(N))
+#space complexity : O(1)
+
+
+#optimal approach
+def optimaldivisor(array,l):
+    left = 1
+    right = max(array)
+    ans = -1
+    while left<=right:
+        mid = (left + right) // 2
+        s = 0
+        for num in array:
+            s+=math.ceil(num/mid)
+        if s<=l:
+            ans = mid
+            right = mid - 1  #we need to find the smallest possible interger 
+        else:
+            left = mid + 1 
+    return ans     
+print(optimaldivisor([8,4,2,3],10))          

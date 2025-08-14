@@ -304,9 +304,11 @@ def optimalpackage(array,n):
         if days<=n:
             ans=mid
             right=mid - 1 #to find the required minimum capacity    
-        else:
+        else:   #but if the obtained days are more than the given days limit , then we just move into higher range so that the number of days will be reduced , which will probably take us within the given number of days' range
             left = mid + 1             
     return ans
 print(optimalpackage( [3, 2, 2, 4, 1, 4],3))
+#time complexity :O(N * log(summ(array) - max(array) + 1))
+#space complexity : O(1)
 
 
