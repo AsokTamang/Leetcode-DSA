@@ -393,6 +393,62 @@ print(optimalcows( [0, 3, 4, 7, 10, 9],4))
 
 
 
+#Book Allocation Problem
+#Given an array nums of n integers, where nums[i] represents the number of pages in the i-th book, and an integer m representing the number of students, allocate all the books to the students so that each student gets at least one book, each book is allocated to only one student, and the allocation is contiguous.
+#Allocate the books to m students in such a way that the maximum number of pages assigned to a student is minimized. If the allocation of books is not possible, return -1.
+
+
+#what the question has asked?
+#the question has asked us to give the minimum possible maximum number of pages given to each student from the given collection of books
+#and if the number of books is lesser than the number of students then we just return -1
+def brutebooks(array,m): #here m represents the number of students
+    if len(array)<m:  #if the number of books is lesser than the number of students then we just return -1
+        return -1
+    for i in range(max(array),sum(array)+1):
+        totalpages=0
+        count= 1
+        for pages in array:
+            if totalpages+pages<=i:   #here we are checking if the taken maximum number of pages is greater than or equal to the sum of current value of totalpages and the current pages
+                totalpages+=pages  #then we add the current pages to totalpages also which is given to the count student which is 1st student right now 
+            else:
+                count+=1   #if the totalsum exceeds the taken value of i then we just give the next total pages to the tha value greater than one of the count
+                totalpages=pages     #and the totalpages will be the current pages 
+        if count == m:  #as we need to find the most minimum possible value of maximum number of pages , we return the i as soon as the condition is matched.
+            return i         
+print(brutebooks( [25, 46, 28, 49, 24],4))   
+#time complexity : O(sum(array)-max(array) * O(N))
+# space complexity : O(1)      
+
+
+#optimal approach
+def optimalbooks(array,m):
+    ans = float('inf')  #assumed greatest positive infinity integer
+    left = max(array)   #we must always begin our loop with the maximum pages in an array cause if we take the pagevalue lesser than the max page of an array then we cannot give the book to the book consisting of maximum pages to the student
+    right=sum(array)
+    while left<=right:
+        mid = (left + right) // 2
+        count = 1  #here count denotes the number of student who received the books
+        currentpages=0     #countpages denotes the totalnumber of pages at the current time
+        for pages in array:
+         if mid>=currentpages+pages:
+             currentpages+=pages
+         else:
+             count+=1
+             currentpages = pages
+        if count <= m:   #if the number of students who received the books lie within the range of m, then it means we can move the right pointer towards left half
+            #as to find the minimum maximum pages possible
+            ans=min(ans,mid)    
+            right = mid - 1  
+        else:   #if the obtained count is greater than the given number of students then we must increase the mid value so that the count value can be decreased
+            left = mid + 1
+    return ans
+print(optimalbooks( [12, 34, 67, 90],2))  
+#time complexity : O(log(sum(array)-max(array)) * O(N))
+#space complexity : O(1)      
+
+
+
+                 
 
 
 
