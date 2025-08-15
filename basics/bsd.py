@@ -312,3 +312,89 @@ print(optimalpackage( [3, 2, 2, 4, 1, 4],3))
 #space complexity : O(1)
 
 
+#Kth Missing Positive Number
+#Given a sorted array of unique positive integers arr, your task is to return the kᵗʰ missing positive number that is not present in arr.
+#The array is guaranteed to be strictly increasing, and the missing numbers are those positive integers that do not appear in arr but would appear in a full sequence starting from 1.
+
+
+#so what we need to do is 
+#first find the number missing numbers which arenot in the arrays starting from 1 to the max value of an array
+#then we need to find the number of the given index k from the array consisting of missing numbers
+def bruteposnum(array,k):   
+    for i in range(len(array)):
+        if array[i]<=k:
+            k+=1
+        else:
+            break    
+    return k
+print(bruteposnum([3, 5, 7, 10],6)) 
+#time complexity : O(N)
+# space complexity : O(1)
+
+
+#optimal approach
+def optimalposnum(array,k):
+    left = 0
+    right = len(array)-1
+    while left<=right:
+        mid = (left + right) // 2
+        missing=array[mid] - (mid + 1)  #here what we are calculating is the missing number of pieces at the index mid
+        if missing<k:
+            left = mid +1
+        else:
+            right = mid -1               
+    return k + right + 1 
+    #or we can also code return k + left     
+print(optimalposnum([1, 4, 6, 8, 9],3))     
+#time complexity : O(log(N))
+# space complexity : O(1)       
+
+
+#Given an array nums of size n, which denotes the positions of stalls, and an integer k, which denotes the number of aggressive cows, assign stalls to k cows such that the minimum distance between any two cows is the maximum possible. Find the maximum possible minimum distance.
+#so what the question is asking us to put the given number of cows in such a way that the distance between two adjacent cows is minimum,but is the maximum among all the conditions of placement of cows in the stalls
+def brutecows(array,k):
+    array=sorted(array)  #first of all we need to sort the array
+    ans = 0
+    for i in range(1,max(array)):  #this outer loop is for assuming the minimum distance between two adjacent cows
+        lastcowpos=array[0]
+        cows = 1  #as have already placed the first cow in the first stall, we are coding the number of cows 1 here
+        for j in range(1,len(array)):
+            if i <=array[j] - lastcowpos:  #if the taken distance can be fit inbetween the stalls then we can place the cows
+                cows+=1  #then we can increase the number of cows 
+                lastcowpos=array[j]   #then we change the place of the last cow to the current i indexed stall
+        if cows>=k:
+            ans=max(ans,i)  #as we need to find the maximum possible minimum distance , we are using max between ans and i.
+    return ans
+print(brutecows([4, 2, 1, 3, 6],2))        
+#time complexity : O(max(array) * O(N))
+#space complexity : O(1)
+
+#optimal approach
+def optimalcows(array,k):
+    array=sorted(array)
+    left = 1
+    right = max(array)
+    ans = 0
+    while left<=right:
+        mid =(left + right) // 2 
+        cows = 1  #here we are assuming the number of cows 1 cause we already placed it in the first stall
+        last=array[0]
+        for i in range(1,len(array)):
+            if mid<=array[i] - last:
+                cows+=1
+                last=array[i]
+        if cows>=k:  #if the obtained number of cows is greater than or equal to the given number of cows then we move our left pointer to right half,so that we can get the maximum possible minimum distance
+            ans=max(ans,mid)
+            left = mid + 1
+        else:  #if the obtained number of cows is lesser then we just move our right pointer towards left half so that the mid value can be fitted majority of times so that the number of cows can be increased
+            right= mid - 1 
+    return ans
+print(optimalcows( [0, 3, 4, 7, 10, 9],4))                   
+
+
+
+
+
+
+
+

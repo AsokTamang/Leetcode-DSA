@@ -937,4 +937,157 @@ def optimaldivisor(array,l):
         else:
             left = mid + 1 
     return ans     
-print(optimaldivisor([8,4,2,3],10))          
+print(optimaldivisor([8,4,2,3],10))  
+#time complexity : O(logMax(array) * O(N))
+# space complexity :O(1)        
+
+#bouquets question
+def brutebouquet(array,m,k):   #here m is the number of bouquets and k is the number adjcanet roses to make one bouquet.
+    #our main loop runs between the range of minimum and the maximum in an array
+    for i in range(min(array),max(array)+1): 
+        bouquets = 0
+        counts=0  #the count of roses must be adjacents or side by side
+        for num in array:
+            if i>=num:
+                counts+=1
+                if counts==k:   #as soon as we found the three adjacent bloomed roses then we can make one bouquets using these roses ,
+                    #after making a bouquet we again make the counts 0 , inorder to make new bouquet
+                    bouquets+=1
+                    counts=0
+            else:   #as soon as we found the number of day which is lesser than the given day , then it means the flower is not bloomed in that day
+                        counts = 0   
+        if bouquets==m:
+            return i 
+    return -1
+print(brutebouquet([7, 7, 7, 7, 13, 11, 12, 7],2,3))  
+#time complexity : O(max(array)-min(array)+1 * O(N))
+#space complexity : O(1)
+
+#optimal approach
+def optimalbouquets(array,m,k):
+    left = min(array)
+    right=max(array)
+    ans = -1
+    while left<=right:
+        mid = (left + right) // 2
+        roses = 0
+        bouquets = 0
+        for num in array:
+            if mid>=num:
+                roses+=1
+                if roses == k:
+                    bouquets+=1
+                    roses = 0
+            else:
+                roses = 0
+        if bouquets>=m:
+            ans = mid
+            right = mid -1   #to find the smallest number possible pr minimum number of days
+        else:   #if the made number of  bouquet is lesser compared to the required value then we just move our left pointer towards right half
+            left = mid + 1
+    return ans
+print(optimalbouquets( [1, 10, 3, 10, 2], 3, 2))
+#time complexity : O(log(max(array)-min(array)+1 * O(N)))
+#space complexity : O(1)
+
+
+#shipping the weights
+def bruteshipp(array,d):  #here our array consists of the packages having their own respective weights and d is the number of days limit within which we must
+    #shipp all the weights represented in an array
+    #the thing is we can shipp any number of packages in 1 day as long as the total weight of the shipped package doesnot exceed the weight which we have targeted to ship per day
+    #and we need to find that minimum weight capacity which can be used as target weight capacity to shipp all these packages within given number of days
+    s = sum(array)  
+    #our outer loop runs within the range of the maximum value in an array and the total sum of weights in the given array
+    #cause if we take the smaller value than the max value of an array , then of course we cannot shipp the package which has the max weight in an array
+    # so we start our loop from the maximum value in an array until the sum of an array
+    for i in range( max(array),s+1):
+        day=1
+        totalweights = 0  #for one day
+        for num in array:
+            if totalweights+num<=i:  #if the taken package can be included in the totalweights if the total weights is still lesser than the target weight then we shipp the package in the same day
+                totalweights+=num
+            else:
+                totalweights = num     #if the total weight exceeds the target weight then we take that current package which makes the total weight exceeded after including it in the total packages,
+                day+=1
+        if day<=d:
+            return i 
+        else:
+            continue   #otherwise we start with next iteration of i
+print(bruteshipp( [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],5))     
+#time complexity : O((sum-max(arraay))) * O(N)
+# space complexity : O(1)
+
+def optimalshipp(array,d):
+    left = max(array)
+    right = sum(array)
+    ans = max(array)
+    while left<=right:
+        mid = (left + right) // 2
+        totalweights = 0
+        day = 1
+        for num in array:
+            if totalweights+num <=mid :
+                totalweights+=num
+            else:
+                totalweights = num
+                day+=1
+        if day<=d:
+            ans=mid
+            right = mid - 1   #inorder to find the minimum capacity we move the right pointer towards the left half if the condition is met
+        else:
+            left = mid + 1      #otherwise we move the left pointer towards right half             
+    return ans
+print(optimalshipp([3, 2, 2, 4, 1, 4],3))
+#time complexity : O(log(sum-max(array)) * O(N)
+#space complexity : O(1)
+
+
+#stallments of cows
+#the question has given us the position of the stalls
+#the question is asking us to place the aggressive cows in such a way that the minimum distance between the two adjacent cows is the maximum
+def brutecows(array,k):
+    array=sorted(array)
+    ans = 0 
+    for i in range(1,(max(array)-min(array))+1):    #this outer loop is for assuming the minimum distance between two adjacent cows is i
+      laststall=array[0]
+      cows=1
+      for j in range(1,len(array)):
+        if i<=array[j]-laststall:      #if the taken distance is lesser than the distance between the consecutive stalls from the given array then we just place the cow in this current j stall and increase the number of cows which are already placed in the stall
+            laststall=array[j]
+            cows+=1
+            
+      if cows>=k:  #if we have placed all the cows in the stalls then we calculate our ans
+          ans= max(i,ans)
+      else:  #if we reach such value of i , in which the number of cows become lesser than the k , then we just break out of the loop
+          break
+    return ans
+print(brutecows([0, 3, 4, 7, 10, 9],4))      
+#time complexity :  O((max(array)-(min(array))) * O(N))
+#space complexity : O(1)
+
+#optimal approach
+def optimalcows(array,k):
+    array=sorted(array)
+    ans = 0
+    left = 1
+    right = max(array)-min(array)
+    while left<=right:
+        laststall=array[0]
+        mid = (left + right) // 2   #this will be our assumed minimum distance taken
+        cows = 1
+        for i in range(1,len(array)):
+            if mid<=array[i]-laststall:
+                laststall=array[i]
+                cows+=1
+        if cows>=k:
+            ans=max(ans,mid)
+            left = mid + 1
+        else:   #if the number of cows is lesser than we just decrease the distance between the two adjacent cows , by moving the right pointer towards left half
+            right=mid - 1  
+    return ans
+print(optimalcows( [4, 2, 1, 3, 6],2)) 
+#time complexity : O(log(max(array)-min(array)) * O(N))
+# space complexity : O(1)                 
+
+
+
