@@ -1,4 +1,5 @@
 import math
+import heapq
 
 
 # Given a positive integer n. Find and return its square root. If n is not a perfect square, then return the floor value of sqrt(n).
@@ -422,6 +423,8 @@ print(brutebooks( [25, 46, 28, 49, 24],4))
 
 #optimal approach
 def optimalbooks(array,m):
+    if len(array) < m:   #if the length of an array is lesser than the number of receivers then of course we cannot allocate the books to all the students.
+        return -1
     ans = float('inf')  #assumed greatest positive infinity integer
     left = max(array)   #we must always begin our loop with the maximum pages in an array cause if we take the pagevalue lesser than the max page of an array then we cannot give the book to the book consisting of maximum pages to the student
     right=sum(array)
@@ -430,9 +433,9 @@ def optimalbooks(array,m):
         count = 1  #here count denotes the number of student who received the books
         currentpages=0     #countpages denotes the totalnumber of pages at the current time
         for pages in array:
-         if mid>=currentpages+pages:
+         if mid>=currentpages+pages:   #if the taken or assumed maximum number of pages is greater than or equal to the sum of current pages then we just keep on adding those pages
              currentpages+=pages
-         else:
+         else:   #otherwise we just give the current book to another student and assume the currentpages to the current pages in an array
              count+=1
              currentpages = pages
         if count <= m:   #if the number of students who received the books lie within the range of m, then it means we can move the right pointer towards left half
@@ -442,13 +445,165 @@ def optimalbooks(array,m):
         else:   #if the obtained count is greater than the given number of students then we must increase the mid value so that the count value can be decreased
             left = mid + 1
     return ans
-print(optimalbooks( [12, 34, 67, 90],2))  
+print(optimalbooks([12, 34, 67, 90],2))  
 #time complexity : O(log(sum(array)-max(array)) * O(N))
-#space complexity : O(1)      
+#space complexity : O(1) 
 
 
+
+
+#Split array - largest sum
+#Given an integer array a of size n and an integer k. Split the array a into k non-empty subarrays such that the largest sum of any subarray is minimized. Return the minimized largest sum of the split.
+#so what the question is asking us is to return the minimum possible of the largest sum among the consecutive subarrays splitted into given number of times
+
+#brute approach
+def splitarray(array,k):
+    for i in range(max(array),sum(array)+1):
+        count =1 #count denotes the nnumber of subarray then we start with the making the first subarray
+        s = 0   #sum denotes the sum of the subarray
+        for num in array:    #then we go through each numbers in an array , whether the taken i or taken sum matches the condition or not
+            if i>=s+num:
+                s+=num
+            else:
+                count+=1
+                s= num
+        if count<=k:
+            return i
+        else:
+            continue     #if the count or obtained number of subarrays exceed the given number limit then we just break out of the loop.
+print(splitarray([3,5,1],3))        
+#time complexity : O(sum(array)-max(array)) * O(N)
+#space complexity : O(1)
+
+
+#optimal approach
+def optimalarray(array,k):
+    ans=float('inf')
+    left = max(array)
+    right = sum(array)
+    while left<=right:
+        count = 1  #count denotes the number of splitted subarray
+        s = 0
+        mid = (left + right) // 2
+        for num in array:
+         if mid>=s+num:
+             s+=num
+         else:
+             count+=1   #if the current sum exceeds our mid value then we start a new subarray and the sum becomes the current num
+             s = num
+        if count<=k:  #if the obtained count is lesser than or equal to k then the mid might be an answer 
+            ans=min(ans,mid) #but as the question is asking us for the most minimum value of largest sum , we are using minimum here.
+            right = mid-1
+        else:
+            left = mid + 1    #here we are moving the left pointer towards the right half cause if the count is way too greater than k then we need to increase the taken sum which is makes the count or the number of splitted subarrays lesser              
+    return ans
+print(optimalarray( [1, 2, 3, 4, 5],3))
+#time complexity : O(log(sum(array)-max(array))*O(N))
+#space complexity : O(1)
 
                  
+#Painter's Partition
+#You are given A painters and an array C of N integers where C[i] denotes the length of the ith board. Each painter takes B units of time to paint 1 unit of board. You must assign boards to painters such that:
+#Each painter paints only contiguous segments of boards.
+#No board can be split between painters.
+#The goal is to minimize the time to paint all boards.Return the minimum time required to paint all boards modulo 10000003.
+
+#so what the question has given us is 
+#the number of painters A
+#C is the collection of boards showing their length
+#B denotes the time taken to print 1 unit of board
+
+#what the question is asking us :
+#is to return the minimum time required to paint all boards
+
+def brutepainter(c,a,b):  #here c is the collection of boards reprenting the length of boards , a is the number of painters and b is the unit of time
+    for i in range(max(c),sum(c)+1):
+        s = 0
+        count = 1   #count denotes the number of painters
+        for num in c:
+            if i >=num:
+                s+=num
+            else:
+                count+=1
+        if count<=a:  #if the obtained number of painters is lesser than or equal to a then we return i
+            return i * b   #b is the unit of time to paint 1 unit of board
+        #as we need to return the minimum time required to print all the boards we return i as soon as the condition is met which is count<=a, which is the number of painters
+print(brutepainter( [1, 10],2,5)) 
+#time complexity : O(sum(c)-max(C) * O(N))
+# space complexity : O(1)           
+
+
+
+#optimal solution
+def optimalpainter(c,a,b)  :#here c is the collection of painting boards denoting the length of boards , a is the number of painters and b is the unit of time 
+    ans = float('inf')
+    left = max(c)
+    right = sum(c)
+    while left<=right:
+        mid = (left + right) // 2  
+        count = 1
+        s = 0
+        for num in c:
+            if mid>=s+num:
+                s+=num
+            else:
+                count+=1
+        if count<=a:
+            ans = min(mid,ans)
+            left = mid + 1
+        else:
+            right = mid -1     
+    return ans * b
+print(optimalpainter( [1, 10],2,5))                   
+                
+
+
+#Minimize Max Distance to Gas Station
+#Given a sorted array arr of size n, containing integer positions of n gas stations on the X-axis, and an integer k, place k new gas stations on the X-axis.
+#The new gas stations can be placed anywhere on the non-negative side of the X-axis, including non-integer positions.
+#Let dist be the maximum distance between adjacent gas stations after adding the k new gas stations.
+#Find the minimum value of dist.
+
+def brutegas(array,k):   #here array is the given number of gas stations and k is the number of new gas stations that we must place them in betweeen the gasstations of the given array
+    howmany=[0] * (len(array)-1)   #here howmany represents the number of gas stations that we have placed inbetween the gasstations from the given array
+    for i in range(1,k+1):  #this outer loop represents the loop of placing the new gas station inbetween the gasstations from the given array
+        maxsection = -1
+        maxindex = -1
+        for j in range(len(array)-1):  #here we are only running the loop until len(array) - 1 cause we need to find the difference between the two consecutive gas station so if we take the last gasstation then we cannot calculate the differenc of it with its next gasststion cause we go out of the loop
+         diff = array[j+1] - array[j]
+         distance = diff / (howmany[j] + 1)   #here the distance means the length or distance between the two consecutive gasstation at j index
+         if distance > maxsection:       #if the current obtained distance is the maximum then the last maxsection then we change our maxsection to current distance and the maxindex to the current i index
+             maxsection=distance
+             maxindex=j 
+        #so from this loop we get the maximum distance between the two consecutive gas stations at the specific index which is a gap at which we place the new gas station to reduce the distance
+        howmany[maxindex]+=1     #then we start placing the new gas station at the index or the gap where the maximum distance between the consecutive gasstation has been found.
+    maxans = -1
+    #this loop is for finding the maximum distance between two consecitive gas station after reducing the distance between the gasstations in every gap by placing all the new gas station
+    for i in range(len(array)-1):
+        diff = array[i+1] - array[i]
+        distance = diff / (howmany[i] + 1)
+        maxans=max(maxans,distance)
+    return maxans   
+print(brutegas( [1, 2, 3, 4, 5, 6 ,7, 8, 9, 10],9)) 
+#time complexity : O(K * O(N))  #here K is the number of new gas stations to be placed and N is the number of gasstations in the given array
+#space compelxity : O(1)
+
+
+#optimal solution 
+def optimalgas(array,k):
+    howmany=[0]*(len(array)-1)  #this howmany represents the number of gaps index in the original gasstation
+    pq = []
+    for i in range(len(array)-1):   #this loop is used for storing the sectionlength or distance and their respective indices in the pq using heap loop
+        heapq.heappush(pq,(-1*array[i+1]-array[i],i))  #here we are storing the distance between the adjacent gasstations with their corresponding indices using heapq.heappush in pq
+    for i in range(1,k+1):
+        removed = heapq.heappop(pq)  #this removes the most smallest value from pq , which is the most largest distance between the adjacent gas stations
+        placedindex=removed[1]   #as we got the index at which the  most maximum distance is , then we can add the new gasstation at this index
+        howmany[placedindex]+=1
+        diff = array[placedindex+1]-array[placedindex]
+        heapq.heappush(pq,(-1 * diff//(howmany[placedindex]+1),placedindex))  #then we add the obtained distance after placing the new gas station 
+    return pq[0][0] * -1  #then we return the first tuple's first value which is the distance and multiply it by -1 as we placed the distances as the negative value
+print(optimalgas([1,13,17,23],5))
+
 
 
 
