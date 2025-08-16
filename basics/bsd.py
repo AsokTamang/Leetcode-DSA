@@ -598,9 +598,11 @@ def optimalgas(array,k):
     for i in range(1,k+1):
         removed = heapq.heappop(pq)  #this removes the most smallest value from pq , which is the most largest distance between the adjacent gas stations
         placedindex=removed[1]   #as we got the index at which the  most maximum distance is , then we can add the new gasstation at this index
-        howmany[placedindex]+=1
+        howmany[placedindex]+=1    #here what we are doing is that we just found out about the gap which is the maximum then we just remove it from heap collection and we place the new gasstation at its respective index.
         diff = array[placedindex+1]-array[placedindex]
+        #then we put the new obtained spacelength at that index after placing the new gasstation
         heapq.heappush(pq,(-1 * diff//(howmany[placedindex]+1),placedindex))  #then we add the obtained distance after placing the new gas station 
+    #then the space lenghth remaining at the top of the heap will be our most minimum maximum distance between the adjacent gas stations
     return pq[0][0] * -1  #then we return the first tuple's first value which is the distance and multiply it by -1 as we placed the distances as the negative value
 print(optimalgas([1,13,17,23],5))
 

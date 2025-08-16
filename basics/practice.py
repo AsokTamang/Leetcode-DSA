@@ -1090,4 +1090,25 @@ print(optimalcows( [4, 2, 1, 3, 6],2))
 # space complexity : O(1)                 
 
 
+#gas station
+def maximumdis(array,k):
+    howmany=[0] * (len(array)-1)  #this howmany denotes the number of new gas station that are placed at the certain gaps or index
+    for i in range(1,k+1):  #As there are k number of new gas stations to be placed , we are running the loop from 1 to k
+        maxdis = -1
+        maxindex = -1
+        for i in range(len(array)-1):  #as our loop starts from 0 and we are using the second last index as the end of the loop
+            diff = array[i+1]-array[i]
+            dis=diff/(howmany[i] + 1)    #here we are calculating the distance between the gas stations or more precisely the distance obtained from placing new the gas staion
+            if diff>maxdis:
+                maxdis=dis
+                maxindex=i
+            howmany[maxindex]+=1   
+    maxans=-1
+    for i in range(len(array)-1):
+        diff = array[i+1]-array[i]
+        dis = diff / (howmany[i]+1)
+        maxans=max(maxans,dis)
+    return maxans 
+print(maximumdis([1, 2, 3, 4, 5, 6 ,7, 8, 9, 10],9))            
+
 
