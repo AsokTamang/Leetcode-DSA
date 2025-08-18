@@ -715,10 +715,51 @@ bettermedian([2, 4, 6],[1,3])
 #space complexity : O(1)   
                            
 
+#optimal approach
+def optimalmedian(arr1,arr2):
+    n1 = len(arr1)
+    n2=len(arr2)
+    if n1>n2:   #as we are taking the array which has the shorter length in the left half to make the total array symmetric , we are first checking the length of array 1 and 2 , then swapping the arrays accordingly
+        return optimalmedian(arr2,arr1)
+    l1=l2=float('-inf')  #this is the most negative number
+    r1=r2=float('inf')   #this is the most positive number
+    low = 0
+    n=(n1 + n2 + 1) // 2   #this n gives the total number of numbers that must be in the left half
+    high = len(arr1)
+    while low<=high:
+        mid1 = (low + high) // 2   #this gives us the number of numbers that must be in the left half from array1
+        mid2=n - mid1    #this gives us the number of numbers that must be in the left half from array 2 
+        r1=arr1[mid1]   #this is our mid1indexed number from arr1 which lies at right half as r1
+        r2=arr2[mid2]   #this is our midindexed number from arr2 which lies at the right half as r2
+        l1 =arr1[mid1-1]  
+        l2=arr2[mid2-1]
+        if l1<=r2 and l2<=r1:
+            if n%2!=0:
+             median = (max(l1,l2) + min(r1,r2)) / 2
+             return median
+            else:
+             return max(l1,l2)
+        elif l1>r2:  #if the l1 is greater than r2 then it means we need more numbers from array2 and less from array1
+            high = mid1-1   #by making the  value of high mid1-1 , we are decreasing the numbers from array1
+        elif l2>r1:   #if the l2 is greater than r1 then it means we need more numbers from array1 and less from array2
+            low = mid1+1     #by making the value of left mid1+1 , we are increasing the numbers from array1
+print(optimalmedian([2, 4, 6],[1,3,5]))        
+#time complexity : O(logmin(n1,n2))  as we are taking the array whose length is much more lesser so the time complexity will be the logarithmic of minimum length among the lengths of array1 and array2
+#space complexity : O(1)    
+
+
+#in the optimal approach what we do is we first check the array whose length is the smallest , then we make that array as our primary or main array based on which we make the left part or left half of the sorted or symmetric array,
+#then based on the mid value which we get from low + high // 2 where low is 0 and high is the length of our primary or main array, we take the mid value number of numbers from our main array and the remaining numbers from the secondary array will be taken to fill the part of left half of symmetric array 
+#and the left half half is obtained by calculating n1 + n2 + 1 // 2 
+#then based on the mid1indexed number and mid2indexed number we get r1 and r2 then l1 will be mid1indexed number -1 and l2 will be mid2indexed number -1 
+#then the main condition which is if l1 < r2 and l2<r1 which is the cross diagram comparison meets then we check the total length , if its odd then the median will be the maximum of l1 and l2
+#but if the total length is even then the median will be the sum of max of l1,l2 and min of r1,r2 divided by 2
 
 
 
 
+
+  
 
 
 

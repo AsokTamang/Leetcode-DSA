@@ -1223,3 +1223,41 @@ def bettermedian(arr1,arr2):
     else:
         return (mainelem + secelem)/2    #this gives us the median which is the average of two middle numbers in a total array if the total length is even     
 print(bettermedian( [2, 4, 6],[1, 3, 5]))              
+
+
+
+#optimal median
+def optimalmedian(array1,array2):
+    n1=len(array1)
+    n2=len(array2)
+    n=n1 + n2
+    if n1>n2:
+        return optimalmedian(array2,array1)    #if the length of the array1 is greater than that of array2 then we just switch the array1 and array2
+    low = 0
+    high = len(array1)   #here anyhow we are making the array1 as the primary array which has the smallest length
+    total = (n1 + n2 + 1) // 2  #this is the size of the left half of the symmetric or sorted array
+    l1=l2=float('-inf')  #here the left half elements or numbers must be the smallest so we are making them as the most smallest number possible
+    r1=r2=float('inf')   #here we are making the r1 and r2 as the most largest number possible initially as the right half numbers must be greater than the left half
+    while low <=high:
+        mid1=(low + high) // 2   #this gives us the number of elements that must be caught from our main array to fill the left half of the symmetric array
+        mid2=total - mid1        #this gives us the number of elements that must be caught from our secondary array to fill the left half of the symmetric array
+        r1=array1[mid1]
+        r2=array2[mid2]
+        l1=array1[mid1-1]
+        l2=array2[mid2-1]
+        if l1<r2 and l2<r1:
+            if n%2==0:
+                median = (max(l1,l2) + min(r1,r2)) / 2 
+                return median
+            else:
+                return max(l1,l2)
+        elif l1>r2:   #if the last element from our main array or array1 is greater than the first element from array2 then it means we need to remove this number from main array so what we need to do is decrease the range of array1 so we make high = mid -1   
+            high = mid1-1
+        elif l2>r1:     #but if the last element from our secondary array or array2 is greater than the first element from array1 then it means we need to remove this number which is of array2 so we increase the range of main array but decrease that of secondary array 
+            low=mid1+1
+    return 0  #if the median is not found
+print(optimalmedian([2, 4, 6],[1,3,5]))
+#time complexity : O(log(min(array1,array2)))
+#space complexity : O(1)
+    
+
