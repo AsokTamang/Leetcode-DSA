@@ -1,4 +1,5 @@
 import math
+import heapq
 # Given an array nums consisting of only 0, 1, or 2. Sort the array in non-decreasing order. The sorting must be done in-place, without making a copy of the original array.
 def dutchnationalalgo(array):
     low = 0  # the left index or the most extreme left
@@ -1102,13 +1103,61 @@ def maximumdis(array,k):
             if diff>maxdis:
                 maxdis=dis
                 maxindex=i
-            howmany[maxindex]+=1   
+            howmany[maxindex]+=1    #then after finding the index at which the maximum distance is found , we place the new gasstation at that gap 
     maxans=-1
     for i in range(len(array)-1):
         diff = array[i+1]-array[i]
         dis = diff / (howmany[i]+1)
         maxans=max(maxans,dis)
     return maxans 
-print(maximumdis([1, 2, 3, 4, 5, 6 ,7, 8, 9, 10],9))            
+print(maximumdis([1, 2, 3, 4, 5, 6 ,7, 8, 9, 10],9)) 
+#time complexity : O(k * N)
+# space complexity : O(1)
 
 
+#optimal approach
+def optimalmaximdis(array,k):
+    pq=[]
+    howmany=[0]*(len(array)-1)
+    for i in range(len(array)-1):   
+        dis=array[i+1]-array[i]
+        heapq.heappush(pq,(-1*dis,i))   #then we push the negative value of the distance and the index
+    for i in range(k):
+        maxim=heapq.heappop(pq)   #here heapq.heappop(pq) removes or delete the most smallest value , which is the maximum distance in the array    
+        maxindex=maxim[1]   #then we find the index at which the maximum gap is occured
+        howmany[maxindex]+=1   #as we got the index where the maximum distance or gap is then we place the new gas station at that index
+        diff = array[maxindex+1]-array[maxindex]
+        gap=diff/(howmany[maxindex] + 1)
+        heapq.heappush(pq,(-1*gap,maxindex))
+    return pq[0][0] * -1  #here we are returning the first value of the pq to return the maximum gap which is the minimum possible by multiplying by -1 to make it into positive     
+print(optimalmaximdis([1, 2, 3, 4, 5, 6 ,7, 8, 9, 10],9))
+#time complexity : O(NlogN) + O(KlogN)
+#space complexity : O(N-1)
+
+
+
+#bruteappeoach of gasstaions
+def brutenewgas(array,k):   #here array is the number of initial gas stations and k is the number of new gasstations to be placed.
+    howmany=[0] * (len(array)-1)   #here howmany represents the number of gaps where the k gas stations can be placed
+    #as we need to place k new gas stations , we are running the loop from 0 to k
+    for i in range(k):
+        maxindex = -1  #this stores the index at which the maximum distance is found at the current loop
+        maxdis = - 1   #this stores the maximum distance found at the current loop
+        for j in range(len(array)-1):   #here we are only running the loop until len(array)-1 cause we need to calculate the difference of array[i+1] - array[i]
+            diff = array[j+1] - array[j]
+            dist= diff / (howmany[j] + 1)   #the formula for the distance is this cause if we place one gas station between the initial position of gas stations then of course there will be two more new gaps and the distance will also be new
+            if dist>maxdis:  #then in every loop of calculating the distance or gaps ,
+                #we also compare the maximum distance, and input the new maximum distance as well as the index at which we found the maximum gap or maximum distance
+                maxdis=dist
+                maxindex=j
+        howmany[maxindex]+=1   #then we place the new gas station at that maxindex  
+    #after the completion of the upper loop we have obtained the index or the gap having the number of new gas stations which total upto k           
+    maxans=-1
+    for i in range(len(array)-2):  #then by running this loop , we calculate the maximum distance based on the number of new gas stations placed on these indexes.
+        diff = array[i+1]-array[i]
+        dist = diff / (howmany[i] + 1)
+        maxans = max(maxans,dist)
+    return maxans
+print(brutenewgas( [1, 2, 3, 4, 5, 6 ,7, 8, 9, 10],9))        
+#time complexity : O(k * N)
+#space complexity : O(1)
