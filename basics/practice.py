@@ -1160,4 +1160,26 @@ def brutenewgas(array,k):   #here array is the number of initial gas stations an
     return maxans
 print(brutenewgas( [1, 2, 3, 4, 5, 6 ,7, 8, 9, 10],9))        
 #time complexity : O(k * N)
-#space complexity : O(1)
+#space complexity : O(N)   #as we are using the set called howmany that nearly takes upto N so space complexity is O(N)
+
+
+def betternewgas(array,k):
+    pq = []
+    howmany = [0] * (len(array)-1)
+    for i in range(len(array)-1):
+        diff = array[i+1]-array[i]
+        heapq.heappush(pq,(-1*(diff/(howmany[i]+1)),i))     #here what we are doing is we are pushing the distance between the adjacent gas stations from the given gas stations and their corresponding indexes, and
+        #the reason we are multiplying the value of distance by -1 is so that while we use pop to delete the maximum distance value from pq , heapq reduces the most smallest
+
+
+
+    for i in range(k):
+        tp = heapq.heappop(pq)  #this removes the most smallest value from pq , which is the most maximum distance at the given  array
+        maxindex = tp[1]  #then we retrieve that index at which the maximum distance is found
+        howmany[maxindex]+=1  #then we insert the new gas station at that index
+        diff=array[maxindex+1] - array[maxindex]  #then we again calculate the difference and the distance 
+        heapq.heappush(pq,((-1*diff/(howmany[maxindex]+1)),maxindex))  #then we again insert that obtained distance after placing the new gas stations
+    return pq[0][0] * -1   #then the one remaining at the top is our required distance
+print(betternewgas( [1, 2, 3, 4, 5, 6 ,7, 8, 9, 10],9))    
+#time complexity : O(k+logN)
+#space complexity : O(N)

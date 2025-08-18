@@ -589,8 +589,8 @@ print(brutegas( [1, 2, 3, 4, 5, 6 ,7, 8, 9, 10],9))
 #space compelxity : O(1)
 
 
-#optimal solution 
-def optimalgas(array,k):
+#better solution 
+def bettergas(array,k):
     howmany=[0]*(len(array)-1)  #this howmany represents the number of gaps index in the original gasstation
     pq = []
     for i in range(len(array)-1):   #this loop is used for storing the sectionlength or distance and their respective indices in the pq using heap loop
@@ -604,7 +604,64 @@ def optimalgas(array,k):
         heapq.heappush(pq,(-1 * diff//(howmany[placedindex]+1),placedindex))  #then we add the obtained distance after placing the new gas station 
     #then the space lenghth remaining at the top of the heap will be our most minimum maximum distance between the adjacent gas stations
     return pq[0][0] * -1  #then we return the first tuple's first value which is the distance and multiply it by -1 as we placed the distances as the negative value
-print(optimalgas([1,13,17,23],5))
+print(bettergas([1,13,17,23],5))
+
+#optimal solution
+#in this optimal approach what we are doing is first we are getting the value of mid which will act as our answer or the required most minimum maximum distacnce ,
+#by taking this distance or value , we check how many new gasstations are required, if the number of required new gasstations exceeds the given number k then we just move the left to mid to increase the value of gap ,
+# otherwise we move the right to mid to decrease the gap distance, as the question is asking us to get the minimum maximum distance
+
+def countgasstations(distance,array):
+    count = 0
+    for i in range(len(array)-1):
+        requirednumber=(array[i+1]-array[i]) / distance  #here we are calculating the number of required gas stations at the current gap
+        if (array[i+1] - array[i]) == (distance * requirednumber):
+            requirednumber -= 1
+               #if the gap is exactly divisible by the taken distance then we only need gasstations just one value lesser than the requirednumber
+        count+=requirednumber  #then in each gaps we calculate the number of gas stations required. 
+    return count
+
+
+def optimalgas(array,k):
+    low=0
+    high = 0
+    for i in range(len(array)-1):
+        high=max(high,array[i+1]-array[i])   #here we are calculating the maximum gap which is present in the original gas station
+    while high - low > 1e-6:      #here we are running the loop as long as the most maximum distance is greater than the value of 1e-6 or 0.000001
+        mid = (low + high) / 2.0     #this is our assumed maximum distance right now
+        count = countgasstations(mid,array)
+        if count>k:  #if the number of gas staions required for the current max distance is way greater than the given k value , then we just increase the value of low , to make the gap much bigger so that the number of gas stations required will be within the k range
+            low = mid   
+        else:  #if the number of required gas stations lie with in the k range then we try to decrease the gap or distance by moving the high to mid
+            high =mid    
+    return high
+print(optimalgas([1, 2, 3, 4, 5, 6 ,7, 8, 9, 10],9))
+#time complexity : O(N * log(len))   #len is the length of the answer and N is the length of an array
+#space complexity : O(1)
+
+#Median of 2 sorted arrays
+#Given two sorted arrays arr1 and arr2 of size m and n respectively, return the median of the two sorted arrays.
+#The median is defined as the middle value of a sorted list of numbers. In case the length of the list is even, the median is the average of the two middle elements.
+
+
+#brute approach
+def brutemedian(arr1,arr2):
+    total=sorted(arr1+arr2)  #here we are first summing the array1 and array2 then we are summing up the array
+    if len(total) % 2 !=0:
+        index = (len(total)-1) // 2
+        ans=total[index] #this gives us the median element of the odd length array
+    else:
+        second = (len(total)) // 2 
+        ans = (total[second] + total[second-1]) / 2
+    return ans
+print(brutemedian( [2, 4, 6], [1, 3,5]))
+#time complexity : O(M+Nlog(M+N))
+#space complexity : O(M+N)
+
+
+
+
+
 
 
 
