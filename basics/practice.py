@@ -1183,3 +1183,43 @@ def betternewgas(array,k):
 print(betternewgas( [1, 2, 3, 4, 5, 6 ,7, 8, 9, 10],9))    
 #time complexity : O(k+logN)
 #space complexity : O(N)
+
+
+#better approach of median of 2 sorted arrays
+def bettermedian(arr1,arr2):   
+    n1=len(arr1)
+    n2=len(arr2)
+    n=n1 + n2
+    mainindex = n // 2 #this gives us the main index from the total array at which we can find the median of the two sorted arrays if the total length of the array is odd
+    secindex = mainindex - 1   #this gives us the secondary index which can be used to find the median of the two sorted arrays if the total length is odd ,
+    count = 0
+    mainelem=0  #this is the number at the main index which we need to find
+    secelem=0    #this is the number at the  secondary index which we need to find if the total length is even
+    i = 0
+    j = 0
+    while i<len(arr1) and j<len(arr2):
+        if arr1[i] < arr2[j]:
+            if count == mainindex: mainelem = arr1[i]   #if the count at the current index i is equal to the main index then ofcourse the number at current index i is the  main elem
+            if count == secindex: secelem = arr1[i]   #same reason here for the secondary index 
+            i+=1
+            count+=1
+        else:
+            if count == mainindex: mainelem = arr2[j]   #if the count at the current index j is equal to the main index then ofcourse the number at current index j is the  main elem
+            if count == secindex: secelem = arr2[j]   #same reason here for the secondary index 
+            j+=1
+            count+=1
+    while i < len(arr1):  
+        if count == mainindex: mainelem = arr1[i]   #if the count at the current index i is equal to the main index then ofcourse the number at current index i is the  main elem
+        if count == secindex: secelem = arr1[i]   #same reason here for the secondary index 
+        i+=1
+        count+=1
+    while j < len(arr2):  
+        if count == mainindex: mainelem = arr2[j]   #if the count at the current index i is equal to the main index then ofcourse the number at current index i is the  main elem
+        if count == secindex: secelem = arr2[j]   #same reason here for the secondary index 
+        j+=1
+        count+=1 
+    if n % 2 !=0:
+        return mainelem
+    else:
+        return (mainelem + secelem)/2    #this gives us the median which is the average of two middle numbers in a total array if the total length is even     
+print(bettermedian( [2, 4, 6],[1, 3, 5]))              

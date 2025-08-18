@@ -646,9 +646,11 @@ print(optimalgas([1, 2, 3, 4, 5, 6 ,7, 8, 9, 10],9))
 
 #brute approach
 def brutemedian(arr1,arr2):
+    n1=len(arr1)
+    n2=len(arr2)
     total=sorted(arr1+arr2)  #here we are first summing the array1 and array2 then we are summing up the array
     if len(total) % 2 !=0:
-        index = (len(total)-1) // 2
+        index = len(total) // 2 
         ans=total[index] #this gives us the median element of the odd length array
     else:
         second = (len(total)) // 2 
@@ -657,6 +659,63 @@ def brutemedian(arr1,arr2):
 print(brutemedian( [2, 4, 6], [1, 3,5]))
 #time complexity : O(M+Nlog(M+N))
 #space complexity : O(M+N)
+
+
+#better approach
+#in the better approach what we do is we dont use the third array for storing the numbers or for displaying the numbers what we do is we just catch the index
+def bettermedian(arr1,arr2):
+    n1=len(arr1)
+    n2=len(arr2)
+    n=n1 + n2   #this is our total length
+    mainindex = (n1 + n2) // 2   #this is the main index which gives us the median if the length of the total array is odd but
+    #if the length of the total arrays is even then we need to find the average between the numbers at the main index and mainindex-1
+    secondaryindex = mainindex - 1  #this is required only when the total length is even cause we need to calculate the average
+    i = 0 
+    j = 0
+    count = 0
+    mainelem=0
+    secelem=0
+    while i<n1 and j<n2:   #here we are running the loop from i to length of arr1 and j to length of arr2
+        if arr1[i]<arr2[j]:   #then we check if the i indexed array element is lesser than the j indexed array element ,
+            #if yes then we check the index count with the required count 
+            if count == mainindex:
+                mainelem=arr1[i]
+            if count == secondaryindex:
+                secelem=arr1[i]    
+
+            count+=1
+            i+=1
+        else:
+            if count == mainindex:
+                mainelem=arr2[j]
+            if count == secondaryindex:
+                secelem=arr2[j]
+            count+=1
+            j+=1     
+    while i<n1:
+        if count == mainindex:
+            mainelem=arr1[i]
+        if count == secondaryindex:
+            secelem=arr1[i]
+        count+=1
+        i+=1
+    while j<n2:
+        if count == mainindex:
+            mainelem=arr2[j]
+        if count == secondaryindex:
+            secelem=arr2[j]
+        count+=1
+        j+=1    
+    if n % 2 != 0:
+        return mainelem
+    else:
+        return (mainelem + secelem) / 2    
+bettermedian([2, 4, 6],[1,3]) 
+#time complexity : O(N + M)
+#space complexity : O(1)   
+                           
+
+
 
 
 
