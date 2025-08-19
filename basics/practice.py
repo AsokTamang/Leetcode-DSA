@@ -1292,3 +1292,28 @@ def optmedian(array1,array2):
 print(optmedian([2, 4, 6],[1,3,5]))     
 #time complexity : O(log(min(len(array1),len(array2))))
 #space complexity : O(1)   
+
+
+def optimalrow(array):  #this is the main or parent array
+    n=len(array)   #this is the length of the parent array
+    m=len(array[0])   #this is the length of the child array
+    row=0  #we start from the  first row 
+    col=m-1   #we start checking from the last index as the arrays are already sorted
+    ans = -1
+    while row<n and col>=0:  #the columns must be greater than or equal to 0 otherwise it will get out of index or range
+        if array[row][col] == 1: #if we encounter number 1 at current row and column then the answer might be the row as our child rows are already sorted 
+            
+            ans = row
+            col-=1   #then we decrease the value of col
+        else:
+            row +=1
+         #and as we need to find the smaller index of row , we are checking the condition from first row or 0 indexed row
+    return ans
+print(optimalrow([[0, 0, 1, 1],
+[0, 1, 1, 1],
+[0, 0, 0, 1]]))  
+#time complexity : O(N + M)  here N is the length of the parent row and M means approximately equal to the length of child row  
+#space complexity : O(1)     
+
+
+
