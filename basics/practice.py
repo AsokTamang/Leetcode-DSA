@@ -1261,3 +1261,35 @@ print(optimalmedian([2, 4, 6],[1,3,5]))
 #space complexity : O(1)
     
 
+def optmedian(array1,array2):
+    n1 = len(array1)
+    n2 = len(array2)
+    n = n1 + n2 #here n is the total length of a sorted array 
+    if n1>n2:  #if the length of an array 1 is greater than the length of an array2 then we just put the array2 inplace of array1 and vice versa 
+        return optmedian(array2,array1)  
+    total = (n1 + n2 + 1) //2   #this gives the total length of the left half of the symmetric array by taking the array1 or the array which has the smallest length
+    l1=l2 = float('-inf')  #here the left side of the elements of both the arrays must be smaller than the right half elements of both arrays
+    r1=r2=float('inf')    #here the right half elements or the numbers must be always greater than the left half elements or numbers
+    low = 0   #here we are declaring low as 0 which means we might also take 0 element from array1
+    high = len(array1)  #and high is declared as len(array1) which means we might also take all the elements from array1
+    while low<=high:
+        mid1=(low + high) //2   #this value tell us how many numbers should be taken from array1
+        mid2=total - mid1   #this value tell us how many numbers should be taken from array2
+        r1=array1[mid1]
+        r2=array2[mid2]   
+        l1=array1[mid1-1]
+        l2=array2[mid2-1]
+        if l1<r2 and l2<r1:
+            if n % 2 == 0:   #if the total length of a symmetric array is even then we need to calculate the average of two middle numbers to get the median
+                return (max(l1,l2) + min(r1,r2)) / 2
+            else:    #else if the total length is odd then we need to return the maximum of l1 and l2
+                return max(l1,l2)  
+        elif l1>r2:  #if the l1 is greater than the r2 then we need to remove this greater number from array1 by making high a mid1-1
+            high = mid1 - 1
+        elif l2>r1:   #else if the l2 is greater than r1 then we need to include more numbers from array1 and less from array2 inorder to remove this current l2 which is the greater value
+            low = mid1 + 1
+    return 0
+print(optmedian([2, 4, 6],[1,3,5]))     
+#time complexity : O(log(min(len(array1),len(array2))))
+#space complexity : O(1)   
+
