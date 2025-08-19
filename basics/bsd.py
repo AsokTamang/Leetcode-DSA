@@ -216,555 +216,810 @@ print(optimalbloom([1, 10, 3, 10, 2], 3, 2))
 # space compplexity : O(1)
 
 
+# Find the smallest divisor
+# Given an array of integers nums and an integer limit as the threshold value, find the smallest positive integer divisor such that upon dividing all the elements of the array by this divisor, the sum of the division results is less than or equal to the threshold value.
+# Each result of the division is rounded up to the nearest integer greater than or equal to that element.
 
-#Find the smallest divisor
-#Given an array of integers nums and an integer limit as the threshold value, find the smallest positive integer divisor such that upon dividing all the elements of the array by this divisor, the sum of the division results is less than or equal to the threshold value.
-#Each result of the division is rounded up to the nearest integer greater than or equal to that element.
 
-def brutedivisor(array,l):    #here l is the limit threshold as the sum of the value obtained after dividing the numbers in an array by that specific number must be less than or equal to this
-    for i in range(1,max(array)+1):
-        s= 0 
+def brutedivisor(
+    array, l
+):  # here l is the limit threshold as the sum of the value obtained after dividing the numbers in an array by that specific number must be less than or equal to this
+    for i in range(1, max(array) + 1):
+        s = 0
         for num in array:
-            s+=math.ceil(num/i)
-        if s<=l:
-            return i 
+            s += math.ceil(num / i)
+        if s <= l:
+            return i
     return -1
-print(brutedivisor( [1, 2, 3, 4, 5],8))        
-#time complexity : O(N * (max(array)-min(array)+1))
 
 
-#optimal approach
-def optimaldivisor(array,l):
+print(brutedivisor([1, 2, 3, 4, 5], 8))
+# time complexity : O(N * (max(array)-min(array)+1))
+
+
+# optimal approach
+def optimaldivisor(array, l):
     left = 1
     right = max(array)
-    ans=-1
-    while left<=right:
+    ans = -1
+    while left <= right:
         mid = (left + right) // 2
-        s=0
+        s = 0
         for num in array:
-            s+=math.ceil(num/mid)
-        if s>l:   #if the sum is greater than the threshold then we just move the left pointer towards the right half to decrease the value of s
+            s += math.ceil(num / mid)
+        if (
+            s > l
+        ):  # if the sum is greater than the threshold then we just move the left pointer towards the right half to decrease the value of s
             left = mid + 1
-        elif s<=l:
-            ans= mid
+        elif s <= l:
+            ans = mid
             right = mid - 1
-    return ans        
-print(optimaldivisor([1, 2, 3, 4, 5],8))
-#time complexity : O(N * (max(array) - min(array)+1))
-#space complexity : O(1)
-
-
-#Capacity to Ship Packages Within D Days
-
-#You are given an array weights where weights[i] represents the weight of the i-th package on a conveyor belt. All the packages must be shipped in the order given from one port to another within days days.
-#Each day, the ship can carry a contiguous sequence of packages, as long as the total weight does not exceed its maximum capacity.
-#Your task is to find the minimum possible capacity of the ship so that all packages can be shipped within the given number of days.
-
-#what the question has given us 
-#the question has given us the packages , each one having their own weights which can be shipped in one day
-#what we need to find
-# 1. the minimum weight capacity that is greater than the weight capacity of each given packages so that the shipping can be done in given number of days
-
-
-#brute approach
-def brutepackage(array,n):  #here n is the number of days
-    summ =sum(array)  #here we are getting the total sum of an array
-    #our loop ranges between the maximum number in an array and the sum of an array cause we need to find the minimum capacity which can hold all the given packages to be shipped with in given numebr of days
-    #so the ranges belowe the maximum of array cannot include the packages like the max in an array and the number ranging after the summation of an array remains the same
-    for i in range(max(array),summ+1): 
-        days = 1
-        totalweights=0
-        for j in range(0,len(array)):
-            if totalweights+array[j]<=i:   #we keep on shipping the packages where the total weights of those packages is lesser than or equal to the taken weight capacity to be shipped per days
-
-                totalweights+=array[j]
-            else:   #if the weights to be shipped are exceeded then we just move to next days
-                days+=1
-                totalweights=array[j]
-        if days<=n:
-            return i  
-print(brutepackage( [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],5))     
-
-
-
-#optimal approach
-def optimalpackage(array,n):
-    left = max(array)
-    right=sum(array)
-    ans=0
-    while left<=right:
-        mid = (left + right) // 2 
-        weights = 0
-        days = 1
-        for num in array:   
-            if weights + num <=mid:
-                weights+=num
-            else:
-                days+=1
-                weights=num
-        if days<=n:
-            ans=mid
-            right=mid - 1 #to find the required minimum capacity    
-        else:   #but if the obtained days are more than the given days limit , then we just move into higher range so that the number of days will be reduced , which will probably take us within the given number of days' range
-            left = mid + 1             
     return ans
-print(optimalpackage( [3, 2, 2, 4, 1, 4],3))
-#time complexity :O(N * log(summ(array) - max(array) + 1))
-#space complexity : O(1)
 
 
-#Kth Missing Positive Number
-#Given a sorted array of unique positive integers arr, your task is to return the kᵗʰ missing positive number that is not present in arr.
-#The array is guaranteed to be strictly increasing, and the missing numbers are those positive integers that do not appear in arr but would appear in a full sequence starting from 1.
-
-
-#so what we need to do is 
-#first find the number missing numbers which arenot in the arrays starting from 1 to the max value of an array
-#then we need to find the number of the given index k from the array consisting of missing numbers
-def bruteposnum(array,k):   
-    for i in range(len(array)):
-        if array[i]<=k:
-            k+=1
-        else:
-            break    
-    return k
-print(bruteposnum([3, 5, 7, 10],6)) 
-#time complexity : O(N)
+print(optimaldivisor([1, 2, 3, 4, 5], 8))
+# time complexity : O(N * (max(array) - min(array)+1))
 # space complexity : O(1)
 
 
-#optimal approach
-def optimalposnum(array,k):
-    left = 0
-    right = len(array)-1
-    while left<=right:
-        mid = (left + right) // 2
-        missing=array[mid] - (mid + 1)  #here what we are calculating is the missing number of pieces at the index mid
-        if missing<k:
-            left = mid +1
-        else:
-            right = mid -1               
-    return k + right + 1 
-    #or we can also code return k + left     
-print(optimalposnum([1, 4, 6, 8, 9],3))     
-#time complexity : O(log(N))
-# space complexity : O(1)       
+# Capacity to Ship Packages Within D Days
+
+# You are given an array weights where weights[i] represents the weight of the i-th package on a conveyor belt. All the packages must be shipped in the order given from one port to another within days days.
+# Each day, the ship can carry a contiguous sequence of packages, as long as the total weight does not exceed its maximum capacity.
+# Your task is to find the minimum possible capacity of the ship so that all packages can be shipped within the given number of days.
+
+# what the question has given us
+# the question has given us the packages , each one having their own weights which can be shipped in one day
+# what we need to find
+# 1. the minimum weight capacity that is greater than the weight capacity of each given packages so that the shipping can be done in given number of days
 
 
-#Given an array nums of size n, which denotes the positions of stalls, and an integer k, which denotes the number of aggressive cows, assign stalls to k cows such that the minimum distance between any two cows is the maximum possible. Find the maximum possible minimum distance.
-#so what the question is asking us to put the given number of cows in such a way that the distance between two adjacent cows is minimum,but is the maximum among all the conditions of placement of cows in the stalls
-def brutecows(array,k):
-    array=sorted(array)  #first of all we need to sort the array
+# brute approach
+def brutepackage(array, n):  # here n is the number of days
+    summ = sum(array)  # here we are getting the total sum of an array
+    # our loop ranges between the maximum number in an array and the sum of an array cause we need to find the minimum capacity which can hold all the given packages to be shipped with in given numebr of days
+    # so the ranges belowe the maximum of array cannot include the packages like the max in an array and the number ranging after the summation of an array remains the same
+    for i in range(max(array), summ + 1):
+        days = 1
+        totalweights = 0
+        for j in range(0, len(array)):
+            if (
+                totalweights + array[j] <= i
+            ):  # we keep on shipping the packages where the total weights of those packages is lesser than or equal to the taken weight capacity to be shipped per days
+
+                totalweights += array[j]
+            else:  # if the weights to be shipped are exceeded then we just move to next days
+                days += 1
+                totalweights = array[j]
+        if days <= n:
+            return i
+
+
+print(brutepackage([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 5))
+
+
+# optimal approach
+def optimalpackage(array, n):
+    left = max(array)
+    right = sum(array)
     ans = 0
-    for i in range(1,max(array)):  #this outer loop is for assuming the minimum distance between two adjacent cows
-        lastcowpos=array[0]
-        cows = 1  #as have already placed the first cow in the first stall, we are coding the number of cows 1 here
-        for j in range(1,len(array)):
-            if i <=array[j] - lastcowpos:  #if the taken distance can be fit inbetween the stalls then we can place the cows
-                cows+=1  #then we can increase the number of cows 
-                lastcowpos=array[j]   #then we change the place of the last cow to the current i indexed stall
-        if cows>=k:
-            ans=max(ans,i)  #as we need to find the maximum possible minimum distance , we are using max between ans and i.
+    while left <= right:
+        mid = (left + right) // 2
+        weights = 0
+        days = 1
+        for num in array:
+            if weights + num <= mid:
+                weights += num
+            else:
+                days += 1
+                weights = num
+        if days <= n:
+            ans = mid
+            right = mid - 1  # to find the required minimum capacity
+        else:  # but if the obtained days are more than the given days limit , then we just move into higher range so that the number of days will be reduced , which will probably take us within the given number of days' range
+            left = mid + 1
     return ans
-print(brutecows([4, 2, 1, 3, 6],2))        
-#time complexity : O(max(array) * O(N))
-#space complexity : O(1)
 
-#optimal approach
-def optimalcows(array,k):
-    array=sorted(array)
+
+print(optimalpackage([3, 2, 2, 4, 1, 4], 3))
+# time complexity :O(N * log(summ(array) - max(array) + 1))
+# space complexity : O(1)
+
+
+# Kth Missing Positive Number
+# Given a sorted array of unique positive integers arr, your task is to return the kᵗʰ missing positive number that is not present in arr.
+# The array is guaranteed to be strictly increasing, and the missing numbers are those positive integers that do not appear in arr but would appear in a full sequence starting from 1.
+
+
+# so what we need to do is
+# first find the number missing numbers which arenot in the arrays starting from 1 to the max value of an array
+# then we need to find the number of the given index k from the array consisting of missing numbers
+def bruteposnum(array, k):
+    for i in range(len(array)):
+        if array[i] <= k:
+            k += 1
+        else:
+            break
+    return k
+
+
+print(bruteposnum([3, 5, 7, 10], 6))
+# time complexity : O(N)
+# space complexity : O(1)
+
+
+# optimal approach
+def optimalposnum(array, k):
+    left = 0
+    right = len(array) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        missing = array[mid] - (
+            mid + 1
+        )  # here what we are calculating is the missing number of pieces at the index mid
+        if missing < k:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return k + right + 1
+    # or we can also code return k + left
+
+
+print(optimalposnum([1, 4, 6, 8, 9], 3))
+# time complexity : O(log(N))
+# space complexity : O(1)
+
+
+# Given an array nums of size n, which denotes the positions of stalls, and an integer k, which denotes the number of aggressive cows, assign stalls to k cows such that the minimum distance between any two cows is the maximum possible. Find the maximum possible minimum distance.
+# so what the question is asking us to put the given number of cows in such a way that the distance between two adjacent cows is minimum,but is the maximum among all the conditions of placement of cows in the stalls
+def brutecows(array, k):
+    array = sorted(array)  # first of all we need to sort the array
+    ans = 0
+    for i in range(
+        1, max(array)
+    ):  # this outer loop is for assuming the minimum distance between two adjacent cows
+        lastcowpos = array[0]
+        cows = 1  # as have already placed the first cow in the first stall, we are coding the number of cows 1 here
+        for j in range(1, len(array)):
+            if (
+                i <= array[j] - lastcowpos
+            ):  # if the taken distance can be fit inbetween the stalls then we can place the cows
+                cows += 1  # then we can increase the number of cows
+                lastcowpos = array[
+                    j
+                ]  # then we change the place of the last cow to the current i indexed stall
+        if cows >= k:
+            ans = max(
+                ans, i
+            )  # as we need to find the maximum possible minimum distance , we are using max between ans and i.
+    return ans
+
+
+print(brutecows([4, 2, 1, 3, 6], 2))
+# time complexity : O(max(array) * O(N))
+# space complexity : O(1)
+
+
+# optimal approach
+def optimalcows(array, k):
+    array = sorted(array)
     left = 1
     right = max(array)
     ans = 0
-    while left<=right:
-        mid =(left + right) // 2 
-        cows = 1  #here we are assuming the number of cows 1 cause we already placed it in the first stall
-        last=array[0]
-        for i in range(1,len(array)):
-            if mid<=array[i] - last:
-                cows+=1
-                last=array[i]
-        if cows>=k:  #if the obtained number of cows is greater than or equal to the given number of cows then we move our left pointer to right half,so that we can get the maximum possible minimum distance
-            ans=max(ans,mid)
-            left = mid + 1
-        else:  #if the obtained number of cows is lesser then we just move our right pointer towards left half so that the mid value can be fitted majority of times so that the number of cows can be increased
-            right= mid - 1 
-    return ans
-print(optimalcows( [0, 3, 4, 7, 10, 9],4))                   
-
-
-
-#Book Allocation Problem
-#Given an array nums of n integers, where nums[i] represents the number of pages in the i-th book, and an integer m representing the number of students, allocate all the books to the students so that each student gets at least one book, each book is allocated to only one student, and the allocation is contiguous.
-#Allocate the books to m students in such a way that the maximum number of pages assigned to a student is minimized. If the allocation of books is not possible, return -1.
-
-
-#what the question has asked?
-#the question has asked us to give the minimum possible maximum number of pages given to each student from the given collection of books
-#and if the number of books is lesser than the number of students then we just return -1
-def brutebooks(array,m): #here m represents the number of students
-    if len(array)<m:  #if the number of books is lesser than the number of students then we just return -1
-        return -1
-    for i in range(max(array),sum(array)+1):
-        totalpages=0
-        count= 1
-        for pages in array:
-            if totalpages+pages<=i:   #here we are checking if the taken maximum number of pages is greater than or equal to the sum of current value of totalpages and the current pages
-                totalpages+=pages  #then we add the current pages to totalpages also which is given to the count student which is 1st student right now 
-            else:
-                count+=1   #if the totalsum exceeds the taken value of i then we just give the next total pages to the tha value greater than one of the count
-                totalpages=pages     #and the totalpages will be the current pages 
-        if count == m:  #as we need to find the most minimum possible value of maximum number of pages , we return the i as soon as the condition is matched.
-            return i         
-print(brutebooks( [25, 46, 28, 49, 24],4))   
-#time complexity : O(sum(array)-max(array) * O(N))
-# space complexity : O(1)      
-
-
-#optimal approach
-def optimalbooks(array,m):
-    if len(array) < m:   #if the length of an array is lesser than the number of receivers then of course we cannot allocate the books to all the students.
-        return -1
-    ans = float('inf')  #assumed greatest positive infinity integer
-    left = max(array)   #we must always begin our loop with the maximum pages in an array cause if we take the pagevalue lesser than the max page of an array then we cannot give the book to the book consisting of maximum pages to the student
-    right=sum(array)
-    while left<=right:
+    while left <= right:
         mid = (left + right) // 2
-        count = 1  #here count denotes the number of student who received the books
-        currentpages=0     #countpages denotes the totalnumber of pages at the current time
+        cows = 1  # here we are assuming the number of cows 1 cause we already placed it in the first stall
+        last = array[0]
+        for i in range(1, len(array)):
+            if mid <= array[i] - last:
+                cows += 1
+                last = array[i]
+        if (
+            cows >= k
+        ):  # if the obtained number of cows is greater than or equal to the given number of cows then we move our left pointer to right half,so that we can get the maximum possible minimum distance
+            ans = max(ans, mid)
+            left = mid + 1
+        else:  # if the obtained number of cows is lesser then we just move our right pointer towards left half so that the mid value can be fitted majority of times so that the number of cows can be increased
+            right = mid - 1
+    return ans
+
+
+print(optimalcows([0, 3, 4, 7, 10, 9], 4))
+
+
+# Book Allocation Problem
+# Given an array nums of n integers, where nums[i] represents the number of pages in the i-th book, and an integer m representing the number of students, allocate all the books to the students so that each student gets at least one book, each book is allocated to only one student, and the allocation is contiguous.
+# Allocate the books to m students in such a way that the maximum number of pages assigned to a student is minimized. If the allocation of books is not possible, return -1.
+
+
+# what the question has asked?
+# the question has asked us to give the minimum possible maximum number of pages given to each student from the given collection of books
+# and if the number of books is lesser than the number of students then we just return -1
+def brutebooks(array, m):  # here m represents the number of students
+    if (
+        len(array) < m
+    ):  # if the number of books is lesser than the number of students then we just return -1
+        return -1
+    for i in range(max(array), sum(array) + 1):
+        totalpages = 0
+        count = 1
         for pages in array:
-         if mid>=currentpages+pages:   #if the taken or assumed maximum number of pages is greater than or equal to the sum of current pages then we just keep on adding those pages
-             currentpages+=pages
-         else:   #otherwise we just give the current book to another student and assume the currentpages to the current pages in an array
-             count+=1
-             currentpages = pages
-        if count <= m:   #if the number of students who received the books lie within the range of m, then it means we can move the right pointer towards left half
-            #as to find the minimum maximum pages possible
-            ans=min(ans,mid)    
-            right = mid - 1  
-        else:   #if the obtained count is greater than the given number of students then we must increase the mid value so that the count value can be decreased
+            if (
+                totalpages + pages <= i
+            ):  # here we are checking if the taken maximum number of pages is greater than or equal to the sum of current value of totalpages and the current pages
+                totalpages += pages  # then we add the current pages to totalpages also which is given to the count student which is 1st student right now
+            else:
+                count += 1  # if the totalsum exceeds the taken value of i then we just give the next total pages to the tha value greater than one of the count
+                totalpages = pages  # and the totalpages will be the current pages
+        if (
+            count == m
+        ):  # as we need to find the most minimum possible value of maximum number of pages , we return the i as soon as the condition is matched.
+            return i
+
+
+print(brutebooks([25, 46, 28, 49, 24], 4))
+# time complexity : O(sum(array)-max(array) * O(N))
+# space complexity : O(1)
+
+
+# optimal approach
+def optimalbooks(array, m):
+    if (
+        len(array) < m
+    ):  # if the length of an array is lesser than the number of receivers then of course we cannot allocate the books to all the students.
+        return -1
+    ans = float("inf")  # assumed greatest positive infinity integer
+    left = max(
+        array
+    )  # we must always begin our loop with the maximum pages in an array cause if we take the pagevalue lesser than the max page of an array then we cannot give the book to the book consisting of maximum pages to the student
+    right = sum(array)
+    while left <= right:
+        mid = (left + right) // 2
+        count = 1  # here count denotes the number of student who received the books
+        currentpages = (
+            0  # countpages denotes the totalnumber of pages at the current time
+        )
+        for pages in array:
+            if (
+                mid >= currentpages + pages
+            ):  # if the taken or assumed maximum number of pages is greater than or equal to the sum of current pages then we just keep on adding those pages
+                currentpages += pages
+            else:  # otherwise we just give the current book to another student and assume the currentpages to the current pages in an array
+                count += 1
+                currentpages = pages
+        if (
+            count <= m
+        ):  # if the number of students who received the books lie within the range of m, then it means we can move the right pointer towards left half
+            # as to find the minimum maximum pages possible
+            ans = min(ans, mid)
+            right = mid - 1
+        else:  # if the obtained count is greater than the given number of students then we must increase the mid value so that the count value can be decreased
             left = mid + 1
     return ans
-print(optimalbooks([12, 34, 67, 90],2))  
-#time complexity : O(log(sum(array)-max(array)) * O(N))
-#space complexity : O(1) 
 
 
+print(optimalbooks([12, 34, 67, 90], 2))
+# time complexity : O(log(sum(array)-max(array)) * O(N))
+# space complexity : O(1)
 
 
-#Split array - largest sum
-#Given an integer array a of size n and an integer k. Split the array a into k non-empty subarrays such that the largest sum of any subarray is minimized. Return the minimized largest sum of the split.
-#so what the question is asking us is to return the minimum possible of the largest sum among the consecutive subarrays splitted into given number of times
+# Split array - largest sum
+# Given an integer array a of size n and an integer k. Split the array a into k non-empty subarrays such that the largest sum of any subarray is minimized. Return the minimized largest sum of the split.
+# so what the question is asking us is to return the minimum possible of the largest sum among the consecutive subarrays splitted into given number of times
 
-#brute approach
-def splitarray(array,k):
-    for i in range(max(array),sum(array)+1):
-        count =1 #count denotes the nnumber of subarray then we start with the making the first subarray
-        s = 0   #sum denotes the sum of the subarray
-        for num in array:    #then we go through each numbers in an array , whether the taken i or taken sum matches the condition or not
-            if i>=s+num:
-                s+=num
+
+# brute approach
+def splitarray(array, k):
+    for i in range(max(array), sum(array) + 1):
+        count = 1  # count denotes the nnumber of subarray then we start with the making the first subarray
+        s = 0  # sum denotes the sum of the subarray
+        for (
+            num
+        ) in (
+            array
+        ):  # then we go through each numbers in an array , whether the taken i or taken sum matches the condition or not
+            if i >= s + num:
+                s += num
             else:
-                count+=1
-                s= num
-        if count<=k:
+                count += 1
+                s = num
+        if count <= k:
             return i
         else:
-            continue     #if the count or obtained number of subarrays exceed the given number limit then we just break out of the loop.
-print(splitarray([3,5,1],3))        
-#time complexity : O(sum(array)-max(array)) * O(N)
-#space complexity : O(1)
+            continue  # if the count or obtained number of subarrays exceed the given number limit then we just break out of the loop.
 
 
-#optimal approach
-def optimalarray(array,k):
-    ans=float('inf')
+print(splitarray([3, 5, 1], 3))
+# time complexity : O(sum(array)-max(array)) * O(N)
+# space complexity : O(1)
+
+
+# optimal approach
+def optimalarray(array, k):
+    ans = float("inf")
     left = max(array)
     right = sum(array)
-    while left<=right:
-        count = 1  #count denotes the number of splitted subarray
+    while left <= right:
+        count = 1  # count denotes the number of splitted subarray
         s = 0
         mid = (left + right) // 2
         for num in array:
-         if mid>=s+num:
-             s+=num
-         else:
-             count+=1   #if the current sum exceeds our mid value then we start a new subarray and the sum becomes the current num
-             s = num
-        if count<=k:  #if the obtained count is lesser than or equal to k then the mid might be an answer 
-            ans=min(ans,mid) #but as the question is asking us for the most minimum value of largest sum , we are using minimum here.
-            right = mid-1
-        else:
-            left = mid + 1    #here we are moving the left pointer towards the right half cause if the count is way too greater than k then we need to increase the taken sum which is makes the count or the number of splitted subarrays lesser              
-    return ans
-print(optimalarray( [1, 2, 3, 4, 5],3))
-#time complexity : O(log(sum(array)-max(array))*O(N))
-#space complexity : O(1)
-
-                 
-#Painter's Partition
-#You are given A painters and an array C of N integers where C[i] denotes the length of the ith board. Each painter takes B units of time to paint 1 unit of board. You must assign boards to painters such that:
-#Each painter paints only contiguous segments of boards.
-#No board can be split between painters.
-#The goal is to minimize the time to paint all boards.Return the minimum time required to paint all boards modulo 10000003.
-
-#so what the question has given us is 
-#the number of painters A
-#C is the collection of boards showing their length
-#B denotes the time taken to print 1 unit of board
-
-#what the question is asking us :
-#is to return the minimum time required to paint all boards
-
-def brutepainter(c,a,b):  #here c is the collection of boards reprenting the length of boards , a is the number of painters and b is the unit of time
-    for i in range(max(c),sum(c)+1):
-        s = 0
-        count = 1   #count denotes the number of painters
-        for num in c:
-            if i >=num:
-                s+=num
+            if mid >= s + num:
+                s += num
             else:
-                count+=1
-        if count<=a:  #if the obtained number of painters is lesser than or equal to a then we return i
-            return i * b   #b is the unit of time to paint 1 unit of board
-        #as we need to return the minimum time required to print all the boards we return i as soon as the condition is met which is count<=a, which is the number of painters
-print(brutepainter( [1, 10],2,5)) 
-#time complexity : O(sum(c)-max(C) * O(N))
-# space complexity : O(1)           
+                count += 1  # if the current sum exceeds our mid value then we start a new subarray and the sum becomes the current num
+                s = num
+        if (
+            count <= k
+        ):  # if the obtained count is lesser than or equal to k then the mid might be an answer
+            ans = min(
+                ans, mid
+            )  # but as the question is asking us for the most minimum value of largest sum , we are using minimum here.
+            right = mid - 1
+        else:
+            left = (
+                mid + 1
+            )  # here we are moving the left pointer towards the right half cause if the count is way too greater than k then we need to increase the taken sum which is makes the count or the number of splitted subarrays lesser
+    return ans
 
 
+print(optimalarray([1, 2, 3, 4, 5], 3))
+# time complexity : O(log(sum(array)-max(array))*O(N))
+# space complexity : O(1)
 
-#optimal solution
-def optimalpainter(c,a,b)  :#here c is the collection of painting boards denoting the length of boards , a is the number of painters and b is the unit of time 
-    ans = float('inf')
+
+# Painter's Partition
+# You are given A painters and an array C of N integers where C[i] denotes the length of the ith board. Each painter takes B units of time to paint 1 unit of board. You must assign boards to painters such that:
+# Each painter paints only contiguous segments of boards.
+# No board can be split between painters.
+# The goal is to minimize the time to paint all boards.Return the minimum time required to paint all boards modulo 10000003.
+
+# so what the question has given us is
+# the number of painters A
+# C is the collection of boards showing their length
+# B denotes the time taken to print 1 unit of board
+
+# what the question is asking us :
+# is to return the minimum time required to paint all boards
+
+
+def brutepainter(
+    c, a, b
+):  # here c is the collection of boards reprenting the length of boards , a is the number of painters and b is the unit of time
+    for i in range(max(c), sum(c) + 1):
+        s = 0
+        count = 1  # count denotes the number of painters
+        for num in c:
+            if i >= num:
+                s += num
+            else:
+                count += 1
+        if (
+            count <= a
+        ):  # if the obtained number of painters is lesser than or equal to a then we return i
+            return i * b  # b is the unit of time to paint 1 unit of board
+        # as we need to return the minimum time required to print all the boards we return i as soon as the condition is met which is count<=a, which is the number of painters
+
+
+print(brutepainter([1, 10], 2, 5))
+# time complexity : O(sum(c)-max(C) * O(N))
+# space complexity : O(1)
+
+
+# optimal solution
+def optimalpainter(
+    c, a, b
+):  # here c is the collection of painting boards denoting the length of boards , a is the number of painters and b is the unit of time
+    ans = float("inf")
     left = max(c)
     right = sum(c)
-    while left<=right:
-        mid = (left + right) // 2  
+    while left <= right:
+        mid = (left + right) // 2
         count = 1
         s = 0
         for num in c:
-            if mid>=s+num:
-                s+=num
+            if mid >= s + num:
+                s += num
             else:
-                count+=1
-        if count<=a:
-            ans = min(mid,ans)
+                count += 1
+        if count <= a:
+            ans = min(mid, ans)
             left = mid + 1
         else:
-            right = mid -1     
+            right = mid - 1
     return ans * b
-print(optimalpainter( [1, 10],2,5))                   
-                
 
 
-#Minimize Max Distance to Gas Station
-#Given a sorted array arr of size n, containing integer positions of n gas stations on the X-axis, and an integer k, place k new gas stations on the X-axis.
-#The new gas stations can be placed anywhere on the non-negative side of the X-axis, including non-integer positions.
-#Let dist be the maximum distance between adjacent gas stations after adding the k new gas stations.
-#Find the minimum value of dist.
+print(optimalpainter([1, 10], 2, 5))
 
-def brutegas(array,k):   #here array is the given number of gas stations and k is the number of new gas stations that we must place them in betweeen the gasstations of the given array
-    howmany=[0] * (len(array)-1)   #here howmany represents the number of gas stations that we have placed inbetween the gasstations from the given array
-    for i in range(1,k+1):  #this outer loop represents the loop of placing the new gas station inbetween the gasstations from the given array
+
+# Minimize Max Distance to Gas Station
+# Given a sorted array arr of size n, containing integer positions of n gas stations on the X-axis, and an integer k, place k new gas stations on the X-axis.
+# The new gas stations can be placed anywhere on the non-negative side of the X-axis, including non-integer positions.
+# Let dist be the maximum distance between adjacent gas stations after adding the k new gas stations.
+# Find the minimum value of dist.
+
+
+def brutegas(
+    array, k
+):  # here array is the given number of gas stations and k is the number of new gas stations that we must place them in betweeen the gasstations of the given array
+    howmany = [0] * (
+        len(array) - 1
+    )  # here howmany represents the number of gas stations that we have placed inbetween the gasstations from the given array
+    for i in range(
+        1, k + 1
+    ):  # this outer loop represents the loop of placing the new gas station inbetween the gasstations from the given array
         maxsection = -1
         maxindex = -1
-        for j in range(len(array)-1):  #here we are only running the loop until len(array) - 1 cause we need to find the difference between the two consecutive gas station so if we take the last gasstation then we cannot calculate the differenc of it with its next gasststion cause we go out of the loop
-         diff = array[j+1] - array[j]
-         distance = diff / (howmany[j] + 1)   #here the distance means the length or distance between the two consecutive gasstation at j index
-         if distance > maxsection:       #if the current obtained distance is the maximum then the last maxsection then we change our maxsection to current distance and the maxindex to the current i index
-             maxsection=distance
-             maxindex=j 
-        #so from this loop we get the maximum distance between the two consecutive gas stations at the specific index which is a gap at which we place the new gas station to reduce the distance
-        howmany[maxindex]+=1     #then we start placing the new gas station at the index or the gap where the maximum distance between the consecutive gasstation has been found.
+        for j in range(
+            len(array) - 1
+        ):  # here we are only running the loop until len(array) - 1 cause we need to find the difference between the two consecutive gas station so if we take the last gasstation then we cannot calculate the differenc of it with its next gasststion cause we go out of the loop
+            diff = array[j + 1] - array[j]
+            distance = diff / (
+                howmany[j] + 1
+            )  # here the distance means the length or distance between the two consecutive gasstation at j index
+            if (
+                distance > maxsection
+            ):  # if the current obtained distance is the maximum then the last maxsection then we change our maxsection to current distance and the maxindex to the current i index
+                maxsection = distance
+                maxindex = j
+        # so from this loop we get the maximum distance between the two consecutive gas stations at the specific index which is a gap at which we place the new gas station to reduce the distance
+        howmany[
+            maxindex
+        ] += 1  # then we start placing the new gas station at the index or the gap where the maximum distance between the consecutive gasstation has been found.
     maxans = -1
-    #this loop is for finding the maximum distance between two consecitive gas station after reducing the distance between the gasstations in every gap by placing all the new gas station
-    for i in range(len(array)-1):
-        diff = array[i+1] - array[i]
+    # this loop is for finding the maximum distance between two consecitive gas station after reducing the distance between the gasstations in every gap by placing all the new gas station
+    for i in range(len(array) - 1):
+        diff = array[i + 1] - array[i]
         distance = diff / (howmany[i] + 1)
-        maxans=max(maxans,distance)
-    return maxans   
-print(brutegas( [1, 2, 3, 4, 5, 6 ,7, 8, 9, 10],9)) 
-#time complexity : O(K * O(N))  #here K is the number of new gas stations to be placed and N is the number of gasstations in the given array
-#space compelxity : O(1)
+        maxans = max(maxans, distance)
+    return maxans
 
 
-#better solution 
-def bettergas(array,k):
-    howmany=[0]*(len(array)-1)  #this howmany represents the number of gaps index in the original gasstation
+print(brutegas([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 9))
+# time complexity : O(K * O(N))  #here K is the number of new gas stations to be placed and N is the number of gasstations in the given array
+# space compelxity : O(1)
+
+
+# better solution
+def bettergas(array, k):
+    howmany = [0] * (
+        len(array) - 1
+    )  # this howmany represents the number of gaps index in the original gasstation
     pq = []
-    for i in range(len(array)-1):   #this loop is used for storing the sectionlength or distance and their respective indices in the pq using heap loop
-        heapq.heappush(pq,(-1*array[i+1]-array[i],i))  #here we are storing the distance between the adjacent gasstations with their corresponding indices using heapq.heappush in pq
-    for i in range(1,k+1):
-        removed = heapq.heappop(pq)  #this removes the most smallest value from pq , which is the most largest distance between the adjacent gas stations
-        placedindex=removed[1]   #as we got the index at which the  most maximum distance is , then we can add the new gasstation at this index
-        howmany[placedindex]+=1    #here what we are doing is that we just found out about the gap which is the maximum then we just remove it from heap collection and we place the new gasstation at its respective index.
-        diff = array[placedindex+1]-array[placedindex]
-        #then we put the new obtained spacelength at that index after placing the new gasstation
-        heapq.heappush(pq,(-1 * diff//(howmany[placedindex]+1),placedindex))  #then we add the obtained distance after placing the new gas station 
-    #then the space lenghth remaining at the top of the heap will be our most minimum maximum distance between the adjacent gas stations
-    return pq[0][0] * -1  #then we return the first tuple's first value which is the distance and multiply it by -1 as we placed the distances as the negative value
-print(bettergas([1,13,17,23],5))
+    for i in range(
+        len(array) - 1
+    ):  # this loop is used for storing the sectionlength or distance and their respective indices in the pq using heap loop
+        heapq.heappush(
+            pq, (-1 * array[i + 1] - array[i], i)
+        )  # here we are storing the distance between the adjacent gasstations with their corresponding indices using heapq.heappush in pq
+    for i in range(1, k + 1):
+        removed = heapq.heappop(
+            pq
+        )  # this removes the most smallest value from pq , which is the most largest distance between the adjacent gas stations
+        placedindex = removed[
+            1
+        ]  # as we got the index at which the  most maximum distance is , then we can add the new gasstation at this index
+        howmany[
+            placedindex
+        ] += 1  # here what we are doing is that we just found out about the gap which is the maximum then we just remove it from heap collection and we place the new gasstation at its respective index.
+        diff = array[placedindex + 1] - array[placedindex]
+        # then we put the new obtained spacelength at that index after placing the new gasstation
+        heapq.heappush(
+            pq, (-1 * diff // (howmany[placedindex] + 1), placedindex)
+        )  # then we add the obtained distance after placing the new gas station
+    # then the space lenghth remaining at the top of the heap will be our most minimum maximum distance between the adjacent gas stations
+    return (
+        pq[0][0] * -1
+    )  # then we return the first tuple's first value which is the distance and multiply it by -1 as we placed the distances as the negative value
 
-#optimal solution
-#in this optimal approach what we are doing is first we are getting the value of mid which will act as our answer or the required most minimum maximum distacnce ,
-#by taking this distance or value , we check how many new gasstations are required, if the number of required new gasstations exceeds the given number k then we just move the left to mid to increase the value of gap ,
+
+print(bettergas([1, 13, 17, 23], 5))
+
+# optimal solution
+# in this optimal approach what we are doing is first we are getting the value of mid which will act as our answer or the required most minimum maximum distacnce ,
+# by taking this distance or value , we check how many new gasstations are required, if the number of required new gasstations exceeds the given number k then we just move the left to mid to increase the value of gap ,
 # otherwise we move the right to mid to decrease the gap distance, as the question is asking us to get the minimum maximum distance
 
-def countgasstations(distance,array):
+
+def countgasstations(distance, array):
     count = 0
-    for i in range(len(array)-1):
-        requirednumber=(array[i+1]-array[i]) / distance  #here we are calculating the number of required gas stations at the current gap
-        if (array[i+1] - array[i]) == (distance * requirednumber):
+    for i in range(len(array) - 1):
+        requirednumber = (
+            array[i + 1] - array[i]
+        ) / distance  # here we are calculating the number of required gas stations at the current gap
+        if (array[i + 1] - array[i]) == (distance * requirednumber):
             requirednumber -= 1
-               #if the gap is exactly divisible by the taken distance then we only need gasstations just one value lesser than the requirednumber
-        count+=requirednumber  #then in each gaps we calculate the number of gas stations required. 
+            # if the gap is exactly divisible by the taken distance then we only need gasstations just one value lesser than the requirednumber
+        count += requirednumber  # then in each gaps we calculate the number of gas stations required.
     return count
 
 
-def optimalgas(array,k):
-    low=0
+def optimalgas(array, k):
+    low = 0
     high = 0
-    for i in range(len(array)-1):
-        high=max(high,array[i+1]-array[i])   #here we are calculating the maximum gap which is present in the original gas station
-    while high - low > 1e-6:      #here we are running the loop as long as the most maximum distance is greater than the value of 1e-6 or 0.000001
-        mid = (low + high) / 2.0     #this is our assumed maximum distance right now
-        count = countgasstations(mid,array)
-        if count>k:  #if the number of gas staions required for the current max distance is way greater than the given k value , then we just increase the value of low , to make the gap much bigger so that the number of gas stations required will be within the k range
-            low = mid   
-        else:  #if the number of required gas stations lie with in the k range then we try to decrease the gap or distance by moving the high to mid
-            high =mid    
+    for i in range(len(array) - 1):
+        high = max(
+            high, array[i + 1] - array[i]
+        )  # here we are calculating the maximum gap which is present in the original gas station
+    while (
+        high - low > 1e-6
+    ):  # here we are running the loop as long as the most maximum distance is greater than the value of 1e-6 or 0.000001
+        mid = (low + high) / 2.0  # this is our assumed maximum distance right now
+        count = countgasstations(mid, array)
+        if (
+            count > k
+        ):  # if the number of gas staions required for the current max distance is way greater than the given k value , then we just increase the value of low , to make the gap much bigger so that the number of gas stations required will be within the k range
+            low = mid
+        else:  # if the number of required gas stations lie with in the k range then we try to decrease the gap or distance by moving the high to mid
+            high = mid
     return high
-print(optimalgas([1, 2, 3, 4, 5, 6 ,7, 8, 9, 10],9))
-#time complexity : O(N * log(len))   #len is the length of the answer and N is the length of an array
-#space complexity : O(1)
-
-#Median of 2 sorted arrays
-#Given two sorted arrays arr1 and arr2 of size m and n respectively, return the median of the two sorted arrays.
-#The median is defined as the middle value of a sorted list of numbers. In case the length of the list is even, the median is the average of the two middle elements.
 
 
-#brute approach
-def brutemedian(arr1,arr2):
-    n1=len(arr1)
-    n2=len(arr2)
-    total=sorted(arr1+arr2)  #here we are first summing the array1 and array2 then we are summing up the array
-    if len(total) % 2 !=0:
-        index = len(total) // 2 
-        ans=total[index] #this gives us the median element of the odd length array
+print(optimalgas([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 9))
+# time complexity : O(N * log(len))   #len is the length of the answer and N is the length of an array
+# space complexity : O(1)
+
+# Median of 2 sorted arrays
+# Given two sorted arrays arr1 and arr2 of size m and n respectively, return the median of the two sorted arrays.
+# The median is defined as the middle value of a sorted list of numbers. In case the length of the list is even, the median is the average of the two middle elements.
+
+
+# brute approach
+def brutemedian(arr1, arr2):
+    n1 = len(arr1)
+    n2 = len(arr2)
+    total = sorted(
+        arr1 + arr2
+    )  # here we are first summing the array1 and array2 then we are summing up the array
+    if len(total) % 2 != 0:
+        index = len(total) // 2
+        ans = total[index]  # this gives us the median element of the odd length array
     else:
-        second = (len(total)) // 2 
-        ans = (total[second] + total[second-1]) / 2
+        second = (len(total)) // 2
+        ans = (total[second] + total[second - 1]) / 2
     return ans
-print(brutemedian( [2, 4, 6], [1, 3,5]))
-#time complexity : O(M+Nlog(M+N))
-#space complexity : O(M+N)
 
 
-#better approach
-#in the better approach what we do is we dont use the third array for storing the numbers or for displaying the numbers what we do is we just catch the index
-def bettermedian(arr1,arr2):
-    n1=len(arr1)
-    n2=len(arr2)
-    n=n1 + n2   #this is our total length
-    mainindex = (n1 + n2) // 2   #this is the main index which gives us the median if the length of the total array is odd but
-    #if the length of the total arrays is even then we need to find the average between the numbers at the main index and mainindex-1
-    secondaryindex = mainindex - 1  #this is required only when the total length is even cause we need to calculate the average
-    i = 0 
+print(brutemedian([2, 4, 6], [1, 3, 5]))
+# time complexity : O(M+Nlog(M+N))
+# space complexity : O(M+N)
+
+
+# better approach
+# in the better approach what we do is we dont use the third array for storing the numbers or for displaying the numbers what we do is we just catch the index
+def bettermedian(arr1, arr2):
+    n1 = len(arr1)
+    n2 = len(arr2)
+    n = n1 + n2  # this is our total length
+    mainindex = (
+        n1 + n2
+    ) // 2  # this is the main index which gives us the median if the length of the total array is odd but
+    # if the length of the total arrays is even then we need to find the average between the numbers at the main index and mainindex-1
+    secondaryindex = (
+        mainindex - 1
+    )  # this is required only when the total length is even cause we need to calculate the average
+    i = 0
     j = 0
     count = 0
-    mainelem=0
-    secelem=0
-    while i<n1 and j<n2:   #here we are running the loop from i to length of arr1 and j to length of arr2
-        if arr1[i]<arr2[j]:   #then we check if the i indexed array element is lesser than the j indexed array element ,
-            #if yes then we check the index count with the required count 
+    mainelem = 0
+    secelem = 0
+    while (
+        i < n1 and j < n2
+    ):  # here we are running the loop from i to length of arr1 and j to length of arr2
+        if (
+            arr1[i] < arr2[j]
+        ):  # then we check if the i indexed array element is lesser than the j indexed array element ,
+            # if yes then we check the index count with the required count
             if count == mainindex:
-                mainelem=arr1[i]
+                mainelem = arr1[i]
             if count == secondaryindex:
-                secelem=arr1[i]    
+                secelem = arr1[i]
 
-            count+=1
-            i+=1
+            count += 1
+            i += 1
         else:
             if count == mainindex:
-                mainelem=arr2[j]
+                mainelem = arr2[j]
             if count == secondaryindex:
-                secelem=arr2[j]
-            count+=1
-            j+=1     
-    while i<n1:
+                secelem = arr2[j]
+            count += 1
+            j += 1
+    while i < n1:
         if count == mainindex:
-            mainelem=arr1[i]
+            mainelem = arr1[i]
         if count == secondaryindex:
-            secelem=arr1[i]
-        count+=1
-        i+=1
-    while j<n2:
+            secelem = arr1[i]
+        count += 1
+        i += 1
+    while j < n2:
         if count == mainindex:
-            mainelem=arr2[j]
+            mainelem = arr2[j]
         if count == secondaryindex:
-            secelem=arr2[j]
-        count+=1
-        j+=1    
+            secelem = arr2[j]
+        count += 1
+        j += 1
     if n % 2 != 0:
         return mainelem
     else:
-        return (mainelem + secelem) / 2    
-bettermedian([2, 4, 6],[1,3]) 
-#time complexity : O(N + M)
-#space complexity : O(1)   
-                           
+        return (mainelem + secelem) / 2
 
-#optimal approach
-def optimalmedian(arr1,arr2):
+
+bettermedian([2, 4, 6], [1, 3])
+# time complexity : O(N + M)
+# space complexity : O(1)
+
+
+# optimal approach
+# in the optimal approach what we do is we first check the array whose length is the smallest , then we make that array as our primary or main array based on which we make the left part or left half of the sorted or symmetric array,
+# then based on the mid value which we get from low + high // 2 where low is 0 and high is the length of our primary or main array, we take the mid value number of numbers from our main array and the remaining numbers from the secondary array will be taken to fill the part of left half of symmetric array
+# and the left half half is obtained by calculating n1 + n2 + 1 // 2
+# then based on the mid1indexed number and mid2indexed number we get r1 and r2 then l1 will be mid1indexed number -1 and l2 will be mid2indexed number -1
+# then the main condition which is if l1 < r2 and l2<r1 which is the cross diagram comparison meets then we check the total length , if its odd then the median will be the maximum of l1 and l2
+# but if the total length is even then the median will be the sum of max of l1,l2 and min of r1,r2 divided by 2
+
+
+def optimalmedian(arr1, arr2):
     n1 = len(arr1)
-    n2=len(arr2)
-    if n1>n2:   #as we are taking the array which has the shorter length in the left half to make the total array symmetric , we are first checking the length of array 1 and 2 , then swapping the arrays accordingly
-        return optimalmedian(arr2,arr1)
-    l1=l2=float('-inf')  #this is the most negative number
-    r1=r2=float('inf')   #this is the most positive number
+    n2 = len(arr2)
+    if (
+        n1 > n2
+    ):  # as we are taking the array which has the shorter length in the left half to make the total array symmetric , we are first checking the length of array 1 and 2 , then swapping the arrays accordingly
+        return optimalmedian(arr2, arr1)
+    l1 = l2 = float("-inf")  # this is the most negative number
+    r1 = r2 = float("inf")  # this is the most positive number
     low = 0
-    n=(n1 + n2 + 1) // 2   #this n gives the total number of numbers that must be in the left half
+    n = (
+        n1 + n2 + 1
+    ) // 2  # this n gives the total number of numbers that must be in the left half
     high = len(arr1)
-    while low<=high:
-        mid1 = (low + high) // 2   #this gives us the number of numbers that must be in the left half from array1
-        mid2=n - mid1    #this gives us the number of numbers that must be in the left half from array 2 
-        r1=arr1[mid1]   #this is our mid1indexed number from arr1 which lies at right half as r1
-        r2=arr2[mid2]   #this is our midindexed number from arr2 which lies at the right half as r2
-        l1 =arr1[mid1-1]  
-        l2=arr2[mid2-1]
-        if l1<=r2 and l2<=r1:
-            if n%2!=0:
-             median = (max(l1,l2) + min(r1,r2)) / 2
-             return median
+    while low <= high:
+        mid1 = (
+            low + high
+        ) // 2  # this gives us the number of numbers that must be in the left half from array1
+        mid2 = (
+            n - mid1
+        )  # this gives us the number of numbers that must be in the left half from array 2
+        r1 = arr1[
+            mid1
+        ]  # this is our mid1indexed number from arr1 which lies at right half as r1
+        r2 = arr2[
+            mid2
+        ]  # this is our midindexed number from arr2 which lies at the right half as r2
+        l1 = arr1[mid1 - 1]
+        l2 = arr2[mid2 - 1]
+        if l1 <= r2 and l2 <= r1:
+            if n % 2 != 0:
+                median = (max(l1, l2) + min(r1, r2)) / 2
+                return median
             else:
-             return max(l1,l2)
-        elif l1>r2:  #if the l1 is greater than r2 then it means we need more numbers from array2 and less from array1
-            high = mid1-1   #by making the  value of high mid1-1 , we are decreasing the numbers from array1
-        elif l2>r1:   #if the l2 is greater than r1 then it means we need more numbers from array1 and less from array2
-            low = mid1+1     #by making the value of left mid1+1 , we are increasing the numbers from array1
-print(optimalmedian([2, 4, 6],[1,3,5]))        
-#time complexity : O(logmin(n1,n2))  as we are taking the array whose length is much more lesser so the time complexity will be the logarithmic of minimum length among the lengths of array1 and array2
-#space complexity : O(1)    
+                return max(l1, l2)
+        elif (
+            l1 > r2
+        ):  # if the l1 is greater than r2 then it means we need more numbers from array2 and less from array1
+            high = (
+                mid1 - 1
+            )  # by making the  value of high mid1-1 , we are decreasing the numbers from array1
+        elif (
+            l2 > r1
+        ):  # if the l2 is greater than r1 then it means we need more numbers from array1 and less from array2
+            low = (
+                mid1 + 1
+            )  # by making the value of left mid1+1 , we are increasing the numbers from array1
 
 
-#in the optimal approach what we do is we first check the array whose length is the smallest , then we make that array as our primary or main array based on which we make the left part or left half of the sorted or symmetric array,
-#then based on the mid value which we get from low + high // 2 where low is 0 and high is the length of our primary or main array, we take the mid value number of numbers from our main array and the remaining numbers from the secondary array will be taken to fill the part of left half of symmetric array 
-#and the left half half is obtained by calculating n1 + n2 + 1 // 2 
-#then based on the mid1indexed number and mid2indexed number we get r1 and r2 then l1 will be mid1indexed number -1 and l2 will be mid2indexed number -1 
-#then the main condition which is if l1 < r2 and l2<r1 which is the cross diagram comparison meets then we check the total length , if its odd then the median will be the maximum of l1 and l2
-#but if the total length is even then the median will be the sum of max of l1,l2 and min of r1,r2 divided by 2
+print(optimalmedian([2, 4, 6], [1, 3, 5]))
+# time complexity : O(logmin(n1,n2))  as we are taking the array whose length is much more lesser so the time complexity will be the logarithmic of minimum length among the lengths of array1 and array2
+# space complexity : O(1)
+
+# Kth element of 2 sorted arrays
+# Given two sorted arrays a and b of size m and n respectively. Find the kth element of the final sorted array.
 
 
+# brute approach
+def brutekelem(arr1, arr2, k):
+    total = sorted(arr1 + arr2)  # this sorts the combination of given two arrays
+    return total[
+        k - 1
+    ]  # as in the list the index starts from 0, we are returning the value which is at index k-1 to return the kth element
 
 
-
-  
-
-
-
+print(brutekelem([2, 3, 6, 7, 9], [1, 4, 8, 10], 5))
+# time complexity : O(M + N)log(M+N)   the time complexity is O(M+N)log(M+N) cause we are first adding the two sorted arrays of length M and N and then we are sorting them using log.
+# space complexity : O(M + N)
 
 
+def betterkelem(
+    arr1, arr2, k
+):  # in this better approach what we gonna do is we gonna just find the index which is equal to k-1
+    i = 0
+    j = 0
+    count = 0
+    while i < len(arr1) and j < len(arr2):
+        if arr1[i] < arr2[j]:
+            if count == k - 1:
+                ans = arr1[i]
+                return ans
+            count += 1
+            i += 1
+        else:
+            if count == k - 1:
+                ans = arr2[j]
+                return ans
+            count += 1
+            j += 1
+    while i < len(arr1):
+        if count == k - 1:
+            ans = arr1[i]
+            return ans
+        count += 1
+        i += 1
+    while j < len(arr2):
+        if count == k - 1:
+            ans = arr2[j]
+            return ans
+        count += 1
+        j += 1
+
+    return 0
 
 
+print(betterkelem([2, 3, 6, 7, 9], [1, 4, 8, 10], 5))
+# time complexity : O(N+M)
+# space complexity : O(1)
 
+
+# optimal approach
+def optkelem(arr1, arr2, k):
+    n1 = len(arr1)
+    n2 = len(arr2)
+    n = n1 + n2
+    if n1 > n2:
+        return optkelem(
+            arr2, arr1, k
+        )  # if the length of an array 1 is greater than the length of array 2 then we just swap the places of array1 and 2 so that array1 will store array2 and array2 will store array1
+    left = k  # here we are making the left part range of k
+    # so that the max of l1 and l2 gives us the kth element as in the median the max of l1 and l2 gave us the median when the array's length was odd.
+    low = max(
+        0, k - n2
+    )  # also we can't take no element from array1 at first as there might be case when the k is greater than n1 and n2 , that it forces us to take atleast one element from array 1 to form the left half//'
+    high = min(
+        k, n1
+    )  # and there might also be cases when the k value is much lesser that we only need few numbers from array1 not all of the numbers from array1.As an example, if k == 2 then we only need 2 elements from array1.so no need for all the numbers to be used from array1
+    # here l1 and l2 are the left half extreme parts which must be lesser than the right half extreme parts
+    l1 =l2= float('-inf')
+    # here r1 and r2 are the right half extreme parts which must be greater than the left half extreme parts
+    r1 =r2= float('inf')
+    while low <= high:
+        mid1 = (low + high) // 2
+        if mid1 <= n1:
+            r1 = arr1[mid1]
+        if mid1 - 1 >= 0:
+            l1 = arr1[
+                mid1 - 1
+            ]  # this gives us the number of elements that must be from the array1 to form the left half of an array
+        mid2 = left - mid1
+        if mid2 <= n2:
+            r2 = arr2[mid2]
+        if mid2 - 1 >= 0:
+            l2 = arr2[
+                mid2 - 1
+            ]  # this gives us the number of elements that must be from the array1 to form the left half of an array
+        if (
+            l1 <= r2 and l2 <= r1
+        ):  # if the condition of left half smaller than the right half is met then
+            return max(
+                l1, l2
+            )  # we return the max of l1 and l2 , which is the kth position element
+        elif (
+            l1 > r2
+        ):  # if the left half number from array1 is way greater then we need to exclude this number from array1 which can be done by making high = mid1-1
+            high = mid1 - 1
+        elif (
+            l2 > r1
+        ):  # if the left half number from arry2 is way greater than we need to exclude this number from array2 which can be done by making low = mid1 +1
+            low = mid1 + 1
+    return 0
+print(optkelem( [2, 3, 6, 7, 9], [1, 4, 8, 10],5))
+#time complexity : O(log(min(array1,array2))
+#space complexity : O(1)

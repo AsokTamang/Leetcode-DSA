@@ -1292,4 +1292,3 @@ def optmedian(array1,array2):
 print(optmedian([2, 4, 6],[1,3,5]))     
 #time complexity : O(log(min(len(array1),len(array2))))
 #space complexity : O(1)   
-
