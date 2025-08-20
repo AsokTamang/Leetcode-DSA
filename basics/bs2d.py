@@ -126,6 +126,32 @@ print(brute2dmatrix( [ [1, 4, 7, 11, 15], [2, 5, 8, 12, 19], [3, 6, 9, 16, 22], 
 #space complexity : O(1)
 
 
+#better approach
+#in the better approach what we will do is we go through each and every rows and check  by using the binary search method
+def checkrow(array,k):
+    left = 0
+    right = len(array)-1
+    while left<=right:
+        mid = (left + right) // 2
+        if array[mid]==k:
+            return True
+        elif array[mid]>k:
+            right = mid - 1
+        else:
+            left = mid + 1
+    return False            
+def better2dmatrix(array,k):
+    for i in range(len(array)):  #going through each and every rows
+        check = checkrow(array[i],k)   #then we pass i indexed row or lets say each and every rows to check the target k using the function checkrow
+        if check:
+            return True   #if we found k then we return true
+        else:
+            continue   #otherwise we just continue with another iteration of i.
+    return False    
+print(better2dmatrix( [ [1, 4, 7, 11, 15], [2, 5, 8, 12, 19], [3, 6, 9, 16, 22], [10, 13, 14, 17, 24], [18, 21, 23, 26, 30] ],5))
+#time complexity : O(N*logM)  for every rows we check k using binary search so the time complexity is O(N*logM)
+#space complexity : O(1)
+
 
    
       
