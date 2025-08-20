@@ -214,12 +214,56 @@ def betterpeak(array):
                 left = mid + 1
             elif array[mid] > array[mid+1]:   #otherwise if the current midindexed number is greater than it's later number then the peak number must be in the left half 
                 right = mid-1
+            else:   #if the mid is at that point where going either side will help us to reach the peak number then we can either go to the left half or the right half
+                left = mid + 1    
         return -1
 print(betterpeak([1, 2, 3, 4, 5, 6, 7, 8, 5, 1])) 
 #time complexity : O(logN)
-# space complexity : O(1)               
+# space complexity : O(1)              
         
     
+#peak element in 2d matrix 
+#brute approach
+#in this brute approach what we can do is we can go through each and every numbers in the array and check whether that specific number is greater than its previous number as well as the later number
+
+def findmax(array,mid):
+    m = -1
+    ans = 0
+    for i in range(len(array)):   #we go through each rows
+        if array[i][mid] > m:  #here what we are doing is finding the maximum number in the given column mid from each rows
+            m=array[i][mid]
+            ans = i
+    return ans   
+
+
+
+
+def optimalpeak2d(array):
+    #in the optimal approach what we are doing is we are checking the mid index based on the column wise or vertically then we find out the maximum element or number in that specific column where the mid lies
+    low = 0   #we make the low as 0 caus
+    high = len(array[0]) - 1   #high will be the last index of our column
+    while low<=high:
+        mid = (low + high) // 2 
+        #as we get the mid value now what we try to do is we find out the maximum value from that specific column where this mid lies    
+        row = findmax(array,mid)  #now as we find out the row which has the maximum value in this specific column mid
+        left = mid -1 if mid-1 >=0  else -1    #here the left or mid - 1 must be with in the range of array[0]
+        right = mid +1 if mid+1<len(array[0]) else -1  #here the right or mid + 1 also must be with in the range of array[0] which is lesser than the length of child array 
+        if array[row][left] <= array[row][mid] and array[row][right] <= array[row][mid]:
+            return (row,mid)
+        elif left!=-1 and  array[row][left] > array[row][mid]:  #if the left indexed number at the obtained row is greater than the mid indexed number then our answer or peak number lies in the left half
+            high = mid-1
+        elif right!=-1 and array[row][right] > array[row][mid]:  #if the right indexed number at the obtained row is greater than the mid indexed number then our answer lies in the right half
+            low = mid + 1  
+    return -1
+print(optimalpeak2d([
+    [3,  8, 12, 15, 20],
+    [5, 10, 14, 18, 25],
+    [7, 13, 17, 22, 28],
+    [9, 16, 21, 26, 30],
+    [11,19, 40, 27, 35]
+]))          
+
+
 
 
 
