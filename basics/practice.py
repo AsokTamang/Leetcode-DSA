@@ -1336,6 +1336,25 @@ print(optimalmax([ [0, 0, 1], [0, 0, 1], [0, 1, 1] ]))
 
 
 
+def optimal2dmatrix(array,k):
+    n = len(array)   #here n is the total length of the parent array
+    m = len(array[0])  #here m is the length of the child array
+    left = 0  #this is our first index of the flatten array
+    right = n*m -1     #this is the last index of the flatten array
+    while left<=right:
+        mid = (left + right) // 2  #this mid value gives the index of the flatten array which we use to check if its equal to the target k or not
+        if array[mid//m][mid%m]==k:
+            return True
+        elif array[mid//m][mid%m]>k:   #if the current mid indexed number is greater than k then we just move the right pointer to left half
+            right = mid - 1 
+        else:
+            left = mid + 1    
+    return False
+print(optimal2dmatrix( [ [1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12] ],12))
+#time complexity : O(logN*M)
+#space complexity : O(1)
+
+
          
 
 

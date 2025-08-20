@@ -90,6 +90,26 @@ print(bettersearch2d( [ [1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12] ], 8))
 # space complexity : O(1)  
 
 
+#so for the row , we should calculate mid // m and for the column we should calculate mid % m , where m is the length if the child array
+#in the optimal approach, what we do is we flatten the array imaginarily  
+def optimalsearch2d(array,k):
+  n = len(array)
+  m=len(array[0])
+  low = 0  #this is at the 0 index
+  high = (n * m) - 1 #this is at the last index of the flatten array
+  while low<=high:
+      mid = (low + high) // 2     #this gives us the index value to check for target number k
+      if array[mid//m][mid%m] == k:
+          return True
+      elif array[mid//m][mid%m] > k:
+          high=mid-1
+      else:
+          low=mid+1
+  return False
+#time complexity : O(logN*M)
+#space complexity : O(1)               
+
+
 
 
 
