@@ -1313,7 +1313,30 @@ print(optimalrow([[0, 0, 1, 1],
 [0, 1, 1, 1],
 [0, 0, 0, 1]]))  
 #time complexity : O(N + M)  here N is the length of the parent row and M means approximately equal to the length of child row  
-#space complexity : O(1)     
+#space complexity : O(1)
+
+
+#Find row with maximum 1's
+def optimalmax(array):
+    n = len(array)  #here n is the length of a parent array
+    m= len(array[0])   #m is the length of the child array
+    row= 0
+    col = m-1
+    ans = -1
+    while row<n and col>=0:
+        if array[row][col] == 1:  #we are checking the 1 from the first row and the last column or the last element of the first row
+            ans=row   #as our answer is sorted in ascending order , we are assuming the answer the current row as soon as we found the number 1 at the current row and column index
+            col-=1
+        else:  #if at the current row as soon as we found the number 0 we change the row by keeping the column same,
+            row+=1 
+    return ans 
+print(optimalmax([ [0, 0, 1], [0, 0, 1], [0, 1, 1] ])) 
+#time complexity : O(N + M) 
+#space complexity : O(1)       
+
+
+
+         
 
 
 
