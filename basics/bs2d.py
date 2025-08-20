@@ -42,4 +42,60 @@ def optimalrow(array):
             col-=1
         else:
             row+=1
-    return ans             
+    return ans  
+
+
+
+#Search in a 2D matrix
+#Given a 2-D array mat where the elements of each row are sorted in non-decreasing order, and the first element of a row is greater than the last element of the previous row (if it exists), and an integer target, determine if the target exists in the given mat or not.
+
+def search2d(array,k):  #here k is the target which we need to check if this exists or not
+    for i in range(len(array)):
+     for j in range(len(array[0])):
+         if array[i][j] == k:
+             return True
+    return False     
+print(search2d(  [ [1, 2, 4], [6, 7, 8], [9, 10, 34] ],78))   
+#time complexity : O(N*M)
+# space complexity : O(1)   
+
+
+def findk(array,k):  #this function is the main function of checking whether the k lies in the array or not
+    low = 0
+    high = len(array)-1
+    while low <=high:
+        mid = (low + high) // 2
+        if array[mid] == k:
+            return True      
+        elif array[mid] < k:
+            low = mid + 1 
+        elif array[mid] > k:
+            high = mid - 1
+    return False 
+       
+
+
+
+
+#so for the better approach what we do is we check in every rows whether the target k lies within the row or not.
+def bettersearch2d(array,k):
+    m=len(array[0])  #this is the length of the child array   
+    for i in range(len(array)):
+        #what this loop is doing is that first of it goes through every rows of the matrix ,and as the child rows are sorted in ascending order , if the target k lies within the child array, then we pass that specific array to the function which do the particular check of target k element or number
+        if array[i][0] <=k <=array[i][m-1]:    #this check whether k lies in original array or not by checking in each and every rows
+            #if it does then we pass this particular array where we found the target 
+             return findk(array[i],k)
+print(bettersearch2d( [ [1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12] ], 8))  
+#time complexity : O(N+log(M)) here N is the length of parent array and M is the length of child array 
+# space complexity : O(1)  
+
+
+
+
+
+
+   
+      
+
+
+           
