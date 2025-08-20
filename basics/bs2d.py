@@ -110,7 +110,20 @@ def optimalsearch2d(array,k):
 #space complexity : O(1)               
 
 
+#Search in 2D matrix - II
+#Given a 2D array matrix where each row is sorted in ascending order from left to right and each column is sorted in ascending order from top to bottom, write an efficient algorithm to search for a specific integer target in the matrix.
 
+#brute appoach
+#in the brute approach what we do is we go through each and every numbers in the given 2D matrix to check whehter the target k exists or not
+def brute2dmatrix(array,k):
+    for i in range(len(array)):  #this loop goes through the each rows
+        for j in range(len(array[0])):   #this loop goes through each columns
+            if array[i][j]==k:
+                return True
+    return False
+print(brute2dmatrix( [ [1, 4, 7, 11, 15], [2, 5, 8, 12, 19], [3, 6, 9, 16, 22], [10, 13, 14, 17, 24], [18, 21, 23, 26, 30] ],75))
+#time complexity : O(N * M)
+#space complexity : O(1)
 
 
 
