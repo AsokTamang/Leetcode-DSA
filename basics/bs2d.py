@@ -153,8 +153,74 @@ print(better2dmatrix( [ [1, 4, 7, 11, 15], [2, 5, 8, 12, 19], [3, 6, 9, 16, 22],
 #space complexity : O(1)
 
 
-   
-      
+
+#optimal approach
+#in the optimal approach what we gonna do is we first check with the last indexed number of the first row , as our numbers are sorted row wise as well as column wise 
+#lets say in the opposite L shape
+def optimal2dmatrix(array,k):
+    row = 0
+    column = len(array[0])-1
+    while row <= len(array)-1 and column>=0:  #the row can go as much as until number of rows - 1 and the columns can only go until 0 otherwise it will be out of the range
+        if array[row][column] == k:
+            return (row,column)
+        elif array[row][column] > k:
+            column-=1
+        elif array[row][column] < k:
+            row+=1
+    return False
+print(optimal2dmatrix([ [1, 4, 7, 11, 15], [2, 5, 8, 12, 19], [3, 6, 9, 16, 22], [10, 13, 14, 17, 24], [18, 21, 23, 26, 30] ],30)) 
+#time complexity : O(N + M)   here time complexity is O(N + M) because what we are doing is we are only going through every rows and columns but alternately.
+# space complexity : O(1)           
+
+
+#Find peak element
+#Given an array arr of integers. A peak element is defined as an element greater than both of its neighbors.
+#Formally, if arr[i] is the peak element, arr[i - 1] < arr[i] and arr[i + 1] < arr[i].
+#Find the index(0-based) of a peak element in the array. If there are multiple peak numbers, return the index of any peak number.
+#Note:
+#As there can be many peak values, 1 is given as output if the returned index is a peak number, otherwise 0.
+
+def brutepeak(array):
+    n=len(array)
+    if len(array) == 1 or array[0]>array[1]:
+        return 0  #if there is only one element in an array or the first number is greater than the second number then of course the peak number or element will be 0
+    elif array[n-1]>array[n-2]:
+        return n-1    #if the last indexed number is greater than the second last than ofcourse this last index will be our answer cause after this index there are no numbers in an array.
+    else:
+        for i in range(1,n-1):    #then we are running the loop from 1 index to n-1 index as we already did the checking for the first as well as the last indexed number
+            if array[i-1]<array[i] and array[i]>array[i+1]:
+                return i
+    return -1  #we are returning -1 if there are no peak elements
+print(brutepeak([1, 2, 3, 4, 5, 6, 7, 8, 5, 1]))
+#time complexity : O(N)
+#space complexity : O(1)
+
+
+#better approach
+def betterpeak(array):
+    n=len(array)
+    if len(array) == 1 or array[0]>array[1]:
+        return 0  #if there is only one element in an array or the first number is greater than the second number then of course the peak number or element will be 0
+    elif array[n-1]>array[n-2]:
+        return n-1    #if the last indexed number is greater than the second last than ofcourse this last index will be our answer cause after this index there are no numbers in an array.
+    else:
+        left = 1
+        right = n-2
+        while left<=right:
+            mid = (left + right) // 2
+            if array[mid] > array[mid-1] and array[mid]>array[mid+1]:
+                return mid    
+            elif array[mid] > array[mid-1]:   #if the current mid indexed number is greater than the previous one then the peak number must be in the right half
+                left = mid + 1
+            elif array[mid] > array[mid+1]:   #otherwise if the current midindexed number is greater than it's later number then the peak number must be in the left half 
+                right = mid-1
+        return -1
+print(betterpeak([1, 2, 3, 4, 5, 6, 7, 8, 5, 1])) 
+#time complexity : O(logN)
+# space complexity : O(1)               
+        
+    
+
 
 
            
