@@ -410,3 +410,60 @@ def brutemedian2d(array):
 print(brutemedian2d([ [1, 3, 8], [2, 3, 4], [1, 2, 5] ]  ))           
 #time complexity : O(N*M * logN*M) logN*M is for sorting the array
 #space complexity : O(N*M)
+
+
+def upperbound(array,mid):  #this is the main function for counting the number of elements which are lesser than or equal to the given mid value , 
+    #in this function what we do is 
+    low = 0
+    high = len(array)-1
+    ans = len(array)   #all of the numbers in the row might be lesser than or equal to the midvalue
+    while low<=high: 
+        midvalue = (low + high) // 2
+        if array[midvalue]>mid:   #if the current midvalue indexed number is greatr than the given mid then this midvalue index might be our answer which gives the number of elements which are lesser than or equal to given mid
+            ans = midvalue   #as the midvalue gives us the index of the numebr which is greater than the given mid and as our array is sorted row wise, the numbers before this index is always smaller than or equal to the given mid and instead of moving to right half , we just destroy the right half and move into the left half
+            high=midvalue-1  #to check whether there might exist a number that can be greater than the given mid
+        else:
+            low=midvalue + 1    
+    return ans        
+
+
+
+
+
+
+def smallequal(array,mid):  #this is just a pathway function which passes the mid value to check the numbers smaller or equal to the this mid value in the given matrix by going through each and every rows
+    count = 0
+    for i in range(len(array)):
+        count+=upperbound(array[i],mid)
+    return count    
+
+
+
+#optimal approach
+def optimalmedian2d(array):
+    low =float('inf')
+    high = float('-inf')
+    n=len(array)  #n is the length of an array or number of rows
+    m=len(array[0])  #m is the length of a child array or number of columns
+    #as our arrays are sorted row wise
+    #we can just go through the first column to get the smallest number in the matrix and we can just go through the last column to get the largest number in the matrix
+    for i in range(len(array)):  #going through each and every rows
+        low = min(low,array[i][0])   #going through every first columns
+        high = max(high,array[i][m-1])   #through every last columns
+    median = (n * m) // 2  
+    while low<=high:
+        mid = (low + high) // 2 
+        #now as we get the mid value which might be our median
+        #but first we need to check how many numbers are lesser than or equal to this mid value   
+        smallerequal = smallequal(array,mid)
+        if smallerequal<=median:  #if the number of elements which are lesser than the  mid value is way lesser than the median index then our answer might lie in the right half
+            low=mid+1
+        else:   #if the number of elements which are lesser than the mid value is greater than the median index then our answer lies in the left half
+            high = mid-1
+    return low   
+print(optimalmedian2d([ [1, 4, 9], [2, 5, 6], [3, 7, 8] ] ))       
+
+#so the main concept behind this optimal solution is we need to find the number of elements smaller than  or equal to the obtained mid and this number which 
+#is the number of elements smaller than or equal to the obtained mid must be just greater than the median position or index which is (n*m) // 2, not too great and not too small
+#time complexity : O(log(max-min) * O(N*logM))  #here N is the number of rows and M is the number of columns
+#space complexity : O(1)
