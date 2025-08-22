@@ -56,4 +56,40 @@ print(reversewordins("welcome to the jungle"))
 #time complexity : O(N)
 # space complexity : O(N) 
 
-     
+
+#Largest Odd Number in a String
+#Given a string s, representing a large integer, the task is to return the largest-valued odd integer (as a string) that is a substring of the given string s.
+#The number returned should not have leading zero's. But the given input string may have leading zero. (If no odd number is found, then return empty string.)
+
+
+#brute approach 
+#in the brute approach what we did was looping through every possible numbers which are odd and finding the maximum among them
+def largestodd(s):
+   n=len(s)  
+   maxim=float('-inf')
+   for i in range(n):
+      for j in range(i+1,n):
+         num=int(s[i:j+1] )   #here we are using j+1 cause in slicing the last index is always ignored , so we are using j+1
+         if num % 2 !=0:
+            maxim=max(maxim,num)
+   return str(maxim)   
+print(largestodd("0214638"))      
+#time complexity : O(N^2)
+#space complexity :O(1)
+
+#in the optimal approach what we will do is
+#we loop from the last index or the last digit of the given string cause ofcourse it will give us the largest possible number in the given string if we just start from the last index
+#and as soon as we find the largest odd number from the last index , this will be our answer
+
+def optimallargestodd(s):
+   n = len(s)
+   for i in range(n-1,-1,-1):
+      if int(s[i]) % 2 !=0:  #as soon as we found the last digit from the last index which is odd then this will be our answer. 
+         return int(s[:i+1])   #here to include this odd digit i we are using i+1
+   return -1
+print(optimallargestodd("0214638"))  
+#time complexity : O(N)
+#space complexity : O(1) 
+      
+   
+        
