@@ -22,3 +22,13 @@ def remoutermost(s):
 print(remoutermost("()(()())(())"))
 #time complexity : O(N)
 #space complexity : O(N)
+
+
+#Reverse every word in a string
+def reverseword(string):
+    ans = string.split(' ')  #here we are splitting the given sentence at the whitespace
+    ans=ans[::-1]  #then we are reversing that splitted ans
+    return  ' '.join(ans)
+print(reverseword(" amazing coding skills "))
+#time complexity : O(N)
+#space complexity : O(N)

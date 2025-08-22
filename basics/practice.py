@@ -1779,3 +1779,55 @@ print(
 )
 #time complexity : O( logM * N) here M is the number of columns and N is the number of rows
 #space complexity : O(1)
+
+#matrix median 
+#in the naive approach what we can do is we can store all the numbers of the 2d matrix in a single array in a sorted way then we can easily find the median by calulating the number at the index (N*M) //2  which is the median position in an array
+#but in the optimal approach what we can do is , we can calculate the number of numbers smaller than or equal to the mid value which is obtained between the minimum and the maximum number in an array,
+#this number of smaller than or equal to the mid value is taken as a comparison value which is compared with  the median, if its lesser than the median then we move to the right half,
+#otherwise we move to the left half,
+#we can see this in the code below
+def upperbound(array,mid):  #we are using only one specific row here passed from smallequal function
+    low = 0
+    high = len(array)-1
+    ans = len(array)   #we are assuming that all the values in the array might be greater than the  value mid
+    while low<=high:
+        mid2=(low + high) // 2
+        if array[mid2] > mid:   #here what we are doing is we  are checking if the mid2 indexed number is greater than the mid in param, if it is then we assume this might be our answer which is mid2 ,
+            #that gives us the number of numbers smaller than or equal to mid, and as our array is sorted in ascending order, rather than going to the right half , we are moving to the left half as shown here 
+            ans = mid2
+            high = mid2-1
+        else:
+            low=mid2+1
+    return ans            
+
+
+
+def smallequal(array,mid):
+    count = 0
+    for i in range(len(array)):
+        count+=upperbound(array[i],mid)  #this count is used for counting the numbers in an array which are lesser than or equal to the mid 
+    return count    
+
+
+def optimalmedian2d(array):
+    n=len(array)  #number of rows
+    m=len(array[0])  #number of columns 
+    low = float('inf')  
+    high = float('-inf')
+    req = (n * m )// 2 
+    #as our rows are arranged or sorted in ascending order,
+    for i in range(n):
+        low = min(low,array[i][0])  #as the first element of every arrays is the smallest in their corresponding rows
+        high = max(high,array[i][m-1])  #and as the last element of every arrays is the largeest in their corresponding rows
+    #from the above loop, we got the value of low and high
+    while low<=high:
+        mid=(low + high) // 2 
+        smallerequal=smallequal(array,mid)    #this smallequal function is used for calculating all the numbers in the array which are smaller than or equal to the obtained mid
+        if smallerequal<=req:
+            low = mid + 1
+        else:
+            high = mid - 1
+    return low   #and the value of smaller equal must be just slightly greater than the  median indexed value in an array , which will be the low value in our case , as high will move beyond the mid value but in left direction
+print(optimalmedian2d([ [1, 3, 8], [2, 3, 4], [1, 2, 5] ] ))    
+#time complexity : O(log(maxm-minm)*NlogM)  #here N is the number of rows and M is the number of columns
+# space complexity : O(1)         
