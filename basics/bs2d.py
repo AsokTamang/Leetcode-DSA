@@ -390,3 +390,23 @@ print(
 )
 # time complexity : O(logM * N)  here M is the number of columns and N is the number of rows
 # space complexity : O(1)
+
+
+#Matrix Median
+#brute approach
+#so the naive brute approach can be sorting the given 2d matrix in 1 array in ascending order then finding the median
+def brutemedian2d(array):
+    test = []
+    for i in range(len(array)):
+        for j in range(len(array[0])):
+            test.append(array[i][j])
+    #now as we are done appending all the numbers from 2d matrix in an array called test , we need to sort them
+    test=sorted(test)
+    medianindex=len(test) // 2
+    if len(test) % 2 !=0:
+        return test[medianindex]
+    else:
+        return (test[medianindex] + test[medianindex-1]) / 2  
+print(brutemedian2d([ [1, 3, 8], [2, 3, 4], [1, 2, 5] ]  ))           
+#time complexity : O(N*M * logN*M) logN*M is for sorting the array
+#space complexity : O(N*M)
