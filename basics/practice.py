@@ -1831,3 +1831,29 @@ def optimalmedian2d(array):
 print(optimalmedian2d([ [1, 3, 8], [2, 3, 4], [1, 2, 5] ] ))    
 #time complexity : O(log(maxm-minm)*NlogM)  #here N is the number of rows and M is the number of columns
 # space complexity : O(1)         
+
+
+#Remove Outermost Parentheses
+#A valid parentheses string is defined by the following rules:
+#It is the empty string "".
+# If A is a valid parentheses string, then so is "(" + A + ")".
+#If A and B are valid parentheses strings, then A + B is also valid.
+#A primitive valid parentheses string is a non-empty valid string that cannot be split into two or more non-empty valid parentheses strings.
+#Given a valid parentheses string s, your task is to remove the outermost parentheses from every primitive component of s and return the resulting string.
+
+def removeouter(string):
+    counter = 0
+    ans = []
+    for char in string:  
+        if char == '(':  #here our approach is as soon as we found the char ( , we check if the count is greater than 0 , if it is then it means its not the first ( so we append otherwise we just increase the count by 1 by ignoring the first (.
+            if counter>0:
+                ans.append(char)
+            counter+=1    
+        elif char == ')':   #but in the case of ), we first decrease the count by 1, then check whether the count is 0 or not , if its 0 then it means this current ) is the last ) that cancel the first ( , if its not then it means its still not the last closing ) char.
+            counter-=1
+            if counter > 0:
+                ans.append(char)
+    return ''.join(ans)
+print(removeouter("((()))"))   
+#time complexity : O(N)
+# space complexity : O(1)                 
