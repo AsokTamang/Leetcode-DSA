@@ -135,5 +135,20 @@ print(isomorphicstring( "apple", "bbnbm"))
 #time complexity : O(N)  where N is the length of the given strings
 #space complexity : O(N)
           
+
+#rotate string
+#Given two strings s and goal, return true if and only if s can become goal after some number of shifts on s.
+#A shift on s consists of moving the leftmost character of s to the rightmost position.
+#For example, if s = "abcde", then it will be "bcdea" after one shift.
+
+def rotatestr(s,goal):  #the best approach will be as s+s consists of all the s string which can be obtained after every rotations possible
+   #the string can be rotated only upto the length of any string
+   if (len(s)!=len(goal)):
+      return False
+   return goal in (s+s)
+print(rotatestr( "abcde" ,"abcde"))  
+#time complexity : O(N) here N is the length of the string
+#space compelxity : O(1)
    
         
+
