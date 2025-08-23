@@ -91,5 +91,24 @@ print(optimallargestodd("0214638"))
 #time complexity : O(N)
 #space complexity : O(1) 
       
+#Longest Common Prefix
+#Write a function to find the longest common prefix string amongst an array of strings.
+#If there is no common prefix, return an empty string "".
+#here what the question is asking us is to find the common or matching letters or prefix among the given words in an array
+def commonprefix(a): #here a is the array which consists of all the strings from which we need to find the prefix
+   ans = ""
+   for i in range(len(a[0])):
+      for str in a[1:]:
+         if i==len(str) or str[i]!=a[0][i]:   #here why we are checking i==len(str) cause the first letter in the array might have the longest length whereas the other strings might have the shortest length, so as soon as i exceeds the length of the other string , then
+            #there is no point in comparing the common prefix . so we just return the ans
+            return ans
+      ans+=a[0][i]  
+print(commonprefix( ["dog" , "cat" , "animal", "monkey" ]))        
+#time complexity : O(M*N)  here M is the length of the first string
+# space complexity : O(M)  in the worst case all of the strings in the first word can be a common prefix     
+
+
+
+         
    
         
