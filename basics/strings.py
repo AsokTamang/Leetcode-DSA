@@ -107,8 +107,33 @@ print(commonprefix( ["dog" , "cat" , "animal", "monkey" ]))
 #time complexity : O(M*N)  here M is the length of the first string
 # space complexity : O(M)  in the worst case all of the strings in the first word can be a common prefix     
 
+#Isomorphic String
+#Given two strings s and t, determine if they are isomorphic. Two strings s and t are isomorphic if the characters in s can be replaced to get t.
+#All occurrences of a character must be replaced with another character while preserving the order of characters. No two characters may map to the same character, but a character may map to itself.
 
 
-         
+#so here what the question is asking us is to check whether the given string is isomorphic or not
+#and for the two strings to be isomorphic, if  the letters of first string s is all replaced by the letters of the second string t and those letters replaced are mapped to their unique replacing number then only the condition is true otherwise false 
+def isomorphicstring(s,t):
+   m1={}  #here this is a map1
+   m2={}   #here this is a map2
+   #first condition, as soon as we find that the length of two strings are unequal then we return false
+   if len(s)!=len(t):
+      return False
+   for i in range(len(s)):#looping through every characters of any string among the two
+      word1=s[i]  #then assiging the given i indexed character of word s in word1 and of word t in word2
+      word2=t[i]
+      #at first the below two conditions will always be false , so it wont return false or return anything 
+      if (word1 in m1 and m1[word1]!=word2) or  (word2 in m2 and m2[word2]!=word1):  #then we check if the word1 has already a value which is not equal to the current word2 then we just return false
+         return False
+      #so we reach here , which stores the first letter of the word s as a key and first letter of the word t as a value in a dict called m1
+     
+      m1[word1]=word2 
+      m2[word2]=word1 
+   return True   
+print(isomorphicstring( "apple", "bbnbm"))   
+#time complexity : O(N)  where N is the length of the given strings
+#space complexity : O(N)
+          
    
         
