@@ -31,3 +31,70 @@ def nestingdepth(s):
 print(nestingdepth("(1)+((2))+((((3))))"))  
 #time complelxity : O(N) N is the number of characters in a string
 # space complexity : O(1)           
+
+
+
+#Roman to Integer
+#Roman numerals are represented by seven different symbols:
+#Roman numerals are typically written from largest to smallest, left to right. However, in specific cases, a smaller numeral placed before a larger one indicates subtraction.
+#The following subtractive combinations are valid:
+#I before V (5) and X (10) → 4 and 9
+#X before L (50) and C (100) → 40 and 90
+#C before D (500) and M (1000) → 400 and 900
+#Given a Roman numeral, convert it to an integer.
+
+def romantoint(s):
+    ans =0
+    i = 0
+    while i<len(s):
+        if i < len(s)-1:
+            if s[i] + s[i+1] == "IV":
+                ans+=4
+                i+=2
+            elif s[i] + s[i+1] == "IX":
+                ans+=9
+                i+=2  
+            elif s[i] + s[i+1] == "XL":
+                ans+=40
+                i+=2
+            elif s[i] + s[i+1] == "XC":
+                ans+=90
+                i+=2 
+            elif s[i] + s[i+1] == "CD":
+                ans+=400
+                i+=2
+            elif s[i] + s[i+1] == "CM":
+                ans+=900
+                i+=2
+        if i<len(s):
+            if s[i] == "I":
+                ans+=1
+                i+=1      
+            elif s[i] == "V":
+                ans+=5
+                i+=1
+            elif s[i] == "X":
+                ans+=10
+                i+=1
+            elif s[i] == "L":
+                ans+=50
+                i+=1
+            elif s[i] == "C":
+                ans+=100
+                i+=1
+            elif s[i] == "D":
+                ans+=500
+                i+=1
+            elif s[i] == "M":
+                ans+=1000
+                i+=1  
+    return ans
+print(romantoint("III"))               
+#time complexity : O(N)
+# space complexity : O(1)   
+                
+
+
+
+
+
