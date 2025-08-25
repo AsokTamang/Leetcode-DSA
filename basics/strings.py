@@ -156,16 +156,18 @@ print(rotatestr( "abcde" ,"abcde"))
 #An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
 #here what we are doing is we are checking the count 
 def validanagram(s,t):
-   m1={}
-   m2={}
+   m={}
    for char in s:
-      m1[char]=m1.get(char,0) + 1  #here 0 is the default
-   for char in t:
-      m2[char]=m2.get(char,0) + 1  
-   if m1==m2:
-      return True
-   else:
-      return False
+      m[char]=m.get(char,0) + 1  #here 0 is the default
+   for char in t:  #as we have stored all the characters from a string s in m as a key-value pair,
+      #if the given two strings are anagram then there must be equal number of characters in both s and t,
+      if char not in m:
+         return False
+      m[char]-=1
+      if m[char]<0:  #if only there is extra number of same character in t,then we will get the m[char] below 0 which means , the given two strings are not anagram
+         return False 
+  
+   return True
 print(validanagram( "anagram" ,"nagaram"))       
 #time complexity : O(N+M) where N is the lenght of the first string and M is the length of the second string
-# space complexity : O(N+M)
+# space complexity : O(N) or O(M) as length of both strings are same
