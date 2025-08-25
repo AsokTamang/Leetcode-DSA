@@ -42,58 +42,27 @@ print(nestingdepth("(1)+((2))+((((3))))"))
 #X before L (50) and C (100) → 40 and 90
 #C before D (500) and M (1000) → 400 and 900
 #Given a Roman numeral, convert it to an integer.
-
-def romantoint(s):
-    ans =0
-    i = 0
-    while i<len(s):
-        if i < len(s)-1:
-            if s[i] + s[i+1] == "IV":
-                ans+=4
-                i+=2
-            elif s[i] + s[i+1] == "IX":
-                ans+=9
-                i+=2  
-            elif s[i] + s[i+1] == "XL":
-                ans+=40
-                i+=2
-            elif s[i] + s[i+1] == "XC":
-                ans+=90
-                i+=2 
-            elif s[i] + s[i+1] == "CD":
-                ans+=400
-                i+=2
-            elif s[i] + s[i+1] == "CM":
-                ans+=900
-                i+=2
-        if i<len(s):
-            if s[i] == "I":
-                ans+=1
-                i+=1      
-            elif s[i] == "V":
-                ans+=5
-                i+=1
-            elif s[i] == "X":
-                ans+=10
-                i+=1
-            elif s[i] == "L":
-                ans+=50
-                i+=1
-            elif s[i] == "C":
-                ans+=100
-                i+=1
-            elif s[i] == "D":
-                ans+=500
-                i+=1
-            elif s[i] == "M":
-                ans+=1000
-                i+=1  
-    return ans
-print(romantoint("III"))               
-#time complexity : O(N)
-# space complexity : O(1)   
+ 
                 
-
+#optimized version
+def romanint(s):
+    data = {
+        "I":1,"V":5,"X":10,"L":50,"C":100,"D":500,"M":1000,"IV":4,"IX":9,"XL":40,"XC":90,"CD":500,"CM":900
+    }
+    i = 0
+    ans=0
+    while i < len(s):
+        if i < len(s)-1:
+            if s[i:i+2] in data:
+                ans+=data[s[i:i+2]]
+                i+=2
+        if s[i:i+1] in data:
+            ans+=data[s[i:i+1]]
+            i+=1
+    return ans
+print(romanint("DCCCXC"))        
+#time complexity : O(N)
+#space complexity : O(1) our space complexity is O(1) our dictonary is fixed through out the code loop
 
 
 
