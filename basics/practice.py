@@ -1857,3 +1857,22 @@ def removeouter(string):
 print(removeouter("((()))"))   
 #time complexity : O(N)
 # space complexity : O(1)                 
+
+
+#reverse the word from a given string
+def reverseword(s):
+    s=s[::-1]
+    i = 0
+    ans=[]
+    while i<len(s):
+        word=[]
+        while i<len(s) and s[i]!=" ":  #this is inside loop will only end when the i is greater than or equal to the length of the string and char is equal to the space
+            word.append(s[i])
+            i+=1
+        ans.append(''.join(word[::-1]))
+        i+=1  #here we are also adding i to pass behind the index where we found the space
+        
+    return ' '.join(ans)
+print(reverseword("welcome to the jungle"))
+#time complexity : O(N) 
+#space complexity : O(N)
