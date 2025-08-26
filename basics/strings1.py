@@ -65,5 +65,33 @@ print(romanint("DCCCXC"))
 #space complexity : O(1) our space complexity is O(1) our dictonary is fixed through out the code loop
 
 
+#string to integer(atoi)
+#Implement the function myAtoi(s) which converts the given string s to a 32-bit signed integer (similar to the C/C++ atoi function).
+def stringtoint(s):
+    ans =0
+    sign = 1
+    i = 0
+    while i < len(s) and  s[i] == " ":
+            i+=1
+    if i < len(s) and (s[i]=="+" or s[i] == "-"):
+            if s[i] == "-":
+                sign=-1
+            i+=1
+    while i < len(s) and s[i].isdigit():
+        ans=ans*10 + int(s[i])
+        i+=1
+    result = sign * ans
+    if result > 2147483647:
+         return 2147483647 
+    elif result < -2147483648:
+         return -2147483648     
+    else:
+     return sign * ans    
+                    
 
+print(stringtoint("0-1")) 
+#time complexity : O(N)
+# space complexity : O(N) in worst case 
+
+    
 

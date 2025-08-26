@@ -1876,3 +1876,29 @@ def reverseword(s):
 print(reverseword("welcome to the jungle"))
 #time complexity : O(N) 
 #space complexity : O(N)
+
+
+#string to atoi
+def stringatoi(s):
+    i = 0
+    n = len(s)
+    sign=1
+    ans=0
+    while i<n and s[i] == " ":  #this loop is for checking the whitespaces before the digits or integers
+        #as long as we find the whitespaces , we keep on skipping this by increasing the value of i
+        i+=1
+    if i<n and (s[i] == "-" or s[i]=="+"):  #this condition is for checking the sign and determining whether the given sign in a string is - or +, then we just increase the value of i based on that
+        if s[i] == "-":
+            sign=-1
+        i+=1    
+    while i<n and s[i].isdigit():
+        ans=(ans*10)+int(s[i])
+        i+=1
+    final = sign * ans
+    if final<-2147483648:
+        return -2147483648
+    elif final>2147483647:
+        return 2147483647
+    else:
+        return final
+print(stringatoi(" -12345"))     
