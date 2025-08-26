@@ -94,4 +94,26 @@ print(stringtoint("0-1"))
 # space complexity : O(N) in worst case 
 
     
+#Count Number of Substrings
+#Given a string s consisting only of characters 'a', 'b', and 'c', return the number of substrings that contain at least one of each character 'a', 'b', and 'c' 
+#Medium
+#here what the question is asking us is to return the number of substrings from the given string
 
+def substring(s):
+    n=len(s)
+    count = 0
+
+    for i in range(n):
+        for j in range(i,n):
+                count+=1
+    return count
+print(substring('abc')) 
+#time complexity : O(N^2)
+# space complexity : O(1)  
+
+#or for the optimization , we can use n*(n+1) // 2 to count the number of substrings in a given array.
+
+def optsubstring(s):
+    n = len(s)
+    return n*(n+1) // 2
+print(optsubstring('abc'))
