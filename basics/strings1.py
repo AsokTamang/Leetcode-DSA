@@ -1,3 +1,6 @@
+from collections import defaultdict
+#the main function of the default dict is that we donot need to check if the value exists or not before increasing the value of this key
+
 #Sort Characters by Frequency
 #You are given a string s. Return the array of unique characters, sorted by highest to lowest occurring characters.
 #If two or more characters have same frequency then arrange them in alphabetic order.
@@ -117,6 +120,23 @@ print(substring('bbcabc'))
 # space complexity : O(1)  
 
 #or for the optimization , 
+def optsubstring(s):
+   n=len(s)
+   count = 0
+   left = 0
+   m = defaultdict(int)  #here we are using the default dict instead of the usual dict inorder to make our code shorter and faster
+   for i in range(n):
+        m[s[i]]+=1  #here what we are doing is storing the charcaters of s at every index i in the storage m
+        while len(m)==3:  #if the length of the storage is m , which means we have found a substring consisting of all the characters at the current index i,then we increase the count by n-i
+            count+=n-i
+            m[s[left]]-=1  #then inorder to remove the left most part of the charc of a string which is store in  our storage m , we are doing this calculation        
+            if m[s[left]] == 0:
+                m.pop(s[left])
+            left+=1
+   return count             
+print(optsubstring("bbcabc"))
+#time complexity : O(N)
+#space complexity : O(1)
 
 
 
