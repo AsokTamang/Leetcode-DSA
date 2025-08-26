@@ -100,20 +100,48 @@ print(stringtoint("0-1"))
 #here what the question is asking us is to return the number of substrings from the given string
 
 def substring(s):
-    n=len(s)
+    n = len(s)
+    required = set(s)   #here we are using set to remove the duplicate data from the comparing variable which is required
     count = 0
-
     for i in range(n):
+        seen = set()
         for j in range(i,n):
-                count+=1
+            seen.add(s[j])#here we are adding the current j indexed character in seen
+            if required == seen:
+                count+=n-j  #here  as soon as we find the index of j at which the substring consists of all the three characters then we just calculate the count which is n-j which gives
+                #the total number of substrings including the substrings made after this current index j too.
+                break
     return count
-print(substring('abc')) 
+print(substring('bbcabc')) 
 #time complexity : O(N^2)
 # space complexity : O(1)  
 
-#or for the optimization , we can use n*(n+1) // 2 to count the number of substrings in a given array.
+#or for the optimization , 
 
-def optsubstring(s):
-    n = len(s)
-    return n*(n+1) // 2
-print(optsubstring('abc'))
+
+
+
+#Count Vowel Substrings of a String
+#Given a string word, return the number of vowel-only substrings—i.e., every character in the substring is a vowel (a, e, i, o, u)
+#brute approach, for the brute approach we check vowels for every possible substrings 
+def countvowel(s):
+    n=len(s)
+    vowels={'a','e','i','o','u'}
+    count = 0
+    for i in range(n):
+        for j in range(i,n):  #this inner loop j is for creating an every possible substrings from the given string s
+            substring=s[i:j+1]  #which is this 
+            if all(char in vowels for char in substring):  # then we are checking every values in an obtained substring that if all of them are vowels or not
+                count+=1  #if yes then we just increase the count by 1
+    return count
+print(countvowel("abc"))            
+#time complexity : O(N^3) in worst case
+#space complexity : O(1)  here we arenot using any kind of extra storage.
+
+#optimized solution
+#in the optimized solution ,what we do is , we just count the number of vowels presented in the given string , then we use the formula of L*(L+1)//2 which calculates the number of total substrings that consists of the vowels
+   
+
+
+
+
