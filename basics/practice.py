@@ -1902,3 +1902,26 @@ def stringatoi(s):
     else:
         return final
 print(stringatoi(" -12345"))     
+
+#count substrings consisting of all the vowels and k consonants
+#brute approach ,
+#in the brute approach , what we can do is we can just go through the nested loops and then check if all the vowels are presented in the substrings or not and also k number of consonants
+def brutevowel(s,k):
+    vowels = ['a','e','i','o','u']
+    n=len(s)
+    c=0
+    for i in range(n):
+        for j in range(i,n):
+            count = 0
+            substring =s[i:j+1]  #here we are making the every possible substrings from the given string
+            for char in substring:
+                if char not in vowels:
+                    count+=1
+            if len(substring)-count==len(vowels) and count==k:  #if the total number of consonants is equal to k , and the other nnumbers except these count elements are vowels then we get our answer
+              c+=1
+    return c   #here c is the total number of substrings which has k number of consonants and all the remaining elements are the vowels
+print(brutevowel('aeioqq',0))   
+#time complexity : O(N^3) in the worst case
+# space complexity : O(1)     
+
+            
