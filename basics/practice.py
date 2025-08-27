@@ -1,5 +1,6 @@
 import math
 import heapq
+from collections import defaultdict
 
 
 # Given an array nums consisting of only 0, 1, or 2. Sort the array in non-decreasing order. The sorting must be done in-place, without making a copy of the original array.
@@ -1917,11 +1918,46 @@ def brutevowel(s,k):
             for char in substring:
                 if char not in vowels:
                     count+=1
-            if len(substring)-count==len(vowels) and count==k:  #if the total number of consonants is equal to k , and the other nnumbers except these count elements are vowels then we get our answer
+            if len(substring)-count>=len(vowels) and count==k:#here the first condition checks if the total number of consonants subtracting the length of the obtained substring is greater than or equal to 0 then of course all the remaining elements are vowels and count==k:  #if the total number of consonants is equal to k , and the other nnumbers except these count elements are vowels then we get our answer
               c+=1
     return c   #here c is the total number of substrings which has k number of consonants and all the remaining elements are the vowels
-print(brutevowel('aeioqq',0))   
+print(brutevowel('aeiou',0))   
 #time complexity : O(N^3) in the worst case
 # space complexity : O(1)     
 
-            
+
+#optimal approach
+#in the optimal approach what we gonna do is , we gonna use the sliding window approach where we calculate the subarray or substring from index 0 to n where n is the length of the string
+#and we also decrease the length of the window by subtracting the index from left side
+def optimalatleastk(s,k):
+    left = 0
+    n=len(s)
+    consonants=0
+    vowel=defaultdict(int)
+    ans = 0
+    for i in range(n):
+        if s[i] in "aeiou":  #here what we are doing is , we are adding the i indexed character in vowel if it is one of the vowel letter
+         vowel[s[i]]+=1
+        else:  #otherwise , we increase the number of consonants , if its not the vowel
+            consonants+=1 
+        #this below while loop is the main loop for calculating the number of subarrays that matches the condition and for moving the left pointer towards the end to decrease the size of a window
+        while len(vowel) == 5 and consonants>=k:  #as long as the length of our dict is 5 which shows all 5 vowels are present in the current i index and the number of consosnants is greater than or equal to k
+            ans+=n-i   #counting the number of substrings which has all 5 vowels and atleats k consonants
+            if s[i] in "aeiou":
+                vowel[s[i]]-=1
+
+            else:
+                consonants-=1
+            if vowel[s[i]]==0:
+                vowel.pop(s[i])          
+            left+=1
+    return ans   
+def optimalvowel(s,k):
+    return optimalatleastk(s,k) - optimalatleastk(s,k+1)  #this trick uses the approach where we assume k+1 value and find the substrings which has the all the 5 vowels and at leats k+1 consosnants , then we subtract this substrings count with the count of substrings which has atleast k consonants , then we get the number of substrings having exactly k consonants and all 5 vowels in it
+print(optimalvowel('aeiou',0))
+#time complexity : O(N) where N is the length of the string
+#space complexity : O(1)  which is constant as the vowel var is also constant which will have atmost length of 5 in most cases
+     
+
+
+        
