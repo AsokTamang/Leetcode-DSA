@@ -202,20 +202,32 @@ print(brutepalindromic("babad"))
 #space complexity : O(1)  
 
 #optimal approach
+#so for the optimal approach inorder to find the longest palindromic substring, we need to take the current i indexed element as the centre of the string and then expand this in both left side as well as the right side as long as the condition of left side and right side elements are same or equal to eachother.
+#and during this while loop , we also need to compare the length of the current substring with the previous one,if only its greater we change our answer otherwise its always the same.
 def optimalpalindromic(s):
-    n=len(s)
-    left = 0
-    length = 0
-    tempo = []
-    ans = 0
-    for i in range(n):
-        tempo.append(s[i])
-        while len(tempo)>length and tempo == tempo[::-1]:
-            length=len(tempo)
-            ans = tempo
-            tempo.remove(s[left])
-            left+=1
-    return ans
+   n = len(s)
+   ans = 0
+   length = 0
+   for i in range(n):
+       if n%2!=0:
+        left,right=i,i
+        while left>=0 and right<n and s[left] == s[right]:
+            if right - left + 1 > length:
+                length=right-left+1
+                ans=s[left:right+1]
+            left-=1  #as we need to find the most longest substring which is palindromic , we are decreasing the value of left and increasing the value of right
+            right+=1
+       else:
+           left,right=i,i+1
+           while left>=0 and right<n and s[left] == s[right]:
+            if right - left + 1 > length:
+                length=right-left+1
+                ans=s[left:right+1]
+            left-=1  #as we need to find the most longest substring which is palindromic , we are decreasing the value of left and increasing the value of right
+            right+=1
+   return ans         
 print(optimalpalindromic("babad"))
+#time complexity : O(N)
+#space complexity : O(1)
 
 
