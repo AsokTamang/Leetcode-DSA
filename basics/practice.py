@@ -1959,25 +1959,6 @@ print(optimalvowel('aeiou',0))
 #space complexity : O(1)  which is constant as the vowel var is also constant which will have atmost length of 5 in most cases
      
 
-#find a contiguous subarray whose length is equal to k
-def consubarray(s,k):  #the subarray or substring must have a length of a k
-    n=len(s)
-    left = 0
-    storage=[]
-    ans = 0
-    for i in range(n):
-        storage.append(s[i])
-        while len(storage) == k:   #here if the length of storage is equal to k then we just calculate the average and find the answer
-            average = sum(storage) / k
-            ans=max(ans,average)
-            storage.pop(0)
-            left+=1
-        
-        
-    return ans
-print(consubarray([5],1))
-#time complexity : O(N)
-#space complexity : O(1)
 
 
     

@@ -162,6 +162,60 @@ print(countvowel("abc"))
 #in the optimized solution ,what we do is , we just count the number of vowels presented in the given string , then we use the formula of L*(L+1)//2 which calculates the number of total substrings that consists of the vowels
    
 
+#find a contiguous subarray whose length is equal to k
+def consubarray(s,k):  #the subarray or substring must have a length of a k
+    n=len(s)
+    left = 0
+    storage=[]
+    ans = 0
+    for i in range(n):
+        storage.append(s[i])
+        while len(storage) == k:   #here if the length of storage is equal to k then we just calculate the average and find the answer
+            average = sum(storage) / k
+            ans=max(ans,average)
+            storage.pop(0)
+            left+=1
+        
+        
+    return ans
+print(consubarray([5],1))
+#time complexity : O(N)
+#space complexity : O(1)
 
+#longest palindromic substring
+#Given a string s, return the longest palindromic substring in s.
+
+def brutepalindromic(s):
+    n=len(s)
+    length=0
+    ans=0
+    for i in range(n):
+        for j in range(i,n):
+            substring=s[i:j+1]
+            if substring==substring[::-1]:  #here we are comparing the reverse form of a substring with the substring, if they are same then it means the substring is palindromic, then we need to calcualte the length of the substring
+              if len(substring)>length:
+                  length=len(substring)
+                  ans=substring
+    return ans  
+print(brutepalindromic("babad"))   
+#time complexity : O(N^3)
+#space complexity : O(1)  
+
+#optimal approach
+def optimalpalindromic(s):
+    n=len(s)
+    left = 0
+    length = 0
+    tempo = []
+    ans = 0
+    for i in range(n):
+        tempo.append(s[i])
+        while len(tempo)>length and tempo == tempo[::-1]:
+            length=len(tempo)
+            ans = tempo
+            tempo.remove(s[left])
+            left+=1
+    return ans
+print(optimalpalindromic("babad"))
 
 
