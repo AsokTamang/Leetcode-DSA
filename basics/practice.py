@@ -1730,10 +1730,10 @@ def findpeakrow(
     array, mid
 ):  # here mid is the column index now based on that column we need to find the peak element comparing among each rows on this column mid
     ans = 0
-    maxvalue = float('-inf')
+    maxvalue = float("-inf")
     for i in range(len(array)):  # here we are looping through each rows
         if array[i][mid] > maxvalue:
-            maxvalue = array[i][mid]  #previously the code was wrong here
+            maxvalue = array[i][mid]  # previously the code was wrong here
             ans = i
     return ans
 
@@ -1760,9 +1760,7 @@ def optimalpeak2d(array):
             left > array[row][mid]
         ):  # if the left indexed number is greater than the mid indexed number then our answer lies in the left half
             high = mid - 1
-        elif (
-            right > array[row][mid]
-        ):  # same here but in the opposite direction
+        elif right > array[row][mid]:  # same here but in the opposite direction
             low = mid + 1
     return -1  # if we dont find any peak number
 
@@ -1778,209 +1776,300 @@ print(
         ]
     )
 )
-#time complexity : O( logM * N) here M is the number of columns and N is the number of rows
-#space complexity : O(1)
+# time complexity : O( logM * N) here M is the number of columns and N is the number of rows
+# space complexity : O(1)
 
-#matrix median 
-#in the naive approach what we can do is we can store all the numbers of the 2d matrix in a single array in a sorted way then we can easily find the median by calulating the number at the index (N*M) //2  which is the median position in an array
-#but in the optimal approach what we can do is , we can calculate the number of numbers smaller than or equal to the mid value which is obtained between the minimum and the maximum number in an array,
-#this number of smaller than or equal to the mid value is taken as a comparison value which is compared with  the median, if its lesser than the median then we move to the right half,
-#otherwise we move to the left half,
-#we can see this in the code below
-def upperbound(array,mid):  #we are using only one specific row here passed from smallequal function
+
+# matrix median
+# in the naive approach what we can do is we can store all the numbers of the 2d matrix in a single array in a sorted way then we can easily find the median by calulating the number at the index (N*M) //2  which is the median position in an array
+# but in the optimal approach what we can do is , we can calculate the number of numbers smaller than or equal to the mid value which is obtained between the minimum and the maximum number in an array,
+# this number of smaller than or equal to the mid value is taken as a comparison value which is compared with  the median, if its lesser than the median then we move to the right half,
+# otherwise we move to the left half,
+# we can see this in the code below
+def upperbound(
+    array, mid
+):  # we are using only one specific row here passed from smallequal function
     low = 0
-    high = len(array)-1
-    ans = len(array)   #we are assuming that all the values in the array might be greater than the  value mid
-    while low<=high:
-        mid2=(low + high) // 2
-        if array[mid2] > mid:   #here what we are doing is we  are checking if the mid2 indexed number is greater than the mid in param, if it is then we assume this might be our answer which is mid2 ,
-            #that gives us the number of numbers smaller than or equal to mid, and as our array is sorted in ascending order, rather than going to the right half , we are moving to the left half as shown here 
+    high = len(array) - 1
+    ans = len(
+        array
+    )  # we are assuming that all the values in the array might be greater than the  value mid
+    while low <= high:
+        mid2 = (low + high) // 2
+        if (
+            array[mid2] > mid
+        ):  # here what we are doing is we  are checking if the mid2 indexed number is greater than the mid in param, if it is then we assume this might be our answer which is mid2 ,
+            # that gives us the number of numbers smaller than or equal to mid, and as our array is sorted in ascending order, rather than going to the right half , we are moving to the left half as shown here
             ans = mid2
-            high = mid2-1
+            high = mid2 - 1
         else:
-            low=mid2+1
-    return ans            
+            low = mid2 + 1
+    return ans
 
 
-
-def smallequal(array,mid):
+def smallequal(array, mid):
     count = 0
     for i in range(len(array)):
-        count+=upperbound(array[i],mid)  #this count is used for counting the numbers in an array which are lesser than or equal to the mid 
-    return count    
+        count += upperbound(
+            array[i], mid
+        )  # this count is used for counting the numbers in an array which are lesser than or equal to the mid
+    return count
 
 
 def optimalmedian2d(array):
-    n=len(array)  #number of rows
-    m=len(array[0])  #number of columns 
-    low = float('inf')  
-    high = float('-inf')
-    req = (n * m )// 2 
-    #as our rows are arranged or sorted in ascending order,
+    n = len(array)  # number of rows
+    m = len(array[0])  # number of columns
+    low = float("inf")
+    high = float("-inf")
+    req = (n * m) // 2
+    # as our rows are arranged or sorted in ascending order,
     for i in range(n):
-        low = min(low,array[i][0])  #as the first element of every arrays is the smallest in their corresponding rows
-        high = max(high,array[i][m-1])  #and as the last element of every arrays is the largeest in their corresponding rows
-    #from the above loop, we got the value of low and high
-    while low<=high:
-        mid=(low + high) // 2 
-        smallerequal=smallequal(array,mid)    #this smallequal function is used for calculating all the numbers in the array which are smaller than or equal to the obtained mid
-        if smallerequal<=req:
+        low = min(
+            low, array[i][0]
+        )  # as the first element of every arrays is the smallest in their corresponding rows
+        high = max(
+            high, array[i][m - 1]
+        )  # and as the last element of every arrays is the largeest in their corresponding rows
+    # from the above loop, we got the value of low and high
+    while low <= high:
+        mid = (low + high) // 2
+        smallerequal = smallequal(
+            array, mid
+        )  # this smallequal function is used for calculating all the numbers in the array which are smaller than or equal to the obtained mid
+        if smallerequal <= req:
             low = mid + 1
         else:
             high = mid - 1
-    return low   #and the value of smaller equal must be just slightly greater than the  median indexed value in an array , which will be the low value in our case , as high will move beyond the mid value but in left direction
-print(optimalmedian2d([ [1, 3, 8], [2, 3, 4], [1, 2, 5] ] ))    
-#time complexity : O(log(maxm-minm)*NlogM)  #here N is the number of rows and M is the number of columns
-# space complexity : O(1)         
+    return low  # and the value of smaller equal must be just slightly greater than the  median indexed value in an array , which will be the low value in our case , as high will move beyond the mid value but in left direction
 
 
-#Remove Outermost Parentheses
-#A valid parentheses string is defined by the following rules:
-#It is the empty string "".
+print(optimalmedian2d([[1, 3, 8], [2, 3, 4], [1, 2, 5]]))
+# time complexity : O(log(maxm-minm)*NlogM)  #here N is the number of rows and M is the number of columns
+# space complexity : O(1)
+
+
+# Remove Outermost Parentheses
+# A valid parentheses string is defined by the following rules:
+# It is the empty string "".
 # If A is a valid parentheses string, then so is "(" + A + ")".
-#If A and B are valid parentheses strings, then A + B is also valid.
-#A primitive valid parentheses string is a non-empty valid string that cannot be split into two or more non-empty valid parentheses strings.
-#Given a valid parentheses string s, your task is to remove the outermost parentheses from every primitive component of s and return the resulting string.
+# If A and B are valid parentheses strings, then A + B is also valid.
+# A primitive valid parentheses string is a non-empty valid string that cannot be split into two or more non-empty valid parentheses strings.
+# Given a valid parentheses string s, your task is to remove the outermost parentheses from every primitive component of s and return the resulting string.
+
 
 def removeouter(string):
     counter = 0
     ans = []
-    for char in string:  
-        if char == '(':  #here our approach is as soon as we found the char ( , we check if the count is greater than 0 , if it is then it means its not the first ( so we append otherwise we just increase the count by 1 by ignoring the first (.
-            if counter>0:
-                ans.append(char)
-            counter+=1    
-        elif char == ')':   #but in the case of ), we first decrease the count by 1, then check whether the count is 0 or not , if its 0 then it means this current ) is the last ) that cancel the first ( , if its not then it means its still not the last closing ) char.
-            counter-=1
+    for char in string:
+        if (
+            char == "("
+        ):  # here our approach is as soon as we found the char ( , we check if the count is greater than 0 , if it is then it means its not the first ( so we append otherwise we just increase the count by 1 by ignoring the first (.
             if counter > 0:
                 ans.append(char)
-    return ''.join(ans)
-print(removeouter("((()))"))   
-#time complexity : O(N)
-# space complexity : O(1)                 
+            counter += 1
+        elif (
+            char == ")"
+        ):  # but in the case of ), we first decrease the count by 1, then check whether the count is 0 or not , if its 0 then it means this current ) is the last ) that cancel the first ( , if its not then it means its still not the last closing ) char.
+            counter -= 1
+            if counter > 0:
+                ans.append(char)
+    return "".join(ans)
 
 
-#reverse the word from a given string
+print(removeouter("((()))"))
+# time complexity : O(N)
+# space complexity : O(1)
+
+
+# reverse the word from a given string
 def reverseword(s):
-    s=s[::-1]
+    s = s[::-1]
     i = 0
-    ans=[]
-    while i<len(s):
-        word=[]
-        while i<len(s) and s[i]!=" ":  #this is inside loop will only end when the i is greater than or equal to the length of the string and char is equal to the space
+    ans = []
+    while i < len(s):
+        word = []
+        while (
+            i < len(s) and s[i] != " "
+        ):  # this is inside loop will only end when the i is greater than or equal to the length of the string and char is equal to the space
             word.append(s[i])
-            i+=1
-        ans.append(''.join(word[::-1]))
-        i+=1  #here we are also adding i to pass behind the index where we found the space
-        
-    return ' '.join(ans)
+            i += 1
+        ans.append("".join(word[::-1]))
+        i += 1  # here we are also adding i to pass behind the index where we found the space
+
+    return " ".join(ans)
+
+
 print(reverseword("welcome to the jungle"))
-#time complexity : O(N) 
-#space complexity : O(N)
+# time complexity : O(N)
+# space complexity : O(N)
 
 
-#string to atoi
+# string to atoi
 def stringatoi(s):
     i = 0
     n = len(s)
-    sign=1
-    ans=0
-    while i<n and s[i] == " ":  #this loop is for checking the whitespaces before the digits or integers
-        #as long as we find the whitespaces , we keep on skipping this by increasing the value of i
-        i+=1
-    if i<n and (s[i] == "-" or s[i]=="+"):  #this condition is for checking the sign and determining whether the given sign in a string is - or +, then we just increase the value of i based on that
+    sign = 1
+    ans = 0
+    while (
+        i < n and s[i] == " "
+    ):  # this loop is for checking the whitespaces before the digits or integers
+        # as long as we find the whitespaces , we keep on skipping this by increasing the value of i
+        i += 1
+    if i < n and (
+        s[i] == "-" or s[i] == "+"
+    ):  # this condition is for checking the sign and determining whether the given sign in a string is - or +, then we just increase the value of i based on that
         if s[i] == "-":
-            sign=-1
-        i+=1    
-    while i<n and s[i].isdigit():
-        ans=(ans*10)+int(s[i])
-        i+=1
+            sign = -1
+        i += 1
+    while i < n and s[i].isdigit():
+        ans = (ans * 10) + int(s[i])
+        i += 1
     final = sign * ans
-    if final<-2147483648:
+    if final < -2147483648:
         return -2147483648
-    elif final>2147483647:
+    elif final > 2147483647:
         return 2147483647
     else:
         return final
-print(stringatoi(" -12345"))     
 
-#count substrings consisting of all the vowels and k consonants
-#brute approach ,
-#in the brute approach , what we can do is we can just go through the nested loops and then check if all the vowels are presented in the substrings or not and also k number of consonants
-def brutevowel(s,k):
-    vowels = ['a','e','i','o','u']
-    n=len(s)
-    c=0
+
+print(stringatoi(" -12345"))
+
+
+# count substrings consisting of all the vowels and k consonants
+# brute approach ,
+# in the brute approach , what we can do is we can just go through the nested loops and then check if all the vowels are presented in the substrings or not and also k number of consonants
+def brutevowel(s, k):
+    vowels = ["a", "e", "i", "o", "u"]
+    n = len(s)
+    c = 0
     for i in range(n):
-        for j in range(i,n):
+        for j in range(i, n):
             count = 0
-            substring =s[i:j+1]  #here we are making the every possible substrings from the given string
+            substring = s[
+                i : j + 1
+            ]  # here we are making the every possible substrings from the given string
             for char in substring:
                 if char not in vowels:
-                    count+=1
-            if len(substring)-count>=len(vowels) and count==k:#here the first condition checks if the total number of consonants subtracting the length of the obtained substring is greater than or equal to 0 then of course all the remaining elements are vowels and count==k:  #if the total number of consonants is equal to k , and the other nnumbers except these count elements are vowels then we get our answer
-              c+=1
-    return c   #here c is the total number of substrings which has k number of consonants and all the remaining elements are the vowels
-print(brutevowel('aeiou',0))   
-#time complexity : O(N^3) in the worst case
-# space complexity : O(1)     
+                    count += 1
+            if (
+                len(substring) - count >= len(vowels) and count == k
+            ):  # here the first condition checks if the total number of consonants subtracting the length of the obtained substring is greater than or equal to 0 then of course all the remaining elements are vowels and count==k:  #if the total number of consonants is equal to k , and the other nnumbers except these count elements are vowels then we get our answer
+                c += 1
+    return c  # here c is the total number of substrings which has k number of consonants and all the remaining elements are the vowels
 
 
-#optimal approach
-#in the optimal approach what we gonna do is , we gonna use the sliding window approach where we calculate the subarray or substring from index 0 to n where n is the length of the string
-#and we also decrease the length of the window by subtracting the index from left side
-def optimalatleastk(s,k):
+print(brutevowel("aeiou", 0))
+# time complexity : O(N^3) in the worst case
+# space complexity : O(1)
+
+
+# optimal approach
+# in the optimal approach what we gonna do is , we gonna use the sliding window approach where we calculate the subarray or substring from index 0 to n where n is the length of the string
+# and we also decrease the length of the window by subtracting the index from left side
+def optimalatleastk(s, k):
     left = 0
-    n=len(s)
-    consonants=0
-    vowel=defaultdict(int)
+    n = len(s)
+    consonants = 0
+    vowel = defaultdict(int)
     ans = 0
     for i in range(n):
-        if s[i] in "aeiou":  #here what we are doing is , we are adding the i indexed character in vowel if it is one of the vowel letter
-         vowel[s[i]]+=1
-        else:  #otherwise , we increase the number of consonants , if its not the vowel
-            consonants+=1 
-        #this below while loop is the main loop for calculating the number of subarrays that matches the condition and for moving the left pointer towards the end to decrease the size of a window
-        while len(vowel) == 5 and consonants>=k:  #as long as the length of our dict is 5 which shows all 5 vowels are present in the current i index and the number of consosnants is greater than or equal to k
-            ans+=n-i   #counting the number of substrings which has all 5 vowels and atleats k consonants
+        if (
+            s[i] in "aeiou"
+        ):  # here what we are doing is , we are adding the i indexed character in vowel if it is one of the vowel letter
+            vowel[s[i]] += 1
+        else:  # otherwise , we increase the number of consonants , if its not the vowel
+            consonants += 1
+        # this below while loop is the main loop for calculating the number of subarrays that matches the condition and for moving the left pointer towards the end to decrease the size of a window
+        while (
+            len(vowel) == 5 and consonants >= k
+        ):  # as long as the length of our dict is 5 which shows all 5 vowels are present in the current i index and the number of consosnants is greater than or equal to k
+            ans += (
+                n - i
+            )  # counting the number of substrings which has all 5 vowels and atleats k consonants
             if s[i] in "aeiou":
-                vowel[s[i]]-=1
+                vowel[s[i]] -= 1
 
             else:
-                consonants-=1
-            if vowel[s[i]]==0:
-                vowel.pop(s[i])          
-            left+=1
-    return ans   
-def optimalvowel(s,k):
-    return optimalatleastk(s,k) - optimalatleastk(s,k+1)  #this trick uses the approach where we assume k+1 value and find the substrings which has the all the 5 vowels and at leats k+1 consosnants , then we subtract this substrings count with the count of substrings which has atleast k consonants , then we get the number of substrings having exactly k consonants and all 5 vowels in it
-print(optimalvowel('aeiou',0))
-#time complexity : O(N) where N is the length of the string
-#space complexity : O(1)  which is constant as the vowel var is also constant which will have atmost length of 5 in most cases
-     
-#optimal of longest palindromic substring
-def optimalpalindrom(s):
-    n=len(s)
-    length=0  #As the question is asking us to find the longest substring which is palindromic,
-    #we need some variable which stores the length of the substring which is a palindromic, for comparison
-    ans=""
-    for i in range(n):  #every index of i acts as a centre of our substring which will be checked whether its a palindromic or not
-        left,right=i,i  
-        while left>=0 and right<n and s[left]==s[right]:
-            if right-left+1 > length:
-                length=right-left+1
-                ans =s[left:right+1]
-            left-=1
-            right+=1
+                consonants -= 1
+            if vowel[s[i]] == 0:
+                vowel.pop(s[i])
+            left += 1
     return ans
-print(optimalpalindrom('babad'))    
-#time complexity : O(N)
-# space complexity : O(1)         
 
 
+def optimalvowel(s, k):
+    return optimalatleastk(s, k) - optimalatleastk(
+        s, k + 1
+    )  # this trick uses the approach where we assume k+1 value and find the substrings which has the all the 5 vowels and at leats k+1 consosnants , then we subtract this substrings count with the count of substrings which has atleast k consonants , then we get the number of substrings having exactly k consonants and all 5 vowels in it
 
 
+print(optimalvowel("aeiou", 0))
+# time complexity : O(N) where N is the length of the string
+# space complexity : O(1)  which is constant as the vowel var is also constant which will have atmost length of 5 in most cases
+
+
+# optimal of longest palindromic substring
+def betterpalindrome(s):
+    n = len(s)
+    length = 0  # As the question is asking us to find the longest substring which is palindromic,
+    # we need some variable which stores the length of the substring which is a palindromic, for comparison
+    ans = ""
+    for i in range(
+        n
+    ):  # every index of i acts as a centre of our substring which will be checked whether its a palindromic or not
+
+        # for odd length
+        left, right = i, i
+        while left >= 0 and right < n and s[left] == s[right]:
+            if right - left + 1 > length:
+                length = right - left + 1
+                ans = s[left : right + 1]
+            left -= 1
+            right += 1
+        # for even length
+        left, right = i, i + 1
+        while left >= 0 and right < n and s[left] == s[right]:
+            if right - left + 1 > length:
+                length = right - left + 1
+                ans = s[left : right + 1]
+            left -= 1
+            right += 1
+    return ans
+
+
+print(betterpalindrome("babad"))
+# time complexity : O(N^2)
+# space complexity : O(1)
+
+#optimal palindrome
+#manacher's algorithm
+def optimalpalindrome(s):
+    #first of all in manacher's algorithm what we need to do is insert ^ in the beginning and $ in the end and # at the gaps of the given string
     
+    t="^#" + "#".join(s) + "$"  #here t is the temporary string obtained after including the #s inside the gaps of the original string and by including ^ and $ at the beginning and the end of the string
+    n=len(t)
+    p=[0] * len(t)    #here we are making a p varibale which stores the radius of a palindrome substring having centre at index i 
+    c=r=0   #here c is the centre of the palindrome substring and r is the right border of the substring
+    for i in range(1,n-1):  #here we are running the loop from 1st index to the second last index ignoring the first and the last character in the temporary string
+     mirror  = c-(i-c)   #mirror is the index on the left side of the centre which mirrors the palindromic length at the index i if the index i lies with in the right boundary r
+      #here the mirror represents the index which mirrors the palindromic radius if i is with in the range of right border
+     if i<r:  #if the current index lies within the right boundary then it means the palindromic radius is equal to atleast the distance of r from i and the radius of its mirror
+         p[i] = min(r-i,p[mirror])
+     while t[i-1-p[i]] == t[i+1+p[i]]:  #and this loop is for calculating the actual radius of the palindromic substring at index i 
+         p[i]+=1    
+     if i + p[i]>r:  #but if the radius at index i exceeds the current right boundary then we must update the centre as well as the right boundary
+        c=i
+        r=i+p[i]
+    maximumradius = max(p)  #here we are determining the maximum radius by comparing of all the indices
+    centreindex = p.index(maximumradius)  #this tells us the index of the centre which has the maximum lenght of the palindromic substring
+    start=(centreindex - maximumradius) // 2
+    return s[start:start+maximumradius]
 
 
-        
+
+print(optimalpalindrome('babad')) 
+#time complexity : O(N)
+#space complexity : O(1)
+
+
