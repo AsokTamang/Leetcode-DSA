@@ -1958,6 +1958,25 @@ print(optimalvowel('aeiou',0))
 #time complexity : O(N) where N is the length of the string
 #space complexity : O(1)  which is constant as the vowel var is also constant which will have atmost length of 5 in most cases
      
+#optimal of longest palindromic substring
+def optimalpalindrom(s):
+    n=len(s)
+    length=0  #As the question is asking us to find the longest substring which is palindromic,
+    #we need some variable which stores the length of the substring which is a palindromic, for comparison
+    ans=""
+    for i in range(n):  #every index of i acts as a centre of our substring which will be checked whether its a palindromic or not
+        left,right=i,i  
+        while left>=0 and right<n and s[left]==s[right]:
+            if right-left+1 > length:
+                length=right-left+1
+                ans =s[left:right+1]
+            left-=1
+            right+=1
+    return ans
+print(optimalpalindrom('babad'))    
+#time complexity : O(N)
+# space complexity : O(1)         
+
 
 
 

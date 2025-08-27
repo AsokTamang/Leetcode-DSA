@@ -1,233 +1,288 @@
 from collections import defaultdict
-#the main function of the default dict is that we donot need to check if the value exists or not before increasing the value of this key
 
-#Sort Characters by Frequency
-#You are given a string s. Return the array of unique characters, sorted by highest to lowest occurring characters.
-#If two or more characters have same frequency then arrange them in alphabetic order.
+# the main function of the default dict is that we donot need to check if the value exists or not before increasing the value of this key
+
+
+# Sort Characters by Frequency
+# You are given a string s. Return the array of unique characters, sorted by highest to lowest occurring characters.
+# If two or more characters have same frequency then arrange them in alphabetic order.
 def sortfreq(s):
-    m={}
+    m = {}
     for char in s:
-        m[char]=m.get(char,0) + 1 #here the default value will be 0 and we are adding 1 as soon as we found the occurence of letter 
-    
-    return(sorted(m,key=lambda x: m[x]))[::-1]  #here what we are doing is we are sorting our dict called m by using sorted and lambda where x:m[x] means sorting based on the values and using [::-1] to reverse the output 
-#as the question is asking us to return from highest to lowest
-print(sortfreq("cba"))
-#time complexity : O(N) + O(K)  #here N is the number of characters in a given string and K is the number of keys in our dictinary m
-#space complexity : O(N)
+        m[char] = (
+            m.get(char, 0) + 1
+        )  # here the default value will be 0 and we are adding 1 as soon as we found the occurence of letter
 
-#Maximum Nesting Depth of the Parentheses
-#A string s is a valid parentheses string (VPS) if it meets the following conditions:
-#It only contains digits 0-9, arithmetic operators +, -, *, /, and parentheses (, ).
-#The parentheses are balanced and correctly nested.
+    return (sorted(m, key=lambda x: m[x]))[
+        ::-1
+    ]  # here what we are doing is we are sorting our dict called m by using sorted and lambda where x:m[x] means sorting based on the values and using [::-1] to reverse the output
+
+
+# as the question is asking us to return from highest to lowest
+print(sortfreq("cba"))
+# time complexity : O(N) + O(K)  #here N is the number of characters in a given string and K is the number of keys in our dictinary m
+# space complexity : O(N)
+
+
+# Maximum Nesting Depth of the Parentheses
+# A string s is a valid parentheses string (VPS) if it meets the following conditions:
+# It only contains digits 0-9, arithmetic operators +, -, *, /, and parentheses (, ).
+# The parentheses are balanced and correctly nested.
 # Your task is to compute the maximum nesting depth of parentheses in s. The nesting depth is the highest number of parentheses that are open at the same time at any point in the string.
 def nestingdepth(s):
     count = 0
     ans = 0
     for char in s:
         if char == "(":
-            count+=1
-            ans=max(ans,count)
+            count += 1
+            ans = max(ans, count)
         elif char == ")":
-            count-=1
-        
+            count -= 1
+
     return ans
-print(nestingdepth("(1)+((2))+((((3))))"))  
-#time complelxity : O(N) N is the number of characters in a string
-# space complexity : O(1)           
 
 
+print(nestingdepth("(1)+((2))+((((3))))"))
+# time complelxity : O(N) N is the number of characters in a string
+# space complexity : O(1)
 
-#Roman to Integer
-#Roman numerals are represented by seven different symbols:
-#Roman numerals are typically written from largest to smallest, left to right. However, in specific cases, a smaller numeral placed before a larger one indicates subtraction.
-#The following subtractive combinations are valid:
-#I before V (5) and X (10) → 4 and 9
-#X before L (50) and C (100) → 40 and 90
-#C before D (500) and M (1000) → 400 and 900
-#Given a Roman numeral, convert it to an integer.
- 
-                
-#optimized version
+
+# Roman to Integer
+# Roman numerals are represented by seven different symbols:
+# Roman numerals are typically written from largest to smallest, left to right. However, in specific cases, a smaller numeral placed before a larger one indicates subtraction.
+# The following subtractive combinations are valid:
+# I before V (5) and X (10) → 4 and 9
+# X before L (50) and C (100) → 40 and 90
+# C before D (500) and M (1000) → 400 and 900
+# Given a Roman numeral, convert it to an integer.
+
+
+# optimized version
 def romanint(s):
     data = {
-        "I":1,"V":5,"X":10,"L":50,"C":100,"D":500,"M":1000,"IV":4,"IX":9,"XL":40,"XC":90,"CD":500,"CM":900
+        "I": 1,
+        "V": 5,
+        "X": 10,
+        "L": 50,
+        "C": 100,
+        "D": 500,
+        "M": 1000,
+        "IV": 4,
+        "IX": 9,
+        "XL": 40,
+        "XC": 90,
+        "CD": 500,
+        "CM": 900,
     }
     i = 0
-    ans=0
+    ans = 0
     while i < len(s):
-        if i < len(s)-1:
-            if s[i:i+2] in data:
-                ans+=data[s[i:i+2]]
-                i+=2
-        if s[i:i+1] in data:
-            ans+=data[s[i:i+1]]
-            i+=1
+        if i < len(s) - 1:
+            if s[i : i + 2] in data:
+                ans += data[s[i : i + 2]]
+                i += 2
+        if s[i : i + 1] in data:
+            ans += data[s[i : i + 1]]
+            i += 1
     return ans
-print(romanint("DCCCXC"))        
-#time complexity : O(N)
-#space complexity : O(1) our space complexity is O(1) our dictonary is fixed through out the code loop
 
 
-#string to integer(atoi)
-#Implement the function myAtoi(s) which converts the given string s to a 32-bit signed integer (similar to the C/C++ atoi function).
+print(romanint("DCCCXC"))
+# time complexity : O(N)
+# space complexity : O(1) our space complexity is O(1) our dictonary is fixed through out the code loop
+
+
+# string to integer(atoi)
+# Implement the function myAtoi(s) which converts the given string s to a 32-bit signed integer (similar to the C/C++ atoi function).
 def stringtoint(s):
-    ans =0
+    ans = 0
     sign = 1
     i = 0
-    while i < len(s) and  s[i] == " ":
-            i+=1
-    if i < len(s) and (s[i]=="+" or s[i] == "-"):
-            if s[i] == "-":
-                sign=-1
-            i+=1
+    while i < len(s) and s[i] == " ":
+        i += 1
+    if i < len(s) and (s[i] == "+" or s[i] == "-"):
+        if s[i] == "-":
+            sign = -1
+        i += 1
     while i < len(s) and s[i].isdigit():
-        ans=ans*10 + int(s[i])
-        i+=1
+        ans = ans * 10 + int(s[i])
+        i += 1
     result = sign * ans
     if result > 2147483647:
-         return 2147483647 
+        return 2147483647
     elif result < -2147483648:
-         return -2147483648     
+        return -2147483648
     else:
-     return sign * ans    
-                    
+        return sign * ans
 
-print(stringtoint("0-1")) 
-#time complexity : O(N)
-# space complexity : O(N) in worst case 
 
-    
-#Count Number of Substrings
-#Given a string s consisting only of characters 'a', 'b', and 'c', return the number of substrings that contain at least one of each character 'a', 'b', and 'c' 
-#Medium
-#here what the question is asking us is to return the number of substrings from the given string
+print(stringtoint("0-1"))
+# time complexity : O(N)
+# space complexity : O(N) in worst case
+
+
+# Count Number of Substrings
+# Given a string s consisting only of characters 'a', 'b', and 'c', return the number of substrings that contain at least one of each character 'a', 'b', and 'c'
+# Medium
+# here what the question is asking us is to return the number of substrings from the given string
+
 
 def substring(s):
     n = len(s)
-    required = set(s)   #here we are using set to remove the duplicate data from the comparing variable which is required
+    required = set(
+        s
+    )  # here we are using set to remove the duplicate data from the comparing variable which is required
     count = 0
     for i in range(n):
         seen = set()
-        for j in range(i,n):
-            seen.add(s[j])#here we are adding the current j indexed character in seen
+        for j in range(i, n):
+            seen.add(s[j])  # here we are adding the current j indexed character in seen
             if required == seen:
-                count+=n-j  #here  as soon as we find the index of j at which the substring consists of all the three characters then we just calculate the count which is n-j which gives
-                #the total number of substrings including the substrings made after this current index j too.
+                count += (
+                    n - j
+                )  # here  as soon as we find the index of j at which the substring consists of all the three characters then we just calculate the count which is n-j which gives
+                # the total number of substrings including the substrings made after this current index j too.
                 break
     return count
-print(substring('bbcabc')) 
-#time complexity : O(N^2)
-# space complexity : O(1)  
 
-#or for the optimization , 
+
+print(substring("bbcabc"))
+# time complexity : O(N^2)
+# space complexity : O(1)
+
+
+# or for the optimization ,
 def optsubstring(s):
-   n=len(s)
-   count = 0
-   left = 0
-   m = defaultdict(int)  #here we are using the default dict instead of the usual dict inorder to make our code shorter and faster
-   for i in range(n):
-        m[s[i]]+=1  #here what we are doing is storing the charcaters of s at every index i in the storage m
-        while len(m)==3:  #if the length of the storage is m , which means we have found a substring consisting of all the characters at the current index i,then we increase the count by n-i
-            count+=n-i
-            m[s[left]]-=1  #then inorder to remove the left most part of the charc of a string which is store in  our storage m , we are doing this calculation        
+    n = len(s)
+    count = 0
+    left = 0
+    m = defaultdict(
+        int
+    )  # here we are using the default dict instead of the usual dict inorder to make our code shorter and faster
+    for i in range(n):
+        m[
+            s[i]
+        ] += 1  # here what we are doing is storing the charcaters of s at every index i in the storage m
+        while (
+            len(m) == 3
+        ):  # if the length of the storage is m , which means we have found a substring consisting of all the characters at the current index i,then we increase the count by n-i
+            count += n - i
+            m[
+                s[left]
+            ] -= 1  # then inorder to remove the left most part of the charc of a string which is store in  our storage m , we are doing this calculation
             if m[s[left]] == 0:
                 m.pop(s[left])
-            left+=1
-   return count             
+            left += 1
+    return count
+
+
 print(optsubstring("bbcabc"))
-#time complexity : O(N)
-#space complexity : O(1)
+# time complexity : O(N)
+# space complexity : O(1)
 
 
-
-
-#Count Vowel Substrings of a String
-#Given a string word, return the number of vowel-only substrings—i.e., every character in the substring is a vowel (a, e, i, o, u)
-#brute approach, for the brute approach we check vowels for every possible substrings 
+# Count Vowel Substrings of a String
+# Given a string word, return the number of vowel-only substrings—i.e., every character in the substring is a vowel (a, e, i, o, u)
+# brute approach, for the brute approach we check vowels for every possible substrings
 def countvowel(s):
-    n=len(s)
-    vowels={'a','e','i','o','u'}
+    n = len(s)
+    vowels = {"a", "e", "i", "o", "u"}
     count = 0
     for i in range(n):
-        for j in range(i,n):  #this inner loop j is for creating an every possible substrings from the given string s
-            substring=s[i:j+1]  #which is this 
-            if all(char in vowels for char in substring):  # then we are checking every values in an obtained substring that if all of them are vowels or not
-                count+=1  #if yes then we just increase the count by 1
+        for j in range(
+            i, n
+        ):  # this inner loop j is for creating an every possible substrings from the given string s
+            substring = s[i : j + 1]  # which is this
+            if all(
+                char in vowels for char in substring
+            ):  # then we are checking every values in an obtained substring that if all of them are vowels or not
+                count += 1  # if yes then we just increase the count by 1
     return count
-print(countvowel("abc"))            
-#time complexity : O(N^3) in worst case
-#space complexity : O(1)  here we arenot using any kind of extra storage.
 
-#optimized solution
-#in the optimized solution ,what we do is , we just count the number of vowels presented in the given string , then we use the formula of L*(L+1)//2 which calculates the number of total substrings that consists of the vowels
-   
 
-#find a contiguous subarray whose length is equal to k
-def consubarray(s,k):  #the subarray or substring must have a length of a k
-    n=len(s)
+print(countvowel("abc"))
+# time complexity : O(N^3) in worst case
+# space complexity : O(1)  here we arenot using any kind of extra storage.
+
+# optimized solution
+# in the optimized solution ,what we do is , we just count the number of vowels presented in the given string , then we use the formula of L*(L+1)//2 which calculates the number of total substrings that consists of the vowels
+
+
+# find a contiguous subarray whose length is equal to k
+def consubarray(s, k):  # the subarray or substring must have a length of a k
+    n = len(s)
     left = 0
-    storage=[]
+    storage = []
     ans = 0
     for i in range(n):
         storage.append(s[i])
-        while len(storage) == k:   #here if the length of storage is equal to k then we just calculate the average and find the answer
+        while (
+            len(storage) == k
+        ):  # here if the length of storage is equal to k then we just calculate the average and find the answer
             average = sum(storage) / k
-            ans=max(ans,average)
+            ans = max(ans, average)
             storage.pop(0)
-            left+=1
-        
-        
-    return ans
-print(consubarray([5],1))
-#time complexity : O(N)
-#space complexity : O(1)
+            left += 1
 
-#longest palindromic substring
-#Given a string s, return the longest palindromic substring in s.
+    return ans
+
+
+print(consubarray([5], 1))
+# time complexity : O(N)
+# space complexity : O(1)
+
+# longest palindromic substring
+# Given a string s, return the longest palindromic substring in s.
+
 
 def brutepalindromic(s):
-    n=len(s)
-    length=0
-    ans=0
+    n = len(s)
+    length = 0
+    ans = 0
     for i in range(n):
-        for j in range(i,n):
-            substring=s[i:j+1]
-            if substring==substring[::-1]:  #here we are comparing the reverse form of a substring with the substring, if they are same then it means the substring is palindromic, then we need to calcualte the length of the substring
-              if len(substring)>length:
-                  length=len(substring)
-                  ans=substring
-    return ans  
-print(brutepalindromic("babad"))   
-#time complexity : O(N^3)
-#space complexity : O(1)  
+        for j in range(i, n):
+            substring = s[i : j + 1]
+            if (
+                substring == substring[::-1]
+            ):  # here we are comparing the reverse form of a substring with the substring, if they are same then it means the substring is palindromic, then we need to calcualte the length of the substring
+                if len(substring) > length:
+                    length = len(substring)
+                    ans = substring
+    return ans
 
-#optimal approach
-#so for the optimal approach inorder to find the longest palindromic substring, we need to take the current i indexed element as the centre of the string and then expand this in both left side as well as the right side as long as the condition of left side and right side elements are same or equal to eachother.
-#and during this while loop , we also need to compare the length of the current substring with the previous one,if only its greater we change our answer otherwise its always the same.
+
+print(brutepalindromic("babad"))
+# time complexity : O(N^3)
+# space complexity : O(1)
+
+
+# better approach
+# so for the optimal approach inorder to find the longest palindromic substring, we need to take the current i indexed element as the centre of the string and then expand this in both left side as well as the right side as long as the condition of left side and right side elements are same or equal to eachother.
+# and during this while loop , we also need to compare the length of the current substring with the previous one,if only its greater we change our answer otherwise its always the same.
 def optimalpalindromic(s):
-   n = len(s)
-   ans = 0
-   length = 0
-   for i in range(n):
-       if n%2!=0:
-        left,right=i,i
-        while left>=0 and right<n and s[left] == s[right]:
+    n = len(s)
+    ans = ""
+    length = 0
+    for i in range(n):
+
+        left, right = i, i
+        while left >= 0 and right < n and s[left] == s[right]:
             if right - left + 1 > length:
-                length=right-left+1
-                ans=s[left:right+1]
-            left-=1  #as we need to find the most longest substring which is palindromic , we are decreasing the value of left and increasing the value of right
-            right+=1
-       else:
-           left,right=i,i+1
-           while left>=0 and right<n and s[left] == s[right]:
+                length = right - left + 1
+                ans = s[left : right + 1]
+            left -= 1  # as we need to find the most longest substring which is palindromic , we are decreasing the value of left and increasing the value of right
+            right += 1
+
+        left, right = i, i + 1
+        while left >= 0 and right < n and s[left] == s[right]:
             if right - left + 1 > length:
-                length=right-left+1
-                ans=s[left:right+1]
-            left-=1  #as we need to find the most longest substring which is palindromic , we are decreasing the value of left and increasing the value of right
-            right+=1
-   return ans         
+                length = right - left + 1
+                ans = s[left : right + 1]
+            left -= 1  # as we need to find the most longest substring which is palindromic , we are decreasing the value of left and increasing the value of right
+            right += 1
+    return ans
+
+
 print(optimalpalindromic("babad"))
-#time complexity : O(N)
-#space complexity : O(1)
-
-
+# time complexity : O(N^2)
+# space complexity : O(1)
