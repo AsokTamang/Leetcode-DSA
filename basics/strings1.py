@@ -259,7 +259,7 @@ print(brutepalindromic("babad"))
 # better approach
 # so for the optimal approach inorder to find the longest palindromic substring, we need to take the current i indexed element as the centre of the string and then expand this in both left side as well as the right side as long as the condition of left side and right side elements are same or equal to eachother.
 # and during this while loop , we also need to compare the length of the current substring with the previous one,if only its greater we change our answer otherwise its always the same.
-def optimalpalindromic(s):
+def betterpalindrome(s):
     n = len(s)
     ans = ""
     length = 0
@@ -283,6 +283,77 @@ def optimalpalindromic(s):
     return ans
 
 
-print(optimalpalindromic("babad"))
+print(betterpalindrome("babad"))
 # time complexity : O(N^2)
 # space complexity : O(1)
+
+#optimal palindrome
+#in the optimal palindrome we are gonna use the manacher's algorithm
+def optimalpalindrome(s):
+    tempo = '^#' + '#'.join(s) + '$'    #here we are just inserting the ^ and $ at the starting and ending position to make our string length of odd so it will be easier to calculate whether the centre position is at index odd or even
+    n = len(tempo)
+    c=r=0  #here c is the centre of the palindromic substring and r is the right boundary of the substring
+    p=[0] * n    
+    for i in range(1,n-1):  #here we are avoiding the first and the last element cause we have used ^ and $ at the first and last index which acts as a boundary of a string
+        mirror = c-(i-c)  #mirror is the postion at the left side of the centre of a palindromic substring which has the same number of radius compared to that at index i
+        if i < r :  #if the i index is with in the palindromic substring right border then
+            p[i] = min(r-i,p[mirror])   #then the palindromic radius at index i is atleast the palindromic radius of its mirror or the distance of i from r
+        while tempo[i-1-p[i]] == tempo[i+1+p[i]]:   #this loop is for expanding the radius of the palindromic substring
+            p[i]+=1
+        if i + p[i] > r:    #but if our palindromic radius exceeds beyound the right border of our previous palindromic centre having centre at c then we must change the index of c and r
+            c=i
+            r=i+p[i]
+    maximumlen = max(p)    #here we are calculating the maximum radius of the palindromic substring
+    centralindex=p.index(maximumlen)   #this gives us the centre which is the central index having the maximum palindromic radius
+    start = (centralindex - maximumlen) // 2        #as the difference of  centralindex and the maximum length gives us the starting index and here we are dividing by 2 casue our original strings length is almost half of the length of the tempo string        
+    return s[start:start+maximumlen]   #and as start + maximumlen gives us the ending index   
+#here we are not using centralindex + maximumlen cause centralindex + maximumlen would give us the ending index based on the tempo string whose length is nearly double than the length of our original string
+print(optimalpalindrome('babad'))
+#time complexity : O(N)
+#space complexity : O(N) cause we are using p whose length is almost N which is the length of the temporary string
+
+
+#Sum of Beauty of All Substrings
+#The beauty of a string is defined as the difference between the frequency of the most frequent character and the least frequent character (excluding characters that do not appear) in that string.
+#Given a string s, return the sum of beauty values of all possible substrings of s.
+
+#so the question is asking us to return the total sum of the beauty values of  all the substring
+
+#brute approach
+#so in the most brute or naive approach , what we can do is we go through each and every elements to make the substring and we count the frequency and we find the difference 
+#then  finally we add those values for every substrings
+
+def calculatebeauty(s):
+    v=defaultdict(int)
+    for str in s:    
+        v[str]+=1
+    return max(v.values()) - min(v.values())  #here as the beauty means the differnce between the frequency of the most frequent word and the frequency of the most least appearing word    
+def brutebeauty(s):
+    n=len(s)
+    total = 0
+    for i in range(n):
+        for j in range(i,n):
+            count=calculatebeauty(s[i:j+1])
+            total+=count
+    return total        
+print(brutebeauty('aabcbaa'))
+#time complexity : O(N^3)
+#space complexity : O(N) cause we are using the storage called v which stores the character and its frequency as a key-value pair in the form of a dictonarys 
+
+
+def optimalbeauty(s):
+    n=len(s)
+   
+    total=0
+    for i in range(n):
+        m=defaultdict(int)
+        for j in range(i,n):
+            m[s[j]]+=1
+            currentbeauty=max(m.values()) - min(m.values())
+            total+=currentbeauty
+    return total        
+print(optimalbeauty('aabcbaa'))
+#time complexity : O(N^2)
+#space complexity : O(1)
+
+
