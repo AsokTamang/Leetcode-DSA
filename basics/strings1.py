@@ -357,3 +357,25 @@ print(optimalbeauty('aabcbaa'))
 #space complexity : O(1)
 
 
+#Reverse every word in a string
+def reverseword(s):
+    tempo=s[::-1]
+    i = 0
+    n = len(tempo)
+    ans = []
+    while i < n:
+        word =[]
+        while i<n and tempo[i]!=' ':
+            word.append(tempo[i])
+            i+=1
+        if len(word)>0:  #if only the obtainded or fomred word's length is greater than 0 , we append this formed word in our ans list
+         ans.append(''.join(word[::-1])) 
+        i+=1
+           
+        
+
+    return ' '.join(ans)
+print(reverseword("welcome to the jungle"))
+#time complexity : O(N^2)
+#space complexity : O(N)  cause we are using ans which always has the same length as that of the original string
+

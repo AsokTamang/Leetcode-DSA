@@ -2073,3 +2073,91 @@ print(optimalpalindrome('babad'))
 #space complexity : O(1)
 
 
+
+
+#find the longest palindromic substring
+#brute approach , so for the brute approach what we gonna do is we gonna first find the substring by going through each and every numbers in a string anc check whether it is palindrome or not
+
+
+
+def brutepalin(s):
+    n=len(s)
+    length = 0
+    ans = 0
+    for i in range(n):
+        for j in range(i,n):
+            subtring = s[i:j+1]
+            if subtring == subtring[::-1] and len(subtring) > length:  #if its reverse form is same as the original form then of course its a palindrome,
+              length=len(subtring)
+              ans = subtring
+    return ('The longest palindromic substring is:',ans,'having length:',length)
+print(brutepalin('bbbab'))
+#time complexity : O(N^3)
+#space complexity : O(1)
+
+#better approach
+#in the better approach what we gonna do is taking every i indexed number as the centre of a palindrom and checking whether its palindrome or not and if yes then finding the length
+def betterpalin(s):
+    n=len(s)
+    length = 0
+    ans = 0 
+    #for odd length
+    for i in range(n):
+        start,end=i,i
+        while start>=0 and end<n and s[start]==s[end]:
+            if len(s[start:end+1]) > length:  #as we need to find the longest palindromic substring , we must calculate the length
+                length = len(s[start:end+1])
+                ans = s[start:end+1]
+            start-=1
+            end+=1
+    #for even length
+    for i in range(n):
+        start,end=i,i+1
+        while start>=0 and end<n and  s[start]==s[end] :
+            if end-start+1 > length:
+                length =end-start+1
+                ans = s[start:end+1]
+            start-=1
+            end+=1
+    return (ans,length)
+print(betterpalin('bbbab'))
+#time complexity : O(N)
+#space complexity : O(1)
+
+#optimal approach
+#machaner's algorithm
+#in the machaner's algorithm rather than expanding at every centre at index i , we just find the palindromic radius based on the mirror of index i whose palindromic radius is already obtained ,
+#if this index i lies within the right boundary or range of the longer palindromic substring
+def optimalpalin(s):
+    c=r=0  #here c is the centre and r is the right boundary or boundary position in a given string
+    tempo='^#' + '#'.join(s) + '$'   #here we are using ^ at the starting position and $ at the ending postion so the count wont go outof the bounds and we are using # at the gaps between the character so that it will be easier for the calculation of even length substring
+    n=len(tempo)
+    p=[0] * n  #here p stores the palindromic radius at each index i
+    for i in range(1,n-1):  #ignoring the first and the last character
+        mirror=c-(i-c)  #here i-c gives us the position of i from the central position and as the mirror's length is equal to the i-c from centre , so we are calculating like this
+        mirror=2*c - i
+        if i < r:  #if the calculating i index lies with in the right boundary
+            p[i] =min(r-i ,p[mirror])  #then the palindromic radius at i will either be same as that at the mirror index or the distance of i from r,
+        while tempo[i-1-p[i]] == tempo[i+1+p[i]]:  #this loop is mostly for expanding the substring at index i as long as the left side and right side numbers from index i are same
+            p[i]+=1
+        if i+p[i]>r:   #but if the palindromic radius from the index i exceeds the right boundary , then we change the centre to i and right boundary to i+p[i]
+            c=i
+            r=i+p[i]
+    maxlen=max(p)  #this gives us the value of the maximum radius of the palindromic string
+    centre=p.index(maxlen)  #this gives us the central index at which or where we foundt the longest palindromic substring
+    start = (centre-maxlen) // 2  #this gives us the starting index which is central index - maximum palindromic radius 
+    #and here we are dividing by 2 cause our tempo list length is almost double than that of our original string
+    end = start + maxlen    #here we are not doing centre + maxlen cause centre + maxlen would give the ending position based on the length of tempo list
+    return s[start:end]  #and as the length of the original string is nearly half of the tempo , we are doing start + maxlen to find the ending position from the original substring.
+print(optimalpalin('bbbab'))
+#time complexity : O(N)
+#space complexity : O(2N) or O(N)
+
+
+
+
+            
+
+
+
+
