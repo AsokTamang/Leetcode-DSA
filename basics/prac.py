@@ -67,6 +67,9 @@ class LinkedList:
                 break
             count+=1
             itr=itr.next
+    def insertdatas(self,datalist):
+        for data in datalist:
+            self.insert_at_beginning(data)        
             
 
 
@@ -80,7 +83,9 @@ if __name__=='__main__':
     ll.insert_at_beginning('77')
     ll.insert_at_end('11')
     ll.insert_at_end('22')
-    print(ll.searchelem(1))
     print(ll.countlength())
     print(ll.print())
+    ll.insertdatas(['apple','orange','banana'])
+    print(ll.print())
+    print(ll.searchelem(1))
     
