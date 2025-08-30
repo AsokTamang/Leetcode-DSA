@@ -150,7 +150,24 @@ class LnkedList:
         while itr:
             itr=itr.next
             count+=1
-        return count       
+        return count  
+    def searchelem(self,index):
+        if index == 0:  #if the index is 0 then obviously, we need to return the head of our node 
+            return self.head.data
+        if self.head is None:
+            return
+        if index<0 or index>=self.find_length():  #if the index at which we are trying to find the element is less than 0 or greater than or equal to the length of the linked list then we just raise an exception
+            raise Exception('Invalid index')
+        itr=self.head
+        count = 0
+        while itr:
+            if count == index -1:  #if the count of the element is same as that of index-1
+                #then the next node of the current itr is our target element or number which is required to be found.
+                return itr.next.data
+            itr=itr.next
+            count+=1
+            
+
 if __name__=='__main__':
     ll=LnkedList()
     ll.insertdatas(['1','2','3'])  
@@ -158,5 +175,6 @@ if __name__=='__main__':
     print(ll.deletehead())
     print(ll.printdatas())
     print(ll.find_length())
+    print(ll.searchelem(0))
 #time complexity : O(N)
 # space complexity : O(1)          
