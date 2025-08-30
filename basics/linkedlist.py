@@ -142,12 +142,21 @@ class LnkedList:
         while itr.next:   #as long as the itr's next exist , we change the current itr to its next itr
             itr=itr.next
         itr.next=Node(data,None)  #then the final next value of itr will be the Node which stores the passed data and it's next will be None           
-        
+    def find_length(self):
+        if self.head is None:
+            return
+        itr=self.head
+        count=0
+        while itr:
+            itr=itr.next
+            count+=1
+        return count       
 if __name__=='__main__':
     ll=LnkedList()
     ll.insertdatas(['1','2','3'])  
     print(ll.insert_at_beginning('7'))
     print(ll.deletehead())
     print(ll.printdatas())
+    print(ll.find_length())
 #time complexity : O(N)
 # space complexity : O(1)          
