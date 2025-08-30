@@ -166,7 +166,22 @@ class LnkedList:
                 return itr.next.data
             itr=itr.next
             count+=1
-            
+    def insertatindex(self,index,data):
+        if index == 0:  #if the index is 0 then obviously, we need to return the head of our node 
+             self.head=Node(data,self.head)  #if we are inserting the data at the first position then the data will be inserted at the head and it's next will be the self.head
+       
+        if index<0 or index>=self.find_length():  #if the index at which we are trying to find the element is less than 0 or greater than or equal to the length of the linked list then we just raise an exception
+            raise Exception('Invalid index')
+        itr=self.head
+        count = 0
+        while itr:
+            if count == index -1:  #if the count of the element is same as that of index-1
+                #then the next node of the current itr is our index where we are inserting the data.
+                itr.next=Node(data,itr.next)
+                return
+            itr=itr.next
+            count+=1
+
 
 if __name__=='__main__':
     ll=LnkedList()
@@ -176,5 +191,9 @@ if __name__=='__main__':
     print(ll.printdatas())
     print(ll.find_length())
     print(ll.searchelem(0))
-#time complexity : O(N)
+    print(ll.insertatindex(2,11))
+    print(ll.printdatas())
+    
+#time complexity : O(N) for inserting at the end
+#then for other functions or properties the time complexity will be O(1)
 # space complexity : O(1)          
