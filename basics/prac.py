@@ -69,7 +69,20 @@ class LinkedList:
             itr=itr.next
     def insertdatas(self,datalist):
         for data in datalist:
-            self.insert_at_beginning(data)        
+            self.insert_at_beginning(data)   
+    def insertatindex(self,index,data):
+        if index == 0:
+            self.head=Node(data,self.head)
+        if index<0 and index>=self.countlength():
+            raise ValueError('Invalid index') 
+        itr=self.head
+        count = 0
+        while itr:
+            if count == index-1:
+                itr.next=Node(data,itr.next)
+                return  #here we are inserting the data at that particular index when the condition of count == index - 1 matches and this current newly added itr's next will be the next of the previous itrnext 
+            itr=itr.next
+            count+=1                 
             
 
 

@@ -54,6 +54,7 @@ class LinkedList:
         value = ''
         while itr:
             value+=itr.data
+            itr=itr.next
         return value    
 
 
@@ -87,3 +88,45 @@ if __name__=='__main__':
     ll.countlength()
     ll.print()
     print(ll.remove_at(1))  
+
+
+#Insertion at the head of LL
+#Given the head of a singly linked list and an integer X, insert a node with value X at the head of the linked list and return the head of the modified list.
+#The head is the first node of the linked list.
+
+class Node:
+    def __init__(self,data,next):
+     self.data=data
+     self.next=next
+class LnkedList:
+    def __init__(self):
+        self.head=None
+    def insert_at_beginning(self,data):
+        node=Node(data,self.head)  #here as we inserting the data at the beginning the next of this data will be the self.head
+        self.head=node   #and this newly created node will be the head of our linked list.
+        itr=self.head
+        value=''
+        while itr:
+            value+=str(itr.data) + ','
+            itr=itr.next
+        return value
+    
+    def insertdatas(self,datas):
+        
+        for data in datas:
+            self.insert_at_end(data)
+    def insert_at_end(self,data):
+        if self.head is None:
+            self.head=Node(data,None)
+            return
+        itr = self.head  #here we are assuming itr as the head of our linked list
+        while itr.next:   #as long as the itr's next exist , we change the current itr to its next itr
+            itr=itr.next
+        itr.next=Node(data,None)  #then the final next value of itr will be the Node which stores the passed data and it's next will be None           
+        
+if __name__=='__main__':
+    ll=LnkedList()
+    ll.insertdatas(['1','2','3'])  
+    print(ll.insert_at_beginning('7'))
+#time complexity : O(N)
+# space complexity : O(1)          
