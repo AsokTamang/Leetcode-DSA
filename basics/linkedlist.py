@@ -89,10 +89,16 @@ if __name__=='__main__':
     ll.print()
     print(ll.remove_at(1))  
 
-
+#Qustion 1
 #Insertion at the head of LL
 #Given the head of a singly linked list and an integer X, insert a node with value X at the head of the linked list and return the head of the modified list.
 #The head is the first node of the linked list.
+
+
+#Qustion 2
+#Given the head of a singly linked list, delete the head of the linked list and return the head of the modified list.
+#The head is the first node of the linked list.
+
 
 class Node:
     def __init__(self,data,next):
@@ -109,8 +115,21 @@ class LnkedList:
         while itr:
             value+=str(itr.data) + ','
             itr=itr.next
-        return value
+        return self.head
+    def deletehead(self):
+        self.head=self.head.next  #here what we are doing is making the head of our linked list the next node of the current head
+        return self.head.data    #which will delete the previous head of the linked list
+      
     
+    def printdatas(self):
+        itr=self.head
+        
+        value=''
+        while itr:
+            value+=str(itr.data) + ','
+            itr=itr.next
+       
+        return value
     def insertdatas(self,datas):
         
         for data in datas:
@@ -128,5 +147,7 @@ if __name__=='__main__':
     ll=LnkedList()
     ll.insertdatas(['1','2','3'])  
     print(ll.insert_at_beginning('7'))
+    print(ll.deletehead())
+    print(ll.printdatas())
 #time complexity : O(N)
 # space complexity : O(1)          
