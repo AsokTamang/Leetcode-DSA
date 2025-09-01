@@ -44,6 +44,11 @@ class DoublyLinkedList:
             count+=1
             itr=itr.next
         return count    
+    def delhead(self):
+        itr=self.head.next
+        self.head=itr
+        itr.prev=None
+        return self.head
     def deleteNode(self,index):
         if self.head is None:
             return
@@ -72,8 +77,14 @@ dll=DoublyLinkedList()
 dll.appendData('2')
 dll.prepend('1')
 dll.prepend('0')
-dll.deleteNode(0)
+
+dll.delhead()
 print(dll.print())
 print(dll.countLength())
 
-        
+
+
+#Delete head of DLL
+#Given the head of a doubly linked list, remove the node at the head of the linked list and return the head of the modified list.
+#The head is the first node of the linked list.
+
