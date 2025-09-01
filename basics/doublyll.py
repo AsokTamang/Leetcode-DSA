@@ -30,13 +30,7 @@ class DoublyLinkedList:
         new_node=Node(data,None,itr)   #the next of the newly created node will be the current head of the doubly linked list
         itr.prev=new_node
         self.head=new_node
-    def print(self):
-        itr=self.head
-        value =[]
-        while itr:
-            value.append(str(itr.data)) 
-            itr=itr.next    
-        return value
+   
     def countLength(self):
         itr=self.head
         count = 0
@@ -49,6 +43,19 @@ class DoublyLinkedList:
         self.head=itr
         itr.prev=None
         return self.head
+    #so the trick for reversing the given linked list was swapping the prev and the next of the current node ,as like the two pointers and as all the nodes are calculated , the tempo will become the value None which is after the last node of the original linked list , so the previous of this node is obviously the head of our double linked list 
+    def reverselist(self):
+        itr=self.head
+        tempo=None
+        while itr:
+            tempo=itr.prev
+            itr.prev=itr.next
+            itr.next=tempo
+            itr=itr.prev  #as our itr.prev is made a itr.next 
+            #so while looping the itr will be changed into itr.prev
+        if tempo:
+            self.head=tempo.prev   #as our temp was none initially , the final value of tempo will alos be none, so the self.head will be the prev of tempo    
+    
     def deleteNode(self,index):
         if self.head is None:
             return
@@ -71,14 +78,21 @@ class DoublyLinkedList:
 
                 count+=1
                 itr=itr.next
-                
+    def print(self):
+        itr=self.head
+        value =[]
+        while itr:
+            value.append(str(itr.data)) 
+            itr=itr.next    
+        return value            
+
 
 dll=DoublyLinkedList()
 dll.appendData('2')
 dll.prepend('1')
 dll.prepend('0')
-
-dll.delhead()
+print(dll.print())
+dll.reverselist()
 print(dll.print())
 print(dll.countLength())
 
@@ -87,4 +101,12 @@ print(dll.countLength())
 #Delete head of DLL
 #Given the head of a doubly linked list, remove the node at the head of the linked list and return the head of the modified list.
 #The head is the first node of the linked list.
+#time complexity : O(1)
+#space complexity : O(1)
 
+
+        
+
+        
+        
+        
