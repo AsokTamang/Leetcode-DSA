@@ -116,7 +116,7 @@ class LnkedList:
             value+=str(itr.data) + ','
             itr=itr.next
         return self.head
-    def deletehead(self):
+    def deletehead(self):   #this function deletes the head of the node
         self.head=self.head.next  #here what we are doing is making the head of our linked list the next node of the current head
         return self.head.data    #which will delete the previous head of the linked list
       
@@ -177,7 +177,7 @@ class LnkedList:
         while itr:
             if count == index -1:  #if the count of the element is same as that of index-1
                 #then the next node of the current itr is our index where we are inserting the data.
-                itr.next=Node(data,itr.next)
+                itr.next=Node(data,itr.next)  #and its next will be the node of the next of the previous itr
                 return
             itr=itr.next
             count+=1
