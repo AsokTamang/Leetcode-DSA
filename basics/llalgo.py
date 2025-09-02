@@ -73,8 +73,22 @@ class Lnkedlst:
             itr=itr.next
         return ','.join(a[::-1])  #this code reverses the obtained linked list
     #time complexity : O(N)
-    #space complexity : O(N)        
-         
+    #space complexity : O(N)    
+
+    def optimalreversal1(self):
+        itr=self.head
+        prev=None
+        while itr:
+            front = itr.next
+            itr.next=prev  #the next of the current node will be the previous 
+            prev=itr   #And this prev will change to the current node 
+
+            itr=front  #and as we need to move to our next node we are doing itr=front as front has stored our original next or inital next of the node
+        self.head=prev
+        return prev  #here at the last iteration , the head of the linked list will be stored in a prev. So, we are returning the prev.
+    #time complexity : O(N)
+    #space complexity : O(1)
+
     def printdatas(self):
         itr=self.head
         value=''
@@ -84,7 +98,7 @@ class Lnkedlst:
         return value
 ll1=Lnkedlst()
 ll1.adddatas(['a','b','c','d','e'])
-print(ll1.brutereversal())
+print(ll1.optimalreversal1())
 print(ll1.printdatas())    
 
        
