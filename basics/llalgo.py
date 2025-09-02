@@ -1,3 +1,4 @@
+from collections import defaultdict
 class Node:
     def __init__(self,data,next):
         self.next=next
@@ -120,18 +121,6 @@ class Lnkedlst:
 
 
     #in the second optimal approach of reversing the linked list , what we are doing is using the recusrion method of breaking down the  larger or longer linked list into smaller linked list
-
-
-  
-
-
-        
-        
-        
-        
-
-
-
     def printdatas(self):
         itr=self.head
         value=''
@@ -144,6 +133,84 @@ ll1.adddatas(['a','b','c','d','e'])
 print(ll1.optimalreversal1())
 print(ll1.printdatas())    
 
+
+#Detect a loop in a linked list
+#Given the head of a singly linked list. Return true if a loop exists in the linked list or return false.
+#A loop exists in a linked list if some node in the list can be reached again by continuously following the next pointer.
+#Internally, pos is used to denote the index(0-based) of the node from where the loop starts. Note that pos is not passed as a parameter.
+
+class Node:
+    def __init__(self,data,next):
+        self.data=data
+        self.next=next
+class LL:
+    def __init__(self):
+        self.head=None
+    def adddatas(self,datas):
+        self.head=Node(datas[0],None)
+        itr=self.head
+        for data in datas[1:]:
+            itr.next=Node(data,None)
+            itr=itr.next
+            
+    def optimaldetectloop(self):
+        if self.head is None:
+            return None
+        else:
+            slow=self.head
+            fast=self.head
+            while fast or fast.next:
+                slow=slow.next
+                fast=fast.next.next
+                if slow==fast:
+                    return True
+        return False        
+
+
+
+    def detectloop(self):
+        if self.head is None:
+            return None
+        else:
+            itr=self.head
+            m={}
+            count = 0
+            while itr:
+                if itr in m:
+                    return m[itr]  #if the node exists which means the node is reconnected or relinked that tells us there is a loop inside the linked list then ofcourse we return the position at which this loop exists.
+                m[itr]=count  #here what we are doing is storing each and everyy nodes based on their respective positions
+                count+=1
+                itr=itr.next
+               
+        return -1  #here we are returning -1 if the loop doesnot exists in the linked list 
+    #time complexity : O(N)
+    #space complexity : O(1)         
+if __name__=='__main__':
+    a=LL()
+    a.adddatas([1,2,3,4,5])
+    s=a.head
+    while s.next:
+        s=s.next
+    s.next=a.head.next
+   
+   
+     #here after the while loop we are at the last node then again we are making the next of this last node to the head , which means we are again linking the last node to the head then ofcourse there exists a loop.
+    print(a.optimaldetectloop())
+    print(a.detectloop()) 
+                 
+               
+
+                
+
+    
+        
+        
+        
+        
+
+
+
+    
        
 
 

@@ -102,3 +102,48 @@ if __name__=='__main__':
     print(ll.print())
     print(ll.searchelem(1))
     
+
+
+class Node:
+    def __init__(self,data,next=None):
+        self.data=data
+        self.next=next
+def optimalreverselist(head):
+    itr=head
+    prev=None
+    while itr:
+        front=itr.next
+        itr.next=prev
+        prev=itr
+        itr=front
+    head=prev
+    return prev
+
+
+#in the recursive approach what we do is we start from the last element and use the recursive nature to reverse the link or connection between the elements in a given string
+def reverselist(head):
+    if head is None or head.next is None:
+        return head
+    mainhead=reverselist(head.next)
+    front=head.next  #here we are storing the next node of the current head in a variable called front
+    front.next=head   #then the next of this front will ofcourse be the current head as we are reversing the linked list
+    head.next=None   #then the next of this current head will be none
+    return mainhead
+def printdatas(head):
+    itr=head
+    value=' '
+    while itr:
+        value+=str(itr.data)+','
+
+        itr=itr.next
+    return value
+head=Node(1)
+head.next=Node(2)
+head.next.next=Node(3)
+head.next.next.next=Node(4)
+head.next.next.next.next=Node(5)
+a=optimalreverselist(head)
+print(printdatas(a))
+
+
+
