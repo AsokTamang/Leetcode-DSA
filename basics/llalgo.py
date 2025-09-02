@@ -64,8 +64,16 @@ class Lnkedlst:
             itr.next=Node(data,None)
             itr=itr.next
         return self.head
-   
-           
+    #brute approach
+    def brutereversal(self):
+        a=[]
+        itr=self.head
+        while itr:
+            a.append(itr.data)
+            itr=itr.next
+        return ','.join(a[::-1])  #this code reverses the obtained linked list
+    #time complexity : O(N)
+    #space complexity : O(N)        
          
     def printdatas(self):
         itr=self.head
@@ -76,7 +84,7 @@ class Lnkedlst:
         return value
 ll1=Lnkedlst()
 ll1.adddatas(['a','b','c','d','e'])
-ll1.reversell()
+print(ll1.brutereversal())
 print(ll1.printdatas())    
 
        
