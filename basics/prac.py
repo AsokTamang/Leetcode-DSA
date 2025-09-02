@@ -195,3 +195,4 @@ b.head.next.next=Node(3,None)
 b.head.next.next.next=b.head.next  
 print(b.opimalcheckcycle())
 
+

@@ -200,10 +200,39 @@ if __name__=='__main__':
                  
                
 
-                
+#Find the starting point in LL
+#Given the head of a singly linked list, the task is to find the starting point of a loop in the linked list if it exists. Return the starting node if a loop exists; otherwise, return null.
+#A loop exists in a linked list if some node in the list can be reached again by continuously following the next pointer. Internally, pos denotes the index (0-based) of the node from where the loop starts.
+#Note that pos is not passed as a parameter.     
 
+
+class Node:
+    def __init__(self,data,next):
+        self.data=data
+        self.next=next
+class algolinkedlst:
+    def __init__(self):
+        self.head=None
+    def brutestartpoint(self):
+        itr = self.head
+        count = 0
+        m={}
+        while itr:
+            if itr in m:  #if the itr is already existed in m then it means there exists a cycle so we are returning it's position
+                return m[itr]    
+            m[itr]=count   #here we are storing the itr as the key and its position in the linked list as the value , pair
+            count+=1
+            itr=itr.next 
+        return -1 #if the cycle is not detected then we return -1
+    #time complexity : O(N)
+    # space complexity : O(N)
+j=algolinkedlst()
+j.head=Node(1,None)
+j.head.next=Node(2,None) 
+j.head.next.next=Node(3,None)   
+j.head.next=j.head  #as we are reconnecting the link or next of our last node to the head of this current linked list , we get the starting point 0
+print(j.brutestartpoint())                  
     
-        
         
         
         
