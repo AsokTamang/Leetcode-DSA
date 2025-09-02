@@ -213,6 +213,22 @@ class Node:
 class algolinkedlst:
     def __init__(self):
         self.head=None
+    def optiamlstartpoint(self):
+        slow=self.head
+        fast=self.head
+        while fast and fast.next:
+            slow=slow.next
+            fast=fast.next.next
+            if slow==fast:  #now if we come to the point or the node where the slow and the fast meets then we need the node position of fast
+                slow =self.head  #then we are reassigning the slow with the head of the node , then we are start moving by one from both slow as well as fast which is not self.head right now , which is the value we got after detecting a cycle
+                while slow!=fast:   #then as long as we donot meet the node where slow is not equal to the fast , then we keep moving both slow and fast by one node
+                    slow=slow.next
+                    fast=fast.next
+                return slow       #then there comes a point or node where the slow meets the fast if there exists a cycle, then we return this current value of slow
+        return -1  #if we donot find the cycle and there is no loop then we just return -1        
+        
+
+
     def brutestartpoint(self):
         itr = self.head
         count = 0
@@ -231,7 +247,7 @@ j.head=Node(1,None)
 j.head.next=Node(2,None) 
 j.head.next.next=Node(3,None)   
 j.head.next=j.head  #as we are reconnecting the link or next of our last node to the head of this current linked list , we get the starting point 0
-print(j.brutestartpoint())                  
+print(j.optiamlstartpoint())                  
     
         
         
