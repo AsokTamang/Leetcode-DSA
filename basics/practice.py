@@ -2156,6 +2156,24 @@ print(optimalpalin('bbbab'))
 
 
 
+class Node:
+    def __init__(self,data,prev,next):
+        self.data=data
+        self.prev=prev
+        self.next=next
+class DoubleLinkedList:
+    def __init__(self):
+        self.head=None
+    def reverselist(self):
+        itr=self.head
+        tempo=None
+        while itr:
+          tempo=itr.prev
+          itr.prev=itr.next  #here we are swapping the previous pointer and the next pointer of the current node
+          itr.next=tempo   #then the next node will be the previous node which was stored in a tempo
+          itr=itr.prev   #and as we need to go to the next node and as the next node pointer is taken by the prev node , so we are using itr=itr.prev
+        
+
             
 
 

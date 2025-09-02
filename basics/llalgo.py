@@ -46,7 +46,40 @@ ll.adddatas([1,2,3,4,5])
 print(ll.brutemiddlelist())
 print(ll.optimalmiddlelist())
 
-    
+
+
+#Reverse Linked List
+#Given the head of a singly linked list, reverse the list, and return the reversed list.
+class Node:
+    def __init__(self,data,next):
+        self.data=data
+        self.next=next
+class Lnkedlst:
+    def __init__(self):
+      self.head=None
+    def adddatas(self,datas):
+        self.head=Node(datas[0],None)
+        itr=self.head
+        for data in datas[1:]:
+            itr.next=Node(data,None)
+            itr=itr.next
+        return self.head
+   
+           
+         
+    def printdatas(self):
+        itr=self.head
+        value=''
+        while itr:
+            value+=str(itr.data)+','
+            itr=itr.next        
+        return value
+ll1=Lnkedlst()
+ll1.adddatas(['a','b','c','d','e'])
+ll1.reversell()
+print(ll1.printdatas())    
+
+       
 
 
     
