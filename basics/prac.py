@@ -147,3 +147,51 @@ print(printdatas(a))
 
 
 
+class Node:
+    def __init__(self,data,next=None):
+        self.data=data
+        self.next=next
+class linkedlistt:
+    def __init__(self):
+       self.head=None
+    def checkcycle(self):
+        itr=self.head
+        count = 0
+        m={}
+        while itr:
+            if itr in m:
+                return m[itr]   #which returns the position of the connecting node or linking point
+            m[itr]=count  #here we are storing the node and its position as the key-value pai
+            count+=1
+            itr=itr.next 
+        return False
+    #time complexity : O(N)
+    #space complexity : O(N)  as we are using the dictionary of size m
+    
+    
+    #in the optimal approach of checking the cycle , we are using the tortorise and rabbit pace method.
+    def opimalcheckcycle(self):
+        slow=self.head
+        fast=self.head
+        while fast and fast.next:
+            slow=slow.next
+            fast=fast.next.next
+            if slow == fast:
+                return True
+        return False    
+
+
+    def printDatas(self):
+        val=''
+        itr=self.head   
+        while itr:
+            val+=str(itr.data) + ','
+            itr=itr.next
+        return val
+b=linkedlistt()  #here we are storing the linkedlistt constructor in a b variable
+b.head=Node(1,None)  #then we are defining the head of the b
+b.head.next=Node(2,None)  #then the next of the head of the b is defined here
+b.head.next.next=Node(3,None)
+b.head.next.next.next=b.head.next  
+print(b.opimalcheckcycle())
+
