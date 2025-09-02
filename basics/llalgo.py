@@ -51,9 +51,38 @@ print(ll.optimalmiddlelist())
 #Reverse Linked List
 #Given the head of a singly linked list, reverse the list, and return the reversed list.
 class Node:
-    def __init__(self,data,next):
+    def __init__(self,data,next=None):
         self.data=data
         self.next=next
+def optimalreversal2(head):
+        if head is None or head.next is None:
+            return head
+        mainhead=optimalreversal2(head.next)  
+        front = head.next
+        front.next=head
+        head.next=None
+        return mainhead 
+def printdatas(head):
+    itr=head
+    value=''
+    while itr:
+        value+=str(itr.data) + ','
+        itr=itr.next
+    return value    
+#recursion output
+head=Node(1)
+head.next=Node(2)
+head.next.next=Node(3)
+head.next.next.next=Node(4)
+head.next.next.next.next=Node(5)
+headd=optimalreversal2(head)
+print(printdatas(headd))
+
+
+
+
+
+
 class Lnkedlst:
     def __init__(self):
       self.head=None
@@ -74,7 +103,7 @@ class Lnkedlst:
         return ','.join(a[::-1])  #this code reverses the obtained linked list
     #time complexity : O(N)
     #space complexity : O(N)    
-
+    #in the optimal approach 1 of reversing the linked list , what we are doing is storing the previous of the itr as prev,
     def optimalreversal1(self):
         itr=self.head
         prev=None
@@ -88,6 +117,20 @@ class Lnkedlst:
         return prev  #here at the last iteration , the head of the linked list will be stored in a prev. So, we are returning the prev.
     #time complexity : O(N)
     #space complexity : O(1)
+
+
+    #in the second optimal approach of reversing the linked list , what we are doing is using the recusrion method of breaking down the  larger or longer linked list into smaller linked list
+
+
+  
+
+
+        
+        
+        
+        
+
+
 
     def printdatas(self):
         itr=self.head
