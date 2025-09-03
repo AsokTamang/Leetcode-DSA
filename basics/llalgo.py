@@ -298,17 +298,58 @@ class llst:
 
     #in the brure approach down below what we are doing is, we are storing the datas of the linked list in an external storage, then if this is equal to it's reverse form, then of course the linked list is palindrome
     #otherwise , its not palindrome
-    def checkpalindrome(self):
-        ans = []
-        itr=self.head
-        while itr:
-            ans.append(itr.data)
-            itr=itr.next
-        if ans==ans[::-1]:  
-            return True
-        return False  
+    
     #time complexity : O(N)
     # space complexity : O(N)  
+    def printdatas1(self):
+        itr=self.head
+        val=''
+        while itr:
+            val+=str(itr.data) + ','
+            itr=itr.next
+        return val    
+
+    #in the reverselinked list approach what we are doing is using the recursion method inorder to reverse the given linked list by changing the direction of next connecting the nodes
+    def reverselinkedlist(self,node=None):
+        if node is None:
+            node=self.head
+
+        if node is None or node.next is None:
+            self.head=node
+            return node
+        mainhead=self.reverselinkedlist(node.next)
+        front=node.next
+        front.next=node
+        node.next=None
+        return mainhead
+    
+
+    def brutepalindrome(self):
+        m=[]
+        itr=self.head
+        while itr:
+            m.append(itr.data)    #here we are storing each and every datas of the linked list inside a list called m which is first in last out
+            itr=itr.next
+        itr=self.head
+        while itr:
+            if itr.data!=m.pop():  #here m.pop deletes the last most data from the list , and if the linked list is palindrome then of course the head must match with the last data in a linked list    
+             return False
+            #if the first most data matches with the last most data then it is showing that the given linked list might be palindrome so thats why we are moving to the next iteration after deleting the last most element from the list m
+            itr=itr.next
+        return True   #if the reversed form of a linked list matches with the original linked list then ofcourse the linked list is palindrome.    
+    #time complexity : O(N)
+    #space complexity : O(N)
+    def printdatas(self):
+        itr=self.head
+        val=''
+        while itr:
+            val+=str(itr.data)+','
+
+            itr=itr.next
+        return val
+
+        
+
 
 
 
@@ -319,7 +360,12 @@ v.head.next.next=Node(1,None)
 v.head.next.next.next=Node(1,None)
 print(v.optimalcountlength())
 print(v.brutecountlength())
-print(v.checkpalindrome())
+print(v.brutepalindrome())
+print(v.printdatas1())
+print(v.reverselinkedlist())
+
+print(v.printdatas())
+
 
 
 #Check if LL is palindrome or not
