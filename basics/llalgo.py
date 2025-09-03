@@ -276,12 +276,27 @@ class llst:
         return 0   
     #time complexity : O(N)
     # space complexity : O(N)  
+    def optimallength(self):
+        slow=self.head
+        fast=self.head
+        count=0
+        while fast and fast.next:
+            slow=slow.next
+            fast=fast.next.next
+            count+=1
+            if slow==fast:
+                return count
+        return 0 
+    #time complexity : O(N)
+    # space complexity : O(1)  
+
 v=llst()
 v.head=Node(1,None)
 v.head.next=Node(2,None)
 v.head.next.next=Node(3,None)
 v.head.next.next.next=Node(4,None)
-v.head.next.next.next.next=v.head
+v.head.next.next.next.next=v.head.next
+print(v.optimallength())
 print(v.countlength())
 
      
