@@ -339,6 +339,43 @@ class llst:
         return True   #if the reversed form of a linked list matches with the original linked list then ofcourse the linked list is palindrome.    
     #time complexity : O(N)
     #space complexity : O(N)
+    
+    def optimalpalindrome(self):
+        slow=self.head
+        fast=self.head
+        while fast and fast.next and fast.next.next:
+            slow=slow.next
+            fast=fast.next.next
+        m1=slow  #here m1 represents the last node of the first half of the linked list
+        m2=slow.next  #here m2 represents the first node or the head node of the second half of the linked list
+        
+        #the below code is for reversing the second half of the linked list
+        prev=None
+        while m2!=None:
+            front=m2.next   #here we are storing the next of the m2 which is head of the second half right now
+            m2.next=prev  #then that front next will be the previous node
+            prev=m2
+            m2=front
+        a=self.head    
+        b=prev
+        while b:
+            if a.data!=b.data:
+                return False
+            a=a.next
+            b=b.next
+        return True    
+    #time complexity : O(N)
+    #space complexity : O(1)    
+
+             
+
+
+
+
+
+    
+    
+    
     def printdatas(self):
         itr=self.head
         val=''
@@ -358,9 +395,10 @@ v.head=Node(1,None)
 v.head.next=Node(1,None)
 v.head.next.next=Node(1,None)
 v.head.next.next.next=Node(1,None)
+v.head.next.next.next.next=Node(1,None)
 print(v.optimalcountlength())
 print(v.brutecountlength())
-print(v.brutepalindrome())
+print(v.optimalpalindrome())
 print(v.printdatas1())
 print(v.reverselinkedlist())
 
