@@ -249,7 +249,42 @@ j.head.next.next=Node(3,None)
 j.head.next=j.head  #as we are reconnecting the link or next of our last node to the head of this current linked list , we get the starting point 0
 print(j.optiamlstartpoint())                  
     
-        
+#Length of loop in LL   
+#Given the head of a singly linked list, find the length of the loop in the linked list if it exists. Return the length of the loop if it exists; otherwise, return 0.
+#A loop exists in a linked list if some node in the list can be reached again by continuously following the next pointer. Internally, pos is used to denote the index (0-based) of the node from where the loop starts.
+#Note that pos is not passed as a parameter.
+
+class Node:
+    def __init__(self,data,next=None):
+      self.data=data
+      self.next=next
+    def __str__(self):  #this constructor is used to return the node in the form of string by using it's corresponding data
+        return str(self.data)       
+class llst:
+    def __init__(self):
+        self.head=None
+    def countlength(self):
+        itr=self.head
+        count = 1  #as we are determing the length of the nested loop in a linked list , we must start with the count = 1
+        m={}  #this m stores the length of the nested loop
+        while itr:
+            if itr in m:
+                return count-m[itr]  #this calculation returns the actual lenght or the number of nodes in a nested loop
+            m[itr]=count
+            count+=1
+            itr=itr.next
+        return 0   
+    #time complexity : O(N)
+    # space complexity : O(N)  
+v=llst()
+v.head=Node(1,None)
+v.head.next=Node(2,None)
+v.head.next.next=Node(3,None)
+v.head.next.next.next=Node(4,None)
+v.head.next.next.next.next=v.head
+print(v.countlength())
+
+     
         
         
 
