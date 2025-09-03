@@ -151,7 +151,10 @@ class Node:
     def __init__(self,data,next=None):
         self.data=data
         self.next=next
+    def __str__(self):   #this string constructor helps us to print the node in it's string data format
+        return str(self.data)    
 class linkedlistt:
+   
     def __init__(self):
        self.head=None
     def checkcycle(self):
@@ -167,7 +170,25 @@ class linkedlistt:
         return False
     #time complexity : O(N)
     #space complexity : O(N)  as we are using the dictionary of size m
-    
+    #in order to detect the starting position of the nested loop in a linked list, we are using the tortorise and hare method 
+
+    def optimalstartingpoint(self):
+        slow = self.head
+        fast=self.head
+        while fast and fast.next:
+            slow=slow.next
+            fast=fast.next.next
+            if slow == fast:   #then if there exists a nested loop in a linked list , then ofcourse we will come to a node where slow will become the fast
+                slow=self.head  #after slow becomes equal to fast
+                while slow!=fast:
+                    slow=slow.next
+                    fast=fast.next
+                return slow  #then the value of slow here is the starting node
+        return -1  #we are returning -1 if there exists no nested loop in a linked list        
+        
+
+
+
     
     #in the optimal approach of checking the cycle , we are using the tortorise and rabbit pace method.
     def opimalcheckcycle(self):
@@ -193,6 +214,7 @@ b.head=Node(1,None)  #then we are defining the head of the b
 b.head.next=Node(2,None)  #then the next of the head of the b is defined here
 b.head.next.next=Node(3,None)
 b.head.next.next.next=b.head.next  
+print(b.optimalstartingpoint())
 print(b.opimalcheckcycle())
 
 
