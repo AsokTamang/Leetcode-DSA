@@ -263,7 +263,7 @@ class Node:
 class llst:
     def __init__(self):
         self.head=None
-    def countlength(self):
+    def brutecountlength(self):
         itr=self.head
         count = 1  #as we are determing the length of the nested loop in a linked list , we must start with the count = 1
         m={}  #this m stores the length of the nested loop
@@ -274,31 +274,60 @@ class llst:
             count+=1
             itr=itr.next
         return 0   
+    
     #time complexity : O(N)
     # space complexity : O(N)  
-    def optimallength(self):
+    #of course in the optimal approach we use tortorise and hare method 
+    def optimalcountlength(self):
         slow=self.head
         fast=self.head
-        count=0
         while fast and fast.next:
             slow=slow.next
             fast=fast.next.next
-            count+=1
-            if slow==fast:
-                return count
-        return 0 
+            if slow == fast:   #then by using slow and fast method, we comes to a point where slow becomes equal to fast
+                length = 1  #then we start calculating the length by assuming it initally 1
+                fast=fast.next  #and we are moving the fast to next iteration or next node , inorder to calculate the length
+                while slow!=fast:
+                    length+=1
+                    fast=fast.next
+                return length    
+        return 0
+    
     #time complexity : O(N)
-    # space complexity : O(1)  
+    # space complexity : O(1) 
+
+    #in the brure approach down below what we are doing is, we are storing the datas of the linked list in an external storage, then if this is equal to it's reverse form, then of course the linked list is palindrome
+    #otherwise , its not palindrome
+    def checkpalindrome(self):
+        ans = []
+        itr=self.head
+        while itr:
+            ans.append(itr.data)
+            itr=itr.next
+        if ans==ans[::-1]:  
+            return True
+        return False  
+    #time complexity : O(N)
+    # space complexity : O(N)  
+
+
 
 v=llst()
 v.head=Node(1,None)
-v.head.next=Node(2,None)
-v.head.next.next=Node(3,None)
-v.head.next.next.next=Node(4,None)
-v.head.next.next.next.next=v.head.next
-print(v.optimallength())
-print(v.countlength())
+v.head.next=Node(1,None)
+v.head.next.next=Node(1,None)
+v.head.next.next.next=Node(1,None)
+print(v.optimalcountlength())
+print(v.brutecountlength())
+print(v.checkpalindrome())
 
+
+#Check if LL is palindrome or not
+#Given the head of a singly linked list representing a positive integer number. Each node of the linked list represents a digit of the number, with the 1st node containing the leftmost digit of the number and so on. Check whether the linked list values form a palindrome or not. Return true if it forms a palindrome, otherwise, return false.
+#A palindrome is a sequence that reads the same forward and backwards.
+
+       
+    
      
         
         
