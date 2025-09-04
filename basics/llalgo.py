@@ -357,17 +357,37 @@ class llst:
             prev=m2
             m2=front
         a=self.head    
-        b=prev
-        while b:
-            if a.data!=b.data:
+        while prev:  #here we are using while prev cause after reversing the second half of the linked list , our last node of the linked list 
+            #which is the head of the second half of the linked list is stored in a variable prev
+            if a.data!=prev.data:
                 return False
             a=a.next
-            b=b.next
+            prev=prev.next
         return True    
     #time complexity : O(N)
     #space complexity : O(1)    
 
-             
+    def segregrate(self):
+        a=[]
+        itr=self.head
+        while itr or  itr.next.next:
+            a.append(itr.data)  #here we are storing the datas of odd indices in the array a
+            itr=itr.next.next
+        itr=self.head.next
+        while itr or  itr.next.next:
+            a.append(itr.data)
+            itr=itr.next.next
+        self.head=a[0]
+        main=self.head
+        for data in a[1:]:  #here we are looping the data from 1st index 
+            main.next=data
+            data=data.next
+        return a
+    #time complexity : O(N)
+    #space complexity : O(N)
+            
+
+
 
 
 
@@ -411,7 +431,9 @@ print(v.printdatas())
 #A palindrome is a sequence that reads the same forward and backwards.
 
        
-    
+#Segregate odd and even nodes in LL
+#Given the head of a singly linked list. Group all the nodes with odd indices followed by all the nodes with even indices and return the reordered list.
+#Consider the 1st node to have index 1 and so on. The relative order of the elements inside the odd and even group must remain the same as the given input.    
      
         
         
