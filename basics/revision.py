@@ -81,28 +81,66 @@ class llist:
             fast=fast.next.next
         m1=slow  #here m1 is the last node of the first half of the linked list
         m2=slow.next  #and m2 is the last node of the second half of the linked list
+        palindrome=True
         prev=None
         while m2:
             front = m2.next
             m2.next=prev
             prev=m2
             m2=front
-        itr=self.head    
+        itr=self.head   
+        x=prev #here we are storing the prev in x 
         while prev:
             if itr.data!=prev.data:  #if any of the datas at the corresponding positions of the splitted half of the linked list,  are not same then we just return false
-                return False
+                palindrome= False
             itr=itr.next
             prev=prev.next
-        return True    
+        prev=None
+        while x:
+            front=x.next
+            x.next=prev
+            prev=x
+            x=front
+        m1.next=prev   
+        return palindrome    
     #time complexity : O(N)
+    #space complexity : O(1)
+    #delete the middle node of the linked list
+    #brute approach
+
+
+
+    #optimal approach
+    def deletemidnode(self):
+        slow=self.head
+        fast=self.head
+        while fast and fast.next:
+            slow = slow.next
+            fast=fast.next.next
+        #this slow gives us the middle node
+        midnode=slow
+        a=self.head
+        while a:
+            if a.next==midnode:
+                a.next=a.next.next
+                a=a.next
+            else:
+                a=a.next
+        return self.head        
+    #time complexity : O(N)        
     #space complexity : O(1)
 
 
 
-a=llist()
-a.head=Node(5,None)
-a.head.next=Node(6,None)
-a.head.next.next=Node(7,None)
+a = llist()
+a.head = Node(1, None)
+a.head.next = Node(2, None)
+a.head.next.next = Node(3, None)
+a.head.next.next.next = Node(4, None)
 print(a.optimalpalindrome())
-print(a.removenthnode(3))
+print(a.deletemidnode())
 print(a.printdatas())
+
+
+
+
