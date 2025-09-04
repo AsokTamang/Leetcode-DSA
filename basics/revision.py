@@ -107,6 +107,27 @@ class llist:
     #space complexity : O(1)
     #delete the middle node of the linked list
     #brute approach
+    def brutedelmidnode(self):
+        itr=self.head
+        a=[]
+        while itr:
+            a.append(itr.data)
+            itr=itr.next
+        middleindex=len(a)//2
+        a.pop(middleindex)
+        self.head=Node(a[0],None)
+        itr=self.head
+        for data in a[1:]:
+            itr.next=Node(data,None)
+            itr=itr.next
+        return self.head
+    #time complexity : O(N)
+    #space complexity : O(N)
+
+
+
+
+
 
 
 
@@ -139,6 +160,7 @@ a.head.next.next = Node(3, None)
 a.head.next.next.next = Node(4, None)
 print(a.optimalpalindrome())
 print(a.deletemidnode())
+print(a.brutedelmidnode())
 print(a.printdatas())
 
 
