@@ -367,25 +367,47 @@ class llst:
     #time complexity : O(N)
     #space complexity : O(1)    
 
-    def segregrate(self):
+    def brutesegregrate(self):
         a=[]
         itr=self.head
-        while itr or  itr.next.next:
-            a.append(itr.data)  #here we are storing the datas of odd indices in the array a
+        while itr and  itr.next.next:
+            a.append(itr)  #here we are storing the datas of odd indices in the array a
             itr=itr.next.next
+        if itr:
+            a.append(itr)    
+
         itr=self.head.next
-        while itr or  itr.next.next:
-            a.append(itr.data)
+        while itr and  itr.next.next:
+            a.append(itr)
             itr=itr.next.next
+        if itr:
+            a.append(itr)    
         self.head=a[0]
         main=self.head
         for data in a[1:]:  #here we are looping the data from 1st index 
             main.next=data
-            data=data.next
+            main=main.next
         return a
     #time complexity : O(N)
     #space complexity : O(N)
+
+    def optimalsegregrate(self):
+       odd=self.head
+       even=even_head=self.head.next
+       
+
+       while even and even.next:
+           odd.next=even.next
+           odd=odd.next
+           even.next=odd.next
+           even=even.next
+       odd.next=even_head
+       return self.head    
+    #time complexity : O(N)
+    #space complexity : O(1)
             
+
+
 
 
 
@@ -421,6 +443,7 @@ print(v.brutecountlength())
 print(v.optimalpalindrome())
 print(v.printdatas1())
 print(v.reverselinkedlist())
+print(v.optimalsegregrate())
 
 print(v.printdatas())
 
