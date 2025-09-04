@@ -200,7 +200,8 @@ class linkedlistt:
             if slow == fast:
                 return True
         return False    
-
+    
+   
 
     def printDatas(self):
         val=''
@@ -214,6 +215,7 @@ b.head=Node(1,None)  #then we are defining the head of the b
 b.head.next=Node(2,None)  #then the next of the head of the b is defined here
 b.head.next.next=Node(3,None)
 b.head.next.next.next=b.head.next  
+print(b.brutecheckpalindrome())
 print(b.optimalstartingpoint())
 print(b.opimalcheckcycle())
 

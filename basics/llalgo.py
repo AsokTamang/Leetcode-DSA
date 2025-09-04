@@ -394,7 +394,7 @@ class llst:
     def optimalsegregrate(self):
        odd=self.head
        even=even_head=self.head.next
-       
+
 
        while even and even.next:
            odd.next=even.next
@@ -405,12 +405,43 @@ class llst:
        return self.head    
     #time complexity : O(N)
     #space complexity : O(1)
+
+    def optimalremove(self,index):
+        prev=None  #this first loop is for reversing the original linked list
+        itr=self.head
+        while itr:
+            front=itr.next
+            itr.next=prev
+            prev=itr
+            itr=front
+        #then this down below code is for finding the index and removing the node    
+        self.head=prev
+        itr=self.head
+        c=1
+        while itr:
+            if c==index-1:
+                itr.next=itr.next.next
+                itr=itr.next
+                c+=1
+            else:
+                itr=itr.next  
+                c+=1 
+        #then this final code is for reversing the obtained list to take it back to the original list
+        prev=None
+        itr=self.head
+        while itr:
+            front=itr.next
+            itr.next=prev
+            prev=itr
+            itr=front
+        self.head=prev   #after reversing the linked list , we must always assign the new head of the linked list.
+        return self.head
+    #time complexity : O(N)
+    # space complexity : O(1)    
+                
+
+        
             
-
-
-
-
-
 
 
 
@@ -434,17 +465,12 @@ class llst:
 
 v=llst()
 v.head=Node(1,None)
-v.head.next=Node(1,None)
-v.head.next.next=Node(1,None)
-v.head.next.next.next=Node(1,None)
-v.head.next.next.next.next=Node(1,None)
-print(v.optimalcountlength())
-print(v.brutecountlength())
-print(v.optimalpalindrome())
-print(v.printdatas1())
-print(v.reverselinkedlist())
-print(v.optimalsegregrate())
+v.head.next=Node(2,None)
+v.head.next.next=Node(3,None)
+v.head.next.next.next=Node(4,None)
+v.head.next.next.next.next=Node(5,None)
 
+print(v.optimalremove(3))
 print(v.printdatas())
 
 
@@ -459,7 +485,8 @@ print(v.printdatas())
 #Consider the 1st node to have index 1 and so on. The relative order of the elements inside the odd and even group must remain the same as the given input.    
      
         
-        
+#Remove Nth node from the back of the LL
+#Given the head of a singly linked list and an integer n. Remove the nth node from the back of the linked List and return the head of the modified list. The value of n will always be less than or equal to the number of nodes in the linked list.        
 
 
 
