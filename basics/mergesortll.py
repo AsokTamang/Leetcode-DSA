@@ -19,7 +19,7 @@ class mergelinkedlist:
     #Given the heads of two linked lists A and B, containing positive integers. Find the node at which the two linked lists intersect. If they do intersect, return the node at which the intersection begins, otherwise return null.
     #The Linked List will not contain any cycles. The linked lists must retain their original structure, given as per the input, after the function returns.
     
-    def intesectionpoint(self,f,s):  #here f means the head of the first linked list and s means head of the second linked list
+    def bruteintesectionpoint(self,f,s):  #here f means the head of the first linked list and s means head of the second linked list
         itr1=f  
         itr2=s
         visited=set()  #this stores all the nodes from the head f
@@ -32,8 +32,21 @@ class mergelinkedlist:
                 return itr2
             itr2=itr2.next    
         return -1
-    #time complexity : O(N)
+    #time complexity : O(N+M)  
     #space complexity : O(N)
+
+    def optimalintersection(self,f,s):
+       itr1=f
+       itr2=s
+       while itr1!=itr2:
+          itr1=s if itr1==None else itr1.next
+          itr2=f if itr2==None else itr2.next
+       return itr1
+    #time complexity : O(N)
+    #space complexity : O(1)
+    
+       
+             
 
 
 
@@ -47,7 +60,7 @@ l=mergelinkedlist()
 l.head=Node(1,None)
 l.head.next=Node(2,None)
 l.head.next.next=Node(3,None)
-common=Node(6)
+common=Node(4)
 l.head.next.next.next=common
 l.head.next.next.next.next=Node(5,None)
 
@@ -57,7 +70,7 @@ b.head.next=Node(8,None)
 b.head.next.next=common
 b.head.next.next.next=Node(5,None)
 c=mergelinkedlist()
-print(c.intesectionpoint(l.head,b.head))
+print(c.optimalintersection(l.head,b.head))
 
 
 
