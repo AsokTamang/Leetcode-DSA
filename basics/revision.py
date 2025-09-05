@@ -124,25 +124,7 @@ class llist:
     #time complexity : O(N)
     #space complexity : O(N)
 
-    #sort linked list
-#Given the head of a singly linked list. Sort the values of the linked list in non-decreasing order and return the head of the modified linked list.
-
-
-    def sortll(self):
-        itr=self.head
-        a=[]
-        while itr:
-            a.append(itr.data)
-            itr=itr.next
-        a=sorted(a)
-        self.head=Node(a[0],None)
-        itr=self.head
-        for data in a[1:]:
-            itr.next=Node(data,None)
-            itr=itr.next
-        return self.head   
-    #time complexity : O(N)
-    # space compleity : O(N)    
+   
 
 
 

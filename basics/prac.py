@@ -201,6 +201,58 @@ class linkedlistt:
                 return True
         return False    
     
+    #Sort LL
+    #Given the head of a singly linked list. Sort the values of the linked list in non-decreasing order and return the head of the modified linked list.
+    #for the optimal approach of sorting this linked list , we need to use the merge sort algorithm
+    #for this first of all what we need to do is finding the left half and right half
+    #which is obtained by diving the given linked list
+    #and we continue this process until we only have a single node
+    #then while merging back we compare the datas of the corresponding nodes
+    #then after the complete merging of the linked list, the original linked list will be sorted in non-decreasing order.
+    def merge(self,left,right):
+        dummynode=Node(-1)
+        temp=dummynode  #here we are storing the dummynode in our temp variable inorder to merge the linked list by comparing the datas
+        while left and right:
+            if left.data<=right.data:
+                temp.next=left
+                left=left.next
+            else:
+                temp.next=right
+                right=right.next
+            temp=temp.next
+        while left:
+            temp.next=left
+            left=left.next
+            temp=temp.next
+        while right:
+            temp.next=right
+            right=right.next
+            temp=temp.next 
+        return dummynode.next  #here we must return the head of the linked list.
+    #so we are returning the dummynode.next               
+                          
+
+    
+    def findmid(self,head):
+        slow=head
+        fast=head.next
+        while fast and fast.next:
+            slow=slow.next
+            fast=fast.next.next
+        return slow  #this gives us the mid index 
+
+    def optimalsort(self,head):
+        if head is None or head.next is None:
+            return head
+        midindex=self.findmid(head)  #this midindex is ussed for finding the middle index of the linked list from the given head 
+        midindex.next=None  #here we are declaring midinex.next to none inorder to destroy the right half while dividing the linked list into two halves
+        #and the midindex.next must be destroyed before using the function recursively
+        lefthalf=self.optimalsort(head)
+        righthalf=self.optimalsort(midindex.next)
+      
+        return self.merge(lefthalf,righthalf)
+    
+
    
 
     def printDatas(self):
@@ -211,12 +263,10 @@ class linkedlistt:
             itr=itr.next
         return val
 b=linkedlistt()  #here we are storing the linkedlistt constructor in a b variable
-b.head=Node(1,None)  #then we are defining the head of the b
+b.head=Node(11,None)  #then we are defining the head of the b
 b.head.next=Node(2,None)  #then the next of the head of the b is defined here
-b.head.next.next=Node(3,None)
-b.head.next.next.next=b.head.next  
-print(b.brutecheckpalindrome())
-print(b.optimalstartingpoint())
-print(b.opimalcheckcycle())
+b.head.next.next=Node(1,None)
+print(b.optimalsort(b.head))
+print(b.printDatas())
 
 
