@@ -270,3 +270,82 @@ print(b.optimalsort(b.head))
 print(b.printDatas())
 
 
+class Node:
+    def __init__(self,data,next=None):
+     self.data=data
+     self.next=next
+    def __str__(self):
+        return str(self.data)
+class mergeLL:
+    def __init__(self):
+        self.head=None
+    #for the optimal approach of sorting the linked list we use the merge sort method   
+    #which is the algorithm of splitting the linkedlist into two halves until only one node is left,
+    #then while merging these splitted nodes , we compare the values of the nodes and then sort them accordingly 
+    def optimalmerge(self,left,right):
+        dummynode=Node(-1)
+        temp=dummynode
+        while left and right:
+            if left.data<=right.data:
+                temp.next=left
+                left=left.next
+                temp=temp.next
+            else:
+                temp.next=right
+                right=right.next
+                temp=temp.next
+        while left:
+            temp.next=left
+            left=left.next
+            temp=temp.next
+        while right:
+            temp.next=right
+            right=right.next
+            temp=temp.next
+        return dummynode.next  #as we must return the head of the merged linked list , so we are using the next of the dummynode cause we used dummynode to store the dummy head for our merged linked list        
+
+
+
+
+    def midpoint(self,head): #this function gives us the midpoint of the linked list from the given head 
+        slow=head
+        fast=head.next
+        while fast and fast.next:
+            slow=slow.next
+            fast=fast.next.next
+        return slow      
+    
+    
+    def optimalsort(self,head):
+        if head is None or head.next is None:
+            return head
+        midindex=self.midpoint(head)
+        right=midindex.next
+        midindex.next=None  #here we are destroying the midindex.next so that the left half wont go beyound our midpoint which is used to split the linked list into two halves
+        lefthead = self.optimalsort(head)
+        righthead=self.optimalsort(right)
+        return self.optimalmerge(lefthead,righthead)
+    def printdats(self):
+        itr=self.head
+        val=[]
+        while itr:
+            val.append(str(itr.data))
+            itr=itr.next
+        return ','.join(val)    
+
+    
+x=mergeLL()
+x.head=Node(11,None)
+x.head.next=Node(1,None)
+x.head.next.next=Node(0,None)
+x.head.next.next.next=Node(8,None)
+v=x.optimalsort(x.head)  #we must store the function that sort the datas using the original head of the linked list,
+x.head=v  #then we must make that variable which stores the function using the original head of the linked list ,"the original head" 
+print(x.printdats())
+
+
+
+
+
+
+                
