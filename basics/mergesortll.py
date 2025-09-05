@@ -78,6 +78,50 @@ class linkedlist:
         return self.head  
     #time complexity : O(NlogN)
     #space complexity : O(N)  
+    def finalmerge(self,left,right):
+        dummynode=Node(-1)
+        temp=dummynode
+        while left and right:
+            if left.data<=right.data:
+                temp.next=left
+                left=left.next
+                temp=temp.next
+            else:
+                temp.next=right
+                right=right.next
+                temp=temp.next
+        while left:
+            temp.next=left
+            left=left.next
+            temp=temp.next
+        while right:
+            temp.next=right
+            right=right.next
+            temp=temp.next
+        return dummynode.next
+
+
+
+    def findmidindex(self,head):
+        slow=head
+        fast=head.next
+        while fast and fast.next:
+            slow=slow.next
+            fast=fast.next.next
+        return slow    
+
+    #for the optimal approach of sorting the linked list having only os and 1s, we again use merge sort algorithm
+    def optimalmergesort(self,head):
+        if head is None or head.next is None:
+            return head
+        mid=self.findmidindex(head)
+        right=mid.next  #we are storing the mid.next inside our right variable
+        mid.next=None
+        lefthead=self.optimalmergesort(head)
+        righthead=self.optimalmergesort(right)
+        return self.finalmerge(lefthead,righthead)
+
+        
 
 
  
@@ -88,7 +132,7 @@ l.head.next=Node(0,None)
 l.head.next.next=Node(2,None)
 l.head.next.next.next=Node(0,None)
 l.head.next.next.next.next=Node(1,None)
-print(l.brutesort())
+l.head=(l.optimalmergesort(l.head))
 print(l.printdatas())
 
 
