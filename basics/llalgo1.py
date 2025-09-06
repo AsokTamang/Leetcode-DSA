@@ -71,6 +71,36 @@ class LL:  # this is our class of linked list
             v += str(itr.data)
             itr = itr.next
         return v
+    def reversethelist(self,head):  #this is our function for reversing the linked list
+        prev=None
+        itr=head
+        while itr:
+            front = itr.next
+            itr.next=prev
+            prev=itr
+            itr=front
+        self.head=prev
+        return self.head    
+    def addsum(self,head):
+        itr=head
+        v=''
+        while itr:
+            v+=str(itr.data)
+            itr=itr.next
+        return v    
+
+
+    #Add two numbers in LL
+    def addtwonumbers(self,l1,l2):
+        a=self.reversethelist(l1)  #reverse form of first linked list
+        b=self.reversethelist(l2)  #reverse form of second linked list
+        asum=self.addsum(a)  #sum of datas as a string from reversed head a 
+        bsum=self.addsum(b)  #sum of datas as a string from reversed head b
+        return int(asum)+int(bsum)
+    #time complexity:O(N+M)
+    #space complexity :O(N+M) 
+
+
 
 
 n = LL()
@@ -78,5 +108,13 @@ n.head = Node(9)
 n.head.next = Node(8)
 n.head.next.next = Node(9)
 n.head.next.next.next = Node(9)
-print(n.optimaladd1())
-print(n.printdatas())
+f=LL()
+f.head = Node(4)
+f.head.next = Node(5)
+f.head.next.next = Node(6)
+s=LL()
+s.head = Node(1)
+s.head.next = Node(2)
+s.head.next.next = Node(3)
+print(n.addtwonumbers(f.head,s.head))
+

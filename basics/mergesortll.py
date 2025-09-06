@@ -149,8 +149,12 @@ class mergelinkedlist:
        itr1=f
        itr2=s
        while itr1!=itr2:
-          itr1=s if itr1==None else itr1.next
-          itr2=f if itr2==None else itr2.next
+           if itr1==None:
+               itr1=s
+           if itr2==None:
+               itr2=f    
+           itr1=itr1.next
+           itr2=itr2.next
        return itr1
     #time complexity : O(N)
     #space complexity : O(1)
