@@ -26,6 +26,23 @@ class doublell:
         return self.head
     #time complexity : O(N)
     #space complexity : O(1)
+    def bruteremovekey(self,k):
+        a=[]
+        itr=self.head
+        while itr:
+            a.append(str(itr.data))
+            itr=itr.next
+        a=[num for num in a if num!=str(k)]    #this loop is for removing the target k from a and as our datas are stored as string, we are comparing the string version of k with the datas
+        self.head=Node(a[0],None,None)
+        itr=self.head
+        for data in a[1:]:
+            itr.next=Node(data,itr,None)
+            itr=itr.next
+        return self.head   
+    #time complexity : O(N)
+    # space complexity : O(N) 
+
+
 
 
        
@@ -43,7 +60,7 @@ c.head.next=Node(3,c.head,None)
 c.head.next.next=Node(1,c.head.next,None) 
 c.head.next.next.next=Node(4,c.head.next.next,None) 
 c.head.next.next.next.next=Node(2,c.head.next.next.next,None) 
-print(c.removekey(2))
+print(c.bruteremovekey(2))
 print(c.printdatas())
      
 
