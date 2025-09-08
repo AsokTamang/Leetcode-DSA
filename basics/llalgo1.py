@@ -64,8 +64,8 @@ class LL:  # this is our class of linked list
         # time complexity : O(N)
         # space complexity : O(1)
 
-    def printdatas(self):
-        itr = self.head
+    def printdatas(self,head):
+        itr = head
         v = ""
         while itr:
             v += str(itr.data)
@@ -91,19 +91,43 @@ class LL:  # this is our class of linked list
 
 
     #Add two numbers in LL
-    def addtwonumbers(self,l1,l2):
+    def bruteaddtwonumbers(self,l1,l2):
         a=self.reversethelist(l1)  #reverse form of first linked list
         b=self.reversethelist(l2)  #reverse form of second linked list
+        #here a is the head of the reversed form of first linked list and b is the head of the reversed form of the second linked list.
         asum=self.addsum(a)  #sum of datas as a string from reversed head a 
         bsum=self.addsum(b)  #sum of datas as a string from reversed head b
         total= int(asum)+int(bsum)
         total=str(total)
-        self.head= Node(total[0],None)
+        self.head= Node(total[0],None)        
         itr= self.head
         for data in total[1:]:
             itr.next=Node(data,None)
             itr=itr.next
-        return self.head    
+        return self.head        
+    def optimaladdtwonumbers(self,l1,l2):
+        a=self.reversethelist(l1)  #reverse form of first linked list
+        b=self.reversethelist(l2)  #reverse form of second linked list
+        #here a is the head of the reversed form of first linked list and b is the head of the reversed form of the second linked list.
+        itr1=a
+        itr2=b
+        dummynode=Node(-1)
+        temp=dummynode
+        c=0
+        while itr1 or itr2 or c:
+            val1=itr1.data if itr1 else 0
+            val2=itr2.data if itr2 else 0
+            total=(val1+val2+c) 
+            temp.next = Node(total%10)  #here the next of the temp will be the quotient divided by 10
+            c = total // 10  #and this gives us the remainder which is the carry value
+            itr1=itr1.next if itr1.next else None
+            itr2=itr2.next if itr2.next else None
+            temp=temp.next
+        return (dummynode.next)    
+    #time complexity : O(N+M)
+    #space complexity : O(1)
+
+
 
 
     
@@ -126,6 +150,7 @@ s=LL()
 s.head = Node(1)
 s.head.next = Node(2)
 s.head.next.next = Node(3)
-print(n.addtwonumbers(f.head,s.head))
-print(n.printdatas())
+a=(n.optimaladdtwonumbers(f.head,s.head))
+print(n.printdatas(a))
+
 
