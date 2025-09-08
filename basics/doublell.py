@@ -81,10 +81,27 @@ class doublell:
             elif a[left] + a[right] < k:
                 left += 1
         return ans
+    
     #time complexity : O(N)
     #space complexity : O(N+M)
-                    
 
+
+    #Remove duplicated from sorted DLL
+    def bruteremoveduplicates(self):
+        itr=self.head
+        s=set()
+        while itr:
+            s.add(itr.data)
+            itr=itr.next
+        s=list(s)    
+        self.head=Node(s[0],None,None)
+        itr=self.head
+        for data in s[1:]:
+            itr.next=Node(data,itr,None)
+            itr=itr.next   
+        return self.head    
+    #time complexity : O(N)
+    # space complexity : O(N)             
 
 
 
@@ -99,11 +116,11 @@ class doublell:
         return ','.join(v)    
 c=doublell()
 c.head=Node(1,None,None)
-c.head.next=Node(2,c.head,None)
-c.head.next.next=Node(4,c.head.next,None) 
-c.head.next.next.next=Node(5,c.head.next.next,None) 
-c.head.next.next.next.next=Node(6,c.head.next.next.next,None) 
-print(c.optimalalfindsum(7))
+c.head.next=Node(1,c.head,None)
+c.head.next.next=Node(3,c.head.next,None) 
+c.head.next.next.next=Node(3,c.head.next.next,None) 
+c.head.next.next.next.next=Node(4,c.head.next.next.next,None) 
+print(c.bruteremoveduplicates())
 print(c.printdatas())
      
 
