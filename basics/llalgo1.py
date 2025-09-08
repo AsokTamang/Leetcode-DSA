@@ -96,7 +96,17 @@ class LL:  # this is our class of linked list
         b=self.reversethelist(l2)  #reverse form of second linked list
         asum=self.addsum(a)  #sum of datas as a string from reversed head a 
         bsum=self.addsum(b)  #sum of datas as a string from reversed head b
-        return int(asum)+int(bsum)
+        total= int(asum)+int(bsum)
+        total=str(total)
+        self.head= Node(total[0],None)
+        itr= self.head
+        for data in total[1:]:
+            itr.next=Node(data,None)
+            itr=itr.next
+        return self.head    
+
+
+    
     #time complexity:O(N+M)
     #space complexity :O(N+M) 
 
@@ -117,4 +127,5 @@ s.head = Node(1)
 s.head.next = Node(2)
 s.head.next.next = Node(3)
 print(n.addtwonumbers(f.head,s.head))
+print(n.printdatas())
 
