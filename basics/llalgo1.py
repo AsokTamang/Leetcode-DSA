@@ -72,6 +72,8 @@ class LL:  # this is our class of linked list
             itr = itr.next
         return v
     def reversethelist(self,head):  #this is our function for reversing the linked list
+        if head.next is None:
+            return head
         prev=None
         itr=head
         while itr:
@@ -92,6 +94,7 @@ class LL:  # this is our class of linked list
 
     #Add two numbers in LL
     def bruteaddtwonumbers(self,l1,l2):
+        return  #here we are returning the function at the beginning inorder to check our optimal function
         a=self.reversethelist(l1)  #reverse form of first linked list
         b=self.reversethelist(l2)  #reverse form of second linked list
         #here a is the head of the reversed form of first linked list and b is the head of the reversed form of the second linked list.
@@ -106,11 +109,9 @@ class LL:  # this is our class of linked list
             itr=itr.next
         return self.head        
     def optimaladdtwonumbers(self,l1,l2):
-        a=self.reversethelist(l1)  #reverse form of first linked list
-        b=self.reversethelist(l2)  #reverse form of second linked list
         #here a is the head of the reversed form of first linked list and b is the head of the reversed form of the second linked list.
-        itr1=a
-        itr2=b
+        itr1=l1
+        itr2=l2
         dummynode=Node(-1)
         temp=dummynode
         c=0
@@ -120,10 +121,10 @@ class LL:  # this is our class of linked list
             total=(val1+val2+c) 
             temp.next = Node(total%10)  #here the next of the temp will be the quotient divided by 10
             c = total // 10  #and this gives us the remainder which is the carry value
-            itr1=itr1.next if itr1.next else None
-            itr2=itr2.next if itr2.next else None
+            itr1=itr1.next if itr1 else None
+            itr2=itr2.next if itr2 else None
             temp=temp.next
-        return (dummynode.next)    
+        return self.reversethelist(dummynode.next)    
     #time complexity : O(N+M)
     #space complexity : O(1)
 
@@ -137,20 +138,13 @@ class LL:  # this is our class of linked list
 
 
 
-n = LL()
-n.head = Node(9)
-n.head.next = Node(8)
-n.head.next.next = Node(9)
-n.head.next.next.next = Node(9)
+
 f=LL()
-f.head = Node(4)
-f.head.next = Node(5)
-f.head.next.next = Node(6)
+f.head = Node(5)
+f.head.next = Node(4)
 s=LL()
-s.head = Node(1)
-s.head.next = Node(2)
-s.head.next.next = Node(3)
-a=(n.optimaladdtwonumbers(f.head,s.head))
-print(n.printdatas(a))
+s.head = Node(4)
+a=(f.optimaladdtwonumbers(f.head,s.head))
+print(f.printdatas(a))
 
 
