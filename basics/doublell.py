@@ -1,4 +1,3 @@
-
 class Node:
     def __init__(self,data,prev,next):
         self.data=data
@@ -103,6 +102,21 @@ class doublell:
     #time complexity : O(N)
     # space complexity : O(N)             
 
+    def optimalremoveduplicates(self):
+        itr=self.head
+        while itr and itr.next:  #here we are running the loop till we have a node and the next node of the current node
+            if itr.data==itr.next.data:
+                itr.next=itr.next.next if itr.next.next else None  #if its not the last second last node then we can move to next.next else none only if the datas of second last node and last node are same
+                if itr.next:
+                    itr.next.prev=itr  #if the next node of the current node exists then we set the previous of this next node to the current node otherwise it will be just none or empty node.
+                
+            else:
+                itr=itr.next 
+        return self.head
+    #time complexity : O(N)
+    #space complexity : O(1)
+              
+    
 
 
        
@@ -117,10 +131,14 @@ class doublell:
 c=doublell()
 c.head=Node(1,None,None)
 c.head.next=Node(1,c.head,None)
-c.head.next.next=Node(3,c.head.next,None) 
-c.head.next.next.next=Node(3,c.head.next.next,None) 
-c.head.next.next.next.next=Node(4,c.head.next.next.next,None) 
-print(c.bruteremoveduplicates())
+c.head.next.next=Node(1,c.head.next,None)
+c.head.next.next.next=Node(1,c.head.next.next,None)
+c.head.next.next.next.next=Node(1,c.head.next.next.next,None)
+c.head.next.next.next.next.next=Node(2,c.head.next.next.next.next,None)
+
+
+
+print(c.optimalremoveduplicates())
 print(c.printdatas())
      
 
