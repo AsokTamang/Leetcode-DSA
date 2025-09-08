@@ -1,4 +1,4 @@
-#Delete all occurrences of a key in DLL
+
 class Node:
     def __init__(self,data,prev,next):
         self.data=data
@@ -6,6 +6,7 @@ class Node:
         self.next=next
     def __str__(self):
         return str(self.data)
+    #Delete all occurrences of a key in DLL
 class doublell:
     def __init__(self):
         self.head=None
@@ -42,6 +43,48 @@ class doublell:
     #time complexity : O(N)
     # space complexity : O(N) 
 
+    #Find Pairs with Given Sum in Doubly Linked List
+    #brute appeoach
+    def brutefindsum(self,k):
+        itr=self.head
+        a=[]
+        while itr:
+            a.append(int(itr.data))
+            itr=itr.next
+        n=len(a) #length of the total datas
+        ans = []
+        for i in range(n):
+            for j in range(i+1,n):
+                if a[i] + a[j] == k:
+                    ans.append([min(a[i],a[j]),max(a[i],a[j])])
+        return ans            
+    #time complexity : O(N+M)  here N is the length of the given double linked list and M is the length of the answer
+    #space complexity : O(N^2)
+    def optimalalfindsum(self,k):
+        itr=self.head
+        a=[]
+        while itr:
+            a.append(int(itr.data))
+            itr=itr.next
+        n=len(a)    
+        #here a is the collection of datas of nodes of a double linked list
+        left = 0   #this is our first index
+        right = n-1   #this is our last index
+        ans=[]
+        while left<=right:
+            if a[left] + a[right] == k:
+                ans.append([a[left],a[right]])
+                left+=1
+                right-=1
+            elif a[left] + a[right] > k:
+                right-=1
+            elif a[left] + a[right] < k:
+                left += 1
+        return ans
+    #time complexity : O(N)
+    #space complexity : O(N+M)
+                    
+
 
 
 
@@ -55,12 +98,12 @@ class doublell:
             itr=itr.next
         return ','.join(v)    
 c=doublell()
-c.head=Node(2,None,None)
-c.head.next=Node(3,c.head,None)
-c.head.next.next=Node(1,c.head.next,None) 
-c.head.next.next.next=Node(4,c.head.next.next,None) 
-c.head.next.next.next.next=Node(2,c.head.next.next.next,None) 
-print(c.bruteremovekey(2))
+c.head=Node(1,None,None)
+c.head.next=Node(2,c.head,None)
+c.head.next.next=Node(4,c.head.next,None) 
+c.head.next.next.next=Node(5,c.head.next.next,None) 
+c.head.next.next.next.next=Node(6,c.head.next.next.next,None) 
+print(c.optimalalfindsum(7))
 print(c.printdatas())
      
 
