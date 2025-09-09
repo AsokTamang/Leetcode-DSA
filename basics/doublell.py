@@ -140,14 +140,14 @@ class doublell:
 
     # reverse LL in a group of given size k
     def optimalreversal(self,head, k):
-        if  head.next is None:
+        if head is None or  head.next is None:
             return head
         c=0
         itr=head
         while itr and c<k:
             itr=itr.next
             c+=1
-        if c<k:  #if the count or the length of the linked list is still lesser than k then we just return the head , inorder to preserve this linked as it was before, by returning the head
+        if c<k:  #if the count or the length of the linked list is still lesser than k then we just return the head , inorder to preserve this linked list as it was before, by returning the head
             return head      
         itr=head
         prev=None
@@ -160,15 +160,30 @@ class doublell:
             c+=1
         if self.head is head:
             self.head=prev
-        if front:
-            head.next=self.optimalreversal(front,k)
+        if front:  #if the next node still exists then we use the recursion
+            head.next=self.optimalreversal(front,k)  #and for the recursion, we use the next node of the current node as the head in our main function inorder to link the previous head and the current next node
         return prev            
         #time complexity : O(N)
         #space complexity : O(1)
+    
 
-       
+    def optimalrotatell(self,k):
+        c=0
+        itr=self.head
+        while c<k:
+            while itr.next:
+                prev=itr
+                itr=itr.next
+            lastnode=itr   #so this is the last node of the current shifted linked list
+            prev.next=None   #then we just destroy the  last node  
+            #and first of all we must destroy the previous node's next 
+            lastnode.next=self.head  #then the next of the last node will be the  current head of the linked list
+            self.head=lastnode  #then this last node will be the new head of the linked list.
             
-
+            c+=1
+        return self.head 
+    #time complexity : O(N*k)
+    #space complexity : O(1)
 
 
     def printdatas(self):
@@ -186,5 +201,5 @@ c.head.next = Node(2, c.head, None)
 c.head.next.next = Node(3, c.head.next, None)
 c.head.next.next.next = Node(4, c.head.next.next, None)
 c.head.next.next.next.next = Node(5, c.head.next.next.next, None)
-print(c.optimalreversal(c.head,2))
+print(c.optimalrotatell(4))
 print(c.printdatas())
