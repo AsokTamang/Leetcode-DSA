@@ -167,10 +167,11 @@ class doublell:
         #space complexity : O(1)
     
 
-    def optimalrotatell(self,k):
+    def bruterotatell(self,k):
         c=0
-        itr=self.head
+        
         while c<k:
+            itr=self.head
             while itr.next:
                 prev=itr
                 itr=itr.next
@@ -184,6 +185,43 @@ class doublell:
         return self.head 
     #time complexity : O(N*k)
     #space complexity : O(1)
+    def countlength(self):
+        c=0
+        itr=self.head
+        while itr:
+            itr=itr.next
+            c+=1
+        return c  #this is the total number of nodes or the length of the linked list    
+    def optimalrotatell(self,k):
+        k=int(k)
+        length=self.countlength() # this gives us the length of the linked list
+        if k>length and k%length==0:  #if the value of k is exactly divisible by the length of the linked list then the linked list will stay original as before
+            return self.head
+        elif k> length and k%length>0:
+            k=k%length
+        itr=self.head
+        target=length-k #this is our target node which must be the tail of the new linked list
+        while itr:
+            prev=itr
+            itr=itr.next
+        prev.next=self.head #now we connected the tail of the original linked list to the head of the original linked list
+        c=0
+        itr=self.head
+        while itr and c<target:
+            temp=itr
+            itr=itr.next  #as the next node is already stored here in itr, we must make this itr the head of the new linked list after the completion of the loop with c variable
+            c+=1
+        temp.next=None  
+        self.head=itr
+        return self.head
+    #time complexity : O(N)
+    #space complexity : O(1)
+
+
+
+
+
+
 
 
     def printdatas(self):
