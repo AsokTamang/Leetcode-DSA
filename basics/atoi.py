@@ -63,6 +63,21 @@ print(optimalstringtointeger("4193 with words"))
 #time complexity : O(N)
 #space complexity : O(1) 
 
+#Pow(x,n)
+#Implement the power function pow(x, n) , which calculates the x raised to n i.e. xn.
+#Note : In output print 6 digits places after decimal point.
+
+def powerxn(x,n):
+  ans=1
+  for i in range(n):  #as we just need to find the power of the given digit upto n times, we are multiplying the digit by n times
+    ans=ans*x
+  return ans   
+
+print(powerxn( 2.0000,10))
+#time complexity : O(N)
+#space complexity : O(1)
+
+
 
 
 
