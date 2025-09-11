@@ -58,7 +58,8 @@ class flattenlist:
         #then we merge the head and the head.next
         head.next=self.optimalflatten(head.next)  #this code uses the recursion method to go deep into the  linked nodes till the base case is hit
         return self.mergelist(head,head.next)
-            
+        
+                
 
            
 
