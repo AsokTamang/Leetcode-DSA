@@ -97,6 +97,24 @@ def optimalpow(x,n):
   return ans     
 print(optimalpow(2,10))
 
+def countgoodnumbers(n):  #here n is the length of the string of good numbers
+  c=0
+  ans=''
+  while c<n:
+    if c %2 == 0:  #here we are just checking at which index we are at
+     ans+=str(5) #here 5 denotes the number of even digits which can be placed at the even index and they are : 0,2,4,6,8
+    else:    
+      ans+=str(4)  #if the current index is odd then there are 4 number of prime digits which can be placed at this current index , and all of them must be within the range 0- 9 and they are
+      2,3,5,7 
+    c+=1  
+
+  final=1
+  for char in ans:
+    final*=int(char)  #this gives us the total number of good digits for the given length n
+  return final  
+print(countgoodnumbers(2))
+#time complexity : O(N)  N is the given length of the digit string 
+#space complexity : O(N)
 
 
 
