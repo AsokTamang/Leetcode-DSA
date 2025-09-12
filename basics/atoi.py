@@ -69,11 +69,41 @@ print(optimalstringtointeger("4193 with words"))
 
 def powerxn(x,n):
   ans=1
+  isnegative=False
+  if n<0:   
+    isnegative=True
+    n=n*-1    #if the power value is negative then we make it positive by multiplying this by -1
   for i in range(n):  #as we just need to find the power of the given digit upto n times, we are multiplying the digit by n times
     ans=ans*x
-  return ans   
+  if isnegative:  #if the power value is negative then we divide 1 by the  actual answer 
+   return 1/ans   
+  else:    #otherwise we just return the actual answer.
+    return ans
 
-print(powerxn( 2.0000,10))
+def optimalpow(x,n):
+  nn=n  #here we are storing the copy of n to nn
+  ans=1
+  if nn<0:  #if the base power is negative then we make it positive 
+    nn=-1 * nn
+  while nn>0:
+    if nn % 2 ==0:  #if the base power is even then we multiply the given number with the given number which is x^2 and divide the basepower n by 2
+      x=x*x
+      nn=nn//2
+    else:   #but if the base power becomes odd then we make the ans to multiply by the 
+      ans=ans*x
+      nn=nn-1  
+  if n<0:
+    ans= 1/ans 
+  return ans     
+print(optimalpow(2,10))
+
+
+
+
+
+
+
+print(powerxn( 2.0000,-2))
 #time complexity : O(N)
 #space complexity : O(1)
 
