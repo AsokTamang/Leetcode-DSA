@@ -131,6 +131,19 @@ print(bettercountgoodnumbers(2))
 #space complexity : O(1)
 
 
+def optimalcountgoodnumbers(n):
+  if n==1:
+    return 5  #if the length of the required digit string is just one then we return 5 as we can place 5 even digits at this only one index
+  else:
+    oddindices=n//2    #if the length of the digit string is more than 1 then of course the odd indices as well as the even indices will be equal which is n//2 , only
+    #if the length of the digit string is even but if the length of the digit string is odd then, the even indices will be one value greater than the odd indices
+    #so we have coded evenindices=(n+1) // 2
+    evenindices=(n+1) // 2
+    return oddindices * 4 * evenindices * 5
+print(optimalcountgoodnumbers(2))  
+
+
+
 
 
 
