@@ -103,6 +103,7 @@ def countgoodnumbers(n):  #here n is the length of the string of good numbers
   while c<n:
     if c %2 == 0:  #here we are just checking at which index we are at
      ans+=str(5) #here 5 denotes the number of even digits which can be placed at the even index and they are : 0,2,4,6,8
+     #and they must be under digit 10
     else:    
       ans+=str(4)  #if the current index is odd then there are 4 number of prime digits which can be placed at this current index , and all of them must be within the range 0- 9 and they are
       2,3,5,7 
@@ -115,6 +116,21 @@ def countgoodnumbers(n):  #here n is the length of the string of good numbers
 print(countgoodnumbers(2))
 #time complexity : O(N)  N is the given length of the digit string 
 #space complexity : O(N)
+def bettercountgoodnumbers(n):
+  c=0
+  ans=1
+  while c<n:
+    if c % 2 ==0 : 
+      ans*=5  #here we can place 5 even digits at the even indices
+    else:
+      ans*=4  #at the odd indices , we can place about 4 digits which are the prime digits under 10
+    c+=1
+  return ans
+print(bettercountgoodnumbers(2))      
+#time complexity : O(N)
+#space complexity : O(1)
+
+
 
 
 
