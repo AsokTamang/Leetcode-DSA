@@ -202,7 +202,7 @@ print(optimalcountgoodnumbers(2))
 # You are given a stack of integers. Your task is to sort the stack in descending order using recursion, such that the top of the stack contains the greatest element. You are not allowed to use any loop-based sorting methods (e.g., quicksort, mergesort). You may only use recursive operations and the standard stack operations (push, pop, peek/top, and isEmpty).
 def sortastack(a):
     if len(a) <= 1:
-        return a
+        return 
     top=a.pop()  #we keep on deleting the lastmost element or the top element from the stack a till the base case is reached
     sortastack(a)
     #after the base case is reached then we keep on adding the element but based on recursive sorting method
@@ -223,9 +223,28 @@ print(sortastack( [4, 1, 3, 2]))
 #space complexity : O(N)
 
 
-    
-    
-    
+#Reverse a stack
+#You are given a stack of integers. Your task is to reverse the stack using recursion. You may only use standard stack operations (push, pop, top/peek, isEmpty). You are not allowed to use any loop constructs or additional data structures like arrays or queues.
+#Your solution must modify the input stack in-place to reverse the order of its elements.
 
-# time complexity : O(N)
-# space complexity : O(1)
+def reverseastack(stack):
+    #our base case
+    if len(stack)<=1:
+        return 
+    top=stack.pop()  #we keep on removing the top most or the right most element from the given stack
+    reverseastack(stack)
+    insertelement(stack,top)  #when the base case is reached then we keep on inserting the elements based on the reversed way
+    return stack
+def insertelement(stack,element):
+    if not stack:
+        stack.append(element)
+        return
+    else:
+        top=stack.pop()  #if there are numbers in a stack then we again remove the topmost element
+        insertelement(stack,element)  #then we insert the newly passed element 
+        stack.append(top)  #then only  we append the popped top element which was the first element passed
+print(reverseastack( [4, 1, 3, 2]))     
+#time complexity : O(N^2)
+#space complexity : O(N)   
+
+        
