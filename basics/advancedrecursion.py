@@ -120,9 +120,35 @@ def solveparenthesis(opentag,closetag,ans,datas,n):  #here opentag represents th
 print(generateparentheses(3))
 #time complexity : O(2^N)
 #space complexity : O(N)
-    
 
 
+#Power Set
+#Given an array of integers nums of unique elements. Return all possible subsets (power set) of the array.
+#Do not include the duplicates in the answer.
+
+def powerset(array):
+    ans=[]
+    nums=[]
+    solvepowerset(0,ans,nums,array)
+    return ans
+def solvepowerset(index,ans,nums,array):
+    if index>=len(array):  #if the passed index becomes greater than or equal to the length of an array then we append the nums in our ans variable
+        ans.append(nums.copy())  #here we are appending the copy of nums instead not the nums itself
+        return
+    nums.append(array[index])  #for creating the subset we keep on appending every numbers from  an array one at a time and go deep into recursion
+    solvepowerset(index+1,ans,nums,array)
+    #while also by deleting the appended number and going into recursion
+    nums.pop()
+    solvepowerset(index+1,ans,nums,array)
+print(powerset([1,2,3]))  
+#time complexity : O(n*2^n)
+#space complexity : O(n) + O(n*2^n)   
+#so the main logic behind backtracking is finding that edge or the condition where we come with two ways and we choose both the ways but in recursive approach
+
+
+
+
+ 
 
 
         
