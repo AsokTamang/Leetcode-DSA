@@ -74,11 +74,9 @@ prime(11)
 
 
 def sortastack(array):
-    if len(array)==1:
-        return array
-    else:
+  
         if not array or len(array)==1:  #and our base case is that if only one number remains inside an array we return 
-            return 
+            return array
         top=array.pop()  #we keep on deleting the last element from our array till only one number remains inside an array.
         sortastack(array) #by calling this same function recursively
         insertelement(array,top)     #then after the base case is reached, we insert those popped numbers recursively using another function
@@ -95,3 +93,28 @@ def insertelement(array,element):
 print(sortastack([1, 2, 5, 10]))
 #time complexity : O(N^2)
 #space complexity : O(N)
+
+
+
+#reverse a given stack
+def reversestack(array):
+    #base case
+    if not array or len(array)<=1:
+        return array
+    top=array.pop()  #we keep on popping the last number from an array recursively till we have only one number in an array
+    #then after reaching the base case, while returning we use another function called addelement which adds the number in an array in a recursive way as well.
+    reversestack(array)
+    addelement(array,top)
+    return array
+def addelement(array,element):
+    if not array:
+        array.append(element)
+        return
+    else:
+        top=array.pop()
+        addelement(array,element)
+        array.append(top)
+print(reversestack([1, 2, 5, 10]))      
+#time complexity : O(N^2)
+#space complexity : O(N)  
+
