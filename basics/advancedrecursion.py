@@ -82,21 +82,47 @@ print(reverseastack([4, 1, 3, 2]))
 def genbinary(n):  # n is the length of the string
     numbers=['0'] * n  
     ans=[]
-    solve(0,True,ans,numbers)  #here we are passing the first index
+    solvebinary(0,True,ans,numbers)  #here we are passing the first index
     return ans
-def solve(index,flag,ans,numbers):
+def solvebinary(index,flag,ans,numbers):
     if index>=len(numbers):  #this is our base case where if the index becomes greater than or equal to the length of the formed numbers
         ans.append(''.join(numbers))
         return 
     numbers[index] = '0'      #whether the flag is true or false , we just add 0 at the current index  
-    solve(index+1,True,ans,numbers)
+    solvebinary(index+1,True,ans,numbers)
     if flag==True:   #onle if the flag is true then we also have a option of adding 1 in the current index, after adding one we just make the flag to false
         numbers[index]='1'
-        solve(index+1,False,ans,numbers)  #and again go deeper into our recursion by increasing the index
+        solvebinary(index+1,False,ans,numbers)  #and again go deeper into our recursion by increasing the index
         numbers[index]='0'  #then while backtracking , we again make the value at the current index 0
 print(genbinary(3))
 #time complexity : O(2^N)
 #space complexity : O(N)
+
+#Generate Parentheses
+#Given an integer n.Generate all possible combinations of well-formed parentheses of length 2 x N.
+def generateparentheses(n):#here n is the number of pair of parenthesis
+    ans=[]
+    datas=[]
+    solveparenthesis(0,0,ans,datas,n)
+    return ans
+def solveparenthesis(opentag,closetag,ans,datas,n):  #here opentag represents the number of opening tag used and closetag represents the number of closing tag used
+    if opentag==closetag==n:
+        ans.append(''.join(datas))
+        return
+    if opentag<n:
+        datas.append('(')
+        solveparenthesis(opentag+1,closetag,ans,datas,n)
+        datas.pop()  #backtracking 
+    if closetag<opentag:
+        datas.append(')')
+        solveparenthesis(opentag,closetag+1,ans,datas,n)
+        datas.pop() #backtracking
+print(generateparentheses(3))
+#time complexity : O(2^N)
+#space complexity : O(N)
+    
+
+
 
 
         
