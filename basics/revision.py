@@ -217,5 +217,24 @@ print(generateparentheses(3))
 #space complexity : O(N*2^N)
 
 
+#power set
+#Given an array of integers nums of unique elements. Return all possible subsets (power set) of the array.
+#Do not include the duplicates in the answer.
+def powerset(array):  #here we need to find the power set or subssquence of this  given array
+    ans=[]
+    nums=[]
+    def solvepowerset(index,ans,nums):
+        if index>=len(array):
+            ans.append([''.join(nums.copy())])
+            return
+        nums.append(str(array[index]))
+        solvepowerset(index+1,ans,nums)
+        nums.pop()
+        
+        solvepowerset(index+1,ans,nums)
+    solvepowerset(0,ans,nums)
+    return ans
+print(powerset([1,2,3]))    
+
 
 
