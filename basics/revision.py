@@ -236,5 +236,25 @@ def powerset(array):  #here we need to find the power set or subssquence of this
     return ans
 print(powerset([1,2,3]))    
 
+#Count all subsequences with sum K
+#Given an array nums and an integer k.Return the number of non-empty subsequences of nums such that the sum of all elements in the subsequence is equal to k.
+def countsubs(array,k):
+    ans=[]
+    nums=[]
+    def solvesubs(index,summ,nums,k):
+        if index>=len(array):
+            if summ==k:
+             ans.append(nums.copy())
+            return
+        nums.append(array[index])
+        solvesubs(index+1,summ+array[index],nums,k)
+
+        nums.pop()
+        solvesubs(index+1,summ,nums,k)
+    solvesubs(0,0,nums,k)
+    return len(ans)  #as the question is asking us to return the length of the subsequences array having the sum k
+print(countsubs([4, 9, 2, 5, 1],10)) 
+#time complexity : O(2^N)
+#space complexity : O(N*2^N)
 
 
