@@ -118,3 +118,5 @@ print(reversestack([1, 2, 5, 10]))
 #time complexity : O(N^2)
 #space complexity : O(N)  
 
+
+
