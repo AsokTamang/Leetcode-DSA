@@ -164,7 +164,35 @@ a.head.next.next = Node(3, None)
 a.head.next.next.next = Node(4, None)
 a.head.next.next.next.next = Node(1, None)
 print(a.optimalpalindrome())
-print(a.sortll())
 print(a.printdatas())
+
+
+#Generate Binary Strings Without Consecutive 1s
+def generatebinarystrings(n):  #here n is the length of the string
+    ans=[]
+    nums=['0']*n
+    def solvebinarystrings(condition,index,ans,nums,n):
+        #base case, is when the index becomes greater than or equal to the n then it means we are our of the index , then we just append the nums of size n in our ans variable
+        if index==n:
+            ans.append(''.join(nums))
+            return 
+        nums[index]='0'  #we always have an option of inserting 0 at the given index
+        solvebinarystrings(True,index+1,ans,nums,n)
+        if condition == True:
+            nums[index]='1'  
+            solvebinarystrings(False,index+1,ans,nums,n)
+            nums[index]='0'  #while backtracking we make the current index value to 0, otherwise the inserted 1 will cause an error if we donot change it to 0
+        
+
+
+    solvebinarystrings(True,0,ans,nums,n) 
+    return ans   
+print(generatebinarystrings(3))
+#time complexity : O(2^N)
+#space complexity : O(N + 2^N*N)  N is the length of the given string and 2^N * N is for the ans variable
+
+#Generate Parentheses
+#Given an integer n.Generate all possible combinations of well-formed parentheses of length 2 x N.
+
 
 
