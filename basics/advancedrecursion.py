@@ -146,6 +146,29 @@ print(powerset([1,2,3]))
 #so the main logic behind backtracking is finding that edge or the condition where we come with two ways and we choose both the ways but in recursive approach
 
 
+#print all the subsequences of the given array
+def getsubsequence(a,k):  #here a is the array given of which we need to find the subsequence
+    ans=[]
+    nums=[]
+    getsubse(0,0,ans,nums,a,k)
+   
+    return len(ans)
+
+
+def getsubse(index,currentsum,ans,nums,a,k):
+    if index>=len(a):
+        if currentsum==k:
+          ans.append(nums.copy())
+        return
+    nums.append(a[index])
+    getsubse(index+1,currentsum+a[index],ans,nums,a,k)  #only if we append the indexed number , the sum will increase 
+    nums.pop()
+    getsubse(index+1,currentsum,ans,nums,a,k)     #otherwise the sum will remain same
+print(getsubsequence([4, 9, 2, 5, 1],10))   
+#time complexity : O(n*2^n )  M is the length of the list of the subsequent arrays
+# space complexity :  O(n*2^n ) 
+    
+
 
 
  
