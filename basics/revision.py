@@ -193,6 +193,29 @@ print(generatebinarystrings(3))
 
 #Generate Parentheses
 #Given an integer n.Generate all possible combinations of well-formed parentheses of length 2 x N.
+def generateparentheses(n):
+    ans=[]
+    nums=[]
+    def solveparentheses(index,opentag,closetag,ans,nums,n):
+    
+        if index>=n and  opentag==closetag==n:
+            ans.append(''.join(nums))
+            return
+        if opentag<n:
+            nums.append('(')
+            solveparentheses(index+1,opentag+1,closetag,ans,nums,n)
+            nums.pop()  #while backtracking
+        if closetag<opentag:
+            nums.append(')')
+            solveparentheses(index+1,opentag,closetag+1,ans,nums,n)
+            nums.pop()  #while backtracking            
+
+    solveparentheses(0,0,0,ans,nums,n)    
+    return ans
+print(generateparentheses(3))
+#time complexity : O(2^N)
+#space complexity : O(N*2^N)
+
 
 
 

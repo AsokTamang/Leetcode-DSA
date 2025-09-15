@@ -119,7 +119,7 @@ def solveparenthesis(opentag,closetag,ans,datas,n):  #here opentag represents th
         datas.pop() #backtracking
 print(generateparentheses(3))
 #time complexity : O(2^N)
-#space complexity : O(N)
+#space complexity : O(N*2^N)
 
 
 #Power Set
