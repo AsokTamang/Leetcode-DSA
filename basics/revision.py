@@ -281,3 +281,29 @@ print(combinationsum([2, 3, 5, 4] ,7))
 #time complexity : O(N * 2^N)  here N is the length of the given array
 #space complexity : O(N*2^N)
 
+
+
+#combination sum II
+def combinationsumii(array,target):
+    array.sort()  #we must sort the array first inorder to prevent the use of the duplicates.
+    ans=[]
+    nums=[]
+    def solvecombinationsumii(index,presum):
+        #base case
+        if presum==target:
+            ans.append(nums.copy())  #if the sum of the obtained array is equal to the target number then ofcourse we append the copy of nums to our ans variable
+            return        
+        if index>=len(array) or presum>target:
+            return
+        for i in range(index,len(array)):
+            if i > index and array[i]==array[i-1]:  #if we are at the iteration of i which is greater than the index value and if the elements at index i-1 and i are same,then we cannot use this same element or number at same recursive level at same index twice 
+                #inorder to prevent the duplicate, so we are continuing with the next iteration
+                continue
+            nums.append(array[i])
+            solvecombinationsumii(i+1,presum+array[i])  #then for each i level iteration, we go deep into recursion by making the index i+1, where we insert the number
+            nums.pop()  #this is the backtracking which is for getting the nums to the same state after completing all the recursive level iteration, which makes the nums ready for i iteration
+    solvecombinationsumii(0,0)
+    return ans
+print(combinationsumii( [2, 1, 2, 7, 6, 1, 5] ,8))        
+#time complexity : O(N*2^N)  we have N number of options for every index and as the number can be choosen or skipped based on the duplicate condition, we are assuming the time complexity to be N*2^N here N* is for the for loop
+#space complexity : O(N*2^N)

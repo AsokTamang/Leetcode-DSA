@@ -230,9 +230,10 @@ def secondcombinationsum(array,target):
             return
         
         for i in range(index,len(array)):  
-            if i>index and  array[i] == array[i-1]:  #here if i> index means that if we are at another i which is further or greater than the index and the array[i] == array[i-1] becomes equal then we just continue with another loop
+            if i>index and  array[i] == array[i-1]:  #here if i> index means that if we are at another i which is further or greater than the index and the array[i] == array[i-1] are equal then we just continue with another loop
                 continue
-            
+            if array[i] > target:   #we are also breaking the loop of iteration with i if the i indexed array element is greater than the target.
+                break
             nums.append(array[i])
             solveseccombination(i+1,presum+array[i],ans,nums)
             nums.pop()
