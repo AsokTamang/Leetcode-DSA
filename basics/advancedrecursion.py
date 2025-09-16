@@ -218,25 +218,47 @@ print(combinationsum([2, 3, 5, 4] ,  7))
 #Combination Sum II
 #Given collection of candidate numbers (candidates) and a integer target.Find all unique combinations in candidates where the sum is equal to the target.There can only be one usage of each number in the candidates combination and return the answer in sorted order.
 
-def secondcombinationsum(array,target):
+
+#combination sum II
+def combinationsumii(array,target):
+    array.sort()  #we must sort the array first inorder to prevent the use of the duplicates.
     ans=[]
     nums=[]
-    array.sort() #we must sort the array inorder to prevent the use of duplicates.
-    def solveseccombination(index,presum,ans,nums):
+    def solvecombinationsumii(index,presum):
+        #base case
         if presum==target:
-             ans.append(nums.copy())
-             return
+            ans.append(nums.copy())  #if the sum of the obtained array is equal to the target number then ofcourse we append the copy of nums to our ans variable
+            return        
         if index>=len(array) or presum>target:
             return
-        
-        for i in range(index,len(array)):  
-            if i>index and  array[i] == array[i-1]:  #here if i> index means that if we are at another i which is further or greater than the index and the array[i] == array[i-1] are equal then we just continue with another loop
+        for i in range(index,len(array)):
+            if i > index and array[i]==array[i-1]:  #if we are at the iteration of i which is greater than the index value and if the elements at index i-1 and i are same,then we cannot use this same element or number at same recursive level at same index twice 
+                #inorder to prevent the duplicate, so we are continuing with the next iteration
                 continue
-            if array[i] > target:   #we are also breaking the loop of iteration with i if the i indexed array element is greater than the target.
-                break
             nums.append(array[i])
-            solveseccombination(i+1,presum+array[i],ans,nums)
-            nums.pop()
-    solveseccombination(0,0,ans,nums)        
+            solvecombinationsumii(i+1,presum+array[i])  #then for each i level iteration, we go deep into recursion by making the index i+1, where we insert the number
+            nums.pop()  #this is the backtracking which is for getting the nums to the same state after completing all the recursive level iteration, which makes the nums ready for i iteration
+    solvecombinationsumii(0,0)
     return ans
-print(secondcombinationsum([2, 1, 2, 7, 6, 1, 5] , 8))
+print(combinationsumii( [2, 1, 2, 7, 6, 1, 5] ,8))        
+#time complexity : O(N*2^N)  we have N number of options for every index and as the number can be choosen or skipped based on the duplicate condition, we are assuming the time complexity to be N*2^N here N* is for the for loop
+#space complexity : O(N*2^N)
+
+
+#subsets-I
+#Given an array nums of n integers. Return array of sum of all subsets of the array nums.
+#Output can be returned in any order.
+
+def subsetsI(array):
+    totalsum=[]
+    def solvesubsetsI(index,presum):
+        if index>=len(array):
+            totalsum.append(presum)
+            return
+        solvesubsetsI(index+1,presum+array[index])  #here we are including the number
+        solvesubsetsI(index+1,presum)  #here we are excluding the number
+    solvesubsetsI(0,0)
+    return totalsum    
+print(subsetsI(  [5, 2, 1]))
+#time complexity : O(2^N)
+#space complexity : O(2^N) + O(N)
