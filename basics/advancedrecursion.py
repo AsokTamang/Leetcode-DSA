@@ -213,3 +213,29 @@ def combinationsum(array,k):
     solvecombination(0,0,ans,nums)
     return ans
 print(combinationsum([2, 3, 5, 4] ,  7))
+
+
+#Combination Sum II
+#Given collection of candidate numbers (candidates) and a integer target.Find all unique combinations in candidates where the sum is equal to the target.There can only be one usage of each number in the candidates combination and return the answer in sorted order.
+
+def secondcombinationsum(array,target):
+    ans=[]
+    nums=[]
+    array.sort() #we must sort the array inorder to prevent the use of duplicates.
+    def solveseccombination(index,presum,ans,nums):
+        if presum==target:
+             ans.append(nums.copy())
+             return
+        if index>=len(array) or presum>target:
+            return
+        
+        for i in range(index,len(array)):  
+            if i>index and  array[i] == array[i-1]:  #here if i> index means that if we are at another i which is further or greater than the index and the array[i] == array[i-1] becomes equal then we just continue with another loop
+                continue
+            
+            nums.append(array[i])
+            solveseccombination(i+1,presum+array[i],ans,nums)
+            nums.pop()
+    solveseccombination(0,0,ans,nums)        
+    return ans
+print(secondcombinationsum([2, 1, 2, 7, 6, 1, 5] , 8))
