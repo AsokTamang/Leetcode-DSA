@@ -173,19 +173,43 @@ print(getsubsequence([4, 9, 2, 5, 1],10))
 
 
 def checksubse(array,k):
-    def solvesubsek(index,summ,nums,k):
+    def solvesubsek(index,summ,k):
      if index >=len(array):  #the base case 
       return summ==k
     
-     if solvesubsek(index+1,summ+array[index],nums,k):  #if any of the function or the branch recursion of including the numbers at the given index satisfies the condition , then immediately we return True
+     if solvesubsek(index+1,summ+array[index],k):  #if any of the function or the branch recursion of including the numbers at the given index satisfies the condition , then immediately we return True
          return True
      
-     if solvesubsek(index+1,summ,nums,k):  #if any of the function of excluding the number at the given index satisfies the condition after hitting the base case , then we return true 
+     if solvesubsek(index+1,summ,k):  #if any of the function of excluding the number at the given index satisfies the condition after hitting the base case , then we return true 
          return True
      return False  #after all the recursion of every possible branches , if it still doesnot satisfy the condition then we return false
 
     return solvesubsek(0,0,k)  #here we are passing the 0 for the first index and ofcourse the pre sum of an array will be 0 at first
    
-print(checksubse( [4, 3, 9, 2] , 10))
+print(checksubse( [4, 3, 9, 2] ,10))
 #time complexity : O(2^N)  where N is the length of the array
 #space complexity : O(N) due to the recursive nature
+
+
+#Combination Sum
+#the given question is asking us to use the number at the given index multiple times
+def combinationsum(array,k):
+    nums=[]
+    ans=[]
+    def solvecombination(index,presum,ans,nums):
+            if index>=len(array) or presum > k:
+                return 
+            if presum ==k:
+             ans.append([''.join(nums.copy())])
+             return
+            nums.append(str(array[index]))
+            solvecombination(index,presum+array[index],ans,nums)
+            nums.pop()
+
+            solvecombination(index+1,presum,ans,nums)
+
+       
+
+    solvecombination(0,0,ans,nums)
+    return ans
+print(combinationsum([2, 3, 5, 4] ,  7))

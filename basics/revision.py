@@ -258,3 +258,26 @@ print(countsubs([4, 9, 2, 5, 1],10))
 #space complexity : O(N*2^N)
 
 
+#combination sum
+def combinationsum(array,target):
+    ans=[]
+    nums=[]
+    def solvecombination(index,presum,ans,nums):
+        if index>=len(array) or presum>target:  #if the index becomes greater than the length of the array then we just stop the loop and also if the sum becomes greater than the  target then we also end the loop
+            return
+        if presum == target:
+            ans.append(nums.copy())
+            return
+        nums.append(array[index])
+        solvecombination(index,presum+array[index],ans,nums)   #continuing at the same index
+
+        nums.pop() #not including the current index number
+        solvecombination(index+1,presum,ans,nums)  #then going to the next index
+    
+          
+    solvecombination(0,0,ans,nums)
+    return ans
+print(combinationsum([2, 3, 5, 4] ,7))
+#time complexity : O(N * 2^N)  here N is the length of the given array
+#space complexity : O(N*2^N)
+
