@@ -296,10 +296,11 @@ def combinationIII(k,target):
     nums=[]
     def solvethirdcombination(index,presum):
         if len(nums) == k:  #the question is asking us to determine the set of length k 
-         if presum == target:
+         if presum == target:   #only if the sum of the formed array is equal to the target number, then we append the copy of nums in our ans variable
             ans.append(nums.copy())
          return
-        for i in range(index,10):  
+        for i in range(index,10):
+        
             nums.append(i)
             solvethirdcombination(i+1,presum+i)
             nums.pop()  #backtracking
@@ -308,3 +309,36 @@ def combinationIII(k,target):
 print(combinationIII(3,9))
 #time complexity : O(2^N*9)
 #space complexity : O(2^N*9)
+
+#letter combinations of a phone number
+#Given a string consisting of digits from 2 to 9 (inclusive). Return all possible letter combinations that the number can represent.
+#Mapping of digits to letters is given in first example.
+
+def lettercombination(digits):
+    m={
+        '2':'abc',
+        '3':'def',
+        '4':'ghi',
+        '5':'jkl',
+        '6':'mno',
+        '7':'pqrs',
+        '8':'tuv',
+        '9':'wxyz',
+    }
+    ans=[]
+    nums=[] 
+    def solvelettercombination(index):
+        if index>=len(digits):   #if the passed index becomes greater or equal to the length of the given digits then we just append the copy of nums to our ans
+            ans.append(''.join(nums.copy()))
+            return
+        for char in m[digits[index]]:
+            nums.append(char)
+            solvelettercombination(index+1)  #this recursion goes to start the for loop for the next number in the given digit 
+            nums.pop() #backtracking
+
+        
+    solvelettercombination(0)
+    return ans
+print(lettercombination('34'))
+#time complexity : O(M^N) here M is the maximum number of characters of the given numbers in the given digit and N is the length of the digits
+# space complexity : O(N)+O(M^N) here O(N) is for the recursion depth and O(M^N) is for the ans variable  
