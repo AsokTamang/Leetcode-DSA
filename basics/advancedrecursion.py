@@ -262,3 +262,49 @@ def subsetsI(array):
 print(subsetsI(  [5, 2, 1]))
 #time complexity : O(2^N)
 #space complexity : O(2^N) + O(N)
+
+#subsetsII
+#Given an integer array nums, which can have duplicate entries, provide the power set.
+#Duplicate subsets cannot exist in the solution set. Return the answer in any sequence.
+#the question is asking us to print the power set of given array which can have duplicate entries ,
+def subsetsII(array):
+    ans=[]
+    nums=[]
+    array.sort()
+    def solvesubsetsii(index):
+         #we don't need the base case here cause we are using the for loop recursion where the index will go until one value lesser than the length of an array.
+           
+        ans.append(nums.copy())
+            
+        for i in range(index,len(array)):
+            if i>index and array[i]==array[i-1]:  #this condition is used to remove
+                continue
+            nums.append(array[i])
+            solvesubsetsii(i+1)
+            nums.pop()    #backtracking
+        
+    solvesubsetsii(0)
+    return ans
+print(subsetsII([1, 2]))
+#time complexity : O(N*2^N)
+#space complexity : O(N*2^N)
+
+
+#combination iii
+def combinationIII(k,target):
+    ans=[]
+    nums=[]
+    def solvethirdcombination(index,presum):
+        if len(nums) == k:  #the question is asking us to determine the set of length k 
+         if presum == target:
+            ans.append(nums.copy())
+         return
+        for i in range(index,10):  
+            nums.append(i)
+            solvethirdcombination(i+1,presum+i)
+            nums.pop()  #backtracking
+    solvethirdcombination(1,0)     #as the question is asking us to use the numerals 1 through 9, and no duplicate numbers or values are allowed while making the subset    
+    return ans 
+print(combinationIII(3,9))
+#time complexity : O(2^N*9)
+#space complexity : O(2^N*9)
