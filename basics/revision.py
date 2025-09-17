@@ -283,3 +283,24 @@ print(combinationsum([2, 3, 5, 4] ,7))
 
 
 
+
+#combination sum III
+def combinationsumIII(k,target):
+    ans=[]
+    nums=[]
+    def solvecombinationsumIII(index,presum):
+        if len(nums)==k: #the index must be within the range of 1 to 9 and the length of the nums also must be equal to the value k
+            if presum==target:
+                ans.append(nums.copy())
+            return
+        for i in range(index,10):
+         nums.append(i)
+         solvecombinationsumIII(i+1,presum+i)  #this recursion is for moving deep into the index recursively while increasing the presum
+         nums.pop()
+    solvecombinationsumIII(1,0)    
+    return ans
+print(combinationsumIII(3,9))
+#time complexity : O(9^K)
+#space complexity : O(K)+O(9^K)
+
+
