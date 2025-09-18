@@ -335,3 +335,29 @@ def lettercombination(digits):
     solvelettercombination(0)  #and we are passing the 0 for the first iteration
     return ans
 print(lettercombination('3'))
+
+
+#palindrome partitioning
+#Given a string s partition string s such that every substring of partition is palindrome. Return all possible palindrome partition of string s.
+
+def palindromepartition(s):
+    ans=[]
+    nums=[]
+    def ispalindrome(subs):
+        return subs==subs[::-1]  #here this function is used for checking the palindrome
+    def solvepalindromepartition(index):
+        if index>=len(s):
+            ans.append(nums.copy())
+            return
+        for i in range(index,len(s)):
+            substring=s[index:i+1]   #here we are making every possible substring from the current 'index' which loop through every possible i from 'index'
+            if ispalindrome(substring):  #only if the formed substring is palindrome ,  we append this  substring in our nums variable
+                nums.append(substring)
+                solvepalindromepartition(i+1)  #And then go deep into recursion
+                nums.pop()  #backtracking
+
+    solvepalindromepartition(0)
+    return ans
+print(palindromepartition("aabaa"))
+#time complexity : O(N*2^N) here as we are going through every characters from the curren index to make every possible subset and we have two options , either the formed substring is palindrome , we append this substring into our nums variable otherwise , we skip it.
+#space complexity : O(N*2^N)  
