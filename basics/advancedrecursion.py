@@ -342,3 +342,30 @@ def lettercombination(digits):
 print(lettercombination('34'))
 #time complexity : O(M^N) here M is the maximum number of characters of the given numbers in the given digit and N is the length of the digits
 # space complexity : O(N)+O(M^N) here O(N) is for the recursion depth and O(M^N) is for the ans variable  
+
+
+#Palindrome partitioning
+#Given a string s partition string s such that every substring of partition is palindrome. Return all possible palindrome partition of string s.
+def palindromepartition(s):
+    ans=[]
+    nums=[]
+    def checkpalindrome(stri):
+        return stri==stri[::-1]
+    def solvepalindromepartition(index):
+
+        if index>=len(s):
+            ans.append(nums.copy())
+            return
+        for i in range(index,len(s)):
+            substring=s[index:i+1]  #here we are trying to form every possible substring from the given string, and check if they are palindrome.
+            if checkpalindrome(substring):  #if the checkpalindrome is true only then we append this substring into our nums and then recurse
+                nums.append(s[index:i+1])
+                solvepalindromepartition(i+1)   
+                nums.pop() #backtracking
+       
+    solvepalindromepartition(0)
+    
+    return ans
+print(palindromepartition("aabb"))
+#time complexity : O(N*2^N) here N is the length of the string and M is the length of the palindrome substring
+#space complexity : O(N*2^N)
