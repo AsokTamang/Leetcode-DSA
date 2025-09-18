@@ -304,3 +304,34 @@ print(combinationsumIII(3,9))
 #space complexity : O(K)+O(9^K)
 
 
+#letter combination of a phone number
+#Given a string consisting of digits from 2 to 9 (inclusive). Return all possible letter combinations that the number can represent.
+
+def lettercombination(digits):
+    ans=[]
+    nums=[]
+    m={
+        '2':'abc',
+         '3':'def',
+         '4':'ghi',
+         '5':'jkl',
+        '6':'mno',
+         '7':'pqrs',
+         '8':'tuv',
+         '9':'wxyz',
+
+
+
+    }
+    def solvelettercombination(index):
+        if index>=len(digits):
+            ans.append(''.join(nums.copy()))
+            return
+        for char in m[digits[index]]:  #here we are looping through each characters of the given number at the current index from the given digit
+            nums.append(char)
+            solvelettercombination(index+1)
+            nums.pop()  #this is for the backtracking
+
+    solvelettercombination(0)  #and we are passing the 0 for the first iteration
+    return ans
+print(lettercombination('3'))
