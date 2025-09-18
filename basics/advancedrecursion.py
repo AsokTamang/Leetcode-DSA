@@ -369,3 +369,31 @@ def palindromepartition(s):
 print(palindromepartition("aabb"))
 #time complexity : O(N*2^N) here N is the length of the string and M is the length of the palindrome substring
 #space complexity : O(N*2^N)
+
+
+#word search
+#Given a grid of n x m dimension grid of characters board and a string word.The word can be created by assembling the letters of successively surrounding cells, whether they are next to each other vertically or horizontally. It is forbidden to use the same letter cell more than once.
+#Return true if the word exists in the grid otherwise false.
+
+def wordsearch(board,word):
+    rows=len(board)  #number of rows
+    cols=len(board[0]) #number of columns
+    path=set()  #here this path is for storing the used or truthy row and column position
+    def dfs(r,c,index):  #here r represents the row position and c represents the column position
+        if index == len(word):  #if the index becomes equal to the length of the word then we return true
+            return True
+        if r<0 or c<0 or r>=rows or c>=cols or word[index] !=board[r][c]:   #if the rows becomes out of bounds or the character at the current index of the target word is not equal to the character at the row and column position of board then we return false.
+            return False
+        #if the edge condition is true then it means the character at r and c postion matches with the character at the current index of word, then we add this current row and column position in our set
+        path.add((r,c))
+        res= dfs(r+1,c,index+1) or dfs(r-1,c,index+1) or dfs(r,c+1,index+1) or dfs(r,c-1,index+1) 
+        path.remove((r,c))  #backtracking
+        return res
+    for i in range(rows):  #this loop is used for using the recursion or dfs for every row and column indexed number from the given board
+        for j in range(cols):
+            if dfs(i,j,0):   #and if the dfs keeps on returning true until the last  recursion level then we return true
+                return True
+    #even after going through every loop , if the condition is not true then we return false
+    return False
+print(wordsearch( [ ["A", "B", "C", "E"] , ["S" ,"F" ,"C" ,"S"] , ["A", "D", "E", "E"] ] ,"ABCCED"))
+
