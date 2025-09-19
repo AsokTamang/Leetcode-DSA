@@ -575,6 +575,43 @@ def nqueen(
 
     solvenqueen(0)  # initially we are passing 0 index row and 0 index column
     return ans
-
-
 print(nqueen(4))
+
+
+#rat in maze
+#Given a grid of dimensions n x n. A rat is placed at coordinates (0, 0) and wants to reach at coordinates (n-1, n-1).
+#Find all possible paths that rat can take to travel from (0, 0) to (n-1, n-1). The directions in which rat can move are 'U' (up) , 'D' (down) , 'L' (left) , 'R' (right).
+#The value 0 in grid denotes that the cell is blocked and rat cannot use that cell for travelling, whereas value 1 represents that rat can travel through the cell. If the cell (0, 0) has 0 value, then mouse cannot move to any other cell.
+#Note :
+#In a path no cell can be visited more than once.
+#If there is no possible path then return empty vector.
+
+def ratinmaze(array):
+    n=rows = len(array)
+    cols = len(array[0])
+    
+    ans=[]
+    nums=[]
+    if array[0][0]==0:  #if the very first row and column position number is 0 then it means the rat cannot move to anyother cell from the starting position
+        return -1
+    def dfs(r,c):
+        if r==rows-1 and c==cols-1:  #if we are at the last row and last column position then we append the copy of nums in our ans variable
+            ans.append(''.join(nums.copy()))
+            return
+       
+        if c+1<cols and array[r][c+1]==1:
+            nums.append('R')
+            dfs(r,c+1)
+            nums.pop()  #backtracking
+        if r+1<rows and array[r+1][c] == 1:
+            nums.append('D')
+            dfs(r+1,c)
+            nums.pop()       #backtracking 
+    dfs(0,0)
+    if ans:
+        return ans
+    else:
+        return -1
+print(ratinmaze([ [1, 0] , [1, 0] ]))    
+#time complexity : O(2^N) only have two options at every index of a given array whether to go right or go left
+#space complexity :  O(N+2^N)
