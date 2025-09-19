@@ -427,3 +427,5 @@ def nqueen(n):  #here we must make n*n boards inserting n queens in such a way t
 print(nqueen(4))
 #time complexity : O(N*2^N)
 #space complexity : O(N*2^N)
+
+
