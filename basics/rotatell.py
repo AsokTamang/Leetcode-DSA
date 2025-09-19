@@ -88,4 +88,44 @@ print(wordsearch( [ ["A", "B", "C", "E"] , ["S" ,"F" ,"C" ,"S"] , ["A", "D", "E"
 #time complexity : O(N*2^N)
 #space complexity : O(N*2^N)
 
+#rat in maze
+#the question is asking us to find every possible way that a rat can reach from the first row and column position [0,0] upto the last row and column position which is [n-1,n-1]
+def ratinmaze(grid):
+    rows = len(grid)  #number of rows
+    cols=len(grid[0])  #number of columns
+    ans = []
+    nums = []
+    path=set()
+    if grid[0][0] == 0:  #if the very first row and column index is 0 then it means the rat cannot even move from this very first index
+        return -1
+    def solveratinmaze(r,c):
+        if r==rows-1 and c==cols-1:  #if our r and c index reaches the very last index of the grid which is rows-1 and cols-1, then it means the rat has reached the ending of the grid. 
+            ans.append(''.join(nums.copy()))
+            return
+        path.add((r,c))
+        
+        if r-1>=0 and grid[r-1][c]==1 and (r-1,c) not in path:
+            nums.append('U')
+            solveratinmaze(r-1,c)
+            nums.pop()
+        if c-1>=0 and grid[r][c-1]==1 and (r,c-1) not in path:
+            nums.append('L')
+            solveratinmaze(r,c-1)
+            nums.pop()    
+        if r+1<rows and grid[r+1][c] == 1 and (r+1,c) not in path:  #if the very next downward position in the same column has value 1 then it means the rat can move in this downward position
+            nums.append('D')
+            solveratinmaze(r+1,c)  #then we recursively go towards this next row
+            nums.pop()
+        if c+1<cols and grid[r][c+1] == 1 and (r,c+1) not in path:  #if the very next right position in the same row has the value 1 then it means the rat can move in this right position
+            nums.append('R')
+            solveratinmaze(r,c+1)  #then we recursively go towards this next column
+            nums.pop()
+        path.remove((r,c)) #backtracking for removing this path
+    solveratinmaze(0,0)  
+    return ans if ans else -1
+print(ratinmaze([ [1, 0, 0, 0] , [1, 1, 0, 1], [1, 1, 0, 0], [0, 1, 1, 1] ]))
+#time complexity : O(4^N*M)  as we have 4 options of going left-right-up-down at each indices and N is the number of rows and M is the number of columns
+#space complexity : O(N*M)   as for the space too in the worst case the space complexity will be O(N*M) for every indices
+
+
             
