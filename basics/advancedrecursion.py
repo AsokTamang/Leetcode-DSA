@@ -80,320 +80,501 @@ print(reverseastack([4, 1, 3, 2]))
 
 
 def genbinary(n):  # n is the length of the string
-    numbers=['0'] * n  
-    ans=[]
-    solvebinary(0,True,ans,numbers)  #here we are passing the first index
+    numbers = ["0"] * n
+    ans = []
+    solvebinary(0, True, ans, numbers)  # here we are passing the first index
     return ans
-def solvebinary(index,flag,ans,numbers):
-    if index>=len(numbers):  #this is our base case where if the index becomes greater than or equal to the length of the formed numbers
-        ans.append(''.join(numbers))
-        return 
-    numbers[index] = '0'      #whether the flag is true or false , we just add 0 at the current index  
-    solvebinary(index+1,True,ans,numbers)
-    if flag==True:   #onle if the flag is true then we also have a option of adding 1 in the current index, after adding one we just make the flag to false
-        numbers[index]='1'
-        solvebinary(index+1,False,ans,numbers)  #and again go deeper into our recursion by increasing the index
-        numbers[index]='0'  #then while backtracking , we again make the value at the current index 0
-print(genbinary(3))
-#time complexity : O(2^N)
-#space complexity : O(N)
 
-#Generate Parentheses
-#Given an integer n.Generate all possible combinations of well-formed parentheses of length 2 x N.
-def generateparentheses(n):#here n is the number of pair of parenthesis
-    ans=[]
-    datas=[]
-    solveparenthesis(0,0,ans,datas,n)
-    return ans
-def solveparenthesis(opentag,closetag,ans,datas,n):  #here opentag represents the number of opening tag used and closetag represents the number of closing tag used
-    if opentag==closetag==n:
-        ans.append(''.join(datas))
+
+def solvebinary(index, flag, ans, numbers):
+    if index >= len(
+        numbers
+    ):  # this is our base case where if the index becomes greater than or equal to the length of the formed numbers
+        ans.append("".join(numbers))
         return
-    if opentag<n:
-        datas.append('(')
-        solveparenthesis(opentag+1,closetag,ans,datas,n)
-        datas.pop()  #backtracking 
-    if closetag<opentag:
-        datas.append(')')
-        solveparenthesis(opentag,closetag+1,ans,datas,n)
-        datas.pop() #backtracking
+    numbers[index] = (
+        "0"  # whether the flag is true or false , we just add 0 at the current index
+    )
+    solvebinary(index + 1, True, ans, numbers)
+    if (
+        flag == True
+    ):  # onle if the flag is true then we also have a option of adding 1 in the current index, after adding one we just make the flag to false
+        numbers[index] = "1"
+        solvebinary(
+            index + 1, False, ans, numbers
+        )  # and again go deeper into our recursion by increasing the index
+        numbers[index] = (
+            "0"  # then while backtracking , we again make the value at the current index 0
+        )
+
+
+print(genbinary(3))
+# time complexity : O(2^N)
+# space complexity : O(N)
+
+
+# Generate Parentheses
+# Given an integer n.Generate all possible combinations of well-formed parentheses of length 2 x N.
+def generateparentheses(n):  # here n is the number of pair of parenthesis
+    ans = []
+    datas = []
+    solveparenthesis(0, 0, ans, datas, n)
+    return ans
+
+
+def solveparenthesis(
+    opentag, closetag, ans, datas, n
+):  # here opentag represents the number of opening tag used and closetag represents the number of closing tag used
+    if opentag == closetag == n:
+        ans.append("".join(datas))
+        return
+    if opentag < n:
+        datas.append("(")
+        solveparenthesis(opentag + 1, closetag, ans, datas, n)
+        datas.pop()  # backtracking
+    if closetag < opentag:
+        datas.append(")")
+        solveparenthesis(opentag, closetag + 1, ans, datas, n)
+        datas.pop()  # backtracking
+
+
 print(generateparentheses(3))
-#time complexity : O(2^N)
-#space complexity : O(N*2^N)
+# time complexity : O(2^N)
+# space complexity : O(N*2^N)
 
 
-#Power Set
-#Given an array of integers nums of unique elements. Return all possible subsets (power set) of the array.
-#Do not include the duplicates in the answer.
+# Power Set
+# Given an array of integers nums of unique elements. Return all possible subsets (power set) of the array.
+# Do not include the duplicates in the answer.
+
 
 def powerset(array):
-    ans=[]
-    nums=[]
-    solvepowerset(0,ans,nums,array)
+    ans = []
+    nums = []
+    solvepowerset(0, ans, nums, array)
     return ans
-def solvepowerset(index,ans,nums,array):
-    if index>=len(array):  #if the passed index becomes greater than or equal to the length of an array then we append the nums in our ans variable
-        ans.append(nums.copy())  #here we are appending the copy of nums instead not the nums itself
+
+
+def solvepowerset(index, ans, nums, array):
+    if index >= len(
+        array
+    ):  # if the passed index becomes greater than or equal to the length of an array then we append the nums in our ans variable
+        ans.append(
+            nums.copy()
+        )  # here we are appending the copy of nums instead not the nums itself
         return
-    nums.append(array[index])  #for creating the subset we keep on appending every numbers from  an array one at a time and go deep into recursion
-    solvepowerset(index+1,ans,nums,array)
-    #while also by deleting the appended number and going into recursion
+    nums.append(
+        array[index]
+    )  # for creating the subset we keep on appending every numbers from  an array one at a time and go deep into recursion
+    solvepowerset(index + 1, ans, nums, array)
+    # while also by deleting the appended number and going into recursion
     nums.pop()
-    solvepowerset(index+1,ans,nums,array)
-print(powerset([1,2,3]))  
-#time complexity : O(n*2^n)
-#space complexity : O(n) + O(n*2^n)   
-#so the main logic behind backtracking is finding that edge or the condition where we come with two ways and we choose both the ways but in recursive approach
+    solvepowerset(index + 1, ans, nums, array)
 
 
-#print all the subsequences of the given array
-def getsubsequence(a,k):  #here a is the array given of which we need to find the subsequence
-    ans=[]
-    nums=[]
-    getsubse(0,0,ans,nums,a,k)
-   
+print(powerset([1, 2, 3]))
+# time complexity : O(n*2^n)
+# space complexity : O(n) + O(n*2^n)
+# so the main logic behind backtracking is finding that edge or the condition where we come with two ways and we choose both the ways but in recursive approach
+
+
+# print all the subsequences of the given array
+def getsubsequence(
+    a, k
+):  # here a is the array given of which we need to find the subsequence
+    ans = []
+    nums = []
+    getsubse(0, 0, ans, nums, a, k)
+
     return len(ans)
 
 
-def getsubse(index,currentsum,ans,nums,a,k):
-    if index>=len(a):
-        if currentsum==k:
-          ans.append(nums.copy())
+def getsubse(index, currentsum, ans, nums, a, k):
+    if index >= len(a):
+        if currentsum == k:
+            ans.append(nums.copy())
         return
     nums.append(a[index])
-    getsubse(index+1,currentsum+a[index],ans,nums,a,k)  #only if we append the indexed number , the sum will increase 
+    getsubse(
+        index + 1, currentsum + a[index], ans, nums, a, k
+    )  # only if we append the indexed number , the sum will increase
     nums.pop()
-    getsubse(index+1,currentsum,ans,nums,a,k)     #otherwise the sum will remain same
-print(getsubsequence([4, 9, 2, 5, 1],10))   
-#time complexity : O(n*2^n )  M is the length of the list of the subsequent arrays
-# space complexity :  O(n*2^n ) 
-    
-#Check if there exists a subsequence with sum K
-#Given an array nums and an integer k. Return true if there exist subsequences such that the sum of all elements in subsequences is equal to k else false.
+    getsubse(
+        index + 1, currentsum, ans, nums, a, k
+    )  # otherwise the sum will remain same
 
 
-def checksubse(array,k):
-    def solvesubsek(index,summ,k):
-     if index >=len(array):  #the base case 
-      return summ==k
-    
-     if solvesubsek(index+1,summ+array[index],k):  #if any of the function or the branch recursion of including the numbers at the given index satisfies the condition , then immediately we return True
-         return True
-     
-     if solvesubsek(index+1,summ,k):  #if any of the function of excluding the number at the given index satisfies the condition after hitting the base case , then we return true 
-         return True
-     return False  #after all the recursion of every possible branches , if it still doesnot satisfy the condition then we return false
+print(getsubsequence([4, 9, 2, 5, 1], 10))
+# time complexity : O(n*2^n )  M is the length of the list of the subsequent arrays
+# space complexity :  O(n*2^n )
 
-    return solvesubsek(0,0,k)  #here we are passing the 0 for the first index and ofcourse the pre sum of an array will be 0 at first
-   
-print(checksubse( [4, 3, 9, 2] ,10))
-#time complexity : O(2^N)  where N is the length of the array
-#space complexity : O(N) due to the recursive nature
+# Check if there exists a subsequence with sum K
+# Given an array nums and an integer k. Return true if there exist subsequences such that the sum of all elements in subsequences is equal to k else false.
 
 
-#Combination Sum
-#the given question is asking us to use the number at the given index multiple times
-def combinationsum(array,k):
-    nums=[]
-    ans=[]
-    def solvecombination(index,presum,ans,nums):
-            if index>=len(array) or presum > k:
-                return 
-            if presum ==k:
-             ans.append([''.join(nums.copy())])
-             return
-            nums.append(str(array[index]))
-            solvecombination(index,presum+array[index],ans,nums)
-            nums.pop()
+def checksubse(array, k):
+    def solvesubsek(index, summ, k):
+        if index >= len(array):  # the base case
+            return summ == k
 
-            solvecombination(index+1,presum,ans,nums)
+        if solvesubsek(
+            index + 1, summ + array[index], k
+        ):  # if any of the function or the branch recursion of including the numbers at the given index satisfies the condition , then immediately we return True
+            return True
 
-       
+        if solvesubsek(
+            index + 1, summ, k
+        ):  # if any of the function of excluding the number at the given index satisfies the condition after hitting the base case , then we return true
+            return True
+        return False  # after all the recursion of every possible branches , if it still doesnot satisfy the condition then we return false
 
-    solvecombination(0,0,ans,nums)
-    return ans
-print(combinationsum([2, 3, 5, 4] ,  7))
+    return solvesubsek(
+        0, 0, k
+    )  # here we are passing the 0 for the first index and ofcourse the pre sum of an array will be 0 at first
 
 
-#Combination Sum II
-#Given collection of candidate numbers (candidates) and a integer target.Find all unique combinations in candidates where the sum is equal to the target.There can only be one usage of each number in the candidates combination and return the answer in sorted order.
+print(checksubse([4, 3, 9, 2], 10))
+# time complexity : O(2^N)  where N is the length of the array
+# space complexity : O(N) due to the recursive nature
 
 
-#combination sum II
-def combinationsumii(array,target):
-    array.sort()  #we must sort the array first inorder to prevent the use of the duplicates.
-    ans=[]
-    nums=[]
-    def solvecombinationsumii(index,presum):
-        #base case
-        if presum==target:
-            ans.append(nums.copy())  #if the sum of the obtained array is equal to the target number then ofcourse we append the copy of nums to our ans variable
-            return        
-        if index>=len(array) or presum>target:
+# Combination Sum
+# the given question is asking us to use the number at the given index multiple times
+def combinationsum(array, k):
+    nums = []
+    ans = []
+
+    def solvecombination(index, presum, ans, nums):
+        if index >= len(array) or presum > k:
             return
-        for i in range(index,len(array)):
-            if i > index and array[i]==array[i-1]:  #if we are at the iteration of i which is greater than the index value and if the elements at index i-1 and i are same,then we cannot use this same element or number at same recursive level at same index twice 
-                #inorder to prevent the duplicate, so we are continuing with the next iteration
+        if presum == k:
+            ans.append(["".join(nums.copy())])
+            return
+        nums.append(str(array[index]))
+        solvecombination(index, presum + array[index], ans, nums)
+        nums.pop()
+
+        solvecombination(index + 1, presum, ans, nums)
+
+    solvecombination(0, 0, ans, nums)
+    return ans
+
+
+print(combinationsum([2, 3, 5, 4], 7))
+
+
+# Combination Sum II
+# Given collection of candidate numbers (candidates) and a integer target.Find all unique combinations in candidates where the sum is equal to the target.There can only be one usage of each number in the candidates combination and return the answer in sorted order.
+
+
+# combination sum II
+def combinationsumii(array, target):
+    array.sort()  # we must sort the array first inorder to prevent the use of the duplicates.
+    ans = []
+    nums = []
+
+    def solvecombinationsumii(index, presum):
+        # base case
+        if presum == target:
+            ans.append(
+                nums.copy()
+            )  # if the sum of the obtained array is equal to the target number then ofcourse we append the copy of nums to our ans variable
+            return
+        if index >= len(array) or presum > target:
+            return
+        for i in range(index, len(array)):
+            if (
+                i > index and array[i] == array[i - 1]
+            ):  # if we are at the iteration of i which is greater than the index value and if the elements at index i-1 and i are same,then we cannot use this same element or number at same recursive level at same index twice
+                # inorder to prevent the duplicate, so we are continuing with the next iteration
                 continue
             nums.append(array[i])
-            solvecombinationsumii(i+1,presum+array[i])  #then for each i level iteration, we go deep into recursion by making the index i+1, where we insert the number
-            nums.pop()  #this is the backtracking which is for getting the nums to the same state after completing all the recursive level iteration, which makes the nums ready for i iteration
-    solvecombinationsumii(0,0)
+            solvecombinationsumii(
+                i + 1, presum + array[i]
+            )  # then for each i level iteration, we go deep into recursion by making the index i+1, where we insert the number
+            nums.pop()  # this is the backtracking which is for getting the nums to the same state after completing all the recursive level iteration, which makes the nums ready for i iteration
+
+    solvecombinationsumii(0, 0)
     return ans
-print(combinationsumii( [2, 1, 2, 7, 6, 1, 5] ,8))        
-#time complexity : O(N*2^N)  we have N number of options for every index and as the number can be choosen or skipped based on the duplicate condition, we are assuming the time complexity to be N*2^N here N* is for the for loop
-#space complexity : O(N*2^N)
 
 
-#subsets-I
-#Given an array nums of n integers. Return array of sum of all subsets of the array nums.
-#Output can be returned in any order.
+print(combinationsumii([2, 1, 2, 7, 6, 1, 5], 8))
+# time complexity : O(N*2^N)  we have N number of options for every index and as the number can be choosen or skipped based on the duplicate condition, we are assuming the time complexity to be N*2^N here N* is for the for loop
+# space complexity : O(N*2^N)
+
+
+# subsets-I
+# Given an array nums of n integers. Return array of sum of all subsets of the array nums.
+# Output can be returned in any order.
+
 
 def subsetsI(array):
-    totalsum=[]
-    def solvesubsetsI(index,presum):
-        if index>=len(array):
+    totalsum = []
+
+    def solvesubsetsI(index, presum):
+        if index >= len(array):
             totalsum.append(presum)
             return
-        solvesubsetsI(index+1,presum+array[index])  #here we are including the number
-        solvesubsetsI(index+1,presum)  #here we are excluding the number
-    solvesubsetsI(0,0)
-    return totalsum    
-print(subsetsI(  [5, 2, 1]))
-#time complexity : O(2^N)
-#space complexity : O(2^N) + O(N)
+        solvesubsetsI(
+            index + 1, presum + array[index]
+        )  # here we are including the number
+        solvesubsetsI(index + 1, presum)  # here we are excluding the number
 
-#subsetsII
-#Given an integer array nums, which can have duplicate entries, provide the power set.
-#Duplicate subsets cannot exist in the solution set. Return the answer in any sequence.
-#the question is asking us to print the power set of given array which can have duplicate entries ,
+    solvesubsetsI(0, 0)
+    return totalsum
+
+
+print(subsetsI([5, 2, 1]))
+# time complexity : O(2^N)
+# space complexity : O(2^N) + O(N)
+
+
+# subsetsII
+# Given an integer array nums, which can have duplicate entries, provide the power set.
+# Duplicate subsets cannot exist in the solution set. Return the answer in any sequence.
+# the question is asking us to print the power set of given array which can have duplicate entries ,
 def subsetsII(array):
-    ans=[]
-    nums=[]
+    ans = []
+    nums = []
     array.sort()
+
     def solvesubsetsii(index):
-         #we don't need the base case here cause we are using the for loop recursion where the index will go until one value lesser than the length of an array.
-           
+        # we don't need the base case here cause we are using the for loop recursion where the index will go until one value lesser than the length of an array.
+
         ans.append(nums.copy())
-            
-        for i in range(index,len(array)):
-            if i>index and array[i]==array[i-1]:  #this condition is used to remove
+
+        for i in range(index, len(array)):
+            if (
+                i > index and array[i] == array[i - 1]
+            ):  # this condition is used to remove
                 continue
             nums.append(array[i])
-            solvesubsetsii(i+1)
-            nums.pop()    #backtracking
-        
+            solvesubsetsii(i + 1)
+            nums.pop()  # backtracking
+
     solvesubsetsii(0)
     return ans
+
+
 print(subsetsII([1, 2]))
-#time complexity : O(N*2^N)
-#space complexity : O(N*2^N)
+# time complexity : O(N*2^N)
+# space complexity : O(N*2^N)
 
 
-#combination iii
-def combinationIII(k,target):
-    ans=[]
-    nums=[]
-    def solvethirdcombination(index,presum):
-        if len(nums) == k:  #the question is asking us to determine the set of length k 
-         if presum == target:   #only if the sum of the formed array is equal to the target number, then we append the copy of nums in our ans variable
-            ans.append(nums.copy())
-         return
-        for i in range(index,10):
-        
+# combination iii
+def combinationIII(k, target):
+    ans = []
+    nums = []
+
+    def solvethirdcombination(index, presum):
+        if len(nums) == k:  # the question is asking us to determine the set of length k
+            if (
+                presum == target
+            ):  # only if the sum of the formed array is equal to the target number, then we append the copy of nums in our ans variable
+                ans.append(nums.copy())
+            return
+        for i in range(index, 10):
+
             nums.append(i)
-            solvethirdcombination(i+1,presum+i)
-            nums.pop()  #backtracking
-    solvethirdcombination(1,0)     #as the question is asking us to use the numerals 1 through 9, and no duplicate numbers or values are allowed while making the subset    
-    return ans 
-print(combinationIII(3,9))
-#time complexity : O(2^N*9)
-#space complexity : O(2^N*9)
+            solvethirdcombination(i + 1, presum + i)
+            nums.pop()  # backtracking
 
-#letter combinations of a phone number
-#Given a string consisting of digits from 2 to 9 (inclusive). Return all possible letter combinations that the number can represent.
-#Mapping of digits to letters is given in first example.
+    solvethirdcombination(
+        1, 0
+    )  # as the question is asking us to use the numerals 1 through 9, and no duplicate numbers or values are allowed while making the subset
+    return ans
+
+
+print(combinationIII(3, 9))
+# time complexity : O(2^N*9)
+# space complexity : O(2^N*9)
+
+# letter combinations of a phone number
+# Given a string consisting of digits from 2 to 9 (inclusive). Return all possible letter combinations that the number can represent.
+# Mapping of digits to letters is given in first example.
+
 
 def lettercombination(digits):
-    m={
-        '2':'abc',
-        '3':'def',
-        '4':'ghi',
-        '5':'jkl',
-        '6':'mno',
-        '7':'pqrs',
-        '8':'tuv',
-        '9':'wxyz',
+    m = {
+        "2": "abc",
+        "3": "def",
+        "4": "ghi",
+        "5": "jkl",
+        "6": "mno",
+        "7": "pqrs",
+        "8": "tuv",
+        "9": "wxyz",
     }
-    ans=[]
-    nums=[] 
+    ans = []
+    nums = []
+
     def solvelettercombination(index):
-        if index>=len(digits):   #if the passed index becomes greater or equal to the length of the given digits then we just append the copy of nums to our ans
-            ans.append(''.join(nums.copy()))
+        if index >= len(
+            digits
+        ):  # if the passed index becomes greater or equal to the length of the given digits then we just append the copy of nums to our ans
+            ans.append("".join(nums.copy()))
             return
         for char in m[digits[index]]:
             nums.append(char)
-            solvelettercombination(index+1)  #this recursion goes to start the for loop for the next number in the given digit 
-            nums.pop() #backtracking
+            solvelettercombination(
+                index + 1
+            )  # this recursion goes to start the for loop for the next number in the given digit
+            nums.pop()  # backtracking
 
-        
     solvelettercombination(0)
     return ans
-print(lettercombination('34'))
-#time complexity : O(M^N) here M is the maximum number of characters of the given numbers in the given digit and N is the length of the digits
-# space complexity : O(N)+O(M^N) here O(N) is for the recursion depth and O(M^N) is for the ans variable  
 
 
-#Palindrome partitioning
-#Given a string s partition string s such that every substring of partition is palindrome. Return all possible palindrome partition of string s.
+print(lettercombination("34"))
+# time complexity : O(M^N) here M is the maximum number of characters of the given numbers in the given digit and N is the length of the digits
+# space complexity : O(N)+O(M^N) here O(N) is for the recursion depth and O(M^N) is for the ans variable
+
+
+# Palindrome partitioning
+# Given a string s partition string s such that every substring of partition is palindrome. Return all possible palindrome partition of string s.
 def palindromepartition(s):
-    ans=[]
-    nums=[]
+    ans = []
+    nums = []
+
     def checkpalindrome(stri):
-        return stri==stri[::-1]
+        return stri == stri[::-1]
+
     def solvepalindromepartition(index):
 
-        if index>=len(s):
+        if index >= len(s):
             ans.append(nums.copy())
             return
-        for i in range(index,len(s)):
-            substring=s[index:i+1]  #here we are trying to form every possible substring from the given string, and check if they are palindrome.
-            if checkpalindrome(substring):  #if the checkpalindrome is true only then we append this substring into our nums and then recurse
-                nums.append(s[index:i+1])
-                solvepalindromepartition(i+1)   
-                nums.pop() #backtracking
-       
+        for i in range(index, len(s)):
+            substring = s[
+                index : i + 1
+            ]  # here we are trying to form every possible substring from the given string, and check if they are palindrome.
+            if checkpalindrome(
+                substring
+            ):  # if the checkpalindrome is true only then we append this substring into our nums and then recurse
+                nums.append(s[index : i + 1])
+                solvepalindromepartition(i + 1)
+                nums.pop()  # backtracking
+
     solvepalindromepartition(0)
-    
+
     return ans
+
+
 print(palindromepartition("aabb"))
-#time complexity : O(N*2^N) here N is the length of the string and M is the length of the palindrome substring
-#space complexity : O(N*2^N)
+# time complexity : O(N*2^N) here N is the length of the string and M is the length of the palindrome substring
+# space complexity : O(N*2^N)
 
 
-#word search
-#Given a grid of n x m dimension grid of characters board and a string word.The word can be created by assembling the letters of successively surrounding cells, whether they are next to each other vertically or horizontally. It is forbidden to use the same letter cell more than once.
-#Return true if the word exists in the grid otherwise false.
+# word search
+# Given a grid of n x m dimension grid of characters board and a string word.The word can be created by assembling the letters of successively surrounding cells, whether they are next to each other vertically or horizontally. It is forbidden to use the same letter cell more than once.
+# Return true if the word exists in the grid otherwise false.
 
-def wordsearch(board,word):
-    rows=len(board)  #number of rows
-    cols=len(board[0]) #number of columns
-    path=set()  #here this path is for storing the used or truthy row and column position
-    def dfs(r,c,index):  #here r represents the row position and c represents the column position
-        if index == len(word):  #if the index becomes equal to the length of the word then we return true
+
+def wordsearch(board, word):
+    rows = len(board)  # number of rows
+    cols = len(board[0])  # number of columns
+    path = (
+        set()
+    )  # here this path is for storing the used or truthy row and column position
+
+    def dfs(
+        r, c, index
+    ):  # here r represents the row position and c represents the column position
+        if index == len(
+            word
+        ):  # if the index becomes equal to the length of the word then we return true
             return True
-        if r<0 or c<0 or r>=rows or c>=cols or word[index] !=board[r][c]:   #if the rows becomes out of bounds or the character at the current index of the target word is not equal to the character at the row and column position of board then we return false.
+        if (
+            r < 0 or c < 0 or r >= rows or c >= cols or word[index] != board[r][c]
+        ):  # if the rows becomes out of bounds or the character at the current index of the target word is not equal to the character at the row and column position of board then we return false.
             return False
-        #if the edge condition is true then it means the character at r and c postion matches with the character at the current index of word, then we add this current row and column position in our set
-        path.add((r,c))
-        res= dfs(r+1,c,index+1) or dfs(r-1,c,index+1) or dfs(r,c+1,index+1) or dfs(r,c-1,index+1) 
-        path.remove((r,c))  #backtracking
+        # if the edge condition is true then it means the character at r and c postion matches with the character at the current index of word, then we add this current row and column position in our set
+        path.add((r, c))
+        res = (
+            dfs(r + 1, c, index + 1)
+            or dfs(r - 1, c, index + 1)
+            or dfs(r, c + 1, index + 1)
+            or dfs(r, c - 1, index + 1)
+        )
+        path.remove((r, c))  # backtracking
         return res
-    for i in range(rows):  #this loop is used for using the recursion or dfs for every row and column indexed number from the given board
-        for j in range(cols):
-            if dfs(i,j,0):   #and if the dfs keeps on returning true until the last  recursion level then we return true
-                return True
-    #even after going through every loop , if the condition is not true then we return false
-    return False
-print(wordsearch( [ ["A", "B", "C", "E"] , ["S" ,"F" ,"C" ,"S"] , ["A", "D", "E", "E"] ] ,"ABCCED"))
 
+    for i in range(
+        rows
+    ):  # this loop is used for using the recursion or dfs for every row and column indexed number from the given board
+        for j in range(cols):
+            if dfs(
+                i, j, 0
+            ):  # and if the dfs keeps on returning true until the last  recursion level then we return true
+                return True
+    # even after going through every loop , if the condition is not true then we return false
+    return False
+
+
+print(
+    wordsearch(
+        [["A", "B", "C", "E"], ["S", "F", "C", "S"], ["A", "D", "E", "E"]], "ABCCED"
+    )
+)
+
+
+# N-queen
+# The challenge of arranging n queens on a n × n chessboard so that no two queens attack one another is known as the "n-queens puzzle."
+# Return every unique solution to the n-queens puzzle given an integer n. The answer can be returned in any sequence.
+# Every solution has a unique board arrangement for the placement of the n-queens, where 'Q' and '.' stand for a queen and an empty space, respectively.
+
+
+def nqueen(
+    n,
+):  # n being the lenght of rows and columns and we also must insert n number of queens in our n*n board
+    ans = []
+   
+    nums = [
+        ['.']*n  for i in range(n)  #we must make the separate arrays for n times so that the value of a certain specific array won't be affected by the value of another specific array.
+    ]  # here we are inserting this colvalue n times inside nums
+
+    def isvalid(row, column):
+        r = row
+        c = column
+        for i in range(
+            column
+        ):  # this loop is for checking whether the queen is placed horizontally before the given column index
+            if nums[row][i] == "Q":
+                return False
+        # now for checking the queen in diagonally and vertically upward position
+        while r >= 0 and c >= 0:
+            if nums[r][c] == "Q":
+                return False
+            r -= 1
+            c -= 1
+        # now for checking whether the queen is in diagonally and vertically downward position
+        r = row
+        c = column
+        while r < n and c >= 0:
+            if nums[r][c] == "Q":
+                return False
+            r += 1
+            c -= 1
+        # if all of the conditions are true , then it means we can insert the queen at the current row and column position
+        return True
+
+    def solvenqueen(column):
+        if (
+            column == n
+        ):  # if we get the conditions true or valid and we are at the index whose value is equal to n, then it means we have inserted the queens in every possible valid positions in our nums
+            solution = ["".join(row) for row in nums]
+            ans.append(solution)
+            return
+        for i in range(n):  # going through every rows and there are n rows
+            if isvalid(i, column):
+                nums[i][column] = "Q"
+                solvenqueen(
+                    column + 1
+                )  # only if the row and column position is valid , we go to the recursion by adding one to the value of column
+                nums[i][column] = "."  # backtracking
+
+    solvenqueen(0)  # initially we are passing 0 index row and 0 index column
+    return ans
+
+
+print(nqueen(4))

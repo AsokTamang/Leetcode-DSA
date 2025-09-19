@@ -385,3 +385,45 @@ def wordsearch(board,target):
                 return True
     return False        
 print(wordsearch([ ["A", "B", "C", "E"] , ["S" ,"F" ,"C" ,"S"] , ["A", "D", "E", "E"] ] ,  "ABCCED"))
+
+
+#nqueen
+def nqueen(n):  #here we must make n*n boards inserting n queens in such a way that they won't cancel out eachother
+    ans=[]
+    nums=[['.']*n for _ in range(n)]  #this code is for making the chess board of n*n rows and columns
+    def isvalid(row,col):
+        for i in range(col):  #this code is for checking if another queen exists horizontally
+            if nums[row][i]=='Q':
+                return False
+        r=row
+        c=col
+        while r>=0 and c>=0:  #this code is for checking if the queen is already in the vertically upward diagonal position compared to this current row and column position
+            if nums[r][c]=='Q':
+                return False
+            r-=1
+            c-=1 
+        r=row
+        c=col
+        while r<n and c>=0:  #this code is for checking if the queen is already in the vertically downward diagonal position compared to this current row and column position
+            if nums[r][c]=='Q': #if yes then we return false showing that this current passed row and column position is not valid
+                return False
+            r+=1
+            c-=1 
+        return True          
+    def solvenqueen(col):
+        if col==n:  #if the column index gets out of range , then it means we already passed the last column , which means we have inserted all n queens in our n*n chess board
+            solution=[''.join(row) for row in nums]  #this creates n number of obtained rows where the numbers in each row is joined
+            ans.append(solution)
+            return
+
+        for i in range(n):  #going through every rows 
+            if isvalid(i,col):  #if the current row and column position is found valid to insert the queen then we insert the queen at this current row and column position
+                nums[i][col]='Q'
+                solvenqueen(col+1)  #only if the current row and column position is valid , we recursively go deep to another column
+                nums[i][col]='.' #backtracking
+
+    solvenqueen(0)  #passing for the first column
+    return ans
+print(nqueen(4))
+#time complexity : O(N*2^N)
+#space complexity : O(N*2^N)
