@@ -128,4 +128,25 @@ print(ratinmaze([ [1, 0, 0, 0] , [1, 1, 0, 1], [1, 1, 0, 0], [0, 1, 1, 1] ]))
 #space complexity : O(N*M)   as for the space too in the worst case the space complexity will be O(N*M) for every indices
 
 
-            
+#word break
+#here the question is asking us that if the given string s is broken into multiple words where these segmented words are found , all of the words of worddict are found in these segmented words , then we must return true otherwise we return false.
+def wordbreak(s,worddict):
+    ans=False
+    def solvewordbreak(i):
+        nonlocal ans  #here we must make our ans variable nonlocal so that this inside function won't has a separate ans variable
+        if i==len(s):  #base case
+            ans=True
+
+            return
+        for j in range(len(worddict)):
+            if worddict[j] == s[i:(len(worddict[j])+i)]:
+                solvewordbreak(i+len(worddict[j]))
+            else:
+                continue    
+
+    solvewordbreak(0)
+    return ans
+    
+print(wordbreak("catsandog", ["cats","dog","sand","and","cat"]))
+#time complexity : O(N^M) where N is the length of the given string and M is the length of the given word dictionary
+#space complexity : O(N)
