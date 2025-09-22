@@ -728,3 +728,32 @@ def sudokusolver(board):
 print(sudokusolver( [ ["5", "3", ".", ".", "7", ".", ".", ".", "."] , ["6", ".", ".", "1", "9", "5", ".", ".", "."] , [".", "9", "8", ".", ".", ".", ".", "6", "."] , ["8", ".", ".", ".", "6", ".", ".", ".", "3"] , ["4", ".", ".", "8", ".", "3", ".", ".", "1"] , ["7", ".", ".", ".", "2", ".", ".", ".", "6"] , [".", "6", ".", ".", ".", ".", "2", "8", "."] , [".", ".", ".", "4", "1", "9", ".", ".", "5"] , [".", ".", ".", ".", "8", ".", ".", "7", "9"] ]))
 #time complexity : O((9^(N^2))  we have 9 choices for each cell of N^2 board which is 9 * 9
 #space complexity : O(1)
+
+#expression add operators
+#Given a string num consisting of only digits and an integer target.Return all possibilities to insert the binary operators '+' , '*' , '-' between the digits of string nums, such that resultant expression evaluates to target value.
+def expressionadd(nums,target):
+    ans= [ ]
+    def solveexpressionadd(index,value,presum,prev):
+        if index==len(nums):
+            if presum == target:
+                ans.append(''.join(value))
+            return
+        for i in range(index,len(nums)):
+            substring = nums[index:i+1]
+            currentvalue=int(substring)
+            if index == 0:  #if we are at the first index then
+                solveexpressionadd(i+1,value + [substring],currentvalue,currentvalue)
+            else:
+                solveexpressionadd(i +1 ,value + ['+']+[substring],presum+currentvalue,currentvalue)
+                solveexpressionadd(i +1 ,value + ['-']+[substring],presum-currentvalue,-currentvalue)
+                solveexpressionadd(i +1 ,value + ['*']+[substring],presum-prev+prev*currentvalue,prev*currentvalue)   #here while passing the presum while doing the multiplication , first of all we are undoing the addition of the previous value then we are adding the multiplication of previous value with the current value to the presum
+            if len(substring)>1 and substring[0] == '0':  #if there is a leading 0 in our substring of length greater than 1 then we just break out of the loop
+                break   
+    solveexpressionadd(0,[],0,0)
+    return ans
+print(expressionadd('12345',6))
+#time complexity : O((3^N-1) * N)  we have options of including all the choices of N for N numbers in the worst case
+#space complexity : O(N) for the recursion depth
+
+
+
