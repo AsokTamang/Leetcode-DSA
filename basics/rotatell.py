@@ -200,7 +200,7 @@ def optimalwordbreak(s,worddict):
         for word in worddict:
             if i+len(word)<=len(s) and s[i:i+len(word)] == word:  #this code checks if the lenght of the word from the current index i is enough to compare with the word from the worddict
              dp[i] = dp[i+len(word)]  #if the word from the current index i upto the length of the any word from word dict matches with that specific word then we change the value of dp from this current index to dp of i+length of that matched word
-            if dp[i]:  #then if it comes true, then it means one of the word is matched , then no need for comparing this other words then we break out of this worddicrt loop
+            if dp[i]:  #then if it comes true, then it means one of the word is matched , then no need for comparing this with the other words then we break out of this worddicrt loop
                 #and continue with another index of i till we reach 0
                 break 
     return dp[0]  #after all this loop , if the dp at the first index 0 is still false then it means we cannot fully segment the given string such that the segmented parts of the string is any one of the word from the worddict        

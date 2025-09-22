@@ -528,9 +528,12 @@ def nqueen(
     n,
 ):  # n being the lenght of rows and columns and we also must insert n number of queens in our n*n board
     ans = []
-   
+
     nums = [
-        ['.']*n  for i in range(n)  #we must make the separate arrays for n times so that the value of a certain specific array won't be affected by the value of another specific array.
+        ["."] * n
+        for i in range(
+            n
+        )  # we must make the separate arrays for n times so that the value of a certain specific array won't be affected by the value of another specific array.
     ]  # here we are inserting this colvalue n times inside nums
 
     def isvalid(row, column):
@@ -575,43 +578,108 @@ def nqueen(
 
     solvenqueen(0)  # initially we are passing 0 index row and 0 index column
     return ans
+
+
 print(nqueen(4))
 
 
-#rat in maze
-#Given a grid of dimensions n x n. A rat is placed at coordinates (0, 0) and wants to reach at coordinates (n-1, n-1).
-#Find all possible paths that rat can take to travel from (0, 0) to (n-1, n-1). The directions in which rat can move are 'U' (up) , 'D' (down) , 'L' (left) , 'R' (right).
-#The value 0 in grid denotes that the cell is blocked and rat cannot use that cell for travelling, whereas value 1 represents that rat can travel through the cell. If the cell (0, 0) has 0 value, then mouse cannot move to any other cell.
-#Note :
-#In a path no cell can be visited more than once.
-#If there is no possible path then return empty vector.
+# rat in maze
+# Given a grid of dimensions n x n. A rat is placed at coordinates (0, 0) and wants to reach at coordinates (n-1, n-1).
+# Find all possible paths that rat can take to travel from (0, 0) to (n-1, n-1). The directions in which rat can move are 'U' (up) , 'D' (down) , 'L' (left) , 'R' (right).
+# The value 0 in grid denotes that the cell is blocked and rat cannot use that cell for travelling, whereas value 1 represents that rat can travel through the cell. If the cell (0, 0) has 0 value, then mouse cannot move to any other cell.
+# Note :
+# In a path no cell can be visited more than once.
+# If there is no possible path then return empty vector.
+
 
 def ratinmaze(array):
-    n=rows = len(array)
+    n = rows = len(array)
     cols = len(array[0])
-    
-    ans=[]
-    nums=[]
-    if array[0][0]==0:  #if the very first row and column position number is 0 then it means the rat cannot move to anyother cell from the starting position
+
+    ans = []
+    nums = []
+    if (
+        array[0][0] == 0
+    ):  # if the very first row and column position number is 0 then it means the rat cannot move to anyother cell from the starting position
         return -1
-    def dfs(r,c):
-        if r==rows-1 and c==cols-1:  #if we are at the last row and last column position then we append the copy of nums in our ans variable
-            ans.append(''.join(nums.copy()))
+
+    def dfs(r, c):
+        if (
+            r == rows - 1 and c == cols - 1
+        ):  # if we are at the last row and last column position then we append the copy of nums in our ans variable
+            ans.append("".join(nums.copy()))
             return
-       
-        if c+1<cols and array[r][c+1]==1:
-            nums.append('R')
-            dfs(r,c+1)
-            nums.pop()  #backtracking
-        if r+1<rows and array[r+1][c] == 1:
-            nums.append('D')
-            dfs(r+1,c)
-            nums.pop()       #backtracking 
-    dfs(0,0)
+
+        if c + 1 < cols and array[r][c + 1] == 1:
+            nums.append("R")
+            dfs(r, c + 1)
+            nums.pop()  # backtracking
+        if r + 1 < rows and array[r + 1][c] == 1:
+            nums.append("D")
+            dfs(r + 1, c)
+            nums.pop()  # backtracking
+
+    dfs(0, 0)
     if ans:
         return ans
     else:
         return -1
-print(ratinmaze([ [1, 0] , [1, 0] ]))    
-#time complexity : O(2^N) only have two options at every index of a given array whether to go right or go left
-#space complexity :  O(N+2^N)
+
+
+print(ratinmaze([[1, 0], [1, 0]]))
+# time complexity : O(2^N) only have two options at every index of a given array whether to go right or go left
+# space complexity :  O(N+2^N)
+
+
+# M-coloring
+# Given an integer M and an undirected graph with N vertices and E edges. The goal is to determine whether the graph can be coloured with a maximum of M colors so that no two of its adjacent vertices have the same colour applied to them.
+# In this context, colouring a graph refers to giving each vertex a different colour. If the colouring of vertices is possible then return true, otherwise return false.
+
+
+def mcolorproblem(
+    n, m, graph
+):  # here n means the number of corners and m is the total number of colors that we must use and graph is the graphical representation of the adjacent nodes or the corners
+    colorstore = [0] * n
+    s = [
+        [] for _ in range(n)
+    ]  # here we are creating the list to store the adjacent nodes or neighbours of n nodes from the given graph
+    for u, v in graph:   #this loop is for storing the corresponding neighbours or the adjacent nodes for every nodes based on the graph.
+        s[u].append(v)
+        s[v].append(u)
+
+    def ispossible(node, color):
+        for neighbour in s[
+            node
+        ]:  # then we go through the very neighbours of the current node or current edge if they have this same color or not
+            if colorstore[neighbour] == color:  #if we find any of the adjacent node to have the same color then we just return false immediately
+                return False
+
+        return True  # otherwise we return true
+
+    def solvemcolor(index):
+        if (
+            index == n
+        ):  # if the index value that we pass becomes equal to the number of nodes or corners then it means the condition of using all m colors is possible
+            return True
+        for i in range(1, m + 1):  # passing every possible m number of colors
+            if ispossible(
+                index, i
+            ):  # here we are using a separate function that checks whether the current passed color for the current node or corner which is index in our case is possible or not
+                colorstore[index] = (
+                    i  # if its possible then we add the current color i to this current node index
+                )
+                if solvemcolor(
+                    index + 1
+                ):  # if the next node or corner also becomes true when we have used the color i in the current node index
+                    return True  # then we return true
+                colorstore[index] = (
+                    0  # if the next node condition becomes false then we just remove that specific color from that index which is backtracking
+                )
+        return False
+
+    return solvemcolor(0)
+
+
+print(mcolorproblem(3, 2, [(0, 1), (1, 2), (0, 2)]))
+#time complexity : O(N^M)  for each nodes we have M number of color choices
+#Space complexity : O(N) + O(N)
