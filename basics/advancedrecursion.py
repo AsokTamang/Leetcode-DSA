@@ -643,7 +643,12 @@ def mcolorproblem(
     s = [
         [] for _ in range(n)
     ]  # here we are creating the list to store the adjacent nodes or neighbours of n nodes from the given graph
-    for u, v in graph:   #this loop is for storing the corresponding neighbours or the adjacent nodes for every nodes based on the graph.
+    for (
+        u,
+        v,
+    ) in (
+        graph
+    ):  # this loop is for storing the corresponding neighbours or the adjacent nodes for every nodes based on the graph.
         s[u].append(v)
         s[v].append(u)
 
@@ -651,7 +656,9 @@ def mcolorproblem(
         for neighbour in s[
             node
         ]:  # then we go through the very neighbours of the current node or current edge if they have this same color or not
-            if colorstore[neighbour] == color:  #if we find any of the adjacent node to have the same color then we just return false immediately
+            if (
+                colorstore[neighbour] == color
+            ):  # if we find any of the adjacent node to have the same color then we just return false immediately
                 return False
 
         return True  # otherwise we return true
@@ -681,5 +688,43 @@ def mcolorproblem(
 
 
 print(mcolorproblem(3, 2, [(0, 1), (1, 2), (0, 2)]))
-#time complexity : O(N^M)  for each nodes we have M number of color choices
-#Space complexity : O(N) + O(N)
+# time complexity : O(N^M)  for each nodes we have M number of color choices
+# Space complexity : O(N) + O(N)
+
+
+# sudoku solver
+def sudokusolver(board):
+    def isvalid(row, col, c):
+        for i in range(
+            0, 9
+        ):  # this loop is for checking if the passed digit exists in the the adajcent row and column indexes or not
+            if board[i][col] == str(c):
+                return False
+            if board[row][i] == str(c):
+                return False
+            if (
+                board[3 * (row // 3) + (i // 3)][3 * (col // 3) + (i % 3)] == str(c)
+            ):  # this loop is for checking the duplicacy of the passed digit c within the 3*3 box of the current row and column index
+                return False
+        return True
+
+    for i in range(0, 9):
+        for j in range(
+            0, 9
+        ):  # here we are looping through every rows and columns of the sudoku board to check whether there is an empty box or not
+            if board[i][j] == ".":
+                for c in range(
+                    1, 10
+                ):  # then we loop from 1 to 9 to check if we can insert the current digit or not
+                    if isvalid(
+                        i, j, c
+                    ):  # if the current digit c is valid then we insert this current digit
+                        board[i][j] = str(c)
+                        if sudokusolver(board):
+                            return True
+                        board[i][j] = "."  # backtracking
+    # if after going the whole row and column index of the sudoku we dont find any empty box then it means our sudoku is already filled
+    return True
+print(sudokusolver( [ ["5", "3", ".", ".", "7", ".", ".", ".", "."] , ["6", ".", ".", "1", "9", "5", ".", ".", "."] , [".", "9", "8", ".", ".", ".", ".", "6", "."] , ["8", ".", ".", ".", "6", ".", ".", ".", "3"] , ["4", ".", ".", "8", ".", "3", ".", ".", "1"] , ["7", ".", ".", ".", "2", ".", ".", ".", "6"] , [".", "6", ".", ".", ".", ".", "2", "8", "."] , [".", ".", ".", "4", "1", "9", ".", ".", "5"] , [".", ".", ".", ".", "8", ".", ".", "7", "9"] ]))
+#time complexity : O((9^(N^2))  we have 9 choices for each cell of N^2 board which is 9 * 9
+#space complexity : O(1)
