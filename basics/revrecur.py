@@ -188,3 +188,66 @@ print(mcolor(2,3,[ (0, 1) , (1, 2) , (0, 2) ]))
 #space complexity : O(N)
 
 
+#sudoku solver
+def sudokusolver(board):
+    def isvalid(row,col,digit):
+        for i in range(9):
+            if board[i][col] == str(digit):
+                return False
+            if board[row][i] == str(digit):
+                return False
+            if board[3*(row//3) + (i//3)][3*(col//3) + (i%3) ] == str(digit):
+                return False
+        return True
+    def solvesudoku():
+     for i in range(9):
+        for j in range(9):
+            if board[i][j]=='.':  #first of all we go through every indices and check if the current index has no digit or just .
+             for c in range(1,10):
+                 if isvalid(i,j,c):
+                     board[i][j]=str(c)
+                     if solvesudoku():
+                         return True   
+                     board[i][j]='.'  #backtracking
+             return False  #if the recursion doesnot work then we just return false
+     return True        #if there was no any error then we return true        
+    solvesudoku()  #we must call the solve function inorder to print the final board
+    return board
+solved=(sudokusolver( [ [ ".", ".", ".", ".", ".", ".", "7", ".", ".", ], [ "7", ".", "5", ".", ".", ".", "9", ".", ".", ], [ ".", ".", ".", "9", "7", "5", "4", "3", "1", ], [ "9", ".", ".", ".", "4", "1", ".", ".", "7", ], [ ".", "5", ".", "8", ".", "7", "6", "4", ".", ], [ ".", "7", ".", ".", "2", ".", ".", ".", ".", ], [ ".", "4", ".", ".", ".", ".", ".", "6", "9", ], [ "1", "6", ".", "4", "3", ".", ".", ".", ".", ], [ ".", ".", ".", ".", "6", "2", "3", ".", "4", ] ]))                 
+for row in solved:
+    print(row)    
+#time complexity : O(9^M)  here M is the number of empty spaces or in the worst case O(9^N^2)  where all the N indices has empty spaces
+#space complexity : O(N)                 
+
+
+#expression add operators
+def addoperators(nums,target):
+    ans=[]
+    def solveoperators(index,presum,prev,path):
+        if index == len(nums):
+            if presum == target:
+                ans.append(''.join(path))
+            return
+        for i in range(index,len(nums)):
+            substring=nums[index:i+1]    
+            currvalue=int(substring)
+            if len(substring) > 1 and substring[0] == '0':
+                break
+            if index == 0:
+                solveoperators(i+1,presum + currvalue,currvalue,path+[substring])
+
+            else:              
+                solveoperators(i+1,presum + currvalue,currvalue,path+['+']+[substring])
+                solveoperators(i+1,presum - currvalue,-currvalue,path+['-']+[substring])
+                solveoperators(i+1,presum-prev+prev*currvalue,prev*currvalue ,path+['*']+[substring])
+
+    solveoperators(0,0,0,[])
+    return ans
+print(addoperators('0232',8))
+#time complexity : O(3^N) as we have 3 signs to use for each index
+# space complexity : O(N) 
+
+
+                
+
+
