@@ -150,7 +150,41 @@ def wordbreak(s,worddict):
          if i+ len(word)<=len(s) and  s[i:i+len(word)]== word:  #the first condition check whether the length of the given word is way greater or not compared to the substring from the given string
              d[i] = d[i+len(word)]   #if the substring matches with any of the word from the word dict then we make the boolean at this particular index which is equal to the boolean of i+len(word) which is matched
          if d[i] == True:   #then if the match comes true then we break out of the for-loop of word and goes to next iteration
-             break    
+             break 
+    return d[0]        
 print(wordbreak("leetcode", ["leet","code"])) 
 #time complexity : O(N*K*W)  N is the number of length of the given string and K is the number of words in the worddict and W is the length of the word as we have used the slicing method inside the two for-loop. 
 #space complexity : O(N+K)  where N is the denotion variable size and K is the set of worddict  
+
+
+#M coloring problem
+def mcolor(M,N,graph):  #M is the number of colors we must use and N is the number of vertices
+    colorset=[0] *  N  #here we store the color used for each vertex
+    neighbourvertex = [[] for _ in range(N)]   #here we store the neighbours of every index
+    for u,v in graph:
+        neighbourvertex[u].append(v)
+        neighbourvertex[v].append(u)
+    def isvalid(color,vertex):   #this function checks whether the passed color is valid for the passed index or not.
+        for index in neighbourvertex[vertex]:
+            if colorset[index] == color:
+                return False
+        return True    
+    def solvemcolor(index):
+        if index==N:  #means all the vertices are colored
+            return True
+        for i in range(1,M+1):  #here we are starting the loop for color from 1 cause initially we have made the color storage from 0 index
+          
+                if isvalid(i,index):
+                    colorset[index]=i  #here i is denoting the color
+                    if solvemcolor(index+1):
+                        return True
+                    
+                    colorset[index] = 0  #backtracking  #if the recursion returns false then we remove that inserted color and go with another color
+        return False  #if the index doesnot reach the N then it means the for loop has ended without returning true so 
+    #we obviously return false.
+    return solvemcolor(0)            
+print(mcolor(2,3,[ (0, 1) , (1, 2) , (0, 2) ]))        
+#time complexity : O(N*M)
+#space complexity : O(N)
+
+
