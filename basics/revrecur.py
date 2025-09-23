@@ -135,3 +135,22 @@ def ratinmaze(grid,n):
 print(ratinmaze( [ [1, 0, 0, 0] , [1, 1, 0, 1], [1, 1, 0, 0], [0, 1, 1, 1] ],4))
 #time complexity : O(4^N*N)  all possible 4 choices are correct for the current co-ordinate of N*N grid
 #space complexity : O(N*N)   
+
+#wordbreak
+#Given a string s and a dictionary of strings wordDict, return true if s can be segmented into a space-separated sequence of one or more dictionary words.
+#Note that the same word in the dictionary may be reused multiple times in the segmentation.
+
+def wordbreak(s,worddict):
+    worddict=set(worddict)  #removing the duplicate words from  the given word dictionary
+    n=len(s)  #length of the given string
+    d=[False] * (n+1)  #making n+1 length of string consisting of false values  which denotes whether we can break the given string at the particular indices or not
+    d[n] =True  #making the very last index true cause this very last index is out of the bound of the given string.
+    for i in range(n-1,-1,-1):
+        for word in worddict:
+         if i+ len(word)<=len(s) and  s[i:i+len(word)]== word:  #the first condition check whether the length of the given word is way greater or not compared to the substring from the given string
+             d[i] = d[i+len(word)]   #if the substring matches with any of the word from the word dict then we make the boolean at this particular index which is equal to the boolean of i+len(word) which is matched
+         if d[i] == True:   #then if the match comes true then we break out of the for-loop of word and goes to next iteration
+             break    
+print(wordbreak("leetcode", ["leet","code"])) 
+#time complexity : O(N*K*W)  N is the number of length of the given string and K is the number of words in the worddict and W is the length of the word as we have used the slicing method inside the two for-loop. 
+#space complexity : O(N+K)  where N is the denotion variable size and K is the set of worddict  
