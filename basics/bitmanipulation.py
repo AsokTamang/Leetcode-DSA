@@ -42,3 +42,17 @@ print(convertintodecimal('1101'))
 
 #right shift >>
 #while doing the right shift we just shift the elements of the given digit to right side
+
+
+#so while storing the negative number , computer stores the 2s compliment of this negative number 
+#as the - sign is denoted by 1 and the positive sign is denoted by 0
+
+#the right shift of a number means the value of a number will be smaller compared to the original value or original number so it's formula is num // 2 ** k where k denotes the power or position of a number from the very last index.
+# the left  shift of a number means the value of a number will be greater compared to the original value , so its formula is num * (2**k)
+
+#for the not operation of a positive number
+#and for the not operation example(~5) what we do is we first flip the digits 0 and 1 then we check if its negative or positive based on the sign at the very beginning , if its a negative which is denoted by 1 then we make the 2s compliment of it, if its a positive then we stop , as the flipped output will be our answer. 
+
+#for the not operation of a negative number
+#first of we should make a 2s compliment of this negative number then we again repeat the same process which is first flipping then checking if it's a negative number or not,
+#if yes then we should make a 2s compliment of this output again otherwise we must stop.
