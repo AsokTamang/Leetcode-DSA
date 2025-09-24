@@ -83,3 +83,14 @@ def optimalcheckibit(n,indexx):
 print(optimalcheckibit(10,1))
 #time complexity : O(1)
 #space complexity : O(1)
+
+#xor fact - the xor of the same number will be 0
+#swap two numbers
+def swaptwonums(a,b):
+    a = a ^ b
+    b = a ^ b   #making b equals to a 
+    a= a ^ b    #making a equals to b
+    return (a,b)
+print(swaptwonums(5,6))   
+#time complexity : O(1)
+#space complexity : O(1)
