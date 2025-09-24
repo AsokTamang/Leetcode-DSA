@@ -2,16 +2,16 @@ def convertintobinary(num):
     res= ''
     if num == 0:
         return '0'
-    while num!=1:
-        if num % 2 == 1:
-            res+='1'
-        else:
+    while num>0:
+        if num % 2 == 0:
             res+='0'
+        else:
+            res+='1'
 
 
         
         num=num // 2
-    return '1' + res[::-1] #here we are adding the '1' at the beginning cause our while loop condition is while num!=1
+    return  res[::-1] #here we are adding the '1' at the beginning cause our while loop condition is while num!=1
 print(convertintobinary(13))    
 #time complexity : O(log2N)
 #space complexity : O(log2N)
@@ -56,3 +56,23 @@ print(convertintodecimal('1101'))
 #for the not operation of a negative number
 #first of we should make a 2s compliment of this negative number then we again repeat the same process which is first flipping then checking if it's a negative number or not,
 #if yes then we should make a 2s compliment of this output again otherwise we must stop.
+
+#problem1
+#Check if the i-th bit is Set or Not
+#Given two integers n and i, return true if the ith bit in the binary representation of n (counting from the least significant bit, 0-indexed) is set (i.e., equal to 1). Otherwise, return false.
+
+def checkibit(n,indexx):
+    if n ==0:
+        return False
+    res=''
+    while n>0:
+        res+='0' if n % 2 ==0 else '1'
+        n=(n // 2) 
+
+   
+    if int(res[indexx]) == 1:
+        return True    
+    return False        
+print(checkibit(10,1))
+#time complexity : O(log2N)
+#space complexity : O(log2N)
