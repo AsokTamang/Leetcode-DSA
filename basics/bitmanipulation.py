@@ -27,3 +27,18 @@ def convertintodecimal(s):
 print(convertintodecimal('1101'))
 #time complexity : O(N) 
 #space complexity : O(N) 
+
+#1s compliment
+#while doing the 1s compliment, we just switch 0 with 1 and 1 with 0
+
+#2s compliement
+#while doing the 2s compliment , we just add 1 to the value of 1s compliment
+
+
+
+#XOR
+#while doing the xor which is like this ^ , if the number of ones is odd then the result of xor operation will be 1.
+#but if the number of ones is even while doing the xor operation then the result of xor operation will be 0.
+
+#right shift >>
+#while doing the right shift we just shift the elements of the given digit to right side
