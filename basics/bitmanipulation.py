@@ -19,10 +19,11 @@ print(convertintobinary(13))
 
 def convertintodecimal(s):
     ans=0
-    s=s[::-1]  
-    for i in range(len(s)):
-        ans+=int(s[i]) * (2**i)  #** denotes the power
+    p= 0 
+    for i in range(len(s)-1,-1,-1):
+        ans+=int(s[i]) * (2**p)  #** denotes the power
+        p+=1
     return ans
 print(convertintodecimal('1101'))
-#time complexity : O(NlogN) is for reversing the given string
+#time complexity : O(N) 
 #space complexity : O(N) 
