@@ -94,3 +94,23 @@ def swaptwonums(a,b):
 print(swaptwonums(5,6))   
 #time complexity : O(1)
 #space complexity : O(1)
+
+
+#set i-th bit a 1
+#brute approach
+def setibnit(n,indexx):
+    res= ''
+    while n>0:
+        res += '0' if n % 2 ==0 else '1'
+        n=n//2
+    res = list(res)
+    if indexx>=len(res):  #if the given index is way greater than the length of the obtained binary digit, then we must add 0s in the obtained binary digit so that we can manipulate the data of the given index.
+        res+=['0']*(indexx - len(res) + 1)
+    res[indexx] = '1'
+    ans = 0
+    for i in range(len(res)):
+        ans += int(res[i]) * (2 ** i)  
+    return ans
+print(setibnit(5,3))    
+#time complexity : O(log2N)+M), M is the length of the obtained binary form
+#space complexity : O(M)     
