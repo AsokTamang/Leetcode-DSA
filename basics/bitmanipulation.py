@@ -15,3 +15,14 @@ def convertintobinary(num):
 print(convertintobinary(13))    
 #time complexity : O(log2N)
 #space complexity : O(log2N)
+
+
+def convertintodecimal(s):
+    ans=0
+    s=s[::-1]  
+    for i in range(len(s)):
+        ans+=int(s[i]) * (2**i)  #** denotes the power
+    return ans
+print(convertintodecimal('1101'))
+#time complexity : O(NlogN) is for reversing the given string
+#space complexity : O(N) 
