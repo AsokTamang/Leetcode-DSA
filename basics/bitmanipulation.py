@@ -113,4 +113,10 @@ def setibnit(n,indexx):
     return ans
 print(setibnit(5,3))    
 #time complexity : O(log2N)+M), M is the length of the obtained binary form
-#space complexity : O(M)     
+#space complexity : O(M)    
+
+def optimalsetibit(n,indexx):
+    return (n|1<<indexx)    #doing the OR operation between the given digit and value obtained by shifting 1 to the leftside to the given index, sets the i-th bit to set.
+print(optimalsetibit(5,3))
+#time complexity : O(1)
+#space complexity : O(1)
