@@ -143,3 +143,10 @@ def bruteclearithbit(n,indexx):
 print(bruteclearithbit(13,3))    
 #time complexity : O(log2N + M)  where M is the length of the obtained binary form of the given digit
 #space complexity : O(M)
+
+#optimal approach
+def optimalclearithbit(n,indexx):
+    return n & ~(1<<indexx)   #as the and operation always gives us false except both the values are true  and doing the not operation on shifting the 1 to the left side of the given index
+print(optimalclearithbit(13,3))
+#time complexity : O(1)
+#space complexity : O(1)
