@@ -120,3 +120,26 @@ def optimalsetibit(n,indexx):
 print(optimalsetibit(5,3))
 #time complexity : O(1)
 #space complexity : O(1)
+
+
+
+#clear the i-th bit
+#which means turning the 1 to 0 if its 1 otherwise let it be 0 at the given index
+#brute approach
+def bruteclearithbit(n,indexx):
+    res = ''
+    ans=0
+    while n>0:
+        res+='0' if n % 2 ==0 else '1'
+        n=n//2
+    res=list(res)
+    if indexx>=len(res):
+        res+=['0'] * (indexx - len(res) + 1)
+    if res[indexx] == '1':
+        res[indexx] = '0'
+    for i in range(len(res)):
+        ans+=int(res[i]) * (2**i)
+    return ans
+print(bruteclearithbit(13,3))    
+#time complexity : O(log2N + M)  where M is the length of the obtained binary form of the given digit
+#space complexity : O(M)
