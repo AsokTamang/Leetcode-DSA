@@ -60,7 +60,7 @@ print(convertintodecimal('1101'))
 #problem1
 #Check if the i-th bit is Set or Not
 #Given two integers n and i, return true if the ith bit in the binary representation of n (counting from the least significant bit, 0-indexed) is set (i.e., equal to 1). Otherwise, return false.
-
+#brute approach
 def checkibit(n,indexx):
     if n ==0:
         return False
@@ -76,3 +76,10 @@ def checkibit(n,indexx):
 print(checkibit(10,1))
 #time complexity : O(log2N)
 #space complexity : O(log2N)
+
+#for the optimal approach we do the and operation between the given number and the left shift of 1 from the given comparing index , and check whether the output is true or false
+def optimalcheckibit(n,indexx):
+    return (n & (1 << indexx))!=0  #here we are doing the and operation which is . or multiplication between n and the left shift of 1 by the given comparing index.
+print(optimalcheckibit(10,1))
+#time complexity : O(1)
+#space complexity : O(1)
