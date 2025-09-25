@@ -184,13 +184,16 @@ print(removelastsetbit(13))
 #time complexity : O(log2N+M)
 #space complexity : O(M+N)
 
-
+#optimal solution
 def optimallastsetbit(n):
     return n & (n-1)
 print(optimallastsetbit(13))
 #time complexity : O(1)
 #space complexity : O(1)
 
-
-
+#check if the given number is a power of 2 or not
+def checkpower(n):
+    return n & (n-1) == 0   #if the and operation between the given number and the number lesser than just 1 compared to the given number , gives us the value 0 then , the given number is a power of 2, otherwise its not the power of 2
+print(checkpower(9))
+#time complexity : O(1)
 
