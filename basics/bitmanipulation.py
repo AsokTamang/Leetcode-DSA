@@ -244,5 +244,16 @@ def checkevenodd(n):
 print(checkevenodd(13))    
 #time complexity : O(1)
 #space complexity : O(1)
+
     
-    
+def setrightmostunsetbit(n):
+    return n | (n+1)   #here doing the OR operation between the given digit n and n+1 helps to set the unset bit
+print(setrightmostunsetbit(9))   
+#time complexity : O(1)
+#space complexity : O(1)    
+
+def unsettherightmostsetbit(n):
+    return n & (n-1)
+print(unsettherightmostsetbit(8))
+#time complexity : O(1)
+#space complexity : O(1) 
