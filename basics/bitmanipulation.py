@@ -169,10 +169,12 @@ def removelastsetbit(n):
      res+='0' if n % 2 ==0 else '1'
      n=n//2
  res=list(res)   
- for char in res:
-     if char == '1':  #the very first 1 will be found and then we change this into 0
-         char = '0'
-         return    
+ for i in range(len(res)):
+     if res[i] == '1':
+         res[i] = '0'
+         break   
+     else:
+         continue
  ans=0
  for i in range(len(res)):
      ans+=int(res[i]) * (2**i)
@@ -180,11 +182,6 @@ def removelastsetbit(n):
 print(removelastsetbit(13))    
 
 
-#toggle the i bit
-#inorder to toggle the ith bit , we must use the not operation
-def toggleibit(n,indexx):
-    return n ^ (1<<indexx)
-print(toggleibit(5,5))
 
 
 
