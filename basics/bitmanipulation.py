@@ -217,8 +217,32 @@ def bitwisecountset(n):
     c=0
     while n>0:
         c+= n & 1   #if the given number is odd then it always gives us 1 while doing the and operation with value 1 otherwise false or 0
-        n = n >>1   #right shifting which means n/2**k
+        n = n >>1   #right shifting which means n/2**k , also means decreasing the number or value
     return c
-print(bitwisecountset(9))    
+print(bitwisecountset(8))    
 #time complexity : O(N)
 #space complexity : O(1)
+
+#using the and operation between n and n-1
+def countset(n):
+    c=0   
+    while n>0:
+        n=n & (n-1)
+        c+=1
+    return c
+print(countset(9))
+#time complexity : O(number of set bits in a given digit)
+#space complexity : O(1)
+
+
+#check if the given number is odd or even
+def checkevenodd(n):
+    if n & 1 == 0:
+        return 'even'
+    elif n & 1 ==1:
+        return 'odd'
+print(checkevenodd(13))    
+#time complexity : O(1)
+#space complexity : O(1)
+    
+    
