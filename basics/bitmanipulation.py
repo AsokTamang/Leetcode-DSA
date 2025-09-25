@@ -55,7 +55,7 @@ print(convertintodecimal('1101'))
 
 #for the not operation of a negative number
 #first of we should make a 2s compliment of this negative number then we again repeat the same process which is first flipping then checking if it's a negative number or not,
-#if yes then we should make a 2s compliment of this output again otherwise we must stop.
+#if it's negative then we should make a 2s compliment of this output again otherwise we must stop.
 
 #problem1
 #Check if the i-th bit is Set or Not
@@ -80,6 +80,7 @@ print(checkibit(10,1))
 #for the optimal approach we do the and operation between the given number and the left shift of 1 from the given comparing index , and check whether the output is true or false
 def optimalcheckibit(n,indexx):
     return (n & (1 << indexx))!=0  #here we are doing the and operation which is . or multiplication between n and the left shift of 1 by the given comparing index.
+#because in the add operation , most of the time the output will be false or 0 except only when both of the inputs are true
 print(optimalcheckibit(10,1))
 #time complexity : O(1)
 #space complexity : O(1)
@@ -150,3 +151,37 @@ def optimalclearithbit(n,indexx):
 print(optimalclearithbit(13,3))
 #time complexity : O(1)
 #space complexity : O(1)
+
+
+#toggle the ith bit  
+def toggleithbit(n,indexx):
+    return n ^(1<<indexx)  #here we are using the xor cause xor changes the value only when both of the values are same which means
+#it changes into 1 when there is odd number of 1, it changes into 0 when is even number of 1s.
+print(toggleithbit(5,5))  
+#time complexity : o(1)
+#space complexity : O(1)
+
+
+#remove the last setbit which is turn the last 1 into 0
+def removelastsetbit(n):
+ res=''
+ while n>0:
+     res+='0' if n % 2 ==0 else '1'
+     n=n//2
+ res=list(res)   
+ for char in res:
+     if char == '1':  #the very first 1 will be found and then we change this into 0
+         char = '0'
+         return    
+ ans=0
+ for i in range(len(res)):
+     ans+=int(res[i]) * (2**i)
+ return ans
+print(removelastsetbit(13))    
+
+
+
+#remove the ith bit
+def removeibit(n,indexx):
+    return n &  ~(1<<indexx)  #we must use the and operation cause the chance of getting the false or 0 or removing the ith bit is possible only using the and operation and to make it possible we are shifting the 1 to the left side using the given index and using a not operation in it.
+print(removeibit(13,3))
