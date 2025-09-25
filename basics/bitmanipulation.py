@@ -197,3 +197,15 @@ def checkpower(n):
 print(checkpower(9))
 #time complexity : O(1)
 
+
+#count the number of setbits
+def countsetbits(n):
+    c = 0
+    while n>0:
+        if n % 2 ==1:
+            c+=1
+        n=n//2
+    return c
+print(countsetbits(9))   
+#time complexity : O(N)
+#space complexity : O(1) 
