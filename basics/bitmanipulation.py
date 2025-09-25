@@ -163,6 +163,7 @@ print(toggleithbit(5,5))
 
 
 #remove the last setbit which is turn the last 1 into 0
+#brute approach
 def removelastsetbit(n):
  res=''
  while n>0:
@@ -180,7 +181,15 @@ def removelastsetbit(n):
      ans+=int(res[i]) * (2**i)
  return ans
 print(removelastsetbit(13))    
+#time complexity : O(log2N+M)
+#space complexity : O(M+N)
 
+
+def optimallastsetbit(n):
+    return n & (n-1)
+print(optimallastsetbit(13))
+#time complexity : O(1)
+#space complexity : O(1)
 
 
 
