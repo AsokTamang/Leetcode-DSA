@@ -262,12 +262,22 @@ print(unsettherightmostsetbit(8))
 #Given the two integers, dividend and divisor. Divide without using the mod, division, or multiplication operators and return the quotient.
 
 def dividenums(dividend,divisor):
+    sign=1
+    
+    if dividend<0 and divisor<0:
+        sign = 1
+    elif dividend < 0 or divisor<0 :
+        sign = -1
+    
+
+    
+
     ans = 0
     i=0
     while divisor<dividend:
         calculation=divisor*(2**i)
         if calculation<=dividend:
-            ans+=calculation
+            ans+=2**i
             i+=1
             dividend-=calculation
     if ans < -231:
@@ -275,8 +285,31 @@ def dividenums(dividend,divisor):
     elif ans > 231-1:
         return 231-1
     else:
-        return int(ans)  #the question is asking us to return our answer in an integer format not in a float or decimal
+        return sign * int(ans)  #the question is asking us to return our answer in an integer format not in a float or decimal
 print(dividenums(10,3))
 #time complexity : O(number of calculation)
 #space complexity : O(1)
+
+#brute approach
+def brutedividenums(divided,divisor):
+    sign=1
+    
+    if divided<0 and divisor<0:
+        sign = 1
+    elif divided < 0 or divisor<0 :
+        sign = -1
+    ans = 0
+    while divisor<divided:
+        divided-=divisor
+        ans+=1
+    if ans < -231:
+        return -231
+    elif ans > 231-1:
+        return 231-1
+    else:
+        return  sign * int(ans)    
+print(brutedividenums(22,3))  
+#time complexity : O(number of divisor to reach the divided)
+#space complexity : O(1)  
+        
 
