@@ -180,8 +180,11 @@ def removelastsetbit(n):
 print(removelastsetbit(13))    
 
 
+#toggle the i bit
+#inorder to toggle the ith bit , we must use the not operation
+def toggleibit(n,indexx):
+    return n ^ (1<<indexx)
+print(toggleibit(5,5))
 
-#remove the ith bit
-def removeibit(n,indexx):
-    return n &  ~(1<<indexx)  #we must use the and operation cause the chance of getting the false or 0 or removing the ith bit is possible only using the and operation and to make it possible we are shifting the 1 to the left side using the given index and using a not operation in it.
-print(removeibit(13,3))
+
+
