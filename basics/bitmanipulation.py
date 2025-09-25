@@ -273,12 +273,10 @@ def dividenums(dividend,divisor):
     
 
     ans = 0
-    i=0
-    while divisor<dividend:
-        calculation=divisor*(2**i)
+    for i in range(32,-1,-1):
+        calculation=divisor<<i  #this means divisor * 2 **i  #left shifting means increasing the value while right shifting means decreasing the value
         if calculation<=dividend:
-            ans+=2**i
-            i+=1
+            ans+=1<<i  #this means 2**i as 1<<i means in the binary form
             dividend-=calculation
     if ans < -231:
         return -231
@@ -286,7 +284,7 @@ def dividenums(dividend,divisor):
         return 231-1
     else:
         return sign * int(ans)  #the question is asking us to return our answer in an integer format not in a float or decimal
-print(dividenums(10,3))
+print(dividenums(15,3))
 #time complexity : O(number of calculation)
 #space complexity : O(1)
 
@@ -302,10 +300,10 @@ def brutedividenums(divided,divisor):
     while divisor<divided:
         divided-=divisor
         ans+=1
-    if ans < -231:
-        return -231
-    elif ans > 231-1:
-        return 231-1
+    if ans < -2**31:
+        return -2**31
+    elif ans > 2**31-1:
+        return 2**31-1
     else:
         return  sign * int(ans)    
 print(brutedividenums(22,3))  
@@ -313,3 +311,18 @@ print(brutedividenums(22,3))
 #space complexity : O(1)  
         
 
+#Minimum Bit Flips to Convert Number
+#Given two integers start and goal. Flip the minimum number of bits of start integer to convert it into goal integer.
+#A bits flip in the number val is to choose any bit in binary representation of val and flipping it from either 0 to 1 or 1 to 0.
+
+def minimumflips(start,goal):
+    target = start ^ goal   #this gives us the value where if there is no difference between the numbers then there would be 0 but if there is difference then there would be 1
+    #and our trick here is to calculate the number of 1s in this target.
+    count = 0
+    while target >0:
+        count+=target & 1   #here we are checking if the 1 exists or not and as the and operation only provide when both of the comparing values are 1   otherwise it provides 0
+        target=target >> 1  #right shifting the target value by 1 inorder to compare other remaining digits
+    return count
+print(minimumflips(3,4))
+#time complexity : O(logN)
+#space complexity : O(1)
