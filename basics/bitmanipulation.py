@@ -257,3 +257,26 @@ def unsettherightmostsetbit(n):
 print(unsettherightmostsetbit(8))
 #time complexity : O(1)
 #space complexity : O(1) 
+
+#Divide two numbers without multiplication and division
+#Given the two integers, dividend and divisor. Divide without using the mod, division, or multiplication operators and return the quotient.
+
+def dividenums(dividend,divisor):
+    ans = 0
+    i=0
+    while divisor<dividend:
+        calculation=divisor*(2**i)
+        if calculation<=dividend:
+            ans+=calculation
+            i+=1
+            dividend-=calculation
+    if ans < -231:
+        return -231
+    elif ans > 231-1:
+        return 231-1
+    else:
+        return int(ans)  #the question is asking us to return our answer in an integer format not in a float or decimal
+print(dividenums(10,3))
+#time complexity : O(number of calculation)
+#space complexity : O(1)
+
