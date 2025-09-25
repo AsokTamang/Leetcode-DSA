@@ -199,6 +199,7 @@ print(checkpower(9))
 
 
 #count the number of setbits
+#brute-wise approach
 def countsetbits(n):
     c = 0
     while n>0:
@@ -209,3 +210,15 @@ def countsetbits(n):
 print(countsetbits(9))   
 #time complexity : O(N)
 #space complexity : O(1) 
+
+#brute-bit-wise approach
+#the bit-wise operation is much faster and effective than the normal brute approach
+def bitwisecountset(n):
+    c=0
+    while n>0:
+        c+= n & 1   #if the given number is odd then it always gives us 1 while doing the and operation with value 1 otherwise false or 0
+        n = n >>1   #right shifting which means n/2**k
+    return c
+print(bitwisecountset(9))    
+#time complexity : O(N)
+#space complexity : O(1)
