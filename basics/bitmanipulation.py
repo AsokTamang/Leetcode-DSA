@@ -392,4 +392,21 @@ def powerset(nums):
 print(powerset([1,2,3]))
 #time complexity : O(2^N)
 #space complexity : O(N*M) M is the length of the output in each recursion level.
+
+#power set 
+#optimal bit manipulation
+def powersetbit(nums):
+    n=len(nums)
+    subsets = 1<<n   #an array having a length n always has a subsets of size 2**n
+    ans=[]
+    for i in range(subsets):
+        output=[]
+        for j in range(n):  #looping through the bits or index in simple language
+            if (i & (1<<j)):   #if the bit-mask and with 1 << j gives us true then we can include the j indexed or j-bit number from an array
+                output.append(nums[j])
+        ans.append(output)   #appending the formed output in ans varible
+    return ans    
+print(powersetbit([1,2,3]))        
+#time complexity : O(N*2**n) we are looping for every possible subsets which is 2**n and N is the number of numbers in a given array
+#space complexity : O(N*2**n) number of formed subsets and those subsets has N length in the worst case.
         
