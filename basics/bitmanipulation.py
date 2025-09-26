@@ -369,4 +369,27 @@ def optimalsinglenum(nums):
 print(optimalsinglenum(  [1, 3, 10, 3, 5, 1, 5]))
 #time complexity : O(N)
 #space complexity : O(1)
+
+
+
+#backtracking
+#power set bit manipulation
+def powerset(nums):
+    ans = []
+    output =[]
+    def solvepowerset(index):
+        if index>=len(nums):
+           
+            ans.append(output.copy())
+            return
+      
+        output.append(nums[index])  #appending the current indexed number
+        solvepowerset(index+1)
+        output.pop()#backtracking
+        solvepowerset(index+1)  #ignoring the current indexed number
+    solvepowerset(0)        
+    return ans
+print(powerset([1,2,3]))
+#time complexity : O(2^N)
+#space complexity : O(N*M) M is the length of the output in each recursion level.
         
