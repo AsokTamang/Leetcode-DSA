@@ -327,33 +327,46 @@ print(minimumflips(3,4))
 #time complexity : O(logN)
 #space complexity : O(1)
 
-#revision of bits
-#divide two numbers without multiplication and division
-def dividetwo(dividend,divisor):
-    if divisor == 0:
-        return False
-    
-    sign=1
-    if dividend < 0 or divisor<0:
-        sign=-1
-    if dividend < 0 and divisor<0: 
-        sign=1
-    ans = 0
-    dividend=abs(dividend)
-    divisor=abs(divisor)
-    for i in range(31,-1,-1):
-        calculation = divisor << i   #this is equivalent to 3*2**i
-        if calculation<=dividend:   #only if the obtained calcaulation is lesser than the dividen we can divide using the current power of 2
-            ans+=1<<i   #this is equivalent to 2**i
-            dividend-=calculation
-    if ans < - 2**31:
-        return -2 ** 31
-    elif ans > 2**31 -1:
-        return 2**31 - 1
-    else:
-        return int(sign * ans)
-print(dividetwo(7,-3))    
-#time complexity : O(1)   it's constant due to O(31)
+
+#revision of minimum bit flips to convert a number from start to end
+def minimumflips(start,end):
+    target = start ^ end  #here xor gives us the value where we can identify the number of bits that must be changed which is denoted by the number of 1s
+    #cause in xor operation , if the values are same then it gives 0, if the values are different or odd number of 1s, then it gives the digit 1
+    count = 0
+    while target > 0:
+        count+=target & 1  #this operation helps us to count the number of 1s
+        target=target >> 1  #then we right shift the target by 1
+    return count
+print(minimumflips(10,7))    
+#time complexity : O(number of distinct bits between the start and end)
 #space complexity : O(1)
 
+
+
+#Given an array of nums of n integers. Every integer in the array appears twice except one integer. Find the number that appeared once in the array.
+#brute-force approach
+def singlenumber(nums):
+    m={}
+    for num in nums:
+       m[num]=m.get(num,0)+1
+    for data in m:
+        if m[data] == 1:
+            return data
+print(singlenumber([1, 2, 2, 4, 3, 1, 4]))     
+#time complexity : O(N+M)   M represents the total number of unique digits from the given array
+#space complexity : O(M)  
+
+
+#optimal solution
+#using xor   
+#the xor of a same number will gives us 0
+def optimalsinglenum(nums):
+    ans = 0
+    for num in nums:
+        ans^=num
+    return ans    
+   
+print(optimalsinglenum(  [1, 3, 10, 3, 5, 1, 5]))
+#time complexity : O(N)
+#space complexity : O(1)
         
