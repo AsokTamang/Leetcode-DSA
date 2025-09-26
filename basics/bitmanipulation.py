@@ -410,3 +410,19 @@ print(powersetbit([1,2,3]))
 #time complexity : O(N*2**n) we are looping for every possible subsets which is 2**n and N is the number of numbers in a given array
 #space complexity : O(N*2**n) number of formed subsets and those subsets has N length in the worst case.
         
+
+#xor of a numbers in a given range
+def xor(l,r):
+    def calculatexor(N):  #this is the logic of xor using 4 as a divisor and depending upon the ramainder , we change the xor value , as this calculates the xor from 1 upto N
+        if N%4==1:
+            return 1
+        elif N%4==2:
+            return N+1
+        elif N%4==3:
+            return 0
+        elif N%4==0:
+            return N
+    return calculatexor(l-1) ^ calculatexor(r)
+print(xor(3,5))    
+#time complexity : O(1)
+#space complexity : O(1)
