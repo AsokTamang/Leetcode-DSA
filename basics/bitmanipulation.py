@@ -423,6 +423,29 @@ def xor(l,r):
         elif N%4==0:
             return N
     return calculatexor(l-1) ^ calculatexor(r)
+#as the calculatexor function calculates the xor of a number from 1 to n
+#and we are using l-1 cause if we include l then it will get cancel cause if we are doing calculatexor(l) ^ calculatexor(r)  l^l will cancel eachother , thats why for the first function
+#we are passing only l-1
 print(xor(3,5))    
 #time complexity : O(1)
 #space complexity : O(1)
+
+
+
+#brute approach
+def brutesinglenumberiii(nums):
+    m={}
+    ans = []
+    for num in nums:
+        m[num] = m.get(num,0) +1 
+    for num in m:
+        if m[num] ==1:
+            ans.append(num)
+    return ans
+print(brutesinglenumberiii([1, 2, 1, 3, 5, 2]))       
+#time complexity : O(N+M) N is the length of given array and M is the number of unique numbers in a given array
+#space complexity : O(M)  number of unique characters or O(N) in the worst case
+
+
+
+
