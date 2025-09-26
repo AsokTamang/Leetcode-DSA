@@ -326,3 +326,34 @@ def minimumflips(start,goal):
 print(minimumflips(3,4))
 #time complexity : O(logN)
 #space complexity : O(1)
+
+#revision of bits
+#divide two numbers without multiplication and division
+def dividetwo(dividend,divisor):
+    if divisor == 0:
+        return False
+    
+    sign=1
+    if dividend < 0 or divisor<0:
+        sign=-1
+    if dividend < 0 and divisor<0: 
+        sign=1
+    ans = 0
+    dividend=abs(dividend)
+    divisor=abs(divisor)
+    for i in range(31,-1,-1):
+        calculation = divisor << i   #this is equivalent to 3*2**i
+        if calculation<=dividend:   #only if the obtained calcaulation is lesser than the dividen we can divide using the current power of 2
+            ans+=1<<i   #this is equivalent to 2**i
+            dividend-=calculation
+    if ans < - 2**31:
+        return -2 ** 31
+    elif ans > 2**31 -1:
+        return 2**31 - 1
+    else:
+        return int(sign * ans)
+print(dividetwo(7,-3))    
+#time complexity : O(1)   it's constant due to O(31)
+#space complexity : O(1)
+
+        
