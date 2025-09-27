@@ -476,3 +476,24 @@ print(optimalsinglenumber([1, 9, 1, 2, 8, 2]))
 
 
 
+
+
+#Prime factorisation of a Number
+#You are given an integer array queries of length n.
+#Return the prime factorization of each number in array queries in sorted order.
+
+def primefactorization(array):
+    ans =[]
+    for num in array:
+        output = []
+        for i in range(2,num+1):
+            while num % i ==0:
+                output.append(i)
+                num=num // i
+        ans.append(output)
+    return ans              
+print(primefactorization( [2, 3, 4, 5, 6]))     
+#time complexity : O(N * M)  N is the length of an array and M is the range between 2 and the number at the current loop
+#space complexity : O(N)  number of prime factorials
+
+
