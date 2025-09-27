@@ -447,5 +447,32 @@ print(brutesinglenumberiii([1, 2, 1, 3, 5, 2]))
 #space complexity : O(M)  number of unique characters or O(N) in the worst case
 
 
+#optimal singlenumberiii
+#so the logic of the solution of this problem is that
+#first of all , we are doing the xor of the numbers in a given array, which gives us the xor between those required two different number
+#then what we do is , we find the set bit of that number using and between that number and it's two's compliment
+#then we again loop through the given array and check if the set bit at the bit of the obtained number is same as the current looped number or not , if yes then we group in one side
+#and for the numbers having unset bit at the bit of the obtained number, we group in the next side
+#then we find the xors of the numbers of those groups separately , which finally provide us those two required values.
+def optimalsinglenumber(nums):
+    initial=0
+    for num in nums:
+        initial^=num
+    #inorder to find the rightmost or the setbit which is at the end compared to other setbits, we must calculate the and operation between the number and the two's compliment of the number    
+    bitposition = initial & -initial   #and operation between the initial and it's two's compliment to find the right most set bit
+    a=0
+    b=0
+    for num in nums:
+        if num & bitposition:  #if the current number has the bit set at the bit of the bitposition, then we start doing the xor in a variable
+            a^=num
+        else:
+            b^=num    #if the current number has an unset bit compared to the bit of the bitposition then we start doing the xor in b variable
+    return [a,b]            
+print(optimalsinglenumber([1, 9, 1, 2, 8, 2]))        
+#time complexity : O(N)
+#space complexity : O(1)
+#First, diff_bit = initial & -initial isolates the bit.
+#Second, num & diff_bit checks if that specific bit is set in each number, which allows us to split the array.
+
 
 
