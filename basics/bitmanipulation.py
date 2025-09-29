@@ -732,6 +732,8 @@ print(cprimes([[2, 5], [4, 7]]))
 # space complexity : O(N)
 
 
+#Sieve of Eratosthenes  theorem
+
 def cprimes(array):
     maximum = max(max(q) for q in array)
     primestore = [1] * (
@@ -780,3 +782,34 @@ def cprimes(array):
 print(cprimes([[2, 5], [4, 7]]))
 # time complexity : O(N*logM * logM)  where N is the number of rows in a given array and M is the maximum value of a given array.
 # space complexity : O(maximum)
+
+
+
+#Prime factorisation of a Number using sieve theorem
+def prmefacto(array):
+    maximum= max(array)  #this gives us the maximum value from a given array
+    primenums = [1] * (maximum+1)  #creating the primenums array initially
+    for i in range(maximum+1):
+        primenums[i]  = i
+    primenums[0] = primenums[1] = 0  #as 0 and 1 are composite numbers so we are making it's value 0    
+    
+    #building SPF sieve
+    for i in range(2,int(maximum**0.5)+1):
+        if primenums[i] == i:   #if the current index has the same value as that of i then 
+            for j in range(i*i,maximum+1,i):
+                if primenums[j] > i:  #only if the current j indexed value is lesser than the current prime factorial then we change the value at the index j
+                 primenums[j] = i  #making the composite indices or the numbers to have value i , which gives us the value from where we should start dividing the number
+    ans = []
+    for num in array:
+        output = []
+        for i in range(primenums[num],num+1):
+            while num > 1:
+                output.append(primenums[num])
+                num //= primenums[num]
+
+        ans.append(output)  
+    return ans
+print(prmefacto([7, 12, 18]))   
+#time complexity : O(M*logM)  M is the maximum value of a given array.
+#space complexity : O(N)       
+
