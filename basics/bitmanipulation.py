@@ -568,6 +568,33 @@ print(countprimes( [ [2, 5], [4, 7] ]))
 #space complexity : O(N)    
 
 
+#better solution 
+#in the better solution what we do is ,we create an array ,lets sat primestore which stores the numbers from 
+        
+def cprimes(array):
+    ans = []
+    rows = len(array)     #number of rows
+    def createarray(start,end):
+        primestore=[1] * (end +1)   #here we are making the primestore starting from 2 to the ending number which has all the value 1 initially that denotes it is the prime number
+        primestore[0] = primestore [1] = 0  #as the numbers 0 and 1 are composite , we declare these numbers to have value 0 from the way start.
+        for i in range(2,int(end**0.5)+1):  #then we again run the loop to convert the composite numbers in a prime store to have a value 0
+            if primestore[i] == 1:
+                for j in range(i*i,end+1,i): #here why we are doing i+j is to find the multiples of the current number i
+                    primestore[j] = 0 #the multiple of prime number will always be composite
+        count = 0
+        for i in range(start,end+1):
+            if primestore[i] == 1:   #if the numbers between the range start and end+1 has a value 1 in the primestore
+                count+=1
+        return count
+    for i in range(rows):
+        c1 = createarray(array[i][0],array[i][1])
+        ans.append(c1)
+    return ans
+print(cprimes(  [ [2, 5], [4, 7] ]))     
+#time complexity : O(N*logM)  where N is the number of rows in a given array and M is the range between start and end  , and we are using log cause we are also using the if condition inside the for-loop of create array
+#space complexity : O(N)    
+
+
 
 
          
