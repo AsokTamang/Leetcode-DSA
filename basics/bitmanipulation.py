@@ -533,3 +533,43 @@ def primefactorials(array):
 print(primefactorials(  [2, 3, 4, 5, 6]))            
 #time complexity : O(N * M)   N is the number of numbers in a given array and M is the prime numbers which exactly divides the current number.
 #space complexity : O(N)  in the worst case
+
+
+#Count primes in range L to R
+#You are given an 2D array queries of dimension n*2.
+#The queries[i] represents a range from queries[i][0] to queries[i][1] (include the end points).
+#Return the count of prime numbers present in between each range in queries array.
+
+
+
+       
+#brute approach
+def countprimes(array):
+    rows = len(array)    #number of rows
+    endindex=len(array[0])-1   
+    ans =[]
+    def checkprime(number):  #this is the function for checking whether the given passed number is prime or not
+        if number < 2:
+            return False
+        for i in range(2,(int(number ** 0.5)+1)):   #as the prime numbers are those numbers that can be divisible by only themselves or the digit 1
+            if number % i ==0 :
+                return False
+        return True    #if it's not divisible then we return true which is a prime number
+    for i in range(rows):
+        count = 0
+        for k in range(array[i][0],array[i][endindex]+1):  #here we are using array[i][cols] +1 so that we can also include this ending number of the range, as 
+            #we need to find the prime numbers between the start and the end range
+            if checkprime(k):
+                count+=1
+        ans.append(count)
+    return ans
+print(countprimes( [ [2, 5], [4, 7] ]))            
+#time complexity : O(N*K*√M)  N is the number of rows and K is range between the starting and ending index at each each rows , and M is the number of checks done on a number which takes upto √M times.
+#space complexity : O(N)    
+
+
+
+
+         
+            
+
