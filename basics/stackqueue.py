@@ -193,5 +193,73 @@ print(sll.displaydata())
 #time complexity : O(1)
 #space complexity : O(N)  N denotes the size of the  stack
 
+#queue implementation using linkedlist.
+class Node1:
+    def __init__(self,data,next):
+        self.data=data
+        self.next=next
+class Queuell:
+    def __init__(self,size):  #size will be the fixed length of the queue to be designed
+      self.size = size
+      self.currsize = 0  #initially the current size will always be 0
+      self.start = None
+      self.end = None
+    def isempty(self):
+        return self.currsize == 0
+    def isfull(self):
+        return self.currsize == self.size   #if the current size becomes equal to the given fixed size, then our linkedlist queue is full
+            
+    def push(self,x):
+        if self.isfull():
+            return 'queue overflow'
+        if self.isempty():
+            newnode = Node1(x,None)
+            self.start=self.end=newnode
+            self.currsize+=1   
 
+        else:
+            newnode = Node1(x,None)
+            
+            self.end.next=newnode
+            self.end=newnode
+            self.currsize+=1    
+    def pop(self):
+        if self.isempty():
+            return 'No any datas available in the queue'
+        if self.currsize==1:
+            self.end=self.start=None
+            self.currsize-=1
+        else:
+            self.start = self.start.next
+            self.currsize-=1
+
+             
+    def peek(self):
+        return self.start.data
+    def printdatas(self):
+        itr=self.start
+        a=[]
+        while itr:
+            a.append(itr.data)
+            itr=itr.next
+        return a    
+qll=Queuell(5)
+qll.push(5) 
+qll.push(4) 
+qll.push(3) 
+qll.push(2) 
+qll.push(1)   
+qll.pop() 
+qll.pop() 
+print(qll.peek())
+print(qll.printdatas())
+#time complexity : O(1)
+#space complexity : O(Q)  Q is the size of the queue
+
+
+#from this learning , I learned that for stack we just need one variable to change the data which is let's say top , as it follows lastin first out rules.
+#for the queues , we need two variables which are start and end , as it follows first in first out rules
+
+
+        
     
