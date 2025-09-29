@@ -514,3 +514,22 @@ def divisorofnum(n):
 print(divisorofnum(8))    
 #time complexity : O(√n + O(logM))
 # space complexity : O(M)     
+
+
+#Prime factorisation of a Number
+#You are given an integer array queries of length n.
+#Return the prime factorization of each number in array queries in sorted order.
+
+def primefactorials(array):
+    ans = []
+    for num in array:
+        output=[]
+        for i in range(2,num+1):
+            while num % i == 0:    #we keep on appending the divisor if the divisor exactly divides the current number of an array
+                output.append(i)
+                num = num // i
+        ans.append(output)
+    return ans
+print(primefactorials(  [2, 3, 4, 5, 6]))            
+#time complexity : O(N * M)   N is the number of numbers in a given array and M is the prime numbers which exactly divides the current number.
+#space complexity : O(N)  in the worst case
