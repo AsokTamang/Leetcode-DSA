@@ -826,9 +826,11 @@ def powerxn(x,n):
         if n % 2 ==0:  #if the power is even then we divide the power by 2 and the number x becomes equal to x**2
             x=x*x
             n//=2  
-        else:
+        else:   #otherwise if the power is odd then we just decrease the value of power by 1 and the ans become ans*=x
             ans *=x
             n-=1
     if sign==-1:
         return  (1/ans)
 print(powerxn(-2, -3))
+#time complexity : O(logN)
+#space complexity : O(1)
