@@ -813,3 +813,22 @@ print(prmefacto([7, 12, 18]))
 #time complexity : O(M*logM)  M is the maximum value of a given array.
 #space complexity : O(N)       
 
+
+#pow(x,n)
+#Implement the power function pow(x, n) , which calculates the x raised to n i.e. xn.
+#Note : In output print 6 digits places after decimal point.
+def powerxn(x,n):
+    ans = 1
+    if n < 0:
+        sign = -1  #here sign denotes whether the power is positive or negative
+    n=abs(n)
+    while n>0:  
+        if n % 2 ==0:  #if the power is even then we divide the power by 2 and the number x becomes equal to x**2
+            x=x*x
+            n//=2  
+        else:
+            ans *=x
+            n-=1
+    if sign==-1:
+        return  (1/ans)
+print(powerxn(-2, -3))
