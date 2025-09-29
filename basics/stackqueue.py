@@ -6,6 +6,8 @@
 #stack and queue using the classes
 #for stack
 #stack is the algorithm following the rule of lastin first out
+
+#USING THE ARRAYS
 class Stack: 
     def __init__(self,size,currsize):
         self.size = size  #this will be the fixed size or the fix length of the stack
@@ -135,6 +137,61 @@ print(q.display())
 #space complexity : O(Q)  size of the queue
 
     
-    
+
+
+#USING THE LINKED LIST  
+#for stack  #last in first out
+class Node:  #creating a class of node for the stack of linked list
+    def __init__(self,data,nxt):
+       self.data=data
+       self.nxt=nxt
+class stackll:
+    def __init__(self,size):  
+        self.size = size
+        self.top = None
+        self.currsize = 0  #initially there will be no values or datas in the stack
+    def isfull(self):
+        return self.currsize == self.size
+    def isemppty(self):
+        return self.currsize == 0
+    def push(self,x):
+        if self.isfull():   #if the stack is full then we cannot add the datas further more
+            return 'stack overflow'
+        newnode = Node(x,None)
+        newnode.nxt = self.top
+        self.top = newnode
+        self.currsize += 1  #increasing the current size of the stack
+
+    def pop(self):
+        if self.isemppty():
+            return 'no any datas in the stack linkedlist'  
+        else:
+            temp = self.top  
+            self.top=temp.nxt
+            temp=None  #deleting the top most node as we have already made the next of the top , THE TOP
+            self.currsize-=1
+   
+    def peek(self):
+        return self.top.data  #returning the data of the top most node which follows last in first out
+    def displaydata(self):
+        itr=self.top
+        a = []
+        while itr:
+            a.append(itr.data)
+            itr=itr.nxt
+        return a
+sll=stackll(5)
+sll.push(5)  
+sll.push(4)  
+sll.push(3)  
+sll.push(2)  
+sll.push(1)
+print(sll.peek())
+sll.pop()
+sll.pop()   
+print(sll.displaydata())
+#time complexity : O(1)
+#space complexity : O(N)  N denotes the size of the  stack
+
 
     
