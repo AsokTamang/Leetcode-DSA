@@ -230,7 +230,7 @@ class Queuell:
             self.end=self.start=None
             self.currsize-=1
         else:
-            self.start = self.start.next
+            self.start = self.start.next  #deleting the data which was inserted at the very beginning in the queue, cause the queue follows the algorithm of first in first out.
             self.currsize-=1
 
              
@@ -257,9 +257,56 @@ print(qll.printdatas())
 #space complexity : O(Q)  Q is the size of the queue
 
 
-#from this learning , I learned that for stack we just need one variable to change the data which is let's say top , as it follows lastin first out rules.
+#from this learning , I learned that for stack we just need one variable to change the data which is let's say top , as it follows last in first out rules.
 #for the queues , we need two variables which are start and end , as it follows first in first out rules
 
 
-        
+
+#implementation of stack using queue
+#so our main goal is to follow the rule of last in first out using the first in first out algorithm
+
+from collections import deque
+class stackq:
+    def __init__(self,size):
+        self.size = size
+        self.currsize = 0 
+        self.q=deque()
+    def isfull(self):
+        return self.currsize == self.size
+    def isempty(self):
+        return self.currsize==0
+
+    def push(self,x):
+        if self.isfull():
+            return 'stack overflow'
+        self.q.append(x)  #here we are inserting the given or passed data in our queue data structure by appending as we do in the list normally
+        self.currsize+=1
+        for i in range(len(self.q)-1):  #here we are running the for loop until the length of our q -1 inorder to ignore the recently added data or number
+            self.q.append(self.q.popleft())   #this appends the leftmost data in the the  queue
+            #self.q.popleft() removes the left most element from the data 
+            #and we are doing this inorder to follow lastin first out rule of stack using queue to mimick this algorithm
+    def pop(self):
+        if self.isempty():
+            return 'No any datas in the stack to remove'
+        else:
+             removed=self.q.popleft()
+             self.currsize-=1
+             return removed
+    def displaydata(self):
+        a=[]
+        for data in self.q:
+            a.append(data)   
+        return a     
+sq=stackq(5)
+sq.push(5)
+sq.push(4)
+sq.push(3)
+sq.push(2)
+sq.push(1)
+sq.pop()
+print(sq.displaydata())
+#time complexity : O(N)  for the push method otherwise its O(1) for other methodss
+#space complexity : O(N)
+
+
     
