@@ -268,9 +268,9 @@ print(qll.printdatas())
 from collections import deque
 class stackq:
     def __init__(self,size):
-        self.size = size
-        self.currsize = 0 
-        self.q=deque()
+        self.size = size   #this will be the fixed size of our stack
+        self.currsize = 0  #this will be the changing size of our stack based on the push and pop operation that we do  
+        self.q=deque()     #this is our queue imitating as a stack
     def isfull(self):
         return self.currsize == self.size
     def isempty(self):
@@ -281,7 +281,7 @@ class stackq:
             return 'stack overflow'
         self.q.append(x)  #here we are inserting the given or passed data in our queue data structure by appending as we do in the list normally
         self.currsize+=1
-        for i in range(len(self.q)-1):  #here we are running the for loop until the length of our q -1 inorder to ignore the recently added data or number
+        for i in range(len(self.q)-1):  #here we are running the for loop until the current length of our q stack inorder to ignore the recently added data or number
             self.q.append(self.q.popleft())   #this appends the leftmost data in the the  queue
             #self.q.popleft() removes the left most element from the data 
             #and we are doing this inorder to follow lastin first out rule of stack using queue to mimick this algorithm
@@ -305,8 +305,72 @@ sq.push(2)
 sq.push(1)
 sq.pop()
 print(sq.displaydata())
-#time complexity : O(N)  for the push method otherwise its O(1) for other methodss
+#push time complexity : O(N)  for the push method otherwise its O(1) for other methodss
+#pop time complexity : O(1) 
 #space complexity : O(N)
+
+class queuestack:
+    def __init__(self,size):
+        self.size = size    #this is the fixed size of our queue being used as stack but still follows the algorithm of firstinfirst out
+        self.currsize = 0   #this is the current size of our queue
+        self.s1=[]
+        self.s2 = []  
+    def isfull(self):
+        return self.currsize == self.size
+    def isempty(self):
+        return self.currsize == 0
+
+
+    def push(self,x):
+        if self.isfull():
+            return 'The queuestack is already full'
+        
+        self.s1.append(x)
+        self.currsize+=1
+    def pop(self):
+        if self.isempty():
+            return 'No any datas in the queue'
+        elif len(self.s2) == 0:
+            while self.s1:
+                self.s2.append(self.s1.pop())
+            self.s2.pop()
+            self.currsize-=1
+        else:
+            self.s2.pop()
+            self.currsize-=1
+
+    def top(self):
+        if len(self.s2) == 0:
+            while self.s1:  #as long as there are values in s1 queue
+                self.s2.append(self.s1.pop())
+            return self.s2[-1]  #returning the top which is the first element that we appended , but it's looking like we are returnring the last element like we did in the stack as LIFO but actually we are following the algorithm of FIFO
+        else:
+            return self.s2[-1]
+    def displaydata(self):
+        a= [ ]
+        for data in self.s2:
+            a.append(data)
+        return a[::-1] + self.s1
+qs=queuestack(5)
+qs.pop()
+qs.push(5)
+qs.push(4)
+qs.push(3)
+qs.pop()
+qs.push(3)
+qs.push(2)
+qs.pop()
+qs.pop()
+qs.pop()
+print(qs.top())
+
+print(qs.displaydata())
+#time complexity : O(2N) for pop and top operation
+#time complexity : O(1) for push operation
+#space complexity : O(N)
+
+           
+
 
 
     
