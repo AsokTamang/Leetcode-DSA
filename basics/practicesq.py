@@ -96,3 +96,55 @@ qs.pop()
 print(qs.displaydata())
 #time complexity : push:O(n), pop:O(1), top: O(1)
 #space complexity : O(1)
+
+
+#implementation of stack using linkedlist
+class Node:
+    def __init__(self,data,next):
+        self.data=data
+        self.next = next
+class stackk:
+    def __init__(self,size):
+        self.size=size
+        self.currsize = 0
+        self.top=None
+    def isempty(self):
+        return self.currsize ==0
+    def isfull(self):
+        return self.currsize ==self.size
+    def push(self,x):  
+        if self.isfull():
+            return 'stack overflow' 
+        self.currsize+=1
+        newnode = Node(x,None)   
+        newnode.next=self.top
+        self.top=newnode      
+    def pop(self):
+        if self.isempty():
+            return 'The stack is empty'
+        temp = self.top
+        self.top=temp.next
+        temp=None   #destroying the very new element that we just appended , which follows the rule of last in first out
+        self.currsize-=1
+    def peek(self):
+        if self.isempty():
+            return 'The stack is empty'
+        return self.top.data
+    def displaydata(self):
+        a=[]
+        itr= self.top
+        while itr:
+            a.append(itr.data)
+            itr=itr.next
+        return a
+sk=stackk(5)  
+sk.push(5)
+sk.push(4)
+sk.push(3)
+sk.push(2)
+sk.push(1)  
+sk.pop()
+print(sk.peek())
+print(sk.displaydata())    
+#time complexity : O(1)
+#space complexity : O(1)
