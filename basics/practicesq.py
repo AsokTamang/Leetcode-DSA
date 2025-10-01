@@ -148,3 +148,68 @@ print(sk.peek())
 print(sk.displaydata())    
 #time complexity : O(1)
 #space complexity : O(1)
+
+#implementation of queues using the linked list
+#following the rule of first in first out
+class Node1:
+    def __init__(self,data,next):
+        self.data=data
+        self.next=next
+
+class queuesll:
+    def __init__(self,size):
+        self.size = size
+        self.currsize = 0
+        self.start=self.end=None
+    def isfull(self):
+        return self.currsize==self.size
+    def isempty(self):
+        return self.currsize == 0   
+    def push(self,x):
+        newnode=Node1(x,None)
+        if self.isfull():
+            return 'queue is full'
+        
+        elif self.currsize == 0:
+            self.start=self.end= newnode
+            self.currsize+=1
+        else:
+            self.end.next=newnode
+            self.end=newnode  
+            self.currsize+=1  
+    def pop(self):
+        if self.isempty():
+            return 'No any datas in the queue'
+        elif self.currsize == 1:
+            self.start=self.end=None
+            self.currsize-=1
+        else:
+            temp=self.start
+            self.start=temp.next
+            temp=None
+            self.currsize-=1
+    def top(self):
+        if self.isempty():
+            return 'No any datas in the queue'
+        return self.start.data
+    def dispalydata(self):
+        itr=self.start
+        a=[]
+        while itr:
+            a.append(itr.data)
+            itr=itr.next
+        return a
+qll=queuesll(5)
+qll.push(5)  
+qll.push(4)  
+qll.push(3)  
+qll.push(2)  
+qll.push(1) 
+qll.pop()  
+qll.pop()     
+print(qll.top())
+print(qll.dispalydata())
+#time complexity : O(1)
+#space complexity : O(1)
+
+                            
