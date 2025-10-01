@@ -369,6 +369,27 @@ print(qs.displaydata())
 #time complexity : O(1) for push operation
 #space complexity : O(N)
 
+
+#Balanced Paranthesis
+#Given string str containing just the characters '(', ')', '{', '}', '[' and ']', check if the input string is valid and return true if the string is balanced otherwise return false.
+#inorder to solve this problem ,we have to use the algorithm of last in first out
+def balancedparan(str):
+    stack=[]
+    m={')':'(','}':'{',']':'['}
+    for char in str:
+        if char in m.values():   #as m.values() are representing the opening brackets , 
+            stack.append(char)
+        elif char in m:
+            if stack and stack.pop()!=m[char]:
+                return False
+   
+    return not stack   #here if the stack still exists then it means the given string is not valid , so it return false otherwise it return true               
+print(balancedparan('[()'))    
+#time complexity: O(N)
+#space complexity : O(N)
+            
+
+
            
 
 
