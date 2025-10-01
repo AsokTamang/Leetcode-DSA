@@ -50,3 +50,49 @@ print(sq.displaydata())
 #space complexity : O(N)
 
 
+
+#queues using stack
+#now we have to follow the rule of queue which is first in first out but using the stack
+class queuestack:
+    def __init__(self,size):
+        self.size = size
+        self.currsize = 0
+        self.s1 = []
+        self.s2 = []
+    def isfull(self):
+        return self.currsize == self.size    
+    def isempty(self):
+        return self.currsize == 0
+    def push(self,x):
+        if self.isfull():
+            return 'The queue is full'
+        self.s1.append(x)
+        self.currsize+=1
+        while self.s1:
+            self.s2.append(self.s1.pop())       #appending the elements in the differengt list called s2 from s1 , from the very last element
+    def pop(self):
+        if self.isempty():
+            return 'The queue is empty'
+        self.currsize-=1
+        return self.s2.pop()
+    def top(self):
+        if self.isempty():
+            return 'The queue is empty'
+        return self.s2[-1]  #the very last element of the s2 list is the very first element that we appended in the list.
+    def displaydata(self):
+        a=[]
+        for data in self.s2:
+            a.append(data)
+        return a    
+qs=queuestack(5)
+qs.push(5)
+qs.push(4)
+qs.push(3)
+qs.push(2)
+qs.push(1)
+qs.pop()
+print(qs.top())
+qs.pop()
+print(qs.displaydata())
+#time complexity : push:O(n), pop:O(1), top: O(1)
+#space complexity : O(1)
