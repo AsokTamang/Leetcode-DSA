@@ -390,6 +390,22 @@ print(balancedparan('[()'))
             
 
 
+#balanced paranthesis
+def balancedthesis(string):
+    stack=[]
+    m={'}':'{',']':'[',')':'('}
+    for char in string:
+        if char in m.values():
+            stack.append(char)
+        elif char in m:
+            if stack and m[char]!=stack.pop():
+                return False
+    return not stack  #if there are still characters in the stack then it means all the opening brackets donot has a closing ones
+print(balancedthesis( '()[{}()]'))
+#time complexity : O(N)
+#space complexity : O(N)
+            
+
            
 
 
