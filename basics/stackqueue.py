@@ -406,7 +406,71 @@ print(balancedthesis( '()[{}()]'))
 #space complexity : O(N)
             
 
-           
+#Implement Min Stack
+#Design a stack that supports the following operations in constant time: push, pop, top, and retrieving the minimum element.
+
+class Minstack:
+    def __init__(self,size):
+        self.size=size
+        self.currsize=0
+        self.stack = []  #this is our original list or stack
+        self.minstack = []  #here we are creating a minimum stack which stores the most minimum element based on the comparison
+    def isempty(self):
+        return self.currsize==0    
+    def isfull(self):
+        return self.currsize == self.size
+    def push(self,x):
+        if self.isfull():
+            return 'stack overflow'
+        else:
+           self.stack.append(x)
+           self.currsize+=1
+           if not self.minstack or x<=self.minstack[-1]:  #if the minstack is empty or the value that is going to be added is lesser than or equal to the most recently added value of the minstack which was the most smallest,then we append this new value x in the minstack
+               self.minstack.append(x)
+               
+    def pop(self):
+        if self.isempty():
+            return 'The stack is empty'
+        else:
+            value=self.stack.pop()  #removing the top most element from the list
+            if value == self.minstack[-1]:
+             self.minstack.pop()  #we also need to remove the top most element from our minstack , if the popped element from the stack is the same as the smallest value which is the top most value in the minstack
+            self.currsize-=1
+    def peek(self):
+        if self.isempty():
+            return 'no any datas in the stack'
+        return self.stack[-1]  #returning the top most element or number          
+    def getmin(self):
+        if self.isempty():
+            return 'No datas in the stack'
+        else:
+            return self.minstack[-1]  #returning the most smallest value    
+    def displaydata(self):
+        a=[]
+        for data in self.stack:
+            a.append(data)
+        return a          
+ms=Minstack(5)
+ms.push(5)
+ms.push(4)
+ms.push(3)
+ms.push(2)
+ms.push(1)
+ms.pop()
+print(ms.peek())
+print(ms.getmin())
+ms.pop()
+print(ms.getmin())
+print(ms.displaydata())
+#time complexity : O(1)
+#space complexity : O(N) size of the list
+
+
+
+    
+
+
+
 
 
 
