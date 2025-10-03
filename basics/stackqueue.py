@@ -409,61 +409,88 @@ print(balancedthesis( '()[{}()]'))
 #Implement Min Stack
 #Design a stack that supports the following operations in constant time: push, pop, top, and retrieving the minimum element.
 
+
+#minstack
 class Minstack:
     def __init__(self,size):
-        self.size=size
-        self.currsize=0
-        self.stack = []  #this is our original list or stack
-        self.minstack = []  #here we are creating a minimum stack which stores the most minimum element based on the comparison
+        self.size = size
+        self.currsize = 0
+        self.stack = []
+        self.minimum = 10 **9  #here we are initially assissgning the self.minimum as the largest possible value
     def isempty(self):
-        return self.currsize==0    
+        return self.currsize == 0
     def isfull(self):
-        return self.currsize == self.size
+        return self.currsize == self.size 
     def push(self,x):
         if self.isfull():
             return 'stack overflow'
+        elif self.isempty():
+            self.stack.append(x)
+            self.minimum = x
+            self.currsize+=1
         else:
-           self.stack.append(x)
-           self.currsize+=1
-           if not self.minstack or x<=self.minstack[-1]:  #if the minstack is empty or the value that is going to be added is lesser than or equal to the most recently added value of the minstack which was the most smallest,then we append this new value x in the minstack
-               self.minstack.append(x)
-               
+            if x < self.minimum:  #if the current pushing number is lesser than the minimum number then we append the decoded number which is 2 * x - self.minimum
+                self.stack.append(2*x - self.minimum) 
+                self.minimum = x     #and  the self.minimum will be x
+                self.currsize+=1
+            else:
+                self.stack.append(x)
+                self.currsize+=1
+
+
     def pop(self):
+       if self.isempty():
+           return 'stack underflow'
+       else:
+           delete = self.stack.pop()  #deleting the last element
+           self.currsize-=1
+           if delete < self.minimum :  #if the deleted or popped element is lesser than the self.minimum then it means it is the decoded element
+               decoded=self.minimum
+               self.minimum = 2 * self.minimum - delete
+               return decoded     #we returns the decoded value
+            
+           else:
+               return delete  #otherwise we return the same undecoded value
+          
+                
+
+    def top(self):
         if self.isempty():
             return 'The stack is empty'
         else:
-            value=self.stack.pop()  #removing the top most element from the list
-            if value == self.minstack[-1]:
-             self.minstack.pop()  #we also need to remove the top most element from our minstack , if the popped element from the stack is the same as the smallest value which is the top most value in the minstack
-            self.currsize-=1
-    def peek(self):
-        if self.isempty():
-            return 'no any datas in the stack'
-        return self.stack[-1]  #returning the top most element or number          
+            peak = self.stack[-1]  #last element of the stack
+            if peak < self.minimum : 
+                return self.minimum   #if the last or the peak number is decoded then we return the minimum value which is our actual top element
+            else:
+                return peak
+            
+           
     def getmin(self):
         if self.isempty():
-            return 'No datas in the stack'
-        else:
-            return self.minstack[-1]  #returning the most smallest value    
-    def displaydata(self):
-        a=[]
-        for data in self.stack:
-            a.append(data)
-        return a          
-ms=Minstack(5)
-ms.push(5)
-ms.push(4)
-ms.push(3)
-ms.push(2)
-ms.push(1)
-ms.pop()
-print(ms.peek())
-print(ms.getmin())
-ms.pop()
-print(ms.getmin())
-print(ms.displaydata())
-#time complexity : O(1)
-#space complexity : O(N) size of the list
+            return 'stack underflow'
+        return self.minimum
+    def displaydatad(self):
+        a = []
+        for data in self.stack[::-1]:#and here we are using the reverse form of self.stack to do the comparison bertween the latest pushed number and the current self.minimum to check whether the number in the stack is decoded or not.
+            if data < self.minimum :
+                  #if the current data is lesser than the minimum value then it means it is the decoded value
+                a.append(self.minimum)
+                self.minimum = 2*self.minimum - data  #then we need to change the data
+            else:
+                a.append(data)  #otherwise we can just append the undecoded data
+        return a[::-1]    #inorder to return the a in the right format we are using the reverse again     
+mss=Minstack(5)
+mss.push(5)
+mss.push(4)
+mss.push(3)
+mss.push(2)
+mss.push(1)
+print(mss.pop())
+print(mss.top())
+mss.push(8)
+print(mss.displaydatad())
+#time complexity : O(1)   only for displaying the data which is not asked by the question , as we are using the reverse method , the time complexity is O(logN)
+#space complexity : O(1)  but for dispalying the data , the space complexity will be O(N)
 
 class Minstackk:
     def __init__(self,size):
@@ -539,6 +566,53 @@ print(minstk.getminimum())
 print(minstk.displaydata())
 #time complexity : O(1)
 #space complexity : O(1)
+
+
+
+#Infix to Postfix Conversion
+#You are given a string expression representing a valid infix mathematical expression. Your task is to convert this expression into its equivalent postfix notation, also known as Reverse Polish Notation (RPN).
+
+def infixtopostfix(str): #here str is a string
+    operators = ['+',' -', '*', '/', '^']    #lower the index lower will be the range of the operator
+    stack = []  #this will be our stack variable which stores the operators and based on the highest to lowest range , we add it's pop to the output variable
+    output=''
+    def precendence(op):
+        if op =='+' or op == '-':
+            return 1
+        elif op== '*' or op =='/':
+            return 2
+        elif op == '^':
+            return 3
+        return 0  
+    def isleftassociative(op):
+        return op!='^'     
+    for char in str:
+        if char.isalpha() or char.isdigit():
+            output+=char
+        else:
+            if not stack:
+                stack.append(char)
+            elif char == '(':
+                stack.append(char)
+            elif char ==')':  #if the current character is ')' then we pop the numbers from the stack till it's '(' and while popping we also add those popped elements in the stack
+                while stack and stack[-1]!='(':
+                    output+=stack.pop()     #we keep on adding the popped operators in the output till we meet the '(' symbol in the stack
+                stack.pop()      #then this '(' symbol is also removed from the stack
+            else:
+                if char =='^':
+                    stack.append(char)
+                else:
+                 while stack and stack[-1]!='(' and precendence(stack[-1])> precendence(char) or precendence(stack[-1]) == precendence(char) and  isleftassociative(char):
+                    output+=stack.pop()
+                 stack.append(char)
+    while stack:  #if there are still oeprators then we just add those oeprators to the output
+        output+=stack.pop()                 
+    return output          
+print(infixtopostfix('"a+b*c^d-e^f*g+h'))   
+#time complexity : O(N)
+#space complexity : O(N)
+
+ 
 
 
 
