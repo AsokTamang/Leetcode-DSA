@@ -429,3 +429,84 @@ print(nqueen(4))
 #space complexity : O(N*2^N)
 
 
+#minstack
+class Minstack:
+    def __init__(self,size):
+        self.size = size
+        self.currsize = 0
+        self.stack = []
+        self.minimum = 10 **9  #here we are initially assissgning the self.minimum as the largest possible value
+    def isempty(self):
+        return self.currsize == 0
+    def isfull(self):
+        return self.currsize == self.size 
+    def push(self,x):
+        if self.isfull():
+            return 'stack overflow'
+        elif self.isempty():
+            self.stack.append(x)
+            self.minimum = x
+            self.currsize+=1
+        else:
+            if x < self.minimum:  #if the current pushing number is lesser than the minimum number then we append the decoded number which is 2 * x - self.minimum
+                self.stack.append(2*x - self.minimum) 
+                self.minimum = x     #and  the self.minimum will be x
+                self.currsize+=1
+            else:
+                self.stack.append(x)
+                self.currsize+=1
+
+
+    def pop(self):
+       if self.isempty():
+           return 'stack underflow'
+       else:
+           delete = self.stack.pop()  #deleting the last element
+           self.currsize-=1
+           if delete < self.minimum :  #if the deleted or popped element is lesser than the self.minimum then it means it is the decoded element
+               decoded=self.minimum
+               self.minimum = 2 * self.minimum - delete
+               return decoded     #we returns the decoded value
+            
+           else:
+               return delete  #otherwise we return the same undecoded value
+          
+                
+
+    def top(self):
+        if self.isempty():
+            return 'The stack is empty'
+        else:
+            peak = self.stack[-1]  #last element of the stack
+            if peak < self.minimum : 
+                return self.minimum   #if the last or the peak number is decoded then we return the minimum value which is our actual top element
+            else:
+                return peak
+            
+           
+    def getmin(self):
+        if self.isempty():
+            return 'stack underflow'
+        return self.minimum
+    def displaydatad(self):
+        a = []
+        for data in self.stack[::-1]:#and here we are using the reverse form of self.stack to do the comparison bertween the latest pushed number and the current self.minimum to check whether the number in the stack is decoded or not.
+            if data < self.minimum :
+                  #if the current data is lesser than the minimum value then it means it is the decoded value
+                a.append(self.minimum)
+                self.minimum = 2*self.minimum - data  #then we need to change the data
+            else:
+                a.append(data)  #otherwise we can just append the undecoded data
+        return a[::-1]    #inorder to return the a in the right format we are using the reverse again     
+mss=Minstack(5)
+mss.push(5)
+mss.push(4)
+mss.push(3)
+mss.push(2)
+mss.push(1)
+print(mss.pop())
+print(mss.top())
+mss.push(8)
+print(mss.displaydatad())
+#time complexity : O(1)   only for displaying the data which is not asked by the question , as we are using the reverse method , the time complexity is O(logN)
+#space complexity : O(1)  but for dispalying the data , the space complexity will be O(N)
