@@ -626,7 +626,7 @@ def infixtoprefix(str):  #infix means the operators will be in the middle and pr
             return 3
         return 0
     for char in str[::-1]:
-        if char == '(':
+        if char == '(':  #just swapping the ( and ) characters as we have reverse the string
             revstr+= ')'
         elif char == ')':
             revstr+= '('
@@ -652,3 +652,21 @@ def infixtoprefix(str):  #infix means the operators will be in the middle and pr
 print(infixtoprefix('a^b^c'))
 #time complexity : O(N)
 #space complexity : O(N)
+
+#postfix to infix
+#so the logic to convert the postfix into infix is that whenever we catch the operand , we just add it to our stack but when ever we get the oeprator, we just add the operator inbetween the two last operands of the stack and append this value in the stack
+def postfixtoinfix(str):  #infix means inserting the operators inbetween the operands
+    stack = []
+    for char in str:
+        if char.isalpha() or char.isdigit():
+            stack.append(char)
+        else:
+            last=stack.pop()  #this is our last element popped from the stack
+            secondlast=stack.pop()  #this is our second last element popped from the stack  as we have already popped the actual last element from the stack
+            newvalue = '(' + secondlast + char + last + ')'         
+            stack.append(newvalue)
+    return stack[0] 
+print(postfixtoinfix('ab+c*'))      
+#time complexity : O(N)
+#space complexity : O(N)          
+
