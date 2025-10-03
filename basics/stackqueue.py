@@ -572,6 +572,7 @@ print(minstk.displaydata())
 #Infix to Postfix Conversion
 #You are given a string expression representing a valid infix mathematical expression. Your task is to convert this expression into its equivalent postfix notation, also known as Reverse Polish Notation (RPN).
 
+#infix to postfix means the operators will be at the later positions depending upon their higher range
 def infixtopostfix(str): #here str is a string
     operators = ['+',' -', '*', '/', '^']    #lower the index lower will be the range of the operator
     stack = []  #this will be our stack variable which stores the operators and based on the highest to lowest range , we add it's pop to the output variable
@@ -607,23 +608,47 @@ def infixtopostfix(str): #here str is a string
                  stack.append(char)
     while stack:  #if there are still oeprators then we just add those oeprators to the output
         output+=stack.pop()                 
-    return output          
-print(infixtopostfix('"a+b*c^d-e^f*g+h'))   
+    return output        
+print(infixtopostfix('(a+b)*c'))   
 #time complexity : O(N)
 #space complexity : O(N)
 
- 
 
-
-
-
-
-
-    
-
-
-
-
-
-
-    
+def infixtoprefix(str):  #infix means the operators will be in the middle and prefix means the signs or the operators will be at the beginning.
+   
+    revstr=''
+    def precendence(op):
+        if op =='+' or op == '-':
+            return 1
+        elif op== '*' or op =='/':
+            return 2
+        elif op == '^':
+            return 3
+        return 0
+    for char in str[::-1]:
+        if char == '(':
+            revstr+= ')'
+        elif char == ')':
+            revstr+= '('
+        else:
+            revstr+=char    
+    stack = []  #this stores all the operators based on the range
+    ans = '' #our final answer
+    for char in revstr:
+        if char.isalpha() or char.isdigit():
+            ans+=char
+        elif char=='(':
+            while stack and stack[-1] != ')':
+                ans+=stack.pop()
+            stack.pop()    
+        
+        else:
+            while stack and (precendence(stack[-1]) > precendence(char) or precendence(stack[-1]) == precendence(char))  :
+               ans+=stack.pop()   #always gotta add the higher range of operator first or even if the range of the comparing char is same
+            stack.append(char)
+    while stack:
+        ans+=stack.pop()
+    return ans[::-1]  #reversing our answer , so that the operators will be at the beginning and the  operands will be at the later positions.                            
+print(infixtoprefix('a^b^c'))
+#time complexity : O(N)
+#space complexity : O(N)
