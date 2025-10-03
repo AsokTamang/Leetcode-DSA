@@ -670,3 +670,20 @@ print(postfixtoinfix('ab+c*'))
 #time complexity : O(N)
 #space complexity : O(N)          
 
+
+#prefix to infix
+def prefixtoinfix(str):
+    stack = []
+    str=str[::-1]  #first we gotta reverse the given string and follow the same logic of postfix to infix but while prodducing a new value, we must put the last value before the operator and then put the second last value.
+    for char in str:
+        if char.isalpha() or char.isdigit():
+            stack.append(char)
+        else:
+            last=stack.pop()
+            secondlast=stack.pop()
+            newvalue = '(' + last + char + secondlast + ')'
+            stack.append(newvalue)
+    return stack[0]            
+print(prefixtoinfix('*+ab-cd'))
+#time complexity : O(N)
+#space complexity : O(N)
