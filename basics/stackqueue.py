@@ -465,6 +465,84 @@ print(ms.displaydata())
 #time complexity : O(1)
 #space complexity : O(N) size of the list
 
+class Minstackk:
+    def __init__(self,size):
+        self.size=size
+        self.currsize = 0
+        self.minimum=(10**9)  #here initially we are asssigining the minimum value as one of the largest possible value
+        self.stack=[]
+    def isempty(self):
+        return self.currsize==0    
+    def isfull(self):
+        return self.currsize == self.size
+    def push(self,x):
+        if self.isfull():
+            return 'stack overflow'
+        elif self.isempty():
+            self.stack.append(x)
+            self.minimum=x
+            self.currsize+=1
+            return
+        else:
+           if x < self.minimum : 
+               self.stack.append( 2 * x - self.minimum)
+               self.minimum = x
+           else:
+               self.stack.append(x)   
+           self.currsize+=1     
+    def pop(self):
+        if self.isempty():
+            return 'stack underflow'
+        dell=self.stack[-1]  
+        self.stack.pop()   #deleting the last most element from the stack
+        self.currsize-=1
+        if dell< self.minimum:  #if the last element of the stack is lesser than the current minimum value then it means we have modified the appended element as well as change the small element , 
+            v=self.minimum
+            self.minimum = 2 * self.minimum - dell #if the current top element is lesser than the current minimum value then it means we had changed the minimum value , so we also need to change the current minimum value to the previous one
+            return v
+        return dell 
+    def top(self):
+        if self.isempty():
+            return 'no datas in the stack'
+        peak=self.stack[-1]
+        if peak < self.minimum:
+           return self.minimum  #if the current top element is lesser than the current minimum value then it means we had changed the minimum value , so we also need to change the current minimum value to the previous one
+        else:
+            return peak
+    def getminimum(self):
+        if self.isempty():
+            return 'no datas in the stack'
+        return self.minimum
+        
+    def displaydata(self):
+        if self.isempty():
+            return 'no datas in the stack'
+        else:
+            a=[]
+            for data in self.stack[::-1]:
+                if data<self.minimum:
+                    a.append(self.minimum)
+                    self.minimum = 2 * self.minimum - data
+                else:    
+                 a.append(data)
+            return a    
+
+minstk=Minstackk(5)
+minstk.push(5)
+minstk.push(4)
+minstk.push(3)
+minstk.push(2)
+minstk.push(1)
+minstk.pop()
+minstk.push(8)
+print(minstk.getminimum())
+print(minstk.displaydata())
+#time complexity : O(1)
+#space complexity : O(1)
+
+
+
+
 
 
     
