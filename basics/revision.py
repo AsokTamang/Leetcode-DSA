@@ -479,5 +479,23 @@ def prefixtoinfix(str):
     return stack[0]
 print(prefixtoinfix('*+ab-cd'))   
 #time complexity :O(N)
-#space complexity : O(N)         
+#space complexity : O(N)  
+
+
+#prefix to postfix conversion
+def prefixtopostfix(str):
+    str=str[::-1]  #reversing the given string
+    stack = []
+    for char in str:
+        if char.isalpha() or char.isdigit():
+            stack.append(char)
+        else:
+            last=stack.pop()
+            secondlast=stack.pop()
+            newvalue = char + secondlast + last
+            stack.append(newvalue)
+    return stack[0][::-1]
+print(prefixtopostfix('^a*bc'))            
+#time complexity : O(N)
+#space complexity : O(N)
 
