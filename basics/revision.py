@@ -428,3 +428,39 @@ print(nqueen(4))
 #time complexity : O(N*2^N)
 #space complexity : O(N*2^N)
 
+
+
+#infix to postfix conversion
+#higher the precedence of the operator , earlier the operator will be in the postfix 
+def infixtopostfix(str):
+    def precedence(op):
+        if op == '+' or op == '-':
+            return 1
+        elif op == '*' or op =='/':
+            return 2
+        elif op =='^':
+            return 3
+        else:
+            return 0
+    output = ''
+    stack = []
+    for char in str:
+        if char.isalpha() or char.isdigit():
+            output+=char
+        elif char == '(':
+            stack.append(char)
+        elif char == ')':
+             while stack and  stack[-1]!= '(':
+              output+=stack.pop() 
+             stack.pop()   #removing the ( from the stack 
+        else:
+           while stack and stack[-1]!='(' and ( char!='^' and precedence(char)<=precedence(stack[-1])) or (char == '^' and (precedence(char) < precedence(stack[-1]))):  #for the operator '^'  we cant pop from the stack , but we can push the ^ into the back of the stack
+                output+=stack.pop()
+           stack.append(char)
+    while stack:
+        output+=stack.pop()
+    return output
+print(infixtopostfix('a+b*c^d-e^f*g+h'))  
+#time complexity : O(N)
+#space complexity : O(N)              
+                            

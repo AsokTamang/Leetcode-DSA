@@ -574,7 +574,7 @@ print(minstk.displaydata())
 
 #infix to postfix means the operators will be at the later positions depending upon their higher range
 def infixtopostfix(str): #here str is a string
-    operators = ['+',' -', '*', '/', '^']    #lower the index lower will be the range of the operator
+      #lower the index lower will be the range of the operator
     stack = []  #this will be our stack variable which stores the operators and based on the highest to lowest range , we add it's pop to the output variable
     output=''
     def precendence(op):
@@ -603,13 +603,13 @@ def infixtopostfix(str): #here str is a string
                 if char =='^':
                     stack.append(char)
                 else:
-                 while stack and stack[-1]!='(' and precendence(stack[-1])> precendence(char) or precendence(stack[-1]) == precendence(char) and  isleftassociative(char):
+                 while stack and stack[-1]!='(' and (precendence(stack[-1])>= precendence(char)) and  isleftassociative(char):
                     output+=stack.pop()
                  stack.append(char)
     while stack:  #if there are still oeprators then we just add those oeprators to the output
         output+=stack.pop()                 
     return output        
-print(infixtopostfix('(a+b)*c'))   
+print(infixtopostfix('a+b*c^d-e^f*g+h'))   
 #time complexity : O(N)
 #space complexity : O(N)
 
