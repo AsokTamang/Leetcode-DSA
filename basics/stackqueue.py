@@ -706,4 +706,21 @@ print(prefixtopostfix('*+ab-cd'))
 #time complexity : O(N)
 #space complexity : O(N)         
          
+#Postfix to Prefix Conversion
+# You are given a valid postfix expression as a string, where:Operands are single lowercase English letters ('a' to 'z')
+#Operators are binary: '+', '-', '*', '/' #The expression contains no spaces and is guaranteed to be valid.       
          
+def postfixtoprefix(str):
+    stack = []
+    for char in str:
+        if char.isalpha() or char.isdigit():
+            stack.append(char)
+        else:
+            last=stack.pop()
+            secondlast=stack.pop()
+            newvalue = char + secondlast + last
+            stack.append(newvalue)
+    return stack[0]  #returning the total final value
+print(postfixtoprefix('abc*+d-')) 
+#time complexity : O(N)
+#space complexity : O(N)            
