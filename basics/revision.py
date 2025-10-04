@@ -499,3 +499,19 @@ print(prefixtopostfix('^a*bc'))
 #time complexity : O(N)
 #space complexity : O(N)
 
+
+#postfix into prefix conversion
+def postfixtoprefix(str):
+    stack = []
+    for char in str:
+        if char.isalpha() or char.isdigit():
+            stack.append(char)
+        else:
+            last=stack.pop()
+            secondlast=stack.pop()
+            newvalue = char + secondlast + last
+            stack.append(newvalue)
+    return stack[0]
+print(postfixtoprefix('ab+'))           
+#time complexity : O(N)
+#space complexity : O(N) 
