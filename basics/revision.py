@@ -463,4 +463,21 @@ def infixtopostfix(str):
 print(infixtopostfix('a+b*c^d-e^f*g+h'))  
 #time complexity : O(N)
 #space complexity : O(N)              
-                            
+
+#prefix to infix conversion
+def prefixtoinfix(str):
+    str=str[::-1]
+    stack = []
+    for char in str:
+        if char.isalpha() or char.isdigit():
+            stack.append(char)
+        else:
+            last=stack.pop()
+            secondlast=stack.pop()
+            newvalue ='('+ last + char + secondlast + ')'
+            stack.append(newvalue)
+    return stack[0]
+print(prefixtoinfix('*+ab-cd'))   
+#time complexity :O(N)
+#space complexity : O(N)         
+
