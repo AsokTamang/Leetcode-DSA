@@ -54,3 +54,27 @@ def optimalnextgreater(arr):
 print(optimalnextgreater([3, 10, 4, 2, 1, 2, 6, 1, 7, 2, 9]))          
 #time complexity : O(N)
 #space complexity : O(N)
+
+
+#Next Smaller Element
+#Given an array of integers arr, your task is to find the Next Smaller Element (NSE) for every element in the array.
+#The Next Smaller Element for an element x is defined as the first element to the right of x that is smaller than x.
+#If there is no smaller element to the right, then the NSE is -1.
+
+def nextsmallerelement(arr):
+    stack = []
+    ans = [-1] * len(arr)
+    for i in range(len(arr)-1,-1,-1):   #looping from the very last element
+        while stack and stack[-1]>=arr[i]:  
+            stack.pop()
+        if stack:
+            ans[i]=stack[-1]  #if the stack still remains , then the top most number of the stack is the very next smaller number for the i indexed number
+        stack.append(arr[i])    
+    return ans
+print(nextsmallerelement([4, 8, 5, 2, 25]))    
+#time complexity : O(N)
+#space complexity : O(N)        
+
+
+
+
