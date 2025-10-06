@@ -111,5 +111,29 @@ print(nges( [3, 4, 2, 7, 5, 8, 10, 6],[0, 5]))
 
 
 
+#find the prefix max
+def prefixmax(arr):
+    ans =[0] * len(arr) #creating an ans variable of length same as that of the arr
+    ans[0] = arr[0]  #the very first element of the ans will be same as that of the arr
+    for i in range(1,len(arr)):
+        ans[i] = max(ans[i-1],arr[i])  #this will insert the value according to the maximum value between the previous and the current indexed number in the array
+    return ans    
+print(prefixmax([2,1,5,0,3]))
+
+
+#find the suffix max
+def suffixmax(arr):
+    n=len(arr)
+    ans=[0] * len(arr)  
+    ans[n-1] = arr[n-1]   #last value of the ans will be same as that of the given arr, as we are trying to find the suffix max
+    for i in range(n-2,-1,-1):
+        ans[i] = max(ans[i+1],arr[i])
+    return ans
+print(suffixmax([2,1,5,0,3]))    
+
+
+
+
+
 
 
