@@ -232,3 +232,37 @@ def bettersubarraymini(arr):
 print(bettersubarraymini([11,81,94,43,3]))  
 #time complexity :O(N^2)
 #space complexity : O(1)       
+
+
+
+def optimalsubarraymini(arr):
+    n=len(arr)
+   
+    def previousminiequal(arr,indexx):
+        stack = []
+        ans=[0] * n   
+        for i in range(n):
+            while stack and arr[stack[-1]] > arr[i]:
+                stack.pop()
+            ans[i] = stack[-1] if stack else -1   #if the stack still exists then the previous smaller or equal element will be the remaining top element or last elment of the stack otherwise we can go till the very first index
+            stack.append(i)
+        return ans[indexx]    #this ans stores the index where we found the smaller element in the previous or past direction compared to the passed index      
+
+            
+    def nextmini(arr,indexx):
+        stack =[]
+        ans = [0] * n  #storing the next smaller element
+        for i in range(n-1,-1,-1):
+            while stack and arr[stack[-1]]>=arr[i]:
+                stack.pop()
+            ans[i]=stack[-1] if stack else n
+            stack.append(i)
+        return ans[indexx]  #this returns the index we found the number smaller than the passed indexed number , which lies in the next or future direction
+    totalsum = 0
+    for i in range(n):
+        totalsum+=(nextmini(arr,i) - i) * (i- previousminiequal(arr,i)) * arr[i]    #here what we are doing is just calculating the number of subarray that can be created in both forward and backward direction where this i indexed number will be the minimum number in the subarray
+    return totalsum
+print(optimalsubarraymini([3,1,2,4]))
+#time complexity : O(N)
+#space complexity : O(N)
+        
