@@ -172,7 +172,8 @@ def optimaltrainingwater(height):
                 rightmax=height[r]
     return total
 print(optimaltrainingwater( [4, 2, 0, 3, 2, 5]))
-                    
+#time complexity : O(N)
+#space complexity : O(1)                    
 
     
    
