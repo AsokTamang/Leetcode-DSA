@@ -515,3 +515,65 @@ def postfixtoprefix(str):
 print(postfixtoprefix('ab+'))           
 #time complexity : O(N)
 #space complexity : O(N) 
+
+#postfix to infix
+def postfixtoinfix(str):
+    stack = []
+    for char in str:
+        if char.isalpha() or char.isdigit():
+            stack.append(char)
+        else:
+            last=stack.pop()
+            secondlast=stack.pop()
+            newvalue='(' + secondlast + char + last + ')'
+            stack.append(newvalue)
+    return stack[0]
+print(postfixtoinfix('ab*c+'))            
+#time complexity : O(N)
+#space complexity : O(N)
+
+
+#infix to prefix conversion
+def infixtoprefix(str):
+    str=str[::-1]  #reversing thre given string
+    reverv=''
+    def precedence(opr):  #here opr means the operator
+        if opr == '^':
+            return 3
+        elif opr == '+' or opr == '-':
+            return 1
+        elif opr == '*' or opr == '/':
+            return 2
+        else:
+            return 0
+
+    for char in str:
+        if char == '(':
+            reverv+=')'
+        elif char == ')':
+            reverv+='('
+        else:
+            reverv+=char    
+    stack =[]
+    output = ''
+    for char in reverv:
+        if char.isalpha() or char.isdigit():
+            output+=char   #if the character is alphabetic or a digit then we just directly add the charcter into our output
+        elif char == '(':
+            stack.append(char)
+        elif char == ')':
+            while stack and stack[-1] !='(':
+                output+=stack.pop()
+            stack.pop()#removing the ( character which is at the last position of the stack
+        else:
+            while stack and precedence(char)<=precedence(stack[-1]):
+                output+=stack.pop()
+            stack.append(char)
+    while stack:
+        output+=stack.pop()
+    return output[::-1]  
+print(infixtoprefix('(a+b)*c'))       
+#time complexity : O(N)
+#space complexity : O(N)        
+
+                        
