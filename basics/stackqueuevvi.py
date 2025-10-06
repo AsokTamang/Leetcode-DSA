@@ -32,3 +32,25 @@ def optimalnext(arr):
 print(optimalnext([6, 8, 0, 1, 3]))
 #time complexity : O(N)
 #space complexity : O(N)
+
+
+
+#Next Greater Element - 2
+#Given a circular integer array arr, return the next greater element for every element in arr.
+#The next greater element for an element x is the first element greater than x that we come across while traversing the array in a clockwise manner.
+#If it doesn't exist, return -1 for that element.
+
+def optimalnextgreater(arr):
+    n=len(arr) 
+    stack = []
+    ans = [-1] * n #this variable stores our ans
+    for i in range( 2 * n , -1 , -1):  #and here we are running the loop twice cause 
+        while stack and stack[-1]<=arr[i%n]:  #the logic remains the same , where we just keep on popping the number from the last position of the stack, 
+            stack.pop()
+        if stack:  #and if the stack still remains then the last number of the stack is ofcourse the required greater number for the current i indexed number
+            ans[i%n] = stack[-1]
+        stack.append(arr[i%n])  
+    return ans
+print(optimalnextgreater([3, 10, 4, 2, 1, 2, 6, 1, 7, 2, 9]))          
+#time complexity : O(N)
+#space complexity : O(N)
