@@ -147,6 +147,34 @@ print(trappingrainwater( [4, 2, 0, 3, 2, 5]))
 #time complexity : O(N)
 #space complexity : O(N)       
 
+#optimal solution 
+def optimaltrainingwater(height):
+    n=len(height)  #length of the given height
+    l=0     #the very first index 
+    r=n-1  #the very last index
+    #in this optimal solution what we do , is first of all we assign the left l and right r pointer to the very first and very last index of the given array respectively,
+    leftmax = height[l]  #initally the left max will be the value of very first index
+    rightmax=height[r]   #the right max will be the value of very last index
+    total = 0
+    while l!=r:
+        #the logic is we traverse from that index whose max value is smaller compared to the other one
+        if leftmax <=rightmax:  
+            l+=1
+            if height[l] < leftmax:   #if the new left indexed value is greater than the left max then it means we can store the water which is 
+                total+=leftmax-height[l] #which is this 
+            else:    
+                leftmax = height[l]  #and we also update the left max
+        else:
+            r-=1
+            if height[r] < rightmax:
+                total +=  rightmax - height[r]
+            else:    
+                rightmax=height[r]
+    return total
+print(optimaltrainingwater( [4, 2, 0, 3, 2, 5]))
+                    
+
+    
    
 
 
