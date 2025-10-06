@@ -79,19 +79,34 @@ print(nextsmallerelement([4, 8, 5, 2, 25]))
 def numberofgreater(arr,indices):
     first = indices[0]  #first index   
     second = indices[1] #second index
-    ans1=[]
-    ans2=[]
+    c1=0
+    c2=0
     for i in range(len(arr)-1,first,-1):
         if arr[i] > arr[first]:
-            ans1.append(arr[i])
+            c1+=1
     for j in range(len(arr)-1,second,-1):
         if arr[j] > arr[second]:
-            ans2.append(arr[j])      
-    return [len(ans1),len(ans2)] 
+            c2+=1     
+    return [c1,c2] 
 print(numberofgreater([1, 2, 3, 4, 1],  [0, 3]))     
 #time complexity : O(N)
-#space complexity : O(N)    
+#space complexity : O(1)    
 
+
+
+#optimal solution 
+def nges(arr,indices):
+    ans =[]
+    for index in indices:
+        count = 0
+        for i in range(index+1,len(arr)):
+            if arr[i] > arr[index]:
+                count+=1
+        ans.append(count)
+    return ans
+print(nges( [3, 4, 2, 7, 5, 8, 10, 6],[0, 5]))    
+#time complexity : O(N*M) M is the number of given indices
+#space complexity :  O(1)        
 
 
 
