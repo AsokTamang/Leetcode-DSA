@@ -112,28 +112,42 @@ print(nges( [3, 4, 2, 7, 5, 8, 10, 6],[0, 5]))
 
 
 #find the prefix max
-def prefixmax(arr):
-    ans =[0] * len(arr) #creating an ans variable of length same as that of the arr
-    ans[0] = arr[0]  #the very first element of the ans will be same as that of the arr
-    for i in range(1,len(arr)):
-        ans[i] = max(ans[i-1],arr[i])  #this will insert the value according to the maximum value between the previous and the current indexed number in the array
-    return ans    
-print(prefixmax([2,1,5,0,3]))
-
-
-#find the suffix max
-def suffixmax(arr):
-    n=len(arr)
-    ans=[0] * len(arr)  
-    ans[n-1] = arr[n-1]   #last value of the ans will be same as that of the given arr, as we are trying to find the suffix max
-    for i in range(n-2,-1,-1):
-        ans[i] = max(ans[i+1],arr[i])
-    return ans
-print(suffixmax([2,1,5,0,3]))    
+   
 
 
 
+#brute approach
+#Trapping Rainwater
+#Given an array of non-negative integers, height representing the elevation of ground. Calculate the amount of water that can be trapped after rain.
 
+def trappingrainwater(height):
+    def prefixmax(h):  #here h acts as the index , where we must find the prefix max
+        ans =[0] * len(height) #creating an ans variable of length same as that of the arr
+        ans[0] = height[0]  #the very first element of the ans will be same as that of the arr
+        for i in range(1,len(height)):
+            ans[i] = max(ans[i-1],height[i])  #this will insert the value according to the maximum value between the previous and the current indexed number in the array
+        return ans[h]    
+
+
+
+    #find the suffix max
+    def suffixmax(h):#here h acts as the index , where we must find the suffix max
+        n=len(height)
+        ans=[0] * len(height)  
+        ans[n-1] = height[n-1]   #last value of the ans will be same as that of the given arr, as we are trying to find the suffix max
+        for i in range(n-2,-1,-1):
+            ans[i] = max(ans[i+1],height[i])
+        return ans[h]  #then we just return the suffixmax at the index h
+    totalamount = 0
+    for i in range(len(height)):
+        if  height[i] < prefixmax(i) and height[i] < suffixmax(i):
+            totalamount+=min(prefixmax(i),suffixmax(i)) - height[i]
+    return totalamount
+print(trappingrainwater( [4, 2, 0, 3, 2, 5]))  
+#time complexity : O(N)
+#space complexity : O(N)       
+
+   
 
 
 
