@@ -75,6 +75,26 @@ print(nextsmallerelement([4, 8, 5, 2, 25]))
 #time complexity : O(N)
 #space complexity : O(N)        
 
+#Number of Greater Elements to the Right
+def numberofgreater(arr,indices):
+    first = indices[0]  #first index   
+    second = indices[1] #second index
+    ans1=[]
+    ans2=[]
+    for i in range(len(arr)-1,first,-1):
+        if arr[i] > arr[first]:
+            ans1.append(arr[i])
+    for j in range(len(arr)-1,second,-1):
+        if arr[j] > arr[second]:
+            ans2.append(arr[j])      
+    return [len(ans1),len(ans2)] 
+print(numberofgreater([1, 2, 3, 4, 1],  [0, 3]))     
+#time complexity : O(N)
+#space complexity : O(N)    
+
+
+
+
 
 
 
