@@ -215,14 +215,20 @@ def sumsubarraymin(arr):
          s+=mini
     return s
 print(sumsubarraymin([11,81,94,43,3]))    
-#time complexity : O(N)
-#space complexity : O(1)  
+#time complexity : O(N^3)
+#space complexity : O(N)  
 
 
-
-
-    
-   
-
-
-
+#better solution
+def bettersubarraymini(arr):
+    n=len(arr)
+    totalsum = 0
+    for i in range(n):
+        mini=arr[i]
+        for j in range(i,n):
+            mini=min(mini,arr[j])
+            totalsum+=mini
+    return totalsum
+print(bettersubarraymini([11,81,94,43,3]))  
+#time complexity :O(N^2)
+#space complexity : O(1)       
