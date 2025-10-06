@@ -173,7 +173,53 @@ def optimaltrainingwater(height):
     return total
 print(optimaltrainingwater( [4, 2, 0, 3, 2, 5]))
 #time complexity : O(N)
+#space complexity : O(1)                   
+
+
+#optimal solution 
+def optimaltrainingwater(height):
+    n=len(height)  #length of the given height
+    l=0     #the very first index 
+    r=n-1  #the very last index
+    #in this optimal solution what we do , is first of all we assign the left l and right r pointer to the very first and very last index of the given array respectively,
+    leftmax = height[l]  #initally the left max will be the value of very first index
+    rightmax=height[r]   #the right max will be the value of very last index
+    total = 0
+    while l!=r:
+        #the logic is we traverse from that index whose max value is smaller compared to the other one
+        if leftmax <=rightmax:  
+            l+=1
+            leftmax = max(leftmax,height[l])
+            total+=leftmax - height[l]  #water amount trapped at that position
+        else:
+            r-=1
+            rightmax=max(rightmax,height[r])
+            total+=rightmax - height[r]
+    return total
+print(optimaltrainingwater( [4, 2, 0, 3, 2, 5]))
+#time complexity : O(N)
 #space complexity : O(1)                    
+
+
+
+#Sum of Subarray Minimums
+#Given an array of integers arr, find the sum of min(b), where b ranges over every (contiguous) subarray of arr. Since the answer may be large, return the answer modulo 109 + 7.
+#brute approach
+def sumsubarraymin(arr):
+    n=len(arr)
+    s = 0
+    for i in range(n):
+        for j in range(i,n):
+         subarray = arr[i:j+1]
+         mini=min(subarray)
+         s+=mini
+    return s
+print(sumsubarraymin([11,81,94,43,3]))    
+#time complexity : O(N)
+#space complexity : O(1)  
+
+
+
 
     
    
