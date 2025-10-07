@@ -628,5 +628,18 @@ print(optimaltrapping([4, 2, 0, 3, 2, 5]))
 #time complexity : O(N)
 #space complexity : O(1)
    
-
+#Sum of Subarray Minimums
+#brute approach of subarray minimums
+def brutesubarraymini(arr):
+    n=len(arr)
+    total = 0
+    for i in range(n):
+        mini=arr[i]
+        for j in range(i,n):
+            mini=min(mini,arr[j])
+            total+=mini
+    return total
+print(brutesubarraymini([3,1,2,4]))     
+#time complexity : O(N^2)
+#space complexity : O(1)    
 
