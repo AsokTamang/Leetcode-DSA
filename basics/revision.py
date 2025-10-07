@@ -630,6 +630,7 @@ print(optimaltrapping([4, 2, 0, 3, 2, 5]))
    
 #Sum of Subarray Minimums
 #brute approach of subarray minimums
+#in the brute approach what we did was , looping through every elements in a nested loop and finding the minimum elment in the subarray creater, then calculating the total
 def brutesubarraymini(arr):
     n=len(arr)
     total = 0
@@ -642,4 +643,40 @@ def brutesubarraymini(arr):
 print(brutesubarraymini([3,1,2,4]))     
 #time complexity : O(N^2)
 #space complexity : O(1)    
+
+
+#optimal solution
+#in the optimal solution what we do is , we try to find the index where lies the number smaller than the number at the current index , in both forward and backwaard direction , then after getting those indices , we calculate the number of subarray that can be created where this current indexed number will be the minimum
+def optimalsubarraymini(arr):
+    n=len(arr)
+
+    stack = []
+    nextsmallerelem = [n] * n
+    for i in range(n-1,-1,-1):
+        while stack and arr[stack[-1]]>=arr[i]:
+            stack.pop()
+        nextsmallerelem[i]=stack[-1] if stack else n  #if the stack still exists then it means there exists a number smaller in the forward direction than current i indexed number in the givenarray
+        #otherwise , no minimum number exists and we can create a subarray till n where this i indexed number is the minimum number
+        stack.append(i)
+    
+
+
+   
+    stack = []
+    previoussmallerequal = [-1] * n
+    for i in range(n):
+        while stack and arr[stack[-1]]>arr[i]:
+            stack.pop()
+        previoussmallerequal[i]=stack[-1] if stack else -1  #if the stack still exists then it means there exists a number smaller in the backward direction than current i indexed number in the givenarray
+        #otherwise , no minimum number exists and we can create a subarray till -1 which is till the very first index where this i indexed number is the minimum number
+        stack.append(i)
+    
+    total = 0
+    for i in range(n):
+        total+=(nextsmallerelem[i] - i) * (i-previoussmallerequal[i]) * arr[i]
+    return total  
+print(optimalsubarraymini([3,1,2,4]))  
+#time complexity : O(N)
+#space complexity : O(N)
+
 
