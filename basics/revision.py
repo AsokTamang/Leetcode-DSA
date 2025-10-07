@@ -577,5 +577,29 @@ print(infixtoprefix('(a+b)*c'))
 #space complexity : O(N)        
 
 
-
+#trapping rainwater
+#Given an array of non-negative integers, height representing the elevation of ground. Calculate the amount of water that can be trapped after rain.
                         
+def brutetrappingrainwater(height):
+    n=len(height)
+    def previousmax(height,indexx):#prefix sum
+        ans=[0] * n  #this stores the maximum value at every index compared to its left max
+        ans[0] = height[0]
+        for i in range(1,n):
+            ans[i] = max(ans[i-1],height[i])  #calculating the previous max
+        return ans[indexx]    
+
+    def nextmax(height,indexx):#suffix sum
+        ans=[0] * n  #this stores the maximum value at every index compared to its right
+        ans[n-1]=height[n-1]
+        for i in range(n-2,-1,-1):
+            ans[i] = max(ans[i+1],height[i])
+        return ans[indexx]    
+    total=0
+    for i in range(n):
+        if height[i]<previousmax(height,i) and height[i]<nextmax(height,i):
+            total+=min(previousmax(height,i),nextmax(height,i)) - height[i] 
+    return total  
+print(brutetrappingrainwater(  [4, 2, 0, 3, 2, 5]))     
+#time complexity : O(N)
+#space complexity : O(N)
