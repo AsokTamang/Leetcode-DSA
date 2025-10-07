@@ -581,6 +581,7 @@ print(infixtoprefix('(a+b)*c'))
 #Given an array of non-negative integers, height representing the elevation of ground. Calculate the amount of water that can be trapped after rain.
                         
 def brutetrappingrainwater(height):
+    #in the brute approach what we do is , we just try to find the left max and right max using the different functions that calculate the prefixmax and suffix max of every index
     n=len(height)
     def previousmax(height,indexx):#prefix sum
         ans=[0] * n  #this stores the maximum value at every index compared to its left max
@@ -603,3 +604,29 @@ def brutetrappingrainwater(height):
 print(brutetrappingrainwater(  [4, 2, 0, 3, 2, 5]))     
 #time complexity : O(N)
 #space complexity : O(N)
+
+
+#optimal solution of trapping rainwater
+def optimaltrapping(height):
+    #in the optimal solution what we do , is we use the two pointers and calculate the leftmax right as well as the amount of water that can be held at every index
+    n=len(height)
+    l,r = 0,n-1
+    leftmax=height[0]   #the initial leftmax will be the value at the very first index
+    rightmax = height[r]  #the initial rightmax will be the value at the very last index
+    total=0
+    while l!=r:
+        if leftmax<rightmax:
+            l+=1  #we traverse from that side which has the maximum value lesser compared to the maximum value of other side
+            leftmax=max(leftmax,height[l])
+            total+=leftmax-height[l]
+        else:
+            r+=1  #we traverse from that side which has the maximum value lesser compared to the maximum value of other side
+            rightmax=max(rightmax,height[r])
+            total+=rightmax-height[r]
+    return total
+print(optimaltrapping([4, 2, 0, 3, 2, 5]))
+#time complexity : O(N)
+#space complexity : O(1)
+   
+
+
