@@ -270,6 +270,8 @@ print(optimalsubarraymini([3,1,2,4]))
 
 
 #asteroid collision
+#LIFO approach
+
 def optimalasteroid(arr):
     stack = []
     for i in range(len(arr)):
@@ -290,3 +292,29 @@ def optimalasteroid(arr):
 print(optimalasteroid( [5, 10, -5, -10, 8, -8, -3, 12]))
 #time complexity : O(N)
 #space complexity : O(N)
+
+
+#Sum of Subarray Ranges
+#Given an integer array nums, determine the range of a subarray, defined as the difference between the largest and smallest elements within the subarray. Calculate and return the sum of all subarray ranges of nums.
+#A subarray is defined as a contiguous, non-empty sequence of elements within the array.
+
+#here what the question is asking us is to determine the sum of range of all possible subarrays from the given array, and this range can be found by calculating the maximum value and minimum value from an obtained subarray
+
+
+
+
+#brute approach
+def brutesubarrayrange(nums):
+    n=len(nums)
+    total = 0
+    for i in range(n):
+        minim=nums[i]
+        maxim=nums[i]
+        for j in range(i,n):
+            minim=min(minim,nums[j])
+            maxim=max(maxim,nums[j])
+            total+=maxim-minim
+    return total
+print(brutesubarrayrange([1, 3, 3]))      
+#time complexity : O(n^2)
+#space complexity : O(1)   
