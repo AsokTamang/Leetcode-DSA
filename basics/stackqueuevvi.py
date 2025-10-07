@@ -266,3 +266,27 @@ print(optimalsubarraymini([3,1,2,4]))
 #time complexity : O(N)
 #space complexity : O(N)
         
+
+
+
+#asteroid collision
+def optimalasteroid(arr):
+    stack = []
+    for i in range(len(arr)):
+        if arr[i] > 0:
+            stack.append(arr[i])
+        else:
+            while stack and stack[-1] > 0:
+                if stack[-1] < abs(arr[i]):
+                    stack.pop()
+                    continue  #continue means continuing with the current while loop
+                elif stack[-1] == abs(arr[i]):  #if both of them are same
+                    stack.pop()
+                break  #this break is for both the condition when the top most element of the stack and the i indexed element are same or thei indexed element is lesser than the top most elemment of the stack     
+            else:  #if there is no stack or the top most element of the stack is lesser than 0 then it means the i indexed and this number are moving in the same direction , so we just append this i indexed number in the stack
+                stack.append(arr[i])
+
+    return stack           
+print(optimalasteroid( [5, 10, -5, -10, 8, -8, -3, 12]))
+#time complexity : O(N)
+#space complexity : O(N)
