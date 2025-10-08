@@ -353,8 +353,9 @@ def optimalsubarrayrange(nums):
     for i in range(n):
         minim=(i-prevmini[i]) * (nextmini[i]-i)
         maxim=(i-prevgreater[i]) * (nextgreater[i]-i)
-        total+=nums[i] * (maxim - minim)
+        total+=nums[i] * (maxim - minim)  #this gives us the number of subarrays where this i indexed number will be the maximum as well as minimum
     return total    
 print(optimalsubarrayrange([1, 2, 3]))
 #time complexity : O(N)
 #space complexity : O(N)
+

@@ -702,3 +702,41 @@ def asteroidcollision(arr):
 print(asteroidcollision([5, 10, -5, -10, 8, -8, -3, 12]))            
 #time complexity : O(N)
 #space complexity : O(N)
+
+
+#Sum of Subarray Ranges
+def sumsubarrayrange(nums):
+    n=len(nums)
+    def prevnextmin(nums):  #function to return the previous min and next min 
+        prevmin=[-1] * n
+        nextmin=[n] * n
+        stack = []
+        for i in range(n):
+            while stack and nums[stack[-1]] > nums[i]:
+                nextmin[stack.pop()] = i
+            if stack:
+                prevmin[i] = stack[-1]
+            stack.append(i) 
+        return prevmin,nextmin           
+    def prevnextmax(nums):
+        prevmax=[-1] * n
+        nextmax = [n] * n
+        stack=[]
+        for i in range(n):
+            while stack and nums[stack[-1]]<nums[i]:
+                nextmax[stack.pop()] = i
+            if stack:
+                prevmax[i]=stack[-1]
+            stack.append(i) 
+        return prevmax,nextmax       
+    prevmin,nextmin=prevnextmin(nums)
+    prevmax,nextmax=prevnextmax(nums)
+    total=0
+    for i in range(n):
+        maxim=(i-prevmax[i] ) * (nextmax[i]-i)
+        minim = (i-prevmin[i]) * (nextmin[i]-i)
+        total+=(maxim - minim) * nums[i]
+    return total
+print(sumsubarrayrange([1, 3, 3]))    
+#time complexity : O(N)
+#space complexity : O(N)
