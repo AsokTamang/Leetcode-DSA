@@ -359,3 +359,17 @@ print(optimalsubarrayrange([1, 2, 3]))
 #time complexity : O(N)
 #space complexity : O(N)
 
+#remove k digits
+def removekdigits(nums,k):
+   stack = []
+   for i in range(len(nums)):
+       while k>0 and stack and stack[-1] >nums[i]:
+           k-=1  #here this calculation determines how many numbers are left to removed as well as how many we have already removed
+           stack.pop()
+       stack.append(nums[i]) 
+   return ''.join(stack).lstrip('0')    #.lstrip('0') removes the leading 0     
+print(removekdigits( "1002991", 3))    
+#time complexity : O(N)
+#space complexity : O(1)
+
+    
