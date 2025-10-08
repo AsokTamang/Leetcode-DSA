@@ -425,20 +425,26 @@ print(brutelargestrec( [2, 1, 5, 6, 2, 3]))
 def optmlargestrec(heights):
     stack = []
     n=len(heights)
-    prevsmaller=[-1] * n
-    nextsmaller=[n] * n
-    for i in range(n):
-        while stack and heights[stack[-1]]>heights[i]:
-            nextsmaller[stack.pop()]=i   #if the stack.pop() indexed number is greater than the current i indexed number
-            #then ofcourse the nextsmaller index of the stack.pop() will be the current i index
-        if stack: 
-            prevsmaller[i] = stack[-1]     #if the stack still exists then the top index of stack will be the previous smaller value containing index of the current index
-        stack.append(i)
     area=0
     for i in range(n):
-        width = nextsmaller[i] - prevsmaller[i] - 1
-        currentarea=heights[i] * width  
+        while stack and heights[stack[-1]]>heights[i]:
+            calculatingelem=heights[stack.pop()]   #the popped index will be the index of the calculating element as we found the next smaller element of this calcualting elment
+            prevsmaller = stack[-1] if stack else -1
+            nextsmaller = i  #the next smaller elmenent's index will be the current i
+            width = nextsmaller-prevsmaller - 1
+            currentarea=calculatingelem * width 
+            area=max(area,currentarea)
+        stack.append(i)
+            
+    while stack:
+        calculatingelem=heights[stack.pop()]
+        nextsmaller = n
+        prevsmaller = stack[-1] if stack else -1  
+        width = nextsmaller - prevsmaller - 1
+        currentarea=calculatingelem*width  #as the calculting elem is the height
         area=max(area,currentarea)
+
+
     return area
 print(optmlargestrec([2, 1, 5, 6, 2, 3]))    
 #time complexity : O(N)
