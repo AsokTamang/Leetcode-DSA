@@ -318,3 +318,43 @@ def brutesubarrayrange(nums):
 print(brutesubarrayrange([1, 3, 3]))      
 #time complexity : O(n^2)
 #space complexity : O(1)   
+
+
+#optimal solution of sum of subarray range
+def optimalsubarrayrange(nums):
+    n=len(nums)
+    def previousmininextmini(nums):
+        stack = []
+        nextmini=[n] * n
+        previousmini = [-1] * n
+        for i in range(n):
+            while stack and nums[stack[-1]] > nums[i]:
+                nextmini[stack.pop()]=i  #if the i indexed number is lesser than the number at the  index which is at the top of stack, then the nextminimum number for this top indexed will be the i indexed number so we put i for nextmini[stack.pop()]
+            if stack:
+                previousmini[i] = stack[-1]
+            stack.append(i)
+        return nextmini,previousmini         
+        
+  
+    def previousgreaternextgreater(nums):
+        stack = []
+        previousgreater=[-1] * n
+        nextgreater = [n] * n
+        for i in range(n):
+            while stack and nums[stack[-1]] < nums[i]:
+                nextgreater[stack.pop()]=i
+            if stack:
+                previousgreater[i] = stack[-1]  #looping from the clockswise direction will always given the previous index whether its a smaller or greater , it depends upon the sign
+            stack.append(i)
+        return previousgreater,nextgreater
+    nextmini,prevmini=previousmininextmini(nums)
+    prevgreater,nextgreater=previousgreaternextgreater(nums)
+    total = 0
+    for i in range(n):
+        minim=(i-prevmini[i]) * (nextmini[i]-i)
+        maxim=(i-prevgreater[i]) * (nextgreater[i]-i)
+        total+=nums[i] * (maxim - minim)
+    return total    
+print(optimalsubarrayrange([1, 3, 3]))
+#time complexity : O(N)
+#space complexity : O(N)
