@@ -768,3 +768,26 @@ print(trappedwater([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]))
 
 
 #optimal rainwater
+#in the optimal approach what we do is we use the two-pointers method and calculate the left max and right max , and we traverse from that direction which has the lesser max
+def opttrappedrainwater(height):
+    n=len(height)
+    l=0
+    r=n-1
+    total = 0
+    leftmax=height[l]
+    rightmax=height[r]
+    while l!=r:
+        
+        if leftmax<=rightmax:
+            l+=1
+            leftmax=max(leftmax,height[l])
+            total+=leftmax - height[l]
+        else:
+            r-=1
+            rightmax=max(rightmax,height[r])
+            total+=rightmax-height[r] 
+    return total
+print(opttrappedrainwater([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]))          
+
+        
+    
