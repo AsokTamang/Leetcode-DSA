@@ -310,7 +310,7 @@ def brutesubarrayrange(nums):
     for i in range(n):
         minim=nums[i]
         maxim=nums[i]
-        for j in range(i,n):
+        for j in range(i,n):  #inside this loop we are finding the maximum as well as the minimum value that will be found in every possible subarray generated , respectively
             minim=min(minim,nums[j])
             maxim=max(maxim,nums[j])
             total+=maxim-minim
@@ -355,6 +355,6 @@ def optimalsubarrayrange(nums):
         maxim=(i-prevgreater[i]) * (nextgreater[i]-i)
         total+=nums[i] * (maxim - minim)
     return total    
-print(optimalsubarrayrange([1, 3, 3]))
+print(optimalsubarrayrange([1, 2, 3]))
 #time complexity : O(N)
 #space complexity : O(N)

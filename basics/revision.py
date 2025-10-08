@@ -680,3 +680,25 @@ print(optimalsubarraymini([3,1,2,4]))
 #space complexity : O(N)
 
 
+#Asteroid Collision
+def asteroidcollision(arr):
+    stack = [ ]  #here initially we will store only the positive values in the stack
+    for i in range(len(arr)):
+        if arr[i] > 0 :  
+            stack.append(arr[i])
+        else:   #if we find the number at the current i indexed to be negative , which means going in opposite direction as mentioned in the question , there's a process of collision,
+            while stack and stack[-1] > 0:
+                if stack and stack[-1] < abs(arr[i]):
+                    stack.pop()
+                    continue  #continuing the while loop
+                elif stack and stack[-1]==abs(arr[i]):
+                    stack.pop()
+                #the break down below will happen if stack[-1] == abs(arr[i]) or stack[-1]>arr[i] , meaning we skip the current i indexed number as it is destroyed.
+                break  #this break means breaking out of the while loop and we reach this break point only under two conditions , when the top element and the abs value of arr[i] are same, or stack[-1] > arr[i]    
+
+            else:  #if the stack is empty or the top most element of the stack is also less than 0 then it means there's no chance of collision, then we just append the current i indexed number in the stack
+                stack.append(arr[i])
+    return stack
+print(asteroidcollision([5, 10, -5, -10, 8, -8, -3, 12]))            
+#time complexity : O(N)
+#space complexity : O(N)
