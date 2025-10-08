@@ -765,6 +765,8 @@ def trappedwater(height):
          total+=min(leftmax(height,i),rightmax(height,i)) - height[i]
     return total     
 print(trappedwater([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]))
+#time complexity : O(N)
+#space complexity : O(N)
 
 
 #optimal rainwater
@@ -787,7 +789,9 @@ def opttrappedrainwater(height):
             rightmax=max(rightmax,height[r])
             total+=rightmax-height[r] 
     return total
-print(opttrappedrainwater([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]))          
+print(opttrappedrainwater([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]))    
+#time compelxity : O(N)
+#space complexity : O(N)       
 
         
     

@@ -380,4 +380,66 @@ print(removekdigits( "1002991", 3))
 #space complexity : O(N)
 
 
-    
+
+#Largest rectangle in a histogram
+#Given an array of integers heights representing the histogram's bar height where the width of each bar is 1 return the area of the largest rectangle in the histogram.
+#brute approach
+#so inorder to be a rectangle from the current index, the current indexed number must be minimum ,towards its left and towards its right 
+#so we need to find the number of subarrays, where it can be minimum and multiply it by this i indexed number
+def brutelargestrec(heights):
+    area=0
+    n=len(heights)
+    def prevsamller(heights,indexx):
+        stack = []
+        ans = [-1] * n
+        for i in range(n):
+            while stack and heights[stack[-1]]>=heights[i]:
+                stack.pop()
+            if stack:
+                ans[i] = stack[-1]   #this will be the index at the preceding position where the number smaller than the current i indexed number is found,until this obtained index the current i indexed number will always be minimum
+            stack.append(i)  
+        return ans[indexx]          
+    def nextsmaller(heights,indexx):
+        stack=[]
+        ans=[n] * n
+        for i in range(n-1,-1,-1):
+            while stack and heights[stack[-1]]>=heights[i]:  #as we are popping the index where the values are greater compared to the current i indexed number
+                stack.pop()
+            if stack:  #if the stack still exists then it means we found a index where the number is smaller than the current indexed number but in the proceding position or direction
+                ans[i] = stack[-1]
+            stack.append(i)
+        return ans[indexx]   #this ans gives us the index,and the value before this index will have the passed indexxed number as the minimum value ,          
+    for i in range(n):
+        width = nextsmaller(heights,i) - prevsamller(heights,i) -1  #here the formula is :
+        #nextsmaller[i] - 1 -(prevsmaller[i]+1) +1  as we cannot include the indices where we find the prevsmaller so we add 1 to it , and nextsmaller so we deduct 1 from it.
+        itsarea=width * heights[i]
+        area=max(area,itsarea)
+    return area
+print(brutelargestrec( [2, 1, 5, 6, 2, 3]))    
+#time complexity : O(N)
+#space complexity : O(N)
+
+
+
+#optimal solution
+def optmlargestrec(heights):
+    stack = []
+    n=len(heights)
+    prevsmaller=[-1] * n
+    nextsmaller=[n] * n
+    for i in range(n):
+        while stack and heights[stack[-1]]>heights[i]:
+            nextsmaller[stack.pop()]=i   #if the stack.pop() indexed number is greater than the current i indexed number
+            #then ofcourse the nextsmaller index of the stack.pop() will be the current i index
+        if stack: 
+            prevsmaller[i] = stack[-1]     #if the stack still exists then the top index of stack will be the previous smaller value containing index of the current index
+        stack.append(i)
+    area=0
+    for i in range(n):
+        width = nextsmaller[i] - prevsmaller[i] - 1
+        currentarea=heights[i] * width  
+        area=max(area,currentarea)
+    return area
+print(optmlargestrec([2, 1, 5, 6, 2, 3]))    
+#time complexity : O(N)
+#space complexity : O(N)
