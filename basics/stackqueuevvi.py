@@ -359,6 +359,8 @@ print(optimalsubarrayrange([1, 2, 3]))
 #time complexity : O(N)
 #space complexity : O(N)
 
+
+#optimal solution
 #remove k digits
 def removekdigits(nums,k):
    stack = []
@@ -367,9 +369,14 @@ def removekdigits(nums,k):
            k-=1  #here this calculation determines how many numbers are left to removed as well as how many we have already removed
            stack.pop()
        stack.append(nums[i]) 
-   return ''.join(stack).lstrip('0')    #.lstrip('0') removes the leading 0     
+   if k > 0 :  #if we still have some numbers to be removes then it means we stopped finding the numbers which are lesser ,in contrast we found the numbers in the increasing order
+           stack=stack[:-k]  #here we are using the stack cause all the numbers are already appended in the stack caused by the for loop,thats why we remove the most larger numbers that are ofcourse found at the ending of the given  stack , so we remove from the last
+           
+     #.lstrip('0') removes the leading 0     
+   result = ''.join(stack).lstrip('0')
+   return result if result else '0'  
 print(removekdigits( "1002991", 3))    
 #time complexity : O(N)
-#space complexity : O(1)
+#space complexity : O(N)
 
     
