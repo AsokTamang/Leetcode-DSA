@@ -740,3 +740,31 @@ def sumsubarrayrange(nums):
 print(sumsubarrayrange([1, 3, 3]))    
 #time complexity : O(N)
 #space complexity : O(N)
+
+
+
+#trapping rainwater
+#in the brute approach we find the leftmax and the right max and find the min value between them and subtracts it by the i indexed height
+def trappedwater(height):
+    n=len(height)
+    def leftmax(height,j):  #this function leftmax determines the maximum height at the left of every index given
+        ans=[0] * n
+        ans[0] = height[0]
+        for i in range(1,n):
+            ans[i] = max(ans[i-1],height[i])
+        return ans[j]    
+    def rightmax(height,j):  #this function rightmax determines the maximum height at every right of the given index
+        ans=[0] * n
+        ans[n-1] = height[n-1]
+        for i in range(n-2,-1,-1):
+            ans[i] = max(ans[i+1],height[i])
+        return ans[j]
+    total=0
+    for i in range(n):
+        if height[i]<leftmax(height,i) and height[i]<rightmax(height,i):
+         total+=min(leftmax(height,i),rightmax(height,i)) - height[i]
+    return total     
+print(trappedwater([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]))
+
+
+#optimal rainwater
