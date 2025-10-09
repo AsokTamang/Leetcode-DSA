@@ -942,3 +942,27 @@ def brutesubminsum(arr):
 print(brutesubarraymini([3,1,2,4]))
 #time complexity : O(N)
 #space complexity : O(N)
+
+
+#asteroid collision
+def asteroidcoll(array):
+    stack=[]
+    n=len(array)  #length of the given array
+    for i in range(n):
+        if array[i]>0:  #if the current i indexed number is positive then we just append it directly to the stack
+            stack.append(array[i])   
+        else:
+            while stack and stack[-1]>0:  #if there is value in stack and the top most element of the stack is greater than 0 then we go to the conditions
+                if stack[-1]<abs(array[i]):  #as long as the top most element of the stack is lesser than the current i indexed number, we keep on popping them
+                    stack.pop()
+                    continue  #continuing the while loop
+                elif stack[-1]==abs(array[i]):  #otherwise if both of them are equal or the i indexed number is lesser
+                    stack.pop()
+                break      #this break means breaking out of the loop and it happens when the top most number of the stack is equal to the i indexed number or the top most element is greater than the i indexed number 
+            else:
+                stack.append(array[i])      #otherwise we just append the current negative number in the stack too cause there is no chance of collision  
+    return stack
+print(asteroidcoll([5, 10, -5, -10, 8, -8, -3, 12]))
+#time complexity : O(N)
+#space complexity : O(N)
+   
