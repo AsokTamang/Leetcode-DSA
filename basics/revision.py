@@ -835,3 +835,19 @@ print(nextgreaterelem([3, 10, 4, 2, 1, 2, 6, 1, 7, 2, 9]))
 #time complexity : O(N)
 #space complexity : O(N)          
 
+
+#next smaller element
+#inorder to find for the next position ,we always need to loop from the last indices
+def nse(arr):
+    n=len(arr)
+    ans =[-1] * n
+    stack = []
+    for i in range(n-1,-1,-1):
+        while stack and arr[stack[-1]]>=arr[i]:
+            stack.pop()
+        if stack:
+            ans[i]=arr[stack[-1]]    
+        stack.append(i)
+    return ans
+print(nse([10, 9, 8, 7]))     
+
