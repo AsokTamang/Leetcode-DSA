@@ -851,3 +851,17 @@ def nse(arr):
     return ans
 print(nse([10, 9, 8, 7]))     
 
+#Number of Greater Elements to the Right
+def ngestoright(arr,indices):
+    n=len(arr)
+    ans = [-1] * n  #this ans store the number of elements that are greater than the current i indexed element to the right
+    for i in range(n):
+        count = 0
+        for j in range(i+1,n):
+            if arr[j] > arr[i]:
+                count+=1
+        ans[i]=count    
+    return [ans[i] for i in indices]
+print(ngestoright( [1, 2, 3, 4, 1], [0, 3]))  
+#time complexity : O(N**2)
+#space complexity : O(N)       
