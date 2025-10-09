@@ -885,3 +885,27 @@ def brutetrap(height):
 print(brutetrap( [4, 2, 0, 3, 2, 5]))
 #time complexity : O(N)
 #space complexity : O(N)
+
+#optimal solution 
+#in the optimal solution , what we do is we use the two pointers inorder to remove the extra use of array ,reducing the space complexity to O(1)
+def optimaltrap(height):
+    l=0
+    n=len(height)
+    r=n-1
+    leftmax=height[l]
+    rightmax=height[r]
+    total = 0
+    while l!=r: 
+        #we always traverse from that direction where the maximum value or number is less 
+        if leftmax<=rightmax:
+            l+=1
+            leftmax=max(leftmax,height[l])
+            total+=leftmax-height[l]
+        else:
+            r-=1
+            rightmax=max(rightmax,height[r])
+            total+=rightmax-height[l]
+    return total
+print(optimaltrap([4, 2, 0, 3, 2, 5]))            
+#time complexity : O(N)
+#space complexity : O(1)
