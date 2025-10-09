@@ -1020,6 +1020,7 @@ print(remkdigits( "1002991",3))
    
 #largest rectangle in a histogram
 #the given array consists of the height of the building
+#brute approach
 def largestrectangle(array):
     n=len(array)
     prevsmall=[-1] * n
@@ -1050,5 +1051,33 @@ def largestrectangle(array):
         area=max(area,currarea)
     return area    
 print(largestrectangle( [3, 5, 1, 7, 5, 9]))
+#time complexity : O(N)
+#space complexity : O(N)
+
+
+#optimal approach
+def optimallargestrect(array):
+    area = 0
+    n=len(array)
+    stack = []
+    for i in range(n):
+        while stack and array[stack[-1]]>=array[i]:
+            currelement = array[stack.pop()]
+            nextsmall = i
+            prevsmall = stack[-1] if stack else -1
+            width = nextsmall-prevsmall-1
+            currarea = width * currelement
+            area=max(area,currarea)
+
+        stack.append(i)
+    while stack: #if there still exists stack
+        currelem=array[stack.pop()]
+        nextsmall = n
+        prevsmall = stack[-1] if stack else -1
+        width = nextsmall-prevsmall - 1
+        currarea=width * currelem
+        area = max(area,currarea)    
+    return area
+print(optimallargestrect([3, 5, 1, 7, 5, 9]))
 #time complexity : O(N)
 #space complexity : O(N)
