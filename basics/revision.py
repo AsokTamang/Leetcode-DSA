@@ -814,3 +814,24 @@ def nge(arr):
 print(nge( [6, 8, 0, 1, 3]))
 #time complexity : O(N)
 #space complexity : O(N)
+
+#Next Greater Element - 2
+#Given a circular integer array arr, return the next greater element for every element in arr.
+#The next greater element for an element x is the first element greater than x that we come across while traversing the array in a clockwise manner.
+#If it doesn't exist, return -1 for that element.
+
+def nextgreaterelem(arr):
+    n=len(arr)
+    ans = [-1] * (n)
+    stack = []
+    for i in range(2*n,-1,-1):
+        while stack and arr[stack[-1]]<=arr[i%n]:
+            stack.pop()
+        if stack:
+            ans[i%n] = arr[stack[-1]]
+        stack.append(i%n)
+    return ans
+print(nextgreaterelem([3, 10, 4, 2, 1, 2, 6, 1, 7, 2, 9]))    
+#time complexity : O(N)
+#space complexity : O(N)          
+
