@@ -794,4 +794,23 @@ print(opttrappedrainwater([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]))
 #space complexity : O(N)       
 
         
-    
+#its all about revision    
+#next greater element
+#Given an array arr of size n containing elements, find the next greater element for each element in the array in the order of their appearance.
+#The next greater element of an element in the array is the nearest element on the right that is greater than the current element.
+#If there does not exist a next greater element for the current element, then the next greater element for that element is -1.
+
+def nge(arr):
+    n=len(arr)
+    stack =[]
+    ans = [-1] * n  #here we are making a ans varible which stores the answer for every number of a given array ,which is the next greater element
+    for i in range(n-1,-1,-1):
+        while stack and arr[stack[-1]]<arr[i]:  #we keep on popping the top most element if the top most element is smaller than this current i indexed number,
+            stack.pop()
+        if stack:  #if the stack still exists then it means we have found the next greater element of the current i indexed number
+            ans[i] = arr[stack[-1]]
+        stack.append(i)
+    return ans            
+print(nge( [6, 8, 0, 1, 3]))
+#time complexity : O(N)
+#space complexity : O(N)
