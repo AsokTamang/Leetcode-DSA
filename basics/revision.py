@@ -1018,3 +1018,37 @@ print(remkdigits( "1002991",3))
 #space complexity : O(N)  
 
    
+#largest rectangle in a histogram
+#the given array consists of the height of the building
+def largestrectangle(array):
+    n=len(array)
+    prevsmall=[-1] * n
+    nextsmall=[n] * n
+    stack = []
+    for i in range(n):
+        while stack and array[stack[-1]]>=array[i]: #we must look for the previous smaller element , and as soon as we find the previous smaller index , then it means upto this previous smaller + 1 index , the current i indexed number's height is the minimum
+            stack.pop()
+        if stack: #if the stack still exist then we found the index having the value lesser than the current i indexed number in the preceding direction
+            prevsmall[i] = stack[-1]    
+
+        stack.append(i)
+    stack.clear()
+    for i in range(n-1,-1,-1):
+        while stack and array[stack[-1]]>=array[i]:
+            stack.pop()
+        if stack:
+            nextsmall[i] = stack[-1]    
+
+        stack.append(i)
+
+    
+    area=0
+    for i in range(n):
+        #width = nextsmall - 1 - (prevsmall +1 ) + 1  - formula for calculating the width of the rectangle
+        width = nextsmall[i] - prevsmall[i] - 1  #this calulates the width of the rectangle that can be formed by a current height
+        currarea=width * array[i]
+        area=max(area,currarea)
+    return area    
+print(largestrectangle( [3, 5, 1, 7, 5, 9]))
+#time complexity : O(N)
+#space complexity : O(N)
