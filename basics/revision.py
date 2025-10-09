@@ -965,4 +965,39 @@ def asteroidcoll(array):
 print(asteroidcoll([5, 10, -5, -10, 8, -8, -3, 12]))
 #time complexity : O(N)
 #space complexity : O(N)
+
+
+#Sum of Subarray Ranges
+def sumofsubarrayranges(array):
+    n=len(array)
+    prevmin=[-1] * n
+    nextmin=[n] * n
+    prevmax=[-1] * n
+    nextmax=[n] * n
+    stack = []
+    for i in range(n):
+        while stack and array[stack[-1]]>array[i]:
+            nextmin[stack.pop()]=i #we keep on popping the greater element than i indexed number from the stack
+        if stack:
+            prevmin[i] = stack[-1] 
+        stack.append(i)
+    stack.clear()  #clearing the stack
+    for i in range(n):
+        while stack and array[stack[-1]]<array[i]:
+            nextmax[stack.pop()]=i #we keep on popping the smaller element than i indexed number from the stack
+        if stack:
+            prevmax[i] = stack[-1] 
+        stack.append(i)
+    total = 0
+    for i in range(n):
+        minimrange=(i-prevmin[i]) * (nextmin[i]-i)
+        maxrange = (i-prevmax[i]) * (nextmax[i]-i)
+        total+=(maxrange - minimrange) * array[i]    
+    return total
+print(sumofsubarrayranges([1, 3, 3]))   
+#time complexity : O(N)
+#space complexity : O(N) 
+
+        
+
    
