@@ -432,13 +432,13 @@ def optmlargestrec(heights):
             prevsmaller = stack[-1] if stack else -1
             nextsmaller = i  #the next smaller elmenent's index will be the current i
             width = nextsmaller-prevsmaller - 1
-            currentarea=calculatingelem * width 
+            currentarea=calculatingelem * width   #here the calculating element acts as the length or the height of the element at the given index
             area=max(area,currentarea)
         stack.append(i)
             
     while stack:
         calculatingelem=heights[stack.pop()]
-        nextsmaller = n
+        nextsmaller = n  #if the stack still remains even after looping through every numbers from the array of given heights then it means the index having the smaller element compared to the current index is n, which is out of bound
         prevsmaller = stack[-1] if stack else -1  
         width = nextsmaller - prevsmaller - 1
         currentarea=calculatingelem*width  #as the calculting elem is the height
@@ -449,3 +449,61 @@ def optmlargestrec(heights):
 print(optmlargestrec([2, 1, 5, 6, 2, 3]))    
 #time complexity : O(N)
 #space complexity : O(N)
+
+
+#maximum rectangle
+#Given a m x n binary matrix filled with 0's and 1's, find the largest rectangle containing only 1's and return its area.
+
+#the question is asking us to find the maximum area of a rectangle from a given 2D matrix , which can be solved by using the same logic of finding the maximum area of a rectangle from a given histogram
+def maximrectangle(matrix):
+    r=len(matrix) #number of rows
+    c=len(matrix[0])  #number of columns
+    #now we need to create a 2D matrix of same length but every index having the total height of a lets say building , at every index except for the index having value as a zero.
+    prefixsum = [[0 for _ in range(c)] for _ in range(r)]  #creating r number of rows having c number of columns
+    #this down below first for loop is for calculating the total height of the supposed building at every index of the given matrix 
+    for j in range(c):  #looping through every row index of every column
+        for i in range(r):
+            if matrix[i][j]==0:
+                prefixsum[i][j]=0
+            else:    
+             prefixsum[i][j] = matrix[i][j] + (prefixsum[i-1][j]  if i >0 else 0)   #if the current i and j indexed number is not 0 then it means the i and j indexed prefix sum matrix number will be addition of current i and j indexed value of matrix and previous row and j indexed value of prefix sum
+    maxarea=0
+    def maxareainasinglearray(array):  #the real calculation happens here 
+        stack = []
+        n=len(array)
+        area=0
+        for i in range(n):
+            while stack and array[stack[-1]] > array[i]:  #if the element at the top most index of the stack is greater than the i indexed number then of course the nextsmaller index of the stack.pop() will be the current i
+                currelem=array[stack.pop()]
+                nextsmaller=i
+                prevsmaller=stack[-1] if stack else -1  #and the previous smaller index of the stack.pop() indexed number will be the new top most index if the stack still exists otherwise it will be -1,which shows out of the bounds
+                width = nextsmaller-prevsmaller-1
+                currarea=width * currelem  #breadth * length or height
+                area=max(area,currarea)
+                
+            stack.append(i)    
+        while stack:
+            currelem=array[stack.pop()]
+            nextsmaller=n
+            prevsmaller=stack[-1] if stack else -1
+            width = nextsmaller-prevsmaller - 1
+            currarea = width * currelem
+            area=max(area,currarea)  #as we need to return the maximum area from the given area , we are usign max function here
+        return area
+    for i in range(r):
+        maxarea=max(maxarea,maxareainasinglearray(prefixsum[i]))   #we pass every row of the prefixsum 2D matrix in our function called maxareainasinglearray which gives us the area of the current i indexed row
+
+    
+    return maxarea
+print(maximrectangle( [[1, 0, 1, 0, 0], [1, 0, 1, 1, 1]]))
+#time complexity : O((N*M)+2*N) 
+#space complexity : O((N*M) + N)  
+
+
+
+
+
+
+
+
+
