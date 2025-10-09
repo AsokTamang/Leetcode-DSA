@@ -1081,3 +1081,44 @@ def optimallargestrect(array):
 print(optimallargestrect([3, 5, 1, 7, 5, 9]))
 #time complexity : O(N)
 #space complexity : O(N)
+
+
+#maximum rectangles
+def maximrectangles(matrix):
+    r= len(matrix) #number of rows
+    c = len(matrix[0])  #number of columns
+    totalhmatrix = [[0 for _ in range(c)] for _ in range(r)]
+    for j in range(c):
+        for i in range(r):
+            if matrix[i][j] == 0:  #if the current i and j indexed number of original matrix is 0 then the new matrix number will also be 0
+             totalhmatrix[i][j] = 0
+            else:  #otherwise it will be the sum of previous i indexed but same column number + matrix i and j indexed value to get the total height of the building at this current i and j index of totalhmatrix
+                totalhmatrix[i][j] = matrix[i][j] + totalhmatrix[i-1][j] 
+    def maxrowarea(array):
+        area= 0
+        n=len(array)
+        stack=[]
+        for i in range(n):
+            while stack and array[stack[-1]]>=array[i]:
+                currelem=array[stack.pop()]
+                nextsmaller= i
+                prevsmaller = stack[-1] if stack else -1
+                width = nextsmaller-prevsmaller - 1
+                currarea = width * currelem  #width * height
+                area = max(area,currarea)
+            stack.append(i)
+        while stack:
+            currelem = array[stack.pop()]
+            nextsmaller = n
+            prevsmaller = stack[-1] if stack else -1
+            width = nextsmaller-prevsmaller - 1
+            currarea = width * currelem
+            area = max(area,currarea)
+        return area
+    area= 0
+    for i in range(r):
+        area = max(area,maxrowarea(totalhmatrix[i]))  #passing the rows of the totalhmatrix as the histogram
+    return area
+print(maximrectangles([[1]] ))    
+#time complexity : O(N)
+#space complexity : O(N)
