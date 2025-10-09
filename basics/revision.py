@@ -909,3 +909,36 @@ def optimaltrap(height):
 print(optimaltrap([4, 2, 0, 3, 2, 5]))            
 #time complexity : O(N)
 #space complexity : O(1)
+
+
+#sum of subarray minimums
+#brute approach
+def brutesubminsum(arr):
+    n=len(arr)
+    total = 0
+    def prevminim(arr,indexx):
+        ans = [-1] * n
+        stack=[]
+        for i in range(n):
+            while stack and arr[stack[-1]]>=arr[i]:
+                stack.pop()
+            if stack:
+                ans[i] = stack[-1]    
+            stack.append(i)
+        return ans[indexx]    
+    def nextminim(arr,indexx):
+        ans = [n] * n
+        stack=[]
+        for i in range(n-1,-1,-1):
+            while stack and arr[stack[-1]]>arr[i]:
+                stack.pop()
+            if stack:
+                ans[i] = stack[-1]    
+            stack.append(i)
+        return ans[indexx]
+    for i in range(n):
+        total+= (i - prevminim) * (nextminim-i) * arr[i]  #(i - prevminim) * (nextminim-i) gives us the number of subarrays where the current i indexed number is the minimum and we multiply it by this i indexed number to get the total
+    return total
+print(brutesubarraymini([3,1,2,4]))
+#time complexity : O(N)
+#space complexity : O(N)
