@@ -999,5 +999,22 @@ print(sumofsubarrayranges([1, 3, 3]))
 #space complexity : O(N) 
 
         
+#remove k digits
+def remkdigits(nums,k):
+    stack = []
+    n=len(nums)
+    for i in range(n):
+        while k and stack and stack[-1]>nums[i]:
+            k-=1
+            stack.pop()
+
+        stack.append(nums[i])
+    while k: #if k still exists then it means we have appended the greater values in the stack , hwich are found at the ending indices
+        stack.pop()
+        k-=1 
+    return ''.join(stack).lstrip('0') #removing the leading 0s
+print(remkdigits( "1002991",3))  
+#time complexity : O(N)
+#space complexity : O(N)  
 
    
