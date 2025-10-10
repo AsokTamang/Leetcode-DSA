@@ -1184,6 +1184,21 @@ print(brutestockspan([120, 100, 60, 80, 90, 110, 115]))
 #time complexity : O(N^2)
 #space complexity : O(N)
 
+#optimal solution
+def optstockspan(arr):
+    stack = []
+    n=len(arr)
+    ans=[0] * n
+    for i in range(n):
+        while stack and arr[stack[-1]]<=arr[i]:#removing the smaller elements from stack in comparison to the current i indexed number
+            stack.pop()
+        if stack:
+            ans[i] = i - stack[-1]  #the i-greater boundary gives us the number of previous consecutive days and we arenot adding 1 here cause the current i indexed day will also be counted    
+        else:
+            ans[i] = i + 1
+        stack.append(i)    
+    return ans
+print(optstockspan([120, 100, 60, 80, 90, 110, 115]))            
 
 
     
