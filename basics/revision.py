@@ -1093,7 +1093,7 @@ def maximrectangles(matrix):
             if matrix[i][j] == 0:  #if the current i and j indexed number of original matrix is 0 then the new matrix number will also be 0
              totalhmatrix[i][j] = 0
             else:  #otherwise it will be the sum of previous i indexed but same column number + matrix i and j indexed value to get the total height of the building at this current i and j index of totalhmatrix
-                totalhmatrix[i][j] = matrix[i][j] + totalhmatrix[i-1][j] 
+                totalhmatrix[i][j] = matrix[i][j] if i ==0 else matrix[i][j] + totalhmatrix[i-1][j] 
     def maxrowarea(array):
         area= 0
         n=len(array)
@@ -1120,5 +1120,5 @@ def maximrectangles(matrix):
         area = max(area,maxrowarea(totalhmatrix[i]))  #passing the rows of the totalhmatrix as the histogram
     return area
 print(maximrectangles([[1]] ))    
-#time complexity : O(N)
+#time complexity : O(N*M)  N is the number of rows and M is the number of columns
 #space complexity : O(N)
