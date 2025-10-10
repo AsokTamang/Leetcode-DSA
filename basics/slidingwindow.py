@@ -67,11 +67,76 @@ print(brutestockspan( [100, 80, 60, 70, 60, 75, 85]))
 
 #optimal solution
 def optstockspan(arr):
+    stack = []
     n=len(arr)
-    ans = []
-    stack=[]
+    ans=[0] * n
     for i in range(n):
-        pass
+        while stack and arr[stack[-1]]<=arr[i]:#removing the smaller elements from stack in comparison to the current i indexed number
+            stack.pop()
+        if stack:
+            ans[i] = i - stack[-1]  #the i-greater boundary gives us the number of previous consecutive days and we arenot adding 1 here cause the current i indexed day will also be counted    
+        else:
+            ans[i] = i + 1
+        stack.append(i)    
+    return ans
+print(optstockspan([120, 100, 60, 80, 90, 110, 115]))            
+#time complexity : O(N)
+#space complexity : O(N)
+
+#Celebrity Problem
+#A celebrity is a person who is known by everyone else at the party but does not know anyone in return. Given a square matrix M of size N x N where M[i][j] is 1 if person i knows person j, and 0 otherwise, determine if there is a celebrity at the party. Return the index of the celebrity or -1 if no such person exists.
+#Note that M[i][i] is always 0.
+
+#brute approach
+def brutecelebprob(arr):
+    r=len(arr)  #number of rows
+    c=len(arr[0])#number of columns
+    knowsme=[0] * r  #here we are making a knowsme list that stores the number of people who knows the  specific person denoted by the index 
+    iknow=[0] * r    #here we are making a iknow list that stores the number of poeple that is known by the specific person denoted by the index
+    for i in range(r):
+        for j in range(c):
+            if arr[i][j] == 1:  #here the first index i represents the person who knows the person j 
+                iknow[i]+=1   #so index i is the knower
+                knowsme[j]+=1 #index j is the known 
+    for i in range(r):
+        if iknow[i] == 0 and knowsme[i] == r-1:   #here the number of people who knows the celeb must be r-1 which is total number of people in the crowd -1 , -1 is due to himself or herself
+            return i
+    return -1        
+print(brutecelebprob([ [0, 1, 1, 0], [0, 0, 0, 0], [1, 1, 0, 0], [0, 1, 1, 0] ]))   
+#time complexity : O(N^2)
+#space complexity : O(N)              
+
+
+#optimal solution 
+def optimalcelebprob(arr):
+    n=len(arr)
+    celeb=[i for i in range(n)]  #inserting all the indices which are the persons and we are considering all of them as the celebrities right now
+    while len(celeb) > 1:
+        a=celeb.pop()
+        b=celeb.pop()
+        if arr[a][b] == 1:  #here we are checking if a knows b or not
+            celeb.append(b)  #As a cannot be celebrity
+        else:
+            celeb.append(a)  #b cannot be celebrity as b is not known by a here, so a might be a celebrity   
+    if len(celeb) == 0:
+        return -1
+    celebrity = celeb.pop()  #the remaining index will be the celebrity
+    for i in range(n):
+        if arr[celebrity][i] == 1 and arr[i][celebrity] == 0: #if the obtained celebrity knows someone and this obtained celebrity is not known by anyone , then this person is not celebrity
+            return -1
+    return celebrity        
+print(optimalcelebprob([ [0, 1, 1, 0], [0, 0, 0, 0], [1, 1, 0, 0], [0, 1, 1, 0] ]))   
+#time complexity : O(N)
+#space complexity : O(N)   
+
+
+ 
+
+    
+
+
+
+    
 
 
 

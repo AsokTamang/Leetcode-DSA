@@ -1199,6 +1199,7 @@ def optstockspan(arr):
         stack.append(i)    
     return ans
 print(optstockspan([120, 100, 60, 80, 90, 110, 115]))            
-
+#time complexity : O(N)
+#space complexity : O(N)
 
     
