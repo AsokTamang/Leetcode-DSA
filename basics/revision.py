@@ -1139,3 +1139,29 @@ def bruteslidingwindow(arr,k):
 print(bruteslidingwindow( [4, 0, -1, 3, 5, 3, 6, 8],  3))
 #time complexity : O(N^2)  #as we are using the for loop and also using the max which loops through every numbers of the subarray being generated ,
 #space complexity : O(N)
+
+
+from collections import deque
+#optimal solution of sliding window
+def optslidingwindow(arr,k):
+    n=len(arr)
+    if n* k ==0:
+        return []
+    elif k == 1:
+        return arr
+    ans = []
+    dq=deque()  #here  we are using deque cause we can remove the numbers from both left side as well as the right side
+    for i in range(n):
+        if dq and dq[0]<=i-k: #here we are checking whether the leftmost index lies with inthe range of current sliding window , ifyes then we dont remove this index otherwise we remove this index
+            dq.popleft()
+        while dq and arr[dq[-1]]<=arr[i]:  #as we are designing the  monotonic stack , where the greater number lies in the leftmost part of the dq , so if we find the number at the current index i to be greater than the current numbers in dq, then we just pop them out 
+            dq.pop()   
+        dq.append(i)  #now we can finally append the index after checking the range of the sliding window and maintaining the monotonic stack
+        if i>=k-1:  #if we reaches the first sliding window, we start appending the maximum value or number in our ans list.
+            ans.append(arr[dq[0]])
+    return ans
+print(optslidingwindow( [4, 0, -1, 3, 5, 3, 6, 8], 3))      
+#time complexity : O(N)
+#space complexity : O(N)   
+
+    
