@@ -127,7 +127,28 @@ def optimalcelebprob(arr):
     return celebrity        
 print(optimalcelebprob([ [0, 1, 1, 0], [0, 0, 0, 0], [1, 1, 0, 0], [0, 1, 1, 0] ]))   
 #time complexity : O(N)
-#space complexity : O(N)   
+#space complexity : O(N)  
+
+
+#more optimized solution
+def optceleb(arr):
+    n=len(arr)
+    top = 0
+    bottom = n - 1  #this will be the last index
+    while top!=bottom:
+        if arr[top][bottom] == 1: #here if this condition is 1 which means top knows bottom then ofcourse top cannot be celebrity 
+            top+=1  #so we move top by 1
+        else:    #otherwise bottom cannot be celeb as the top index doesnot know bottom
+            bottom-=1
+    for i in range(n):  #checking the condition of celebrity
+        if arr[top][i] == 1 or arr[i][top]==0:
+            return -1
+    return top
+print(optceleb([ [0, 1, 1, 0], [0, 0, 0, 0], [1, 1, 0, 0], [0, 1, 1, 0] ]))  
+#time complexity : O(N)
+#space complexity : O(1)      
+                
+
 
 
  
