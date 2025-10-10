@@ -1122,3 +1122,20 @@ def maximrectangles(matrix):
 print(maximrectangles([[1]] ))    
 #time complexity : O(N*M)  N is the number of rows and M is the number of columns
 #space complexity : O(N)
+
+
+#Sliding Window Maximum
+def bruteslidingwindow(arr,k):
+    n=len(arr)
+    if n*k==0:
+        return [] 
+    elif k == 1:  #if the length of the sliding window is just one then ,the array will remain same as each every number will be its own maximum number in the sliding window
+        return arr
+   
+    ans = []
+    for i in range(n-k+1):
+        ans.append(max(arr[i:i+k]))
+    return ans
+print(bruteslidingwindow( [4, 0, -1, 3, 5, 3, 6, 8],  3))
+#time complexity : O(N^2)  #as we are using the for loop and also using the max which loops through every numbers of the subarray being generated ,
+#space complexity : O(N)

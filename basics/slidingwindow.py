@@ -45,20 +45,33 @@ print(optimalslidingwindow([1, 3, -1, -3, 5, 3, 6, 7], k = 3))
 
 
 #stock span problem
+#only the values or stock price on previous consecutive days smaller than current i day is supposed to be added in the count
 def brutestockspan(arr):
     n=len(arr)
     ans = []
-    def countvalue(array,num):
-        c=0
-        for i in range(len(array)):
-            if num>array[i]:
-                c+=1
-        return c        
     for i in range(n):
-        count = countvalue(arr[:i+1],arr[i])
-        ans.append(1+count)  #we are adding 1 to the count cause the current day stock price is also counted
+        count=1
+        j = i -1 
+        while j>=0:
+            if arr[j]<=arr[i]:
+                count+=1
+                j-=1   
+            else:
+                break     
+        ans.append(count)  #we are adding 1 to the count cause the current day stock price is also counted
     return ans
-print(brutestockspan( [120, 100, 60, 80, 90, 110, 115]))
-#time complexity : O(N*M)N is the length of the given array and M is the length of the formed subarray in every iteration
+print(brutestockspan( [100, 80, 60, 70, 60, 75, 85]))
+#time complexity : O(N^2) 
 #space complexity : O(N)
+
+
+#optimal solution
+def optstockspan(arr):
+    n=len(arr)
+    ans = []
+    stack=[]
+    for i in range(n):
+        pass
+
+
 
