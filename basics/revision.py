@@ -1164,4 +1164,26 @@ print(optslidingwindow( [4, 0, -1, 3, 5, 3, 6, 8], 3))
 #time complexity : O(N)
 #space complexity : O(N)   
 
+
+#Stock span problem
+def brutestockspan(arr):
+    n=len(arr)
+    ans = []
+    for i in range(n):
+        numprevday = 1
+        j=i-1
+        while j>=0:
+            if arr[j]<=arr[i]:  #checking the price of previous days that ,whether they are lesser or not 
+                numprevday+=1
+                j-=1
+            else:  #if we find any one previous day price to be greater then we just break out of the loop ,cause the question is asking us to count the number of consecutive previous days having the minimum price 
+                break    
+        ans.append(numprevday)
+    return ans
+print(brutestockspan([120, 100, 60, 80, 90, 110, 115]))  
+#time complexity : O(N^2)
+#space complexity : O(N)
+
+
+
     
