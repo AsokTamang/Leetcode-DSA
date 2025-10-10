@@ -106,6 +106,8 @@ print(brutecelebprob([ [0, 1, 1, 0], [0, 0, 0, 0], [1, 1, 0, 0], [0, 1, 1, 0] ])
 #time complexity : O(N^2)
 #space complexity : O(N)              
 
+#so in this celebrity logic, the condition is the first index i will be the knower if a[i][j] == 1 and j will be the known person
+#but if a[i][j] == 0 then it means i doesnot know j and j cannot be celebrity , as for a person to be celebrity , he or she must be known by other person or index
 
 #optimal solution 
 def optimalcelebprob(arr):
@@ -148,6 +150,87 @@ print(optceleb([ [0, 1, 1, 0], [0, 0, 0, 0], [1, 1, 0, 0], [0, 1, 1, 0] ]))
 #time complexity : O(N)
 #space complexity : O(1)      
                 
+
+
+#LRU Cache       
+#Design a data structure that follows the constraints of Least Recently Used (LRU) cache.
+#Implement the LRUCache class:
+#LRUCache(int capacity): We need to initialize the LRU cache with positive size capacity.
+#int get(int key): Returns the value of the key if the key exists, otherwise return -1.
+#void put(int key,int value): Update the value of the key if the key exists. Otherwise, add the key-value pair to the cache. If the number of keys exceeds the capacity from this operation, evict the least recently used key.
+#The functions get and put must each run in O(1) average time complexity.         
+
+class Node:  #this node has the key-value pair
+    def __init__(self,key,value):  #designing the class of node having key-value pair
+        self.prev=None
+        self.next=None
+        self.key=key
+        self.value=value
+        
+class Doublell:  #we must assign the capacity of storage of our designed double linkedlist
+    def __init__(self,capacity:int):
+        self.capacity = capacity  #this will be the capacity of our map dictionary or the length of the map dictionary
+        self.m={}  #here m is the hashmap where we stores our nodes key-value pair
+        self.head = Node(-1,-1)  #dummy node
+        self.tail = Node(-1,-1)  #dummy tail
+        self.head.prev=None
+        self.head.next=self.tail
+        self.tail.prev=self.head
+        self.tail.next=None
+    
+    def remove(self,node):  #removing the node
+       
+        prevnode = node.prev  #here im making the node to represent the node
+        nextnode = node.next
+        prevnode.next=nextnode
+        nextnode.prev=prevnode
+    def addtohead(self,node):  #when we add the new key-value pair we always add the passed node to the head of the double linked list
+        
+        nxt=self.head.next
+        self.head.next = node
+        nxt.prev=node
+        node.next=nxt
+        node.prev=self.head
+
+
+
+    def put(self,data):  #here data will be in the form [a,b] where a is the key and b is the value and we can access them by data[0] as key and data[1] as value
+        if data[0] in self.m:  #if the passed key node already exists then we first update the value of key in hashmap and then we remove it from it's original position and then we add it to the next of the headnode
+            self.remove(self.m[data[0]])  #removing the old node with the help of a key
+            del self.m[data[0]]  #
+        updatednode = Node(data[0],data[1])
+        self.addtohead(updatednode)  #here the first value will act as the key and second value will act as the value
+        self.m[data[0]] = updatednode   #updating the node in hashmap too
+        if len(self.m) > self.capacity:
+            removed = self.tail.prev
+            self.remove(removed)
+            del self.m[removed.key]  #removing the node which is the previous of self.tail
+
+        
+    def get(self,key):
+        if key not in self.m:
+            return -1
+        self.remove(self.m[key])  #as our node is stored in hashmap with the help of key , we are also removing the node with the help of a key
+        self.addtohead(self.m[key])
+        return self.m[key].value    #as our m stores the data with the help of a key , we are returning the value which is stored in self.m
+    def printdatas(self):
+        itr=self.head.next
+        a=[]
+        while itr!=self.tail:
+            a.append(str(itr.value))
+            itr=itr.next
+        return ''.join(a)    
+dl=Doublell(3) #the capacity of cache here is assigned 3
+dl.put([2,2])  #time complexity : O(1) 
+dl.put([3,3])
+dl.put([4,4])
+dl.put([7,7])
+dl.put([2,2])
+print(dl.get(2))  #time complexity : O(1)
+print(dl.printdatas())
+#space complexity : O(N)      
+    
+        
 
 
 
