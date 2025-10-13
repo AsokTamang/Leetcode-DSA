@@ -1184,22 +1184,83 @@ print(brutestockspan([120, 100, 60, 80, 90, 110, 115]))
 #time complexity : O(N^2)
 #space complexity : O(N)
 
-#optimal solution
-def optstockspan(arr):
-    stack = []
-    n=len(arr)
-    ans=[0] * n
-    for i in range(n):
-        while stack and arr[stack[-1]]<=arr[i]:#removing the smaller elements from stack in comparison to the current i indexed number
-            stack.pop()
-        if stack:
-            ans[i] = i - stack[-1]  #the i-greater boundary gives us the number of previous consecutive days and we arenot adding 1 here cause the current i indexed day will also be counted    
-        else:
-            ans[i] = i + 1
-        stack.append(i)    
-    return ans
-print(optstockspan([120, 100, 60, 80, 90, 110, 115]))            
-#time complexity : O(N)
+
+
+#LRU Cache
+#the fullform of LRU cache is least recently used cache
+#and the logic for the LRU cache is whatever operation we do except deleting the node , we just delete that node and add it to the next of the head of the node, whether the operation be get node , add node and
+# also while inserting the new node, we must check if our capacity of the cache is already exceeded or not , if so then we must delete the least recently used node , or the node just before the tail of the LRU Cache after inserting the new node
+
+
+class Node:
+    def __init__(self,key,value):   #each node has a key-value pair and next and previous node
+        self.key=key
+        self.value=value
+        self.next=None
+        self.prev=None
+    #our property of node is done , now we need to make the properties of our LRU
+class LRU:
+    def __init__(self,capacity):  #here capacity is the total number of nodes that must not be exceeded
+        self.capacity=capacity
+        self.m={}  #this is our hashmap where we store the node as a value denoted by their own respective key
+        self.head=Node(-1,-1)  #dummy head
+        self.tail=Node(-1,-1)  #dummy tail
+        self.head.next=self.tail
+        self.tail.prev=self.head
+        self.head.prev=None
+        self.tail.next=None
+    #now the property of our LRU cache is also done , now we need to define the functions 
+    def addtohead(self,node):
+        nxt=self.head.next    
+        node.next=nxt
+        self.head.next=node
+        node.prev=self.head
+        nxt.prev=node
+    def deletenode(self,node):
+        del self.m[node.key]  #as we have stored each node with the help of key
+        prv=node.prev
+        nxt=node.next
+        prv.next=nxt
+        nxt.prev=prv
+    def putnode(self,data):
+        if data[0] in self.m:
+            self.deletenode(self.m[data[0]])  #deleting the node from our cache
+        newnode=Node(data[0],data[1])  #here data[0] acts as a key and data[1] acts as a value
+        self.m[data[0]]=newnode  #storing the new node in hashmap too
+        self.addtohead(newnode)   
+        if len(self.m) > self.capacity:  #if the total length of the hasmap exceeds the capacity of the cache after inserting this new node ,then we have to delete the least recently used node
+            removed = self.tail.prev   
+            self.deletenode(removed)
+    def getnode(self,k):  #here k is the key
+        if k not in self.m:
+            return -1
+        getnode=self.m[k]
+        self.deletenode(getnode)
+        self.addtohead(getnode)
+        return getnode.value  #returning the value of wanted node
+    def printdatas(self):
+        itr=self.head.next
+        a=[]
+        while itr!=self.tail:
+            a.append(str(itr.value))
+            itr=itr.next
+        return a
+lru=LRU(4)
+lru.putnode([1,1]) 
+lru.putnode([2,2]) 
+lru.putnode([3,3])   
+lru.putnode([4,4])   
+lru.putnode([5,5])
+print(lru.printdatas())
+print(lru.getnode(1))    
+print(lru.printdatas())  
+#time complexity for all operations : O(1)
 #space complexity : O(N)
 
-    
+
+
+
+
+
+
+
