@@ -22,3 +22,19 @@ print(longestsubstring('aaabbbccc'))
 #space complexity : O(M)  number of different character at each loop
 
 
+#optimal solution
+def optimalsubstring(s):
+    n=len(s)
+    l=r= 0 
+    maxlength = 0
+    m={ }  #this is our dictionary which stores every characters and its corresponding indices
+    while r<n:
+        if s[r] in m and m[s[r]] >= l:  #if we find the same character in a while loop then the value of l will be s[r] + 1
+            l=m[s[r]] + 1    
+        m[s[r]] = r  #storing the character and index
+        maxlength=max(maxlength,r-l+1)
+        r+=1
+    return maxlength
+print(optimalsubstring('aaabbbccc'))                 
+   
+
