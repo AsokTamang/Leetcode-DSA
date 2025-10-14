@@ -73,7 +73,8 @@ class LFU:
         currentfreq=node.freq  #this is the current frequency of the passed node
         self.freqnode[currentfreq].deletenode(node)  #deleting this passed node from its current freq list
         if currentfreq == self.minfreq and self.freqnode[currentfreq] == 0:  #if the  frequency of this passed node is the current minimm=um freq of our LFU then we must update the minimum freq of LFU cache
-            self.minfreq=currentfreq+1   
+            self.minfreq=currentfreq+1 
+        node.freq=currentfreq+1      
         self.freqnode[currentfreq+1].addtohead(node)   
     def printcache(self):
         a=[]

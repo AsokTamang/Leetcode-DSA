@@ -1,18 +1,20 @@
+#so in the LFU cache what we need to do is , we have to maintain a node of key,value,freq where freq is the frequency of a node,and of course prev,next
+#and we need to make a doublelinked list which has the size , means the number of nodes in the double linked list , then make the dummyhead and tail
+#then finally we need to make the LFU cache which contains the default dict of this double linked list , that stores the double list of nodes and their freq in the form of key-value pair
 from collections import defaultdict
-#LFU cache
 class Node:
     def __init__(self,key,value,freq):
-        self.key=key
-        self.value=value
-        self.freq=freq    #this is the number of count or frequency of the Node
-        self.prev=None
+        self.key = key
+        self.value= value
+        self.freq = freq
+        self.prev = None
         self.next=None
 class Doublelinkedlist:
-    def __init__(self):  #here the size denotes the initial size of the each frequency double linked list
-        self.size = 0
-        self.head= Node(-1,-1,0) #this is our dummy head and dummy node
-        self.tail= Node(-1,-1,0)
-        self.head.next= self.tail  
+    def __init__(self):
+        self.size = 0  #the initial size of the double linked list
+        self.head=Node(-1,-1,0)
+        self.tail=Node(-1,-1,0)
+        self.head.next=self.tail
         self.tail.prev=self.head
     def addtohead(self,node):
         nxt=self.head.next
@@ -20,79 +22,82 @@ class Doublelinkedlist:
         node.next=nxt
         self.head.next=node
         nxt.prev=node
-
-        self.size+=1   
-    def removenode(self,node):
-        if self.size==0:
+        self.size+=1
+    def deletenode(self,node):
+        if self.size == 0:
             return
         prv=node.prev
         nxt=node.next
         prv.next=nxt
         nxt.prev=prv
         self.size-=1
-    def removefromtail(self):
-        if self.size == 0:
-            return
-        rmved = self.tail.prev
-        self.removenode(rmved)  #as the size is already decreased in the removenode function,
-        return rmved
+    def deletefromtail(self):  #as we need to remove the least frequently used node which lies at the tail of the double linked list
+           if self.size == 0:
+               return 
+           rmved = self.tail.prev 
+           self.deletenode(rmved)
+           return rmved
+    #our double linked list is also designed
 class LFU:
-    def __init__(self,capacity):
-        self.capacity=capacity   #this is the fixed length of the LFU cache
-        self.keynode_pair={}  #this stores the node with key as key and node as value
-        self.freqnode_pair=defaultdict(Doublelinkedlist)  #this stores the list of node or node as value and freq as the key
-        self.minfreq = 0  #the minimum freq will be 0 initially,
+    def __init__(self,capacity):  #capacity means the total number of nodes that will be in the LFU cache
+        self.keynode_pair = { }  #this dict storest the key of nodes and nodes in the form of key-value pair
+        self.freqnode_pair=defaultdict(Doublelinkedlist)  #this dictionary stores the freq of nodes and the doublelinked list in  the key-value pair
+        self.capacity = capacity
+        self.minfreq = 0
     def put(self,data):
-        k = data[0]   #this is the key from the passed data 
-        v=data[1]    #Value of new passed data
-        newnode=Node(k,v,1)
-        if k in self.keynode_pair:  #if the new passed node already exists in the node then we just need to update the node with the new value in self.key dict and update node with helper function
-            node = self.keynode_pair[k]
-            node.value=v
-            self.update(node)
-            return
-        self.keynode_pair[k] =newnode
-        self.freqnode_pair[1].addtohead(newnode)  #adding this new node in the head of the freq of 1 , cause this is new node which will have one freq
-        self.minfreq=1
-        if len(self.keynode_pair)>self.capacity:
-            rmved = self.freqnode_pair[self.minfreq].removefromtail() #removing tailnode from the minimum freq list
-            del self.keynode_pair[rmved.key]  #also we need to delete this node from our keynode pair
-            return
-    def get(self,key):
-        if key not in self.keynode_pair:
+        k = data[0]  #key of the node
+        v=data[1]    #value of the node
+        if k in self.keynode_pair:  #first we update in the freqnode pair  cause the current or previous freq of node matters
+            self.keynode_pair[k].value = v
+            self.update(self.keynode_pair[k])
+            return 
+        
+        if len(self.keynode_pair) == self.capacity:  #if the current size is same as that of the given capacity then we must remove the tail node from the minimum freq freqnode pair list
+            lst=self.freqnode_pair[self.minfreq]
+            remved=lst.deletefromtail()
+            del self.keynode_pair[remved.key]
+        newnode = Node(k,v,1)
+        self.keynode_pair[k] = newnode
+        self.freqnode_pair[1].addtohead(newnode)  #adding this new node in the head of the double linked list of freq pair 1
+        self.minfreq = 1
+       
+            
+
+            
+    def update(self,node): #this is our helper function
+        currfreq=node.freq  #current freq of node
+        self.freqnode_pair[currfreq].deletenode(node)
+        if currfreq == self.minfreq and self.freqnode_pair[currfreq].size == 0:
+            self.minfreq = currfreq + 1
+        self.freqnode_pair[currfreq+1].addtohead(node)   #updating the freq of node and inserting this passed node in one value greater than its prev freq in freq node pair
+        
+        node.freq=currfreq+1  #here we are also updating the freq of this passed node
+    def get(self,k): #here k is the key
+        if k not in self.keynode_pair:
             return -1
-        else:
-            self.update(self.keynode_pair[key])  #passing the node
-            return self.keynode_pair[key].value 
-    def update(self,node):
-        currfreq=node.freq
-        self.freqnode_pair[currfreq].removenode(node)   #removing the current node from the its curretn freq node pair list
-        newfreq=currfreq+1
-        node.freq=newfreq
-        if currfreq == self.minfreq and self.freqnode_pair[currfreq] == 0:  #if the freq of this current passed node is the minimum freq of LFU cache and if its inital freq list  pair becomese empty  currently then we must update the minimum freq of this LFU cache 
-            self.minfreq=currfreq+1
-        self.freqnode_pair[newfreq].addtohead(node)  #adding this node to the new freq node pair
+        node = self.keynode_pair[k]
+        v= node.value
+
+        self.update(node)
+        return v
     def printdatas(self):
         a=[]
-        for freq in self.freqnode_pair:
-            itr=self.freqnode_pair[freq].head.next
+        for freq in self.freqnode_pair:  
+            itr=self.freqnode_pair[freq].head.next  #in each frequency there is a list of nodes with head as well as tail
             while itr!=self.freqnode_pair[freq].tail:
                 a.append(str(itr.value))
                 itr=itr.next
         return ''.join(a)        
 
-    
-lfu=LFU(3)
-lfu.put([1,1])
-lfu.put([3,3])
-lfu.put([3,3])    
-print(lfu.printdatas())
-lfu.put([3,4])
-print(lfu.get(3))
-print(lfu.printdatas())
-#time complexity : O(1)
-#space complexity : O(1)           
+lfuu=LFU(4)
+lfuu.put([1,1])
+lfuu.put([2,2])
+lfuu.put([3,3])
+lfuu.put([4,4])
+print(lfuu.get(4))
+print(lfuu.printdatas())
+print(lfuu.get(1))
+print(lfuu.printdatas())
 
 
 
-   
