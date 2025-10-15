@@ -29,4 +29,43 @@ def optimallongestsubstring(s):
     return maxlength
 print(optimallongestsubstring("abcddabac"))    
 
+#max consecutive ones 
+def brutemaxconsecones(nums , k):
+    n=len(nums)
+    maxlength = 0
+    for i in range(n):
+        count = 0
+        for j in range(i,n):
+            if nums[j]==0:  #we must increase the count first then only we check if the count exceeds k or not
+                count+=1
+            if count>k:
+                break    
+            maxlength=max(maxlength,j-i+1)
+    return maxlength
+print(brutemaxconsecones( [1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0] , k = 3))        
+#time complexity :  O(N**2)
+#space complexity : O(1)
+
+def betterapproachconsecones(nums , k):
+    l=r=0
+    n=len(nums)
+    count = 0
+    maxlength = 0
+    while r<n:
+        if nums[r] == 0:
+            count+=1
+        while count > k:
+            if nums[l] == 0:
+                count-=1
+            l+=1  
+        maxlength=max(maxlength,r-l+1)
+        r+=1
+    return maxlength
+print(betterapproachconsecones([0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1] , k = 3))   
+#time complexity : O(2N)
+#space complexity : O(1)        
+        
+
+
+
 
