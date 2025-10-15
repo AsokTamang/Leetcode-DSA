@@ -183,3 +183,89 @@ def optimizedfruitsinbaskets(fruits):
 print(optimizedfruitsinbaskets([1, 2, 3, 2, 2]))
 #time complexity : O(N)
 #space complexity : O(1)  the size of m is constant cause it always remains same which is 2 , cause only 2 fruits basket are given 
+
+
+
+#Longest Repeating Character Replacement
+def brutelongestrepchar(s,k):
+    n=len(s)
+    maxlength = 0
+
+    for target in set(s):
+        for i in range(n):
+            count = 0
+            for j in range(i,n):
+                if s[j] != target:
+                    count+=1
+                if count>k:
+                    break
+                maxlength = max(maxlength,j-i+1)  #the function will never reach this code if the total count becomes greater than k
+    return maxlength
+print(brutelongestrepchar("AABABBA" , k = 1))   
+#time complexity : O(m*N**2)  where m is the number of unique characters from the given string
+#space complexity : O(1)      
+
+#better solution
+def betterlongestrepchar(s,k):
+    l=r = 0
+    n=len(s)
+    maxfreq = 0  #this counts the maximum freq of character for every substring obtained inside the loop
+    maxlength = 0
+    m={}  #this stores the freq of the character
+    while r<n:
+        m[s[r]]=m.get(s[r],0)+1
+        maxfreq=max(maxfreq,m[s[r]])
+        while (r-l+1) - maxfreq > k:    #(r-l+1) - maxfreq this value gives us the number of characters that must be replaced in the current substring , if this is greater than k then we need to minimize our window
+         m[s[l]]-=1
+         l+=1
+        maxlength=max(maxlength,r-l+1)
+        r+=1
+    return maxlength
+print(betterlongestrepchar("BAABAABBBAAA" ,k = 2))
+#time complexity : O(N)
+#space complexity : O(M)  #number of unique characters from the given string
+
+
+#optimal solution
+def optimallongestrepchar(s,k):
+    l=r=0
+    n=len(s)
+    maxlength = 0
+    maxfreq = 0  
+    freq = [0] * 26  #as there are total 26 number of alphabets
+    while r<n:
+        freq[ord(s[r])-ord('A')]+=1
+        maxfreq=max(maxfreq,freq[ord(s[r])-ord('A')])
+        while (r-l+1) - maxfreq > k:
+            freq[ord(s[l])-ord('A')]-=1  #this code ord(s[l]) - ord('A')  calculates the index for every alphabetic letters at index r , as 0 means A , 1 means B
+            l+=1
+        maxlength=max(maxlength,r-l+1)    
+        r+=1
+    return maxlength
+print(optimallongestrepchar("BAABAABBBAAA" ,k = 2))    
+#time complexity : O(N)
+#space complexity : O(1)
+
+#Binary Subarrays With Sum
+#Given a binary array nums and an integer goal. Return the number of non-empty subarrays with a sum goal.
+
+def brutebinarysubsum(nums,goal):
+    n=len(nums)
+    count = 0
+    for i in range(n):
+        s=0
+        for j in range(i,n):   
+            s+=nums[j]
+            if s==goal:
+                count+=1
+            elif s>goal:
+                break
+    return count
+print(brutebinarysubsum([0, 0, 0, 0, 1] , goal = 0))  
+#time complexity : O(N**2)
+#space complexity : O(1)       
+             
+            
+
+
+
