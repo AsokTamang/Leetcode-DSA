@@ -102,6 +102,31 @@ def brutefruitbasket(fruits):
 print(brutefruitbasket( [1, 2, 3, 2, 2]))  
 #time complexity : O(N**2)
 #space complexity : O(M)    number of unique or different kinds of fruits
+
+#better approach
+def betterfruitintobaskets(fruits):
+    n=len(fruits)
+    l=r=0  
+    m={}  #this stores the kind of fruits and its count
+    maxlength = 0
+    while r<n:
+        m[fruits[r]]=m.get(fruits[r],0) + 1  #here 0 is the default count
+        while len(m) > 2:
+            m[fruits[l]]-=1
+            if m[fruits[l]] == 0:
+                del m[fruits[l]]
+                l+=1
+        maxlength=max(maxlength,r-l+1)
+        r+=1
+    return maxlength
+print(betterfruitintobaskets([1, 2, 3, 2, 2]))  
+#time complexity : O(2N)
+#space complexity : O(1) as the size of dict m is constant which is maximum 3
+          
+                
+
+        
+
        
             
 
