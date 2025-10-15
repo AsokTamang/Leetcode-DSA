@@ -161,3 +161,25 @@ def optimalfruitsinbaskets(fruits):
 print(optimalfruitsinbaskets([1, 2, 3, 2, 2]))
 #time complexity : O(N)
 #space complexity : O(1)  the size of m is constant cause it always remains same which is 2 , cause only 2 fruits basket are given 
+
+#optimal solution
+def optimizedfruitsinbaskets(fruits):
+    m={}
+    l=r=0
+    n=len(fruits)
+    maxlength = 0
+    while r<n:
+        m[fruits[r]]=m.get(fruits[r],0) + 1  #storing the count of the fruits in dictionary of m
+        if len(m) > 2:
+            m[fruits[l]]-=1
+            if m[fruits[l]] == 0:
+                del m[fruits[l]]
+            l+=1    
+        if len(m)<=2:  #only if two different kinds of fruits are taken , we calcualte the length
+         maxlength = max(maxlength,r-l+1)    
+        r+=1    
+        
+    return maxlength
+print(optimizedfruitsinbaskets([1, 2, 3, 2, 2]))
+#time complexity : O(N)
+#space complexity : O(1)  the size of m is constant cause it always remains same which is 2 , cause only 2 fruits basket are given 
