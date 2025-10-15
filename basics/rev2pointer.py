@@ -123,7 +123,33 @@ print(betterfruitintobaskets([1, 2, 3, 2, 2]))
 #time complexity : O(2N)
 #space complexity : O(1) as the size of dict m is constant which is maximum 3
           
-                
+
+#optimal approach
+def optimalfruitintobaskets(fruits):
+    n=len(fruits)
+    l=r=0
+    m={}
+    maxlength = 0
+    while r < n: 
+        m[fruits[r]]=m.get(fruits[r],0)+1  
+        if len(m)>2:
+            m[fruits[l]]-=1
+            if m[fruits[l]] ==0:
+                del m[fruits[l]] 
+                l+=1
+        elif len(m) <= 2:  #only when there is only one kind of fruit in two baskets respectively where these two fruits are completely different from each other \
+            #we count the total number of fruits that can be collected
+            maxlength=max(maxlength,r-l+1)
+            r+=1
+    return maxlength
+print(optimalfruitintobaskets([1, 2, 3, 2, 2]))  
+#time complexity : O(N)
+#space complexity : O(1)
+
+
+
+
+
 
         
 
