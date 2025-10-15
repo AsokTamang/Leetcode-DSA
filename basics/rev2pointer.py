@@ -63,7 +63,31 @@ def betterapproachconsecones(nums , k):
     return maxlength
 print(betterapproachconsecones([0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1] , k = 3))   
 #time complexity : O(2N)
-#space complexity : O(1)        
+#space complexity : O(1)  
+
+
+#optimal solution targetting for O(N) TC
+def optimalconsecones(nums,k):
+    l=r=0
+    n=len(nums)
+    count = 0
+    maxlength = 0
+    while r<n:
+        if nums[r] == 0:
+            count+=1
+        if count > k:
+            if nums[l]==0:
+                count-=1
+            l+=1  
+        if count<=k:  #only when the count of zeros is within the limit of k, we calculate the maximum length of the substring with counsecutive ones
+            maxlength = max(maxlength,r-l+1)
+        r+=1    
+    return maxlength
+print(optimalconsecones([1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0] , k = 3)) 
+#time complexity : O(N)
+#space complexity : O(1)    
+
+
         
 
 
