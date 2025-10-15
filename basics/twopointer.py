@@ -122,3 +122,21 @@ def optimizedmaxconsec1s(nums, k):
 print(optimizedmaxconsec1s([1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0], k=3))
 # time complexity : O(N)
 # space complexity : O(1)
+
+
+#Fruit Into Baskets
+def brutefruitsintobaskets(fruits):
+    n =len(fruits)
+    maxfruits = 0
+    for i in range(n):
+     m={}  #this stores the number of fruits as values and the kind of fruits as the key
+     for j in range(i,n):
+         m[fruits[j]] = m.get(fruits[j],0) + 1  #0 is the default value  and here we are storing the number of counts of the total fruits
+         if len(m) > 2:  #as only two baskets are given , so we mustnot use third basket ,
+             break
+         total =sum(m.values())  #this calculate the sum of values of dictionary
+         maxfruits=max(maxfruits,total)
+    return maxfruits     
+print(brutefruitsintobaskets([1, 2, 1]))   
+#time complexity : O(N**2)
+#space complexity : O(1)  #cause the size of m remains same which denotes the number of fruit baskets , which is 2  
