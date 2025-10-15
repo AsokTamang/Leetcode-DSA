@@ -14,3 +14,19 @@ def brutelongestsubstring(s):
 print(brutelongestsubstring("aaabbbccc"))        
 #time complexity : O(N**2)
 #space complexity : O(M)  M is the number of unique characters in the substring
+
+def optimallongestsubstring(s):
+    l=r=0
+    n=len(s)
+    m={}  #this dict stores the character and its index as key-value pair
+    maxlength = 0
+    while r<n:
+        if s[r] in m and m[s[r]]>=l:
+            l=m[s[r]] + 1
+        maxlength=max(maxlength,r-l+1)
+        m[s[r]] = r  #storing the character and its corresponding index in m
+        r+=1
+    return maxlength
+print(optimallongestsubstring("abcddabac"))    
+
+
