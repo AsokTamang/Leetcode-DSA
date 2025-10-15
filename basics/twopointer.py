@@ -112,7 +112,7 @@ def optimizedmaxconsec1s(nums, k):
 
             if nums[l] == 0:
                 zeros -= 1
-                l += 1
+            l += 1
         if zeros<=k:
             maxlength = max(maxlength, r - l + 1)  #only when the number of zeros is withinthe limit of given value k , we calculate the maximum length otherwise the substring still consists of number of 0s greater than the given value k 
 
@@ -140,3 +140,24 @@ def brutefruitsintobaskets(fruits):
 print(brutefruitsintobaskets([1, 2, 1]))   
 #time complexity : O(N**2)
 #space complexity : O(1)  #cause the size of m remains same which denotes the number of fruit baskets , which is 2  
+
+#optimal solution
+def optimalfruitsinbaskets(fruits):
+    m={}
+    l=r=0
+    n=len(fruits)
+    maxlength = 0
+    while r<n:
+        m[fruits[r]]=m.get(fruits[r],0) + 1  #storing the count of the fruits in dictionary of m
+        while len(m) > 2:
+            m[fruits[l]]-=1
+            if m[fruits[l]] == 0:
+                del m[fruits[l]]
+                l+=1    
+        maxlength = max(maxlength,r-l+1)    
+        r+=1    
+        
+    return maxlength
+print(optimalfruitsinbaskets([1, 2, 1]))
+#time complexity : O(N)
+#space complexity : O(1)  the size of m is constant cause it always remains same which is 2 , cause only 2 fruits basket are given 
