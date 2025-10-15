@@ -87,9 +87,23 @@ print(optimalconsecones([1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0] , k = 3))
 #time complexity : O(N)
 #space complexity : O(1)    
 
-
-        
-
+#fruit into baskets
+def brutefruitbasket(fruits):
+    n=len(fruits)
+    maxlength = 0
+    for i in range(n):
+        diff=set()  #this is our basket
+        for j in range(i,n):
+            diff.add(fruits[j])
+            if len(diff) > 2:  #as we can store only two different kinds of fruits in given 2 baskets, so if we store more than that , we need to remove the one from the leftmost tree 
+             break
+            maxlength=max(maxlength,j-i+1)
+    return maxlength
+print(brutefruitbasket( [1, 2, 3, 2, 2]))  
+#time complexity : O(N**2)
+#space complexity : O(M)    number of unique or different kinds of fruits
+       
+            
 
 
 
