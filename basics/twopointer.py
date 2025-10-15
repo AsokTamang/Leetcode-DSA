@@ -264,8 +264,30 @@ def brutebinarysubsum(nums,goal):
 print(brutebinarysubsum([0, 0, 0, 0, 1] , goal = 0))  
 #time complexity : O(N**2)
 #space complexity : O(1)       
-             
+
+#better approach
+def optimalbinarysubarray(nums,goal):
+    
+    def calculatel(nums,k):
+        if k<0:
+            return 0
+        l=r=0
+        n=len(nums)
+        count = 0
+        s=0
+        while r<n:
+            s+=nums[r]
             
+            while s>k: 
+                s-=nums[l]
+                l+=1
+            count+=r-l+1  #this gives us the number of subarrays ending at index r and the sum of these subarray is lesser than or equal to the given value k    
+            r+=1   
+        return count
+    return calculatel(nums,goal) - calculatel(nums,goal-1)  #this gives us the number of subarrays whose sum is exactly equal to the given value goal
+print(optimalbinarysubarray( [0, 0, 0, 0, 1] , goal = 0))
+#time complexity : O(N)
+#space complexity : O(1)            
 
 
 
