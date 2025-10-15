@@ -38,3 +38,45 @@ def optimalsubstring(s):
 print(optimalsubstring('aaabbbccc'))                 
    
 
+#Max Consecutive Ones III
+#Given a binary array nums and an integer k, flip at most k 0's.
+#Return the maximum number of consecutive 1's after performing the flipping operation.
+
+def maxconsec1s(nums,k):
+    n = len(nums)
+    l = 0
+    zeros = 0
+    maxlength=0
+    
+    for r in range(n):
+        if nums[r] == 0:
+            zeros+=1
+        while zeros > k:
+            if nums[l] == 0:
+                zeros-=1
+            l+=1
+        maxlength=max(maxlength,r-l+1)    
+    return maxlength    
+
+print(maxconsec1s( [1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0] , k = 3))
+#time complexity : O(N)
+#space complexity : O(1) number of unique indices consisting of 0s
+
+
+#brute approach
+def maxconsecones(nums,k):
+    n=len(nums)
+    maxlength = 0
+    for i in range(n):
+        count = 0
+        for j in range(i,n):
+            if nums[j] == 0:
+                count+=1
+            if count>k:
+                break
+            maxlength = max(maxlength,j-i+1)    
+    return maxlength
+print(maxconsecones( [1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0] , k = 3))    
+#time complexity : O(N**2)
+#space complexity : O(1) 
+            
