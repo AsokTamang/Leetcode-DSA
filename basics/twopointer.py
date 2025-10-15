@@ -134,7 +134,7 @@ def brutefruitsintobaskets(fruits):
          m[fruits[j]] = m.get(fruits[j],0) + 1  #0 is the default value  and here we are storing the number of counts of the total fruits
          if len(m) > 2:  #as only two baskets are given , so we mustnot use third basket ,
              break
-         total =sum(m.values())  #this calculate the sum of values of dictionary
+         total =j-i+1 #calculating the total length of the substring which consists of atmost 2 different kind of fruits
          maxfruits=max(maxfruits,total)
     return maxfruits     
 print(brutefruitsintobaskets([1, 2, 1]))   
@@ -153,11 +153,11 @@ def optimalfruitsinbaskets(fruits):
             m[fruits[l]]-=1
             if m[fruits[l]] == 0:
                 del m[fruits[l]]
-                l+=1    
+            l+=1    
         maxlength = max(maxlength,r-l+1)    
         r+=1    
         
     return maxlength
-print(optimalfruitsinbaskets([1, 2, 1]))
+print(optimalfruitsinbaskets([1, 2, 3, 2, 2]))
 #time complexity : O(N)
 #space complexity : O(1)  the size of m is constant cause it always remains same which is 2 , cause only 2 fruits basket are given 
