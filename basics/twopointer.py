@@ -406,6 +406,30 @@ print(brutemaximumcardscore( [1, 2, 3, 4, 5, 6] , k = 3))
 #space complexity : O(1)
 
 
+#better approach
+def bettermaximumcardscore(card,k):
+    total=0
+    n=len(card)
+    leftsum = 0
+    rightsum=0
+    maxsum = 0
+    for i in range(k):
+        leftsum+=card[i]
+    maxsum=leftsum
+    r=n-1
+    for i in range(k-1,-1,-1):
+        leftsum-=card[i]
+        rightsum+=card[r]
+        maxsum=max(maxsum,leftsum+rightsum)
+        r-=1   
+
+
+    
+    return maxsum
+print(bettermaximumcardscore( [1, 2, 3, 4, 5, 6] , k = 3))    
+#time complexity : O(K)
+#space complexity : O(1)
+
 
 
 
