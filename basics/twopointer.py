@@ -383,7 +383,27 @@ print(optimalnumsubstring("ccabcc"))
 #time complexity : O(N)
 #space complexity : O(1)  #even though we used the freq variable , its constant whose length is always 3
 
-
+#Maximum Points You Can Obtain from Cards
+#Given N cards arranged in a row, each card has an associated score denoted by the cardScore array. Choose exactly k cards. In each step, a card can be chosen either from the beginning or the end of the row. The score is the sum of the scores of the chosen cards.
+#Return the maximum score that can be obtained.
+def brutemaximumcardscore(card,k):
+    l=0
+    n=len(card)
+    r=n-1
+    count=0  #this counts the number of cards taken
+    s=0      #this calculates the total sum 
+    while count<k:
+        if card[r]>card[l]:
+            s+=card[r]
+            r-=1
+        else:
+            s+=card[l]
+            l+=1
+        count+=1
+    return s  
+print(brutemaximumcardscore( [1, 2, 3, 4, 5, 6] , k = 3))             
+#time complexity : O(k)
+#space complexity : O(1)
 
 
 
