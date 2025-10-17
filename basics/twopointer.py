@@ -347,7 +347,42 @@ print(optimalcountnice( [4, 8, 2] , k = 1))
 #time complexity : O(N)
 #space complexity : O(1)
 
-                 
+
+#Number of Substrings Containing All Three Characters
+#Given a string s , consisting only of characters 'a' , 'b' , 'c'.Find the number of substrings that contain at least one occurrence of all these characters 'a' , 'b' , 'c'.
+def brutenumsubstring(s):
+    n=len(s)
+    count = 0
+    for i in range(n):
+        freq=[0] * 3
+        for j in range(i,n):  
+            freq[ord(s[j])-ord('a')]+=1  
+            if freq[0]>0 and freq[1]>0 and freq[2]>0:
+             count+=n-j   #here we are subtracting the total length n by this ending index j , cause after this index j until the last index , this substring consists of all three a,b and c characters
+             break
+    return count
+print(brutenumsubstring("ccabcc"))                
+#time complexity : O(N**2)
+#space complexity : O(1)
+
+
+def optimalnumsubstring(s):
+    n=len(s)
+    l=r=0
+    count = 0
+    freq= [0] * 3  #making the 3 freq for a,b,c
+    while r<n:
+        freq[ord(s[r])-ord('a')]+=1  #increasing the freq of the r indexed character based on the ord of a
+        while freq[0]>0 and freq[1]>0 and freq[2]>0:  #if all the indices of the freq has the values greater than 0 then it means we have found a,b,c in the substring
+         count+=n - r  #here r means the current index in which we have found all a,b, and c and we are substracting r from n cause it gives us the total number of subarrays which consists of all a,b, and c
+         freq[ord(s[l])-ord('a')]-=1
+         l+=1
+        r+=1    
+    return count
+print(optimalnumsubstring("ccabcc"))
+#time complexity : O(N)
+#space complexity : O(1)  #even though we used the freq variable , its constant whose length is always 3
+
 
 
 
