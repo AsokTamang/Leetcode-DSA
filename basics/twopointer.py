@@ -565,34 +565,50 @@ print(bruteminimumwindow("aAbBDdcC" , t = "Bc"))
 #time complexity : O(N**2)   
 #space complexity : O(M)  M is the number of unique characters of substring at every iteration          
 
-#optimal solution
-def optimalminimumwindow(s,t):
-    n=len(s)
-    l=r=0
-    count=Counter(t)   #this makes the dict having char as key and freq of char as value from a given t string 
-    freq= {}   #this stores the frequency of r indexec character
-    minlength = 10 ** 9 
-    required = len(count)  
+    
+
+#optimizedminimum
+from collections import Counter
+
+def optimizedminwindow(s, t):
+    c = Counter(t)
+    l = r = 0
+    n = len(s)
     formed = 0
-    while r<n:
-        freq[s[r]] = freq.get(s[r],0) + 1
-        if s[r] in count and freq[s[r]]== count[s[r]]:  #if the current i indexed character is in the count and its freq in freq variable matches with that in count variable
-            #then it means , we have one satisfied character till this r index
-            formed+=1
-        while l<=r and   formed == required:       #when the current window has all the valid characters with the valid freq as in t, we try to reduce the window size , by removing l indexed char as well as checking if this removed char was in count or not 
-            if r-l+1<minlength:
-                minlength=r-l+1
-                ans=s[l:r+1]  
-            freq[s[l]]-=1
-            if s[l] in count and freq[s[l]]<count[s[l]]:  #if after removing the l indexed character which was in count , its freq becomes lesser compared to that in count,we have lost the  valid char to match the t, we reduce the formed
-                formed-=1
-            l+=1
-        r+=1
+    minlength = float('inf')
+    ans = ""
+
+    while r < n:
+        # decrease freq for this character
+        if s[r] in c:
+            c[s[r]] -= 1
+            if c[s[r]] == 0:
+                formed += 1  # we matched one character fully
+
+        # try to shrink window
+        while l <= r and formed == len(c):
+            if (r - l + 1) < minlength:
+                minlength = (r - l + 1)
+                ans = s[l:r+1]
+
+            if s[l] in c:
+                if c[s[l]] == 0:
+                    formed -= 1  # removing this breaks validity
+                c[s[l]] += 1  # restore the count for that char
+
+            l += 1
+        r += 1
+
     return ans
-print(optimalminimumwindow( "ADOBECODEBANC" , t = "ABC"))   
+
+print(optimizedminwindow("aAbBDdcC" , t = "Bc"))
 #time complexity : O(N)
-#space complexity : O(M)  number of unique characters in the given string s           
-        
+#space complexity : O(M)  number of unique characters from given string t
+
+            
+
+
+
 
 
 
