@@ -431,5 +431,24 @@ print(bettermaximumcardscore( [1, 2, 3, 4, 5, 6] , k = 3))
 #space complexity : O(1)
 
 
+#HARD PROBLEMS
+#Longest Substring With At Most K Distinct Characters
+#Given a string s and an integer k.Find the length of the longest substring with at most k distinct characters.
+def longestsubstring(s,k):
+    n=len(s)
+    maxlength = 0
+    for i in range(n):
+        m={}
+        for j in range(i,n):
+            m[s[j]]=m.get(s[j],0)+1
+            if len(m)>k:
+                break
+            maxlength=max(maxlength,j-i+1)
+    return maxlength
+print(longestsubstring( "abcddefg" , k = 3))  
+#time complexity : O(N**2)
+#space complexity : O(1) 
+     
+            
 
 
