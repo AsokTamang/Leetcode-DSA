@@ -534,6 +534,44 @@ print(optimalksubarray( [1, 2, 1, 3, 4], k = 3  ))
 #time complexity : O(N)
 #space complexity : O(K)     
 
+#Minimum Window Substring
+#here what the question is asking us is to find the smallest window having all the characters from given string t even the  duplicates 
+from collections import Counter
+def bruteminimumwindow(s,t):
+    n=len(s)
+    minlength = 10**9
+    ans = ''
+    validcounter=Counter(t)  #countign the number of occuirences of each character from given string t
+   
+    
+
+    for i in range(n):
+      m={}
+      
+      for j in range(i,n):
+        valid = True
+        m[s[j]]=m.get(s[j],0) + 1
+        for char in t:
+            if m.get(char,0) < validcounter[char]:   #if the current substring doesnot consists of smae freq of the characters given in the string t then 
+                #the current substring is invalid
+                valid = False
+                break
+            
+          
+        if valid and j-i+1<minlength:  #only if the current substring isvalid and its length is lesser than the minimum length , we change the minimum length and update the answer
+            minlength=j-i+1
+            ans = s[i:j+1] #counting the minimum length as required in the question
+               
+        
+    return ans
+print(bruteminimumwindow("ADOBECODEBANC" , t = "ABC"))
+#time complexity : O(N**2)   
+#space complexity : O(M)  M is the number of unique characters of substring at every iteration             
+
+
+
+
+
 
 
 
