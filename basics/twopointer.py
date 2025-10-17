@@ -315,6 +315,38 @@ def brutecountnicesubarrays(nums,k):
 print(brutecountnicesubarrays( [4, 8, 2] , k = 1))
 #time complexity : O(N**3)
 #space complexity : O(1)
+
+
+#optimal solution
+#in the optimal solution what we are trying to do is , we use the same logic of finding the number of subarrays having odd numbers lesser than or equal to k and
+#lesser than equal to k-1
+#then we substract those two values , which then provide us the actual count of subarrays having exactly k number of odd numbers 
+#but first of all , what we do is , we convert all the odd numbers into 1 and all the even numbers from the given array into 1 and 0 respectively , 
+#by using the formulae a %  2 
+def optimalcountnice(nums,k):
+    def countnice(nums,value):
+        s= 0
+        count = 0
+        if value<0:
+            return 0
+        n=len(nums)
+        l=r=0
+        for r in range(n):
+            
+            s+=(nums[r] % 2) #if the number is odd adding 1 otherwise it will add 0
+            while s>value:
+                s-=(nums[l]  % 2)   #here if the number is odd then the remainder will be 1 otherwise 0 
+                l+=1
+            count+=r-l+1    #adding the number of subarrays ending at index r having the number of odd numbers lesser than or equal to the passed value
+            
+        return count    
+
+
+    return countnice(nums,k) - countnice(nums,k-1)
+print(optimalcountnice( [4, 8, 2] , k = 1))
+#time complexity : O(N)
+#space complexity : O(1)
+
                  
 
 
