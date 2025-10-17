@@ -289,5 +289,36 @@ print(optimalbinarysubarray( [0, 0, 0, 0, 1] , goal = 0))
 #time complexity : O(N)
 #space complexity : O(1)            
 
+#Count number of Nice subarrays
+#Given an array nums and an integer k. An array is called nice if and only if it contains k odd numbers. Find the number of nice subarrays in the given array nums.
+#A subarray is continuous part of the array.
+
+def brutecountnicesubarrays(nums,k):
+    n = len(nums)
+    def countnicesubarrays(array):
+        count = 0
+        for i in range(len(array)):
+            if array[i] % 2 !=0:
+                count+=1
+        if count == k:
+            return True  #we return true when the count of odd numbers is exactly equal to value k
+        else:
+            return False        
+
+    total = 0
+    for i in range(n):
+        for j in range(i,n):
+            if len(nums[i:j+1])>=k:  #we only pass the substring when this subsstring has the length greaer than or equal to value k
+                if countnicesubarrays(nums[i:j+1]):
+                    total+=1
+    return total
+print(brutecountnicesubarrays( [4, 8, 2] , k = 1))
+#time complexity : O(N**3)
+#space complexity : O(1)
+                 
+
+
+
+
 
 
