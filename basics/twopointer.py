@@ -469,6 +469,76 @@ print(optimallongestsubstring("aababbcaacc" , k = 2))
 #time complexity : O(N)
 #space complexity : O(M) number of different characters 
      
+
+#optimal approach
+def optimizedlongestsubstring(s,k):
+    n=len(s)
+    l=r=0
+    freq={}    
+    maxlength  = 0
+    for r in range(n):
+        freq[s[r]]=freq.get(s[r],0)+1  #increasing the frequency of character at index r
+        if len(freq) > k:  #if we have found more than k characters then we must decrease the value from left index 
+            freq[s[l]]-=1
+            if freq[s[l]] == 0:
+                del freq[s[l]]
+            l+=1
+        if len(freq)<=k:    
+         maxlength=max(maxlength,r-l+1)    
+    return maxlength
+print(optimizedlongestsubstring("abcddefg" , k = 3))    
+#time complexity : O(N)
+#space complexity : O(M) number of different characters      
             
+#Subarrays with K Different Integers
+def bruteksubarray(nums,k):
+    n=len(nums)
+    count = 0
+    for i in range(n):
+        m={}
+        for j in range(i,n):
+            m[nums[j]]=m.get(nums[j],0) + 1
+            if len(m) == k:  #exactly k different numbers
+                count +=1
+            elif len(m)>k:  #if more than k different numbers found then we break out of the loop
+                break
+    return count
+print(bruteksubarray([1, 2, 1, 2, 3], k = 2  ))     
+
+#optimal solution
+def optimalksubarray(nums,k):
+    def calculatelessthan(array,goal):
+        if goal<0:
+            return 0
+        n=len(array)
+        l=r=0
+        freq = {}
+        count = 0
+        while r<n:
+            freq[array[r]] = freq.get(array[r],0) + 1
+        
+            
+                    
+            while len(freq)>goal:
+                freq[array[l]]-=1
+                if freq[array[l]]==0:
+                    del freq[array[l]]
+                l+=1
+            count +=r-l+1   #number of subarrays endinfg at index r having exactly k different numbers    
+                
+            r+=1 
+        return count       
+        
+    return calculatelessthan(nums,k) - calculatelessthan(nums,k-1)
+print(optimalksubarray( [1, 2, 1, 3, 4], k = 3  ))     
+#time complexity : O(N)
+#space complexity : O(K)     
+
+
+
+
+
+
+
 
 
