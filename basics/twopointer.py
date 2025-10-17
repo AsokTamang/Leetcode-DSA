@@ -541,10 +541,7 @@ def bruteminimumwindow(s,t):
     n=len(s)
     minlength = 10**9
     ans = ''
-    validcounter=Counter(t)  #countign the number of occuirences of each character from given string t
-   
-    
-
+    validcounter=Counter(t)  #counting the number of occuirences of each character from given string t
     for i in range(n):
       m={}
       
@@ -552,10 +549,10 @@ def bruteminimumwindow(s,t):
         valid = True
         m[s[j]]=m.get(s[j],0) + 1
         for char in t:
-            if m.get(char,0) < validcounter[char]:   #if the current substring doesnot consists of smae freq of the characters given in the string t then 
+            if m.get(char,0) < validcounter[char]:   #if the current substring doesnot consists of exactly same freq of the characters given in the string t then 
                 #the current substring is invalid
                 valid = False
-                break
+                break  #then we break out of this checking loop
             
           
         if valid and j-i+1<minlength:  #only if the current substring isvalid and its length is lesser than the minimum length , we change the minimum length and update the answer
@@ -564,9 +561,39 @@ def bruteminimumwindow(s,t):
                
         
     return ans
-print(bruteminimumwindow("ADOBECODEBANC" , t = "ABC"))
+print(bruteminimumwindow("aAbBDdcC" , t = "Bc"))
 #time complexity : O(N**2)   
-#space complexity : O(M)  M is the number of unique characters of substring at every iteration             
+#space complexity : O(M)  M is the number of unique characters of substring at every iteration          
+
+#optimal solution
+def optimalminimumwindow(s,t):
+    n=len(s)
+    l=r=0
+    count=Counter(t)   #this makes the dict having char as key and freq of char as value from a given t string 
+    freq= {}   #this stores the frequency of r indexec character
+    minlength = 10 ** 9 
+    required = len(count)  
+    formed = 0
+    while r<n:
+        freq[s[r]] = freq.get(s[r],0) + 1
+        if s[r] in count and freq[s[r]]== count[s[r]]:  #if the current i indexed character is in the count and its freq in freq variable matches with that in count variable
+            #then it means , we have one satisfied character till this r index
+            formed+=1
+        while l<=r and   formed == required:       #when the current window has all the valid characters with the valid freq as in t, we try to reduce the window size , by removing l indexed char as well as checking if this removed char was in count or not 
+            if r-l+1<minlength:
+                minlength=r-l+1
+                ans=s[l:r+1]  
+            freq[s[l]]-=1
+            if s[l] in count and freq[s[l]]<count[s[l]]:  #if after removing the l indexed character which was in count , its freq becomes lesser compared to that in count,we have lost the  valid char to match the t, we reduce the formed
+                formed-=1
+            l+=1
+        r+=1
+    return ans
+print(optimalminimumwindow( "ADOBECODEBANC" , t = "ABC"))   
+#time complexity : O(N)
+#space complexity : O(M)  number of unique characters in the given string s           
+        
+
 
 
 
