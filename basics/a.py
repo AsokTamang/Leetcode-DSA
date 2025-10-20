@@ -48,6 +48,36 @@ def brutesubarray(nums,k):
             elif len(m)>k:
                 break
     return count
-print(brutesubarray([1, 2, 1, 3, 4], k = 3))        
+print(brutesubarray([1, 2, 1, 3, 4], k = 3))       
+
+#optimal solution
+#inorder to find the number of subarrays having exactly k distinct integers , we can find find the number of subarrays having less than equal to k-1 distinct integers and k , and then we can subtract between k and k-1,
+def optimalkdiff(nums,k):
+    def solvelesseqlk(nums,value):
+        if value<0:
+            return 0
+        l=r=0
+        n=len(nums)
+        m={}
+        count=0
+        while r<n:
+            m[nums[r]]=m.get(nums[r],0)+1
+            if len(m)>value:
+                m[nums[l]]-=1
+                if m[nums[l]]==0:
+                    del m[nums[l]]
+                l+=1
+            if len(m)<=value:
+                count+=r-l+1  #we have to the number of all the subarrays ending at index r consisting the number less than or equal to k distinct numbers or elements
+                r+=1     
+        return count           
+
+
+
+    return solvelesseqlk(nums,k) - solvelesseqlk(nums,k-1)
+     
+print(optimalkdiff([1, 2, 1, 2, 3], 2  ))
+#time complexity : O(N)
+#space complexity : O(M)  number of distinct elements in nums 
 
         
