@@ -146,3 +146,34 @@ print(optimalfruitintobaskets([1, 2, 3, 2, 2]))
 #time complexity : O(N)
 #space complexity : O(1)
 
+from collections import Counter
+#Minimum Window Substring
+#Given two strings s and t. Find the smallest window substring of s that includes all characters in t (including duplicates) , in the window. Return the empty string "" if no such substring exists.
+def minwindowsubstring(s,t):
+    m=Counter(t) 
+    
+    l=r=0
+    n=len(s)
+    minimumlength = 10**9
+    formed = 0  #here formed determines that we found exactly same freq of all the characters of t in s
+    ans = -1
+    while r<n:
+        if s[r] in t:
+            m[s[r]]-=1  #decreasing the freq of the char
+            if m[s[r]] == 0:     #after decreasing if its freq becomes zero,then we have exatcly the same freq of this char of t in this current index
+             formed+=1
+        while l<=r and formed==len(t):   #if the formed value matches the length of the t , then it means we have exactly same freq of all the characters of t in s
+            if r-l+1<minimumlength:
+                minimumlength=r-l+1
+                ans = s[l:r+1]
+            if s[l] in t:
+                if m[s[l]] == 0:     #before moving the left pointer , we check if its freq is zero then it means if we move this left pointer the valid length will be reduucce as we are removign the one required character from this current window,
+                    #so we reduce the formed by 1
+                    formed-=1 
+                m[s[l]]+=1  #again inserting the required freq of this character   
+            l+=1
+        r+=1           
+    return ans
+print(minwindowsubstring("aAbBDdcC" , "Bc"))
+
+

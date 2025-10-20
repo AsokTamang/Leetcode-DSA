@@ -592,7 +592,7 @@ def optimizedminwindow(s, t):
                 ans = s[l:r+1]
 
             if s[l] in c:
-                if c[s[l]] == 0:
+                if c[s[l]] == 0:     #if we have already and exaclty matched this l indexed character as its freq is 0  , so while moving the left pointer , it will be dismissed , we reduce the value of formed by 1
                     formed -= 1  # removing this breaks validity
                 c[s[l]] += 1  # restore the count for that char
 
