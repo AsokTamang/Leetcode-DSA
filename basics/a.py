@@ -103,6 +103,44 @@ def bruteminimumwindow(s,t):
 print(bruteminimumwindow("aAbBDdcC" , "Bc"))       
 #time complexity : O(N**2)
 #space complexity : O(M)  number of unique characters
+
+
+#optimal solution
+def optminimumwindow(s,t):
+    n=len(s)
+    l=r=0
+    k=Counter(t)  #this stores the counting of character of t as key-value pair
+    formed = 0
+    minlength = 10**9
+    ans = ''
+    while r<n:
+        if s[r] in t:
+            k[s[r]]-=1
+            if k[s[r]]==0:  #if the the freq of current r inddexed char becomes 0 then it means we have the required freq of this char thats in t, in this valid window
+                formed+=1  
+        
+        while l<=r and formed==len(k):  #if we have found all the characters of t in the current window then
+            if r-l+1 < minlength:
+                minlength=r-l+1
+                ans = s[l:r+1]
+           
+            if s[l] in t:
+                 
+             if k[s[l]]==0:  #if the l indexed char's freq is 0 then it means we have the req char of req freq which is of l index , and when we remove this , the formed value will also decrease so
+                    formed-=1
+             k[s[l]]+=1    #making the freq of l index as previous
+            l+=1
+        r+=1
+    return ans
+print(optminimumwindow( "aAbBDdcC" ,  "Bc"))
+                     
+
+
+
+
+
+
+
             
 
         
