@@ -80,4 +80,30 @@ print(optimalkdiff([1, 2, 1, 2, 3], 2  ))
 #time complexity : O(N)
 #space complexity : O(M)  number of distinct elements in nums 
 
+#minimum window substring
+#Given two strings s and t. Find the smallest window substring of s that includes all characters in t (including duplicates) , in the window. Return the empty string "" if no such substring exists.
+from collections import Counter
+def bruteminimumwindow(s,t):
+    n=len(s)
+    k=Counter(t)
+    minlength = 10 ** 9
+    ans = ''
+    for i in range(n):
+        m={}
+        for j in range(i,n):
+            valid=True
+            m[s[j]]=m.get(s[j],0) + 1
+            for char in t:
+              if m.get(char,0) < k[char]:      #if the char from t is still not stored in m yet , then its default value will be 0
+                  valid = False 
+            if valid and j-i+1<minlength:
+                minlength=j-i+1
+                ans=s[i:j+1]
+    return ans
+print(bruteminimumwindow("aAbBDdcC" , "Bc"))       
+#time complexity : O(N**2)
+#space complexity : O(M)  number of unique characters
+            
+
         
+
