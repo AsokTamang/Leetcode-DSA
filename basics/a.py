@@ -31,5 +31,23 @@ def optimalongestsubstring(s,k):
          maxlength=max(maxlength,r-l+1)
          r+=1
     return maxlength
-print(optimalongestsubstring("aababbcaacc" , k = 2))     
+print(optimalongestsubstring("aababbcaacc" , k = 2))  
+#time complexity : O(N)
+#space complexity : O(M)  number of unique characters from the given string s
+
+#Subarrays with K Different Integers
+def brutesubarray(nums,k):
+    count = 0
+    n=len(nums)
+    for i in range(n):
+        m=set()
+        for j in range(i,n):    
+            m.add(nums[j])
+            if len(m)==k:
+                count+=1
+            elif len(m)>k:
+                break
+    return count
+print(brutesubarray([1, 2, 1, 3, 4], k = 3))        
+
         
