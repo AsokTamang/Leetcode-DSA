@@ -223,6 +223,28 @@ print(optimallongestrep("abcddabac"))
 #space complexity : O(M) 
 
 
+#Max Consecutive Ones III
+#brute approach
+def brutemaxconsecones(nums,k):
+    n=len(nums)
+    maximum = 0
+    for i in range(n):
+        count=0
+        for j in range(i,n):
+            if nums[j] == 0:
+                count+=1    
+            if count>k:
+                break   
+            maximum=max(maximum,j-i+1)
+    return maximum
+print(brutemaxconsecones( [0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1] , 3)) 
+#time complexity : O(N**2)
+#space complexity : O(1)
+                
+            
+
+
+
 
 
 
