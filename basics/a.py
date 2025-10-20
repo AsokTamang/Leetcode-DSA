@@ -240,7 +240,31 @@ def brutemaxconsecones(nums,k):
 print(brutemaxconsecones( [0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1] , 3)) 
 #time complexity : O(N**2)
 #space complexity : O(1)
-                
+
+#optimal approach
+def optimalmaxconsecones(nums,k):
+    n=len(nums)
+    l=r=0
+    count = 0
+    maxlength = 0
+    while r<n:
+        if nums[r] == 0:
+            count+=1
+        if count>k:
+            if nums[l] == 0:
+                count-=1
+            l+=1
+        elif count<=k:
+            maxlength=max(maxlength,r-l+1)
+        r+=1
+    return maxlength
+print(optimalmaxconsecones([0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1] ,  3))    
+#time complexity : O(N)
+#space complexity : O(1)                
+
+
+
+
             
 
 
