@@ -135,6 +135,60 @@ def optminimumwindow(s,t):
 print(optminimumwindow( "aAbBDdcC" ,  "Bc"))
                      
 
+#Minimum Window Subsequence
+#﻿Given strings s1 and s2, return the minimum contiguous substring part of s1, so that s2 is a subsequence of the part.
+#If there is no such window in s1 that covers all characters in s2, return the empty string "". If there are multiple such minimum-length windows, return the one with the left-most starting index.
+def bruteminsubseq(s1,s2):
+    ans=''
+    n=len(s1)
+    minlength = 10**9
+    for i in range(n):
+        k=0
+        for j in range(i,n):
+            if s1[j] == s2[k]:
+                k+=1
+            if k ==len(s2):
+                if j-i+1<minlength:
+                    minlength=j-i+1
+                    ans = s1[i:j+1]
+                    break
+    return ans
+print(bruteminsubseq("abcdebdde", "bde"))            
+#time complexity : O(N**2)
+#space complexity : O(1)
+
+#optimal solution
+def optimalminsubseq(s1,s2):
+    n=len(s1)
+    start=i=j = 0
+    minlength = float('inf')
+    while i < n:
+        if s1[i] == s2[j]:
+            j+=1
+        if j == len(s2):
+             end = i+1
+             j-=1   #putting the j pointer back to the last index of s2 
+             while j>=0:
+                 if s1[i] == s2[j]:
+                     j-=1
+                 i-=1
+             i+=1  #putting the i pointer at the start position for the valid window
+             if end - i <minlength:
+                 minlength=end - i 
+                 start = i
+        i+=1 
+
+    if minlength==float('inf'):
+        return ''
+    else:
+     return s1[start:start+minlength]
+print(optimalminsubseq("abcdebdde","bde"))   
+#time complexity : O(N)
+#space complexity : O(1) 
+
+
+
+
 
 
 
