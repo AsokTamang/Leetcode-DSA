@@ -606,6 +606,40 @@ print(optimizedminwindow("aAbBDdcC" , t = "Bc"))
 #space complexity : O(M)  number of unique characters from given string t
 
             
+#Minimum Window Subsequence
+#﻿Given strings s1 and s2, return the minimum contiguous substring part of s1, so that s2 is a subsequence of the part.
+#If there is no such window in s1 that covers all characters in s2, return the empty string "". If there are multiple such minimum-length windows, return the one with the left-most starting index.
+#in
+def minwindowsubseq(s1,s2):
+   ans = ""
+   i=j=0
+   n=len(s1)
+   minlength = 10 **9
+
+   while i<n:
+       if s1[i] == s2[j]:
+           j+=1
+       if j==len(s2):  #if all the characters in s2 are matched then
+           end = i+1   #we are declaring the border of the valid window
+           j-=1    #taking the j pointer back to the last index of s2 
+           while j>=0:
+               if s2[j] == s1[i]:
+                   j-=1
+               i-=1
+           j+=1   #taking the j back to the start of the s2 or first index of s2
+           i+=1   #this adding of 1 to the i is for determining the correct starting index of the valid window
+           if end - i  < minlength :  #end - i calculates the length of the valid window
+               start = i  
+               minlength=end-i  
+               ans = s1[start:end]     
+       i+=1    
+   
+   return ans    
+print(minwindowsubseq("abcdebdde", "bde"))   
+#time complexity : O(N)  N is the length of s1
+#space complexity : O(1)                         
+
+
 
 
 
