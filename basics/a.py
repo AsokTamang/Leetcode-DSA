@@ -187,6 +187,47 @@ print(optimalminsubseq("abcdebdde","bde"))
 #space complexity : O(1) 
 
 
+#longest Substring Without Repeating Characters
+def brutelongestrep(s):
+    n=len(s)
+    maxlength = float('-inf')
+    for i in range(n):
+        m=[]
+        for j in range(i,n):
+            if s[j] in m:
+                break
+            m.append(s[j])
+            maxlength=max(maxlength,j-i+1)
+    return maxlength
+print(brutelongestrep("aaabbbccc"))   
+#time complexity : O(N**2)
+#space complexity : O(M)  number of unique characters in a given string s
+
+#optimal solution
+def optimallongestrep(s):
+    n=len(s)
+    l=r=0
+    m={}
+    maxlength = float('-inf')
+    while r<n:
+        if s[r] in m and l<=m[s[r]]:  #if the current r indexed value is in m already , then we move the left pointer to the next position of initial value of this r indexed character
+            l=m[s[r]]+1
+            m[s[r]]=r
+        m[s[r]]=r  #storing the char with its index as key-value pair in m
+        
+        maxlength=max(maxlength,r-l+1)
+        r+=1
+    return maxlength
+print(optimallongestrep("abcddabac"))   
+#time complexity : O(N)
+#space complexity : O(M) 
+
+
+
+
+
+
+
 
 
 
