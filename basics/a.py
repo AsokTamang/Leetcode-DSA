@@ -378,7 +378,7 @@ def optimalbinarysum(nums,goal):
             while s>k:
                 s-=nums[l]
                 l+=1
-            count+=r-l+1
+            count+=r-l+1  #total number of subarrays whose sum is less than or equal to k
             r+=1    
                 
         return count
@@ -386,6 +386,29 @@ def optimalbinarysum(nums,goal):
 print(optimalbinarysum( [0, 0, 0, 0, 1] , goal = 0))   
 #time complexity : O(N)
 #space complexity : O(1)         
+
+
+#count number of Nice subarrays
+#brute approach
+def brutecount(nums,k):
+    if k<0:
+        return 0
+    n=len(nums)
+    count = 0
+    for i in range(n):
+        c=0
+        for j in range(i,n):
+            if nums[j]%2==1:  #if the number is odd , then we increase this c which denotes the number of odd numbers in the current window
+                c+=1
+            if c==k:
+                count+=1
+            elif c>k:
+                break
+    return count
+print(brutecount( [41, 3, 5] , k = 2))   
+#time complexity : O(N**2)
+#space complexity : O(1)              
+
 
 
 
