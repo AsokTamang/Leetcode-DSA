@@ -452,6 +452,11 @@ print(brutesuball("ccabcc"))
 #space complexity : O(1)       
 
 #optimal solution
+#so the logic behind this optimal solution is that ,
+#we calculate the frequency of the letters a,b, and c with the help of ord('a)
+#and when the frequency of all characters are greater than 0 then 
+#we calculate the number of substring by n-j
+#then we shrink the window with the help of l index 
 def optsuball(s):
     l=r=0
     n=len(s)
@@ -468,6 +473,26 @@ def optsuball(s):
 print(optsuball("abcba"))   
 #time complexity : O(N)
 #space complexity : O(1)         
+
+#Maximum Points You Can Obtain from Cards
+def maxmpoints(card,k):
+    n=len(card)
+    leftsum = 0
+    r = n-1
+    rightsum=0
+    maxpoints=0
+    for i in range(k):
+        leftsum+=card[i]
+    maxmpoints=leftsum  #as till now the maximum points we have found is ofcourse the leftsum as we have looped from the left side till k index
+    for i in range(k-1,-1,-1):
+        leftsum-=card[i]  #here we are replacing the number from the  leftindex with the right index with the help of k
+        rightsum+=card[r] 
+        maxpoints=max(maxpoints,leftsum+rightsum)
+        r-=1   
+    return maxpoints       
+print(maxmpoints([5, 4, 1, 8, 7, 1, 3 ] , k = 3))
+#time complexity : O(K)
+#space complexity : O(1)
 
 
             
