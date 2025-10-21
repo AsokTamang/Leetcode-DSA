@@ -306,6 +306,29 @@ print(optfruits( [1, 2, 3, 2, 2]))
 #time complexity : O(N)
 #space complexity : O(1)      
 
+#Longest Repeating Character Replacement
+#brute approach
+def brutelongestrep(s,k):  #we cannot replace more than k characters in the window
+    n=len(s)
+    maxlength = 0
+    for t in set(s):
+        for i in range(n):
+            count = 0  #count calculates the number of characters that we must replace with the current t inorder to get the longest window having repeating character
+            for j in range(i,n):
+                if s[j]!=t:  #only if the current j indexed character doesnot match with the current t , we need to replace this current character, thats why increase the count
+                    count+=1
+                if count>k:
+                    break
+                maxlength=max(maxlength,j-i+1) 
+    return maxlength
+print(brutelongestrep( "AABABBA" ,  1))  
+#time complexity : O(m*N**2)  where m is the number of unique characters from given string s
+#space complexity : O(1)          
+
+
+
+
+
 
 
 

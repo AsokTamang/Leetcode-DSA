@@ -214,7 +214,7 @@ def betterlongestrepchar(s,k):
     m={}  #this stores the freq of the character
     while r<n:
         m[s[r]]=m.get(s[r],0)+1
-        maxfreq=max(maxfreq,m[s[r]])
+        maxfreq=max(maxfreq,m[s[r]])  #this gives us the maximum frequency of a character at the current window
         while (r-l+1) - maxfreq > k:    #(r-l+1) - maxfreq this value gives us the number of characters that must be replaced in the current substring , if this is greater than k then we need to minimize our window
          m[s[l]]-=1
          l+=1
