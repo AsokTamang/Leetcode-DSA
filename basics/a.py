@@ -325,6 +325,73 @@ print(brutelongestrep( "AABABBA" ,  1))
 #time complexity : O(m*N**2)  where m is the number of unique characters from given string s
 #space complexity : O(1)          
 
+#optimal solution
+#so the logic behind this optimal solution is we try to find the number of character that we must replace ,with the help of the value of  maximum freq in the current window, if the freq of number to be replaced is greater than k then we just keep removing the number at l index from m , till the window is valid
+def optlongestrep(s,k):
+    n=len(s)
+    l=r=0
+    m={}
+    maximfreq=0
+    maxlength = 0
+    while r<n:
+        m[s[r]]=m.get(s[r],0) + 1
+        maximfreq=max(maximfreq,m[s[r]])
+        while (r-l+1) - maximfreq > k:  #(r-l+1) - maximfreq gives us the number of characters needed to be replaced at the current window
+            m[s[l]]-=1
+            l+=1
+        maxlength=max(maxlength,r-l+1)
+        r+=1
+    return maxlength
+print(optlongestrep( "AABABBA" , 1))    
+#time complexity : O(N)
+#space complexity : O(M)  number of unique characters from the given string
+
+
+#Binary Subarrays With Sum
+#brute approach
+def brutebinarysum(nums,goal):
+    n=len(nums)
+    count = 0
+    for i in range(n):
+        s= 0
+        for j in range(i,n):
+            s+=nums[j]
+            if s==goal:
+                count+=1
+            elif s>goal:
+                break
+    return count
+print(brutebinarysum(  [0, 0, 0, 0, 1] , goal = 0))  
+
+
+#optimal solution
+def optimalbinarysum(nums,goal):
+    def calcualtesum(nums,k):
+        if k<0:
+            return 0
+        l=r=0
+        n=len(nums)
+        s=0
+        count=0
+        while r<n:
+            s+=nums[r]
+            while s>k:
+                s-=nums[l]
+                l+=1
+            count+=r-l+1
+            r+=1    
+                
+        return count
+    return calcualtesum(nums,goal) - calcualtesum(nums,goal-1)
+print(optimalbinarysum( [0, 0, 0, 0, 1] , goal = 0))   
+#time complexity : O(N)
+#space complexity : O(1)         
+
+
+
+
+
+
 
 
 
