@@ -451,6 +451,25 @@ print(brutesuball("ccabcc"))
 #time complexity : O(N**2)
 #space complexity : O(1)       
 
+#optimal solution
+def optsuball(s):
+    l=r=0
+    n=len(s)
+    freq=[0] * 3
+    count = 0
+    while r<n:
+        freq[ord(s[r])-ord('a')]+=1
+        while freq[0] > 0 and freq[1] > 0 and freq[2] > 0:
+            count+=n-r
+            freq[ord(s[l])-ord('a')]-=1
+            l+=1
+        r+=1    
+    return count
+print(optsuball("abcba"))   
+#time complexity : O(N)
+#space complexity : O(1)         
+
+
             
 
 
