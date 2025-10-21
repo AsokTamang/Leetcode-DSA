@@ -413,7 +413,7 @@ print(brutecount( [41, 3, 5] , k = 2))
 def optcount(nums,k):
     
     def calculatecount(nums,v):
-        if k<0:
+        if v<0:
          return 0
         n=len(nums)
         l=r=0
@@ -425,13 +425,36 @@ def optcount(nums,k):
             while odd>v:
                 odd-=nums[l] % 2
                 l+=1
-            count+=r-l+1 
+            count+=r-l+1   #as we are increasing the count based on the fact that the number of odd numbers in the current window is less than or equal to the value v,
             r+=1
         return count
     return calculatecount(nums,k) - calculatecount(nums,k-1)            
 print(optcount([41, 3, 5] , k = 2))
 #time complexity : O(N)
 #space complexity : O(1)
+
+
+#Number of Substrings Containing All Three Characters
+#brute approach
+def brutesuball(s):
+    n=len(s)
+    count = 0
+    for i in range(n):
+        k=set()
+        for j in range(i,n):
+            k.add(s[j])
+            if len(k) == 3:
+                count+=n-j  #if at the window j , all occcurences of a,b, and c is found then ofcourse the window till the end from the starting position of this window, also consists of a,b and c
+                break
+    return count
+print(brutesuball("ccabcc"))  
+#time complexity : O(N**2)
+#space complexity : O(1)       
+
+            
+
+
+
 
 
 
