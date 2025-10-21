@@ -262,6 +262,51 @@ print(optimalmaxconsecones([0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1] ,
 #time complexity : O(N)
 #space complexity : O(1)                
 
+#Fruits into basket 
+#so the question is asking us to put as much as fruits in two baskets available but each basket must consists of onle one kind of fruit, and we must start from the left most tree always
+
+#brute approach
+def brutefruits(fruits):
+    n=len(fruits)
+    s=float('-inf')
+    for i in range(n):
+     m={}
+     for j in range(i,n):
+         m[fruits[j]]=m.get(fruits[j],0) + 1
+         if len(m)>2:
+             break
+         
+         s=max(s,sum(m.values()))
+    return s         
+             
+    
+print(brutefruits( [1, 2, 1]))     
+#time complexity : O(N**2)
+#space complexity : O(M)  number of unique kind of fruits in each iteration
+         
+
+#optimal solution
+def optfruits(fruits):
+    l=r=0
+    n=len(fruits)
+    m={}
+    ans=float('-inf')
+    while r<n:
+        m[fruits[r]]=m.get(fruits[r],0) + 1 
+        if len(m)>2:
+            m[fruits[l]]-=1
+            if m[fruits[l]] == 0:
+                del m[fruits[l]]
+            l+=1
+        elif len(m)<=2:
+            ans=max(ans,(r-l+1))  #r-l+1 also gives us the  number of fruits inside the current window , which is same as calculating sum(m.values())
+            r+=1
+    return ans
+print(optfruits( [1, 2, 3, 2, 2]))   
+#time complexity : O(N)
+#space complexity : O(1)      
+
+
 
 
 
