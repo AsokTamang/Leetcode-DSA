@@ -409,6 +409,32 @@ print(brutecount( [41, 3, 5] , k = 2))
 #time complexity : O(N**2)
 #space complexity : O(1)              
 
+#optimal approach
+def optcount(nums,k):
+    
+    def calculatecount(nums,v):
+        if k<0:
+         return 0
+        n=len(nums)
+        l=r=0
+        count = 0
+        odd=0
+        while r<n:
+            
+            odd+=nums[r]  % 2   #if the number is odd then its value will be 1 , if its even then its value will be 0
+            while odd>v:
+                odd-=nums[l] % 2
+                l+=1
+            count+=r-l+1 
+            r+=1
+        return count
+    return calculatecount(nums,k) - calculatecount(nums,k-1)            
+print(optcount([41, 3, 5] , k = 2))
+#time complexity : O(N)
+#space complexity : O(1)
+
+
+
 
 
 
