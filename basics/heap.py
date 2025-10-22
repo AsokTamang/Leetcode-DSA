@@ -68,7 +68,21 @@ class Heapqueue:
         self.heapify(0)  #after replacing the first element with the last element , we use the heapify function to satisfy the minheap property
         return root
     def heapsize(self):
-        return self.size      
+        return self.size    
+    def changekey(self,i,val):    #this function is used to change the value of the element at the given index i
+        prevvalue=self.elements[i]
+        self.elements[i]=val
+
+        if val<prevvalue:       
+        #bubble up logic
+
+            while i!=0 and self.elements[self.parentind(i)]>self.elements[i]:
+                self.elements[self.parentind(i)],self.elements[i] = self.elements[i],self.elements[self.parentind(i)]
+                i=self.parentind(i)  #as we have swapped the parent element with the current element , the current index is changed to the parent index
+        else:
+            self.heapify(i)  #if the new value is greater than the old value then we need to do bubble down
+        return self.elements[i]          
+    
 if __name__=='__main__':
     hh=Heapqueue(5)
     hh.insert(5)
@@ -80,6 +94,8 @@ if __name__=='__main__':
     print(hh.extractmin())
     print(hh.elements)
     print(hh.heapsize())
+    print(hh.changekey(3,30))
+    print(hh.elements)
 #time complexity:  
 #insert : O(logN)
 #heapify : O(logN)
