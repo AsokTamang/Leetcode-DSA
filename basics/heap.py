@@ -50,17 +50,25 @@ class Heapqueue:
     def heapify(self,i):  #so the function heapify means , based on the left side and right side element we switch this current i indexed element with the smallest element
         leftindex=self.leftind(i)
         rightindex=self.rightind(i)
-        leftelem=self.elements[leftindex]
-        rightelem=self.elements[rightindex]
-        currentelem=self.elements[i]
         smaller=i
-        if leftindex<self.size and leftelem<self.elements[smaller]:
+        if leftindex<self.size and self.elements[self.leftind(i)]<self.elements[smaller]:
             smaller=leftindex
-        if rightindex<self.size and rightelem<self.elements[smaller]:  #if the rigght index is within the range of our current size and right element is smaller than this i indexed element ,
+        if rightindex<self.size and self.elements[self.rightind(i)]<self.elements[smaller]:  #if the rigght index is within the range of our current size and right element is smaller than this i indexed element ,
             smaller=rightindex
         if smaller!=i:  #if the index consisting of the smaller number is not this current i index then we swap the elements
-            currentelem,self.elements[smaller]=self.elements[smaller],currentelem
-            self.heapify(smaller)  #we heapify the index        
+            self.elements[i],self.elements[smaller]=self.elements[smaller],self.elements[i]
+            self.heapify(smaller)  #we heapify the index      
+    def extractmin(self):
+        if self.size == 0:
+            return 'heap underflow'
+        root = self.elements[0]
+        self.elements[0] = self.elements[self.size-1]  #here we are replacing the first element with the last element
+        self.elements.pop()  #removing the moved last element
+        self.size-=1
+        self.heapify(0)  #after replacing the first element with the last element , we use the heapify function to satisfy the minheap property
+        return root
+    def heapsize(self):
+        return self.size      
 if __name__=='__main__':
     hh=Heapqueue(5)
     hh.insert(5)
@@ -69,6 +77,10 @@ if __name__=='__main__':
     hh.insert(-5)
     hh.insert(2)
     print(hh.elements)
+    print(hh.extractmin())
+    print(hh.elements)
+    print(hh.heapsize())
 #time complexity:  
 #insert : O(logN)
 #heapify : O(logN)
+#heapsize : O(1)
