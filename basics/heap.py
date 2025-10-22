@@ -81,7 +81,11 @@ class Heapqueue:
                 i=self.parentind(i)  #as we have swapped the parent element with the current element , the current index is changed to the parent index
         else:
             self.heapify(i)  #if the new value is greater than the old value then we need to do bubble down
-        return self.elements[i]          
+        return self.elements[i]   
+    def deleteelem(self,i):
+        self.changekey(i,float('-inf'))  #first of all we are changing the value at the given index to the most minimum infinity,which takes this element to the root with the help of our change key function
+        #then we are using the extract min to remove this element
+        self.extractmin()          
     
 if __name__=='__main__':
     hh=Heapqueue(5)
@@ -92,11 +96,14 @@ if __name__=='__main__':
     hh.insert(2)
     print(hh.elements)
     print(hh.extractmin())
-    print(hh.elements)
     print(hh.heapsize())
     print(hh.changekey(3,30))
+    print(hh.elements)
+    hh.deleteelem(2)
     print(hh.elements)
 #time complexity:  
 #insert : O(logN)
 #heapify : O(logN)
 #heapsize : O(1)
+#deleteelem: O(logN)
+#changekey: O(logN)
