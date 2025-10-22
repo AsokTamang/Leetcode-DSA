@@ -30,6 +30,9 @@ class Heapqueue:
         self.capacity = capacity
         self.size = 0
         self.elements = [0] * self.capacity
+    def initializeheap(self):
+        self.elements = []
+        self.size = 0
     def parentind(self,i):
         return (i-1) // 2
     def leftind(self,i):
@@ -85,7 +88,8 @@ class Heapqueue:
     def deleteelem(self,i):
         self.changekey(i,float('-inf'))  #first of all we are changing the value at the given index to the most minimum infinity,which takes this element to the root with the help of our change key function
         #then we are using the extract min to remove this element
-        self.extractmin()          
+        self.extractmin()  
+                
     
 if __name__=='__main__':
     hh=Heapqueue(5)
