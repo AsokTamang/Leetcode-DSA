@@ -25,7 +25,7 @@ def convertmintomax(nums):
     
     return nums        
 
-print(convertmintomax([3, 4, 8, 11, 13]))
+print(convertmintomax([2, 6, 3, 100, 120, 4, 5]))
 #time complexity : O(N)
 #space complexity : O(1)
 

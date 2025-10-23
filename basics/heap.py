@@ -212,3 +212,25 @@ def checkminheap(nums):
 print(checkminheap([10, 20, 30, 25, 15]))    
 #time complexity : O(N)
 #space complexity : O(1)
+
+
+#conversion of min heap to max heap
+def convertmintomax(nums):
+    n=len(nums)
+    def maxheapify(i):
+        maximum=i   #initially lets assume that the current index i is the maximum
+        leftind=(2* i) + 1
+        rightind=(2*i) + 2
+        if leftind<n and nums[leftind] > nums[maximum]:
+            maximum=leftind
+        if rightind<n and nums[rightind] >  nums[maximum]:
+            maximum=rightind
+        if maximum!=i:
+            nums[i],nums[maximum]=nums[maximum],nums[i]
+            maxheapify(maximum)        
+    for i in range((n//2) - 1 , -1 , -1):
+        maxheapify(i)
+    return nums
+print(convertmintomax( [-5, -4, -3, -2, -1]))    
+#time complexity : O(N)
+#space complexity : O(1)
