@@ -64,3 +64,32 @@ print(kthlargest([-5, 4, 1, 2, -3], k = 5))
 #space complexity : O(1)
 
 
+#k-th smallest element 
+def kthsmallest(nums,k):
+    n=len(nums)
+    def heapify(i,size):
+        minimum = i
+        leftind = (2*i) + 1
+        rightind = (2*i) + 2
+        if leftind < size and nums[leftind] < nums[minimum]:
+             minimum=leftind
+        if rightind < size and nums[rightind] < nums[minimum]:
+             minimum=rightind
+        if minimum!=i:
+            nums[minimum],nums[i] = nums[i],nums[minimum]
+            heapify(minimum,size)
+    for i in range(n//2):
+        heapify(i,n) 
+    #after this loop , we have designed a min-heap binary tree
+    size = n
+    for i in range(1,k):
+        nums[0],nums[size-1]=nums[size-1],nums[0]
+        size-=1
+        heapify(0,size)    
+    return nums[0]  
+
+
+print(kthsmallest([7, 10, 4, 3, 20, 15], k = 3))
+#time complexity : O(N)
+#space complexity : O(1)
+
