@@ -173,6 +173,7 @@ import heapq
 class Nnode:
     def __init__(self,val,next=None):
         self.val=val
+        self.next=next
 class Optmergelist:
     def buildlist(array):
         dummynode = Nnode(0,None)
@@ -187,15 +188,30 @@ class Optmergelist:
         heap = []  
         for i,node in enumerate(array):
             if node: #here node means the list
-                heapq.heappush(heap,(node.val,i,node))
+                heapq.heappush(heap,(node.val,i,node))  #and the heap will sort the nodes internally based on the value first, but if the values are same , then it will sort based on the index
         #here we are storing value of the node as well as the index and node as well
         while heap:
-            val,i,node = heapq.heappop(heap)
+            val,i,node = heapq.heappop(heap)  #as this code returns the smallest value with node as well as index,
+            #thats why the next of the dummy will be this first smallest value , which will be the head of the linked list
             current.next=node
             current=current.next
             if node.next:
                 heapq.heappush(heap,(node.next.val,i,node.next)) #here i means the position of the node not the index of values
-        return dummynode.next
+        final = []
+        itr=dummynode.next
+        while itr:
+            final.append(itr.val)
+            itr=itr.next
+        return final
+
+list1=Optmergelist.buildlist([ -5 , -4 , -1])
+list2=Optmergelist.buildlist([10 , 11 , 12]) 
+total=[list1,list2]
+print(Optmergelist.optmergeklist(total))
+#time complexity : O(NlogK)   
+#space complexity : O(K)  length of the total list as we are using heap
+
+    
 
 
 
