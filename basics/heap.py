@@ -196,4 +196,19 @@ print(lh.elements)
 
         
 
-
+#revision
+#check  if an array represents a min heap
+def checkminheap(nums):
+    n=len(nums)
+    #inorder to check for the min heap property we must loop through the non-leaf nodes only as the leaf nodes doesnot has any child , so they already satisfy the min heap property
+    for i in range(n//2):
+        leftind = (2 * i) + 1
+        rightind = (2 * i) + 2
+        if leftind < n and nums[leftind] < nums[i]:
+            return False
+        if rightind < n and nums[rightind] < nums[i]:
+            return False
+    return True
+print(checkminheap([10, 20, 30, 25, 15]))    
+#time complexity : O(N)
+#space complexity : O(1)
