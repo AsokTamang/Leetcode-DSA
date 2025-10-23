@@ -60,7 +60,7 @@ class Heapqueue:
             smaller=rightindex
         if smaller!=i:  #if the index consisting of the smaller number is not this current i index then we swap the elements
             self.elements[i],self.elements[smaller]=self.elements[smaller],self.elements[i]
-            self.heapify(smaller)  #we heapify the index      
+            self.heapify(smaller)  #we heapify the index  recursively with the smaller index   
     def extractmin(self):
         if self.size == 0:
             return 'heap underflow'
