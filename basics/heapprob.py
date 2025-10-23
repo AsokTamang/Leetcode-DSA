@@ -167,3 +167,36 @@ total = [list1,list2,list3]
 print(Mergelist.printlist(Mergelist.merge(total)))    
 #time complexity : O(NlogN)
 #space complexity : O(N)
+
+import heapq
+#optimal approach
+class Nnode:
+    def __init__(self,val,next=None):
+        self.val=val
+class Optmergelist:
+    def buildlist(array):
+        dummynode = Nnode(0,None)
+        current = dummynode
+        for data in array:
+            current.next=Nnode(data,None)
+            current=current.next
+        return dummynode.next
+    def optmergeklist(array):  #this array is the array consisting of multiple list or array having their own values
+        dummynode=Nnode(0,None)
+        current=dummynode
+        heap = []  
+        for i,node in enumerate(array):
+            if node: #here node means the list
+                heapq.heappush(heap,(node.val,i,node))
+        #here we are storing value of the node as well as the index and node as well
+        while heap:
+            val,i,node = heapq.heappop(heap)
+            current.next=node
+            current=current.next
+            if node.next:
+                heapq.heappush(heap,(node.next.val,i,node.next)) #here i means the position of the node not the index of values
+        return dummynode.next
+
+
+
+
