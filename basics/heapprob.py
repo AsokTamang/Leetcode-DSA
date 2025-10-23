@@ -116,3 +116,54 @@ def ksorted(nums,k):
 print(ksorted([2, 3, 1, 4],  k = 2 ))
 #time complexity : O(nlogK)
 #space complexity : O(K)  this is the auxillary space of heap
+
+
+#merge k sorted lists
+#Given heads of k sorted linked lists as an array called heads, merge them into one single sorted linked list and return the head of that list.
+#brute approach
+
+class Node:
+    def __init__(self,val,next=None):
+        self.val=val
+        self.next = next 
+class Mergelist:
+    def merge(heads):
+        final = []
+        for head in heads:
+            while head:
+                final.append(head.val)
+                head=head.next
+        #until this point we have appended all available values of nodes in our variable called final
+        final.sort()  #now we have sorted our values
+        dummynode = Node(0,None)
+        current = dummynode
+        for data in final:
+            current.next=Node(data,None)
+            current=current.next
+        return dummynode.next    
+
+           
+
+    def buildlinkedlist(array):  #first of all what we did , was we built the linked list from the given matrix  , then we used this linked list to append their values in one variable or container and sorted them and ,
+        #based on that we built a linked list
+        dummynode = Node(0,None)
+        current = dummynode
+        for data in array:
+            current.next=Node(data,None)
+            current=current.next
+        return dummynode.next    
+    def printlist(head):
+        ans = []
+        while head:
+            ans.append(head.val)
+            head=head.next
+        return ans    
+
+
+list1=Mergelist.buildlinkedlist([1,2,3,4])
+list2=Mergelist.buildlinkedlist([-4,-3])
+list3=Mergelist.buildlinkedlist([-5 , -3 , 1 , 2 , 3 , 4])
+total = [list1,list2,list3]
+print(Mergelist.printlist(Mergelist.merge(total)))    
+#time complexity : O(NlogN)
+#space complexity : O(N)
