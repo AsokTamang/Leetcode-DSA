@@ -111,3 +111,89 @@ if __name__=='__main__':
 #heapsize : O(1)
 #deleteelem: O(logN)
 #changekey: O(logN)
+
+
+#implement min heap
+#what is min heap?
+# so the min heap is the binary tree where the root element is the smallest element in the  tree and the parent nodes are smaller than its  child nodes in the tree
+#a leaf node is the node which is the leaf of the branch and the non leaf node is the node which has the child nodes or the leaf nodes in the tree.
+class Lastheap:
+    def __init__(self,capacity):
+        self.capacity = capacity
+        self.size = 0
+        self.elements = [0] * self.capacity
+    def parentnode(self,i):
+        return (i-1)//2
+    def leftindex(self,i):
+        return (2*i) + 1
+    def rightindex(self,i):
+        return (2*i) + 2
+    def insert(self,x):   #here we are inserting the x which is the new value in the node
+        if self.size==self.capacity:
+            return 'heap overflow'
+        self.elements[self.size] = x  #inserting at the last node
+        i = self.size
+        self.size+=1
+        while i!=0 and self.elements[self.parentnode(i)] > self.elements[i]:
+            self.elements[self.parentnode(i)],self.elements[i] = self.elements[i],self.elements[self.parentnode(i)]
+            i=self.parentnode(i)    #as we have switched the parentnode and the i indexed element, the index of i will be the parent node
+    def getmin(self):
+        if self.size==0:
+            return 'heap underflow'    
+        return self.elements[0]  #returning the first most element from the list
+    def heapify(self,i):
+        n=len(self.elements)
+        smaller = i
+        leftind=self.leftindex(i)
+        rightind=self.rightindex(i)
+        if leftind<n and self.elements[leftind] < self.elements[i]:
+            smaller=leftind
+        if rightind < n and self.elements[rightind] < self.elements[i]:
+            smaller=rightind
+        if smaller!=i:
+            self.elements[i],self.elements[smaller] = self.elements[smaller],self.elements[i]  
+            self.heapify(smaller)       #recursively calling the heapify function
+
+    def extractmin(self):
+        root=self.elements[0]
+        self.elements[0]=self.elements[self.size-1]
+        self.size-=1
+        self.elements.pop()  #removing the last element
+        self.heapify(0)
+        return root
+    def heapsize(self):
+        return self.size
+    def isempty(self):
+        return not self.elements   
+    def changekey(self,i,val):
+        prevval=self.elements[i]
+        self.elements[i] = val  #new value
+        if val>prevval:  #if the new value is greater than we need to bubble down
+            self.heapify(i)
+        else:  #if the new value is lesser than the previous value then we need to do the logic of bubble up because there might be the chance that its parent node value might be greater than the current node's value as we have inserted the lesser value
+            while i!=0 and self.elements[self.parentnode(i)] > self.elements[i]:
+                self.elements[self.parentnode(i)],self.elements[i]= self.elements[i],self.elements[self.parentnode(i)]
+                i=self.parentnode(i)
+        return self.elements[i]
+lh=Lastheap(6)
+lh.insert(1)
+lh.insert(7)
+lh.insert(11)
+lh.insert(13)
+lh.insert(23)
+lh.insert(63)    
+print(lh.elements)
+print(lh.extractmin())
+print(lh.elements)
+#time complexity : 
+#insert : O(logN)
+#getmin: O(1)
+#extractmin : O(logN)
+#heapsize : O(1)
+#isempty : O(1)
+#changekeyvalue : O(logN)
+#space complexity : O(N)
+
+        
+
+
