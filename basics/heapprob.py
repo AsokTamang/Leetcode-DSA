@@ -93,3 +93,26 @@ print(kthsmallest([7, 10, 4, 3, 20, 15], k = 3))
 #time complexity : O(N)
 #space complexity : O(1)
 
+#sort k sorted array
+#so in the given question , the array is sorted in k position , which mneans the element of array at every index i can be either i-k or i+k position in the given sorted array
+#so we must sort this array
+#so the logic for solving this problem is that we are appending the elements at the window of k+1 first 
+import heapq
+def ksorted(nums,k):
+    n=len(nums)
+    heap=[]
+    for i in range(k+1):
+        heapq.heappush(heap,nums[i])   #pushing the i indexed element into heap using heapq.heappush which internally arranges in the min-heap patterned binary tree
+    index = 0
+    for i in range(k+1,n):
+        nums[index]=(heapq.heappop(heap))  #appending the smallest element in our ans with in the range k+1
+        heapq.heappush(heap,nums[i])
+        index+=1
+
+    while heap and index<n:
+        nums[index]=(heapq.heappop(heap))  #heapq.heappop(heap) always returns the smallest number available in the current heap
+        index+=1
+    return nums      
+print(ksorted([2, 3, 1, 4],  k = 2 ))
+#time complexity : O(nlogK)
+#space complexity : O(K)  this is the auxillary space of heap
