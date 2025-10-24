@@ -213,6 +213,25 @@ print(Optmergelist.optmergeklist(total))
 
     
 
+#Replace elements by its rank in the array
+#Given an array of N integers, the task is to replace each element of the array by its rank in the array.v
+def replaceleem(array):
+    heap = []
+    n=len(array)
+    for i in range(n):
+        heapq.heappush(heap,(array[i],i))   #this will store and sort the data as well as index of a given array based on the value 
+    ans = [0] * n
+    index = 1
+    while heap:
+        val,i = heapq.heappop(heap)
+        ans[i] = index  #here index denotes the rank
+        index+=1
+    return ans
+print(replaceleem([20, 15, 26, 2, 98, 6]))
+#time complexity : O(NlogN)  logN is for the insertion of datas and their index in heap
+#space complexity : O(N)
+
+
 
 
 
