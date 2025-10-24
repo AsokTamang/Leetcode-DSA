@@ -255,4 +255,63 @@ def sortkarray(array,k):
 print(sortkarray([2, 3, 1, 4], 2))    
 #time complexity : O(NlogK)   
 #space complexity : O(K)  for the heap size 
+
+
+#kth largest and smallest element in an array
+def kthlargestandsmallest(array,k):
+    def kthlargest(array,k):  #inorder to find the largest element , first of all we need to design this tree in maxheap pattern using maxheapify
+        array=array.copy()  #here we must make the copy of an array so that it won't change the result
+        n=len(array)
+        def maxheapify(ind,size):
+            leftind = (2*ind) + 1 
+            rightind = (2*ind) + 2
+            maximum = ind
+            if leftind< size and array[leftind] > array[maximum]:
+                maximum=leftind
+            if rightind< size and array[rightind] > array[maximum]:
+                maximum=rightind 
+            if maximum!=ind:
+                array[maximum],array[ind] = array[ind],array[maximum]
+                maxheapify(maximum,size)   #using recursion with the maximum index       
+
+        for i in range((n//2) - 1 , - 1 ,-1):  #as the leaf nodes already satisfy the condition of min heap or maxheap , we start from the non-leaf
+          maxheapify(i,n)
+        size = n
+        #if we need to find the kth largest or smallest element, then we need to remove the  root elment which is the maximum element at time k-1 times , then we can return the root element , which is the kth largest or kth smallest element
+        for i in range(1,k):  
+            array[0],array[size-1]=array[size-1],array[0]
+            size-=1
+            maxheapify(0,size)  #as we have replaced the root with the last element , we again need to heapify to maintain the max heapify pattern
+        return array[0]      
+
+        
+    def kthsmallest(array,k):
+        n=len(array)
+        array=array.copy()
+        def minheapify(ind,size):
+            leftind = (2*ind) + 1 
+            rightind = (2*ind) + 2
+            minimum = ind
+            if leftind< size and array[leftind] < array[minimum]:
+                minimum=leftind
+            if rightind< size and array[rightind] < array[minimum]:
+                minimum=rightind 
+            if minimum!=ind:
+                array[minimum],array[ind] = array[ind],array[minimum]
+                minheapify(minimum,size)   #using recursion with the minimum index       
+        for i in range((n//2)-1,-1,-1):  #as the leaf nodes already satisfy the condition of min heap or minheap , we start from the non-leaf
+          minheapify(i,n)
+        size = n
+        #if we need to find the kth largest or smallest element, then we need to remove the  root elment which is the minimum element at time k-1 times , then we can return the root element , which is the kth largest or kth smallest element
+        for i in range(1,k):  
+            array[0],array[size-1]=array[size-1],array[0]
+            size-=1
+            minheapify(0,size)
+        return array[0]
+    return f'kth smallest:{kthsmallest(array,k)} and kth largest:{kthlargest(array,k)}'
+print(kthlargestandsmallest([1,2,6,4,5,3] , 3 )) 
+#time complexity : O(N + KlogN)
+#space complexity : O(1)
+
+
     
