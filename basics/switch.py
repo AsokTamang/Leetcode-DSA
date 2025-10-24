@@ -63,3 +63,6 @@ def mergereverse(array, low, high):
 
 ar = [6, 4, 1, 2, 7]
 print(mergereverse(ar[:], 0, 4))  # ✅ Correct Output
+
+
+

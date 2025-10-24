@@ -2173,7 +2173,7 @@ class DoubleLinkedList:
           itr.next=tempo   #then the next node will be the previous node which was stored in a tempo
           itr=itr.prev   #and as we need to go to the next node and as the next node pointer is taken by the prev node , so we are using itr=itr.prev
         
-
+    
             
 
 

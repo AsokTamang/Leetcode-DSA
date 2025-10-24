@@ -453,7 +453,6 @@ print(optmlargestrec([2, 1, 5, 6, 2, 3]))
 
 #maximum rectangle
 #Given a m x n binary matrix filled with 0's and 1's, find the largest rectangle containing only 1's and return its area.
-
 #the question is asking us to find the maximum area of a rectangle from a given 2D matrix , which can be solved by using the same logic of finding the maximum area of a rectangle from a given histogram
 def maximrectangle(matrix):
     r=len(matrix) #number of rows

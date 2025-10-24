@@ -1192,6 +1192,9 @@ def betterapproach(array,k):
 betterapproach([1,1,1],2) 
 #timecomplexity is : O(N)
 #spacecomplexity is : O(N) for worst case if all the subarrays give the target k   
+
+
+
         
 
 

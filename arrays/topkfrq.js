@@ -29,11 +29,7 @@ class Solution {
       store.set(num,(store.get(num)||0)+1)   //here we are directly setting the num's freq using set method if store.get(num) is undefined then we set it to 0 and add 1.
     } //then this loop is done whose role is for counting the numebr of appearance of a numeber and storing as a key-value pair in a map.
 
-    for (const [key, value] of store) {   //then this loop is for comparing the value with the K inorder to get the required array of number which is a key.
-      if (value >= k) {
-        keys.push(key); //then we append the key.
-      }
-    }
+    
 
     return keys;
   }

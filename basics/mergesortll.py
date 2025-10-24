@@ -148,7 +148,7 @@ class mergelinkedlist:
     def optimalintersection(self,f,s):
        itr1=f
        itr2=s
-       while itr1!=itr2:
+       while itr1!=itr2:  
            if itr1==None:
                itr1=s
            if itr2==None:

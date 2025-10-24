@@ -234,3 +234,25 @@ def convertmintomax(nums):
 print(convertmintomax( [-5, -4, -3, -2, -1]))    
 #time complexity : O(N)
 #space complexity : O(1)
+
+
+#revision 
+#sort k sorted array
+def sortkarray(array,k):
+    heap = []
+    n=len(array)   
+    index = 0
+    for i in range(k+1):
+        heapq.heappush(heap,array[i])    
+    for i in range(k+1,n):
+        array[index]=heapq.heappop(heap)  #appending the smallest element available in the heap in our array at the current index
+        heapq.heappush(heap,array[i])
+        index+=1
+    while heap:   #if the heap still exists then we append the numbers from heap in the respective index for sorting the given array 
+        array[index] = heapq.heappop(heap)
+        index+=1        
+    return array
+print(sortkarray([2, 3, 1, 4], 2))    
+#time complexity : O(NlogK)   
+#space complexity : O(K)  for the heap size 
+    

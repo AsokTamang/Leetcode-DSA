@@ -408,7 +408,6 @@ print(brutemaximumcardscore( [1, 2, 3, 4, 5, 6] , k = 3))
 
 #better approach
 def bettermaximumcardscore(card,k):
-    total=0
     n=len(card)
     leftsum = 0
     rightsum=0

@@ -40,3 +40,4 @@ def splitt(array,low,high):
     return cl+cr+cm   #here cl is the counting left array numbers , cr is the counting right array numbers and cm is the counting merging numbers
 a=[2, 3, 7, 1, 3, 5]
 print(splitt(a[:],0,len(a)-1))
+

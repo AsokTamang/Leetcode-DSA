@@ -207,3 +207,4 @@ def optimalwordbreak(s,worddict):
 print(optimalwordbreak('leetcode',['leet','code']))
 #time complexity : O(N*M*K) where K denotes the slicing the given string which is done after the if condition
 #space complexity : O(N)
+
