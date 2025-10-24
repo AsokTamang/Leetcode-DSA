@@ -232,6 +232,23 @@ print(replaceleem([20, 15, 26, 2, 98, 6]))
 #space complexity : O(N)
 
 
-
-
+#sorting method
+def replacenum(array):
+    m={}
+    n=len(array)
+    
+    ans = [0] * n
+    a=sorted(array)
+    index = 1
+    for i in range(n):  #first of all we are looping through the sorted array to store the data and its rank as key-value pair
+        if a[i] not in m:
+            m[a[i]] = index
+            index+=1
+    for i in range(n):  #then we loop using the original array value to get the corresponding rank to store in the respective index based on the original array
+        ans[i] = m[array[i]]
+    return ans
+print(replacenum([20, 15, 26, 2, 98, 6]))     
+#time complexity : O(nlogn)
+#space complexity : O(n)
+    
 
