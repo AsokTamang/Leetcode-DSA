@@ -313,5 +313,53 @@ print(kthlargestandsmallest([1,2,6,4,5,3] , 3 ))
 #time complexity : O(N + KlogN)
 #space complexity : O(1)
 
+#merge k sorted lists
+#Given heads of k sorted linked lists as an array called heads, merge them into one single sorted linked list and return the head of that list.
+class Node1:
+    def __init__(self,val,next=None):
+        self.val=val
+        self.next=next
+class Mergeksortedlists:
+    def mergethelist(self,array):  #here array is the parent list
+        dummy=Node1(0,None)
+        current = dummy
+        heap = []  #this will store the node values as well as return the minimum node values for the final linked list in each iteration
+        for i,node in enumerate(array):  #here i represents the index and node represents the head of each linked list
+            if node:
+                heapq.heappush(heap,(node.val,i,node))  #we are pushing the node inside the heap based on the value , index and node itself , cause if the values are same then the heap sort them according to the index
+        while heap:
+            val,i,node = heapq.heappop(heap)
+            current.next = node
+            current=current.next
+            if node.next:
+                heapq.heappush(heap,(node.next.val,i,node.next))
+        return dummy.next
+    def printlist(self,array):
+        itr=self.mergethelist(array)
+        ans = []
+        while itr:
+            ans.append(str(itr.val))
+            itr=itr.next
+        return ans    
+
+
+
+      
+        
+    def buildlinkedlist(self,list):  #here list is just the normal array and from this normal array we have to make the linked list and return the head of the linked list
+        dummy=Node1(0,None)
+        current=dummy
+        for data in list:
+            current.next=Node1(data,None)
+            current=current.next
+        return dummy.next  #returning the head of the linked list
+mg=Mergeksortedlists()
+list1=mg.buildlinkedlist([1,2,3,4])
+list2=mg.buildlinkedlist([-4,-3])
+list3=mg.buildlinkedlist([-5 , -3 , 1 , 2 , 3 , 4])   
+totallist=[list1,list2,list3] 
+print(mg.printlist(totallist))
+        
+
 
     
