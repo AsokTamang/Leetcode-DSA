@@ -372,16 +372,18 @@ def taskscheduler(array,n):
     freqarray = [0] * 26
     for num in array:
         freqarray[ord(num)-ord('A')]+=1    #counting the frequency of each task from the given array
-    for num in array:
-        heapq.heappush(heap,-freqarray[ord(num)-ord('A')])     #here we are storing the negative value of the freq cause the heapq only operates for the smallest number or value at first
+    for i in range(26):
+        if freqarray[i] > 0:
+         heapq.heappush(heap,-freqarray[i])     #here we are storing the negative value of the freq cause the heapq only operates for the smallest number or value at first
     while heap:
         temp = [ ]  #this is the temporary variable which is used for restoring the new value of popped value from the heap
         for i in range(n+1):
-            count = heapq.heappop(heap)
-            count+=1
-            temp.append(count)
+            if heap:
+                count = heapq.heappop(heap)
+                count+=1
+                temp.append(count)
         for value in temp:
-            if value<0:
+            if value<0:  #as we are storing the negative value in our heap , only if its negative we will push it back to the heap
                 heapq.heappush(heap,value)
         if heap:
             totaltime+=n+1  #if the heap still exists then ofcourse the total time will be addition of  n+1
@@ -389,3 +391,5 @@ def taskscheduler(array,n):
             totaltime+=len(temp)                     
     return totaltime
 print(taskscheduler( ["A","A","A","B","B","B"],  2))
+#time complexity : O(N)
+#space complexity : O(1)
