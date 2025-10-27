@@ -393,3 +393,26 @@ def taskscheduler(array,n):
 print(taskscheduler( ["A","A","A","B","B","B"],  2))
 #time complexity : O(N)
 #space complexity : O(1)
+from collections import Counter
+#brute handofstraights
+def brutehandstraight(hand,groupsize):
+    if len(hand) % groupsize!=0:
+        return False
+    hand.sort()  #sorting the given array
+    m=Counter(hand)  #this makes the key-value pair of number and their count
+    for num in hand:
+        if m[num] == 0:  #if the very first value's count is 0 then we continue with another number
+            continue
+        for i in range(groupsize):
+            card = num + i  #here for every number we must check if its next consecutive number exists or not
+            if m[card]==0:
+                return False
+            else:
+                m[card]-=1
+        return True        
+                 
+print(brutehandstraight([1,2,3,4,5],  4))      
+#time complexity : O(N)
+#space complexity : O(1)  
+          
+         
