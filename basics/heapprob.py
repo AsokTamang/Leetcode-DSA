@@ -292,7 +292,23 @@ print(taskscheduler(["A","A","A","B","B","B"], 2))
 #space complexity : O(logN)  for the heap 
 
 
+from collections import Counter
+#optimal solution 
+def optimalhandstraight(array,n):  #here we must make n size ordered group from all possible valus in a given array as these values cannot be repeated and all the values must be used 
+    #otherwise it will return false
+    m=Counter(array)
+    for hand in sorted(m.keys()):
+        if m[hand]>0:
+            currentfreq = m[hand]   #if the freq of 1 is 2 then the freq of 2 and 3 also must be equal to or greater than 2 inorder to  form 2 [1,2,3] otherwise it is seen that there is no sufficient frequency of 2 and 3 to form [1,2,3] for the hand 1
+            for i in range(n):
+                if m[hand + i]<currentfreq:  #if the frequency of currentfreq + i is insufficient which means its lesser than the currentfreq then we return false
+                    return False
+                m[hand + i]-=currentfreq
+    return True 
+print(optimalhandstraight([1,2,3,4,5],  4))    
+#time complexity : O(k)
+#space complexity : O(k) number of distinct elements from the given array   
 
-#task scheduler
+
 
 

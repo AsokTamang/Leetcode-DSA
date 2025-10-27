@@ -405,7 +405,7 @@ def brutehandstraight(hand,groupsize):
             continue
         for i in range(groupsize):
             card = num + i  #here for every number we must check if its next consecutive number exists or not
-            if m[card]==0:
+            if m[card]==0:  #if the freq of the needed number is 0 then it means we dont have the sufficient required number so we cannot form a group of length groupsize, so we return false
                 return False
             else:
                 m[card]-=1
@@ -414,5 +414,21 @@ def brutehandstraight(hand,groupsize):
 print(brutehandstraight([1,2,3,4,5],  4))      
 #time complexity : O(N)
 #space complexity : O(1)  
-          
+
+#optimal solution
+def optimalhandstraight(hand,groupsize):
+    m=Counter(hand)   #here we are sorting the hands and then calculating the freq of these hands
+    for hand in sorted(m.keys()):
+        currentfreq=m[hand]
+        for i in range(groupsize):
+            card = hand + i
+            if m[card] < currentfreq:
+                return False
+            m[card]-=currentfreq
+    return True
+print(optimalhandstraight( [1,2,3,4,5],   4))        
+
+
+         
+
          
