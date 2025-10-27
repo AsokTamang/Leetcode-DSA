@@ -150,4 +150,23 @@ print(kthsmallest([7, 10, 4, 3, 20, 15], k = 3))
 #time complexity : O(klogN)  k is the value given and n is the length of a given array
 #space complexity : O(1)
 
+import heapq
+#sort k sorted array
+def ksortedarray(array,k):
+    heap = []
+    index = 0
+    n=len(array)
+    for i in range(k+1):
+        heapq.heappush(heap,array[i])
+    for i in range(k+1,n):
+        array[index] = heapq.heappop(heap)
+        heapq.heappush(heap,array[i])
+        index+=1      
+    while heap and  index<n:
+        array[index] = heapq.heappop(heap)
+        index+=1
+    return array      
+print(ksortedarray([2, 3, 1, 4],  k = 2 ))
+#time complexity : O(nlogK)
+#space complexity : O(K)  for the heap 
 
