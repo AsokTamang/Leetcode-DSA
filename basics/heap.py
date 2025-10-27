@@ -363,3 +363,29 @@ print(mg.printlist(totallist))
 
 
     
+#task scheduler
+#here the question has asked us to complete the given number of tasks in the minimum possible time intervals,
+#and n is the time interval between the same task as no same task can be performed within the n value
+def taskscheduler(array,n):
+    totaltime = 0
+    heap = []
+    freqarray = [0] * 26
+    for num in array:
+        freqarray[ord(num)-ord('A')]+=1    #counting the frequency of each task from the given array
+    for num in array:
+        heapq.heappush(heap,-freqarray[ord(num)-ord('A')])     #here we are storing the negative value of the freq cause the heapq only operates for the smallest number or value at first
+    while heap:
+        temp = [ ]  #this is the temporary variable which is used for restoring the new value of popped value from the heap
+        for i in range(n+1):
+            count = heapq.heappop(heap)
+            count+=1
+            temp.append(count)
+        for value in temp:
+            if value<0:
+                heapq.heappush(heap,value)
+        if heap:
+            totaltime+=n+1  #if the heap still exists then ofcourse the total time will be addition of  n+1
+        else:
+            totaltime+=len(temp)                     
+    return totaltime
+print(taskscheduler( ["A","A","A","B","B","B"],  2))

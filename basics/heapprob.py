@@ -252,3 +252,47 @@ print(replacenum([20, 15, 26, 2, 98, 6]))
 #space complexity : O(n)
     
 
+
+#task scheduler
+#You are given a list of tasks represented by uppercase English letters ('A' to 'Z'), and an integer n representing a cooldown interval between two same tasks.
+#Each task takes exactly 1 CPU interval to complete.
+#Tasks can be executed in any order, but identical tasks must be separated by at least n intervals, during which the CPU may remain idle or execute other tasks.
+#Return the minimum number of CPU intervals required to complete all the tasks.
+
+
+def taskscheduler(array,n):
+    total= 0  #this is the total intervals needed to take to complete the tasks
+    heap = []
+    freqarray = [0] * 26
+    for num in array:
+        freqarray[ord(num)-ord('A')]+=1   #here we are storing the frequency of the num from given array in our freqarray
+    for i in range(26):
+        if freqarray[i] > 0:
+            heapq.heappush(heap,-freqarray[i])  #here we are storing the negative value of the frequency of the num cause the default heapq method in python pops the negative value
+   
+    while heap:
+         temp=[]
+         for i in range(n+1):
+           if heap: 
+            count = heapq.heappop(heap)
+            count+=1
+            temp.append(count)
+         for val in temp:
+             if val<0:
+                 heapq.heappush(heap,val)   
+         if not heap:    #if the heap becomes empty in the iteration , then
+             total+=len(temp)
+         else:
+             total+=n+1  #as in each iteration we are doing n+1 tasks
+                     
+           
+    return total    
+print(taskscheduler(["A","A","A","B","B","B"], 2))
+#time complexity : O(N)
+#space complexity : O(logN)  for the heap 
+
+
+
+#task scheduler
+
+
