@@ -93,6 +93,35 @@ ll.put([4,4])
 print(ll.get(3))
 print(ll.printcache())
 
+
+#kth largest element in an array
+def kthlargest(nums,k):  #here the quesion is asking us to return the kth largest element in an array
+    def heapifymax(size,i):
+        maximum = i  #lets assume the current index is the maximum
+        leftind = (2* i) +1
+        rightind = (2*i) + 2  
+        if leftind<size and nums[leftind] > nums[maximum]:
+            maximum=leftind
+        if rightind<size and nums[rightind] > nums[maximum]:
+            maximum=rightind
+        if maximum!=i:
+            nums[maximum],nums[i]=nums[i],nums[maximum]
+            heapifymax(size,maximum) 
+    n=len(nums)
+
+    for i in range((n//2)-1,-1,-1):  #here we must heapifymax from the non-leaf node which is not the leaf but the parent node itself
+        heapifymax(n,i)   
+    size = n         
+    for i in range(1,k):
+        nums[0]=nums[size-1]   #removing the very first elmeent which is the first maximum element then decreasing the size and heapifying for max tree
+        size-=1  #and repeating this process from 1 to k-1 times
+        heapifymax(size,0)    
+    return nums[0]   #then the very first element or the root element after the loop is the kth largest element
+print(kthlargest( [-5, 4, 1, 2, -3], k = 5))
+#time complexity : O(klogN)  k is the value given and n is the length of a given array
+#space complexity : O(1)
+
+
         
 
 
