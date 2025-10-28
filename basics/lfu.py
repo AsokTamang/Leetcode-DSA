@@ -170,3 +170,46 @@ print(ksortedarray([2, 3, 1, 4],  k = 2 ))
 #time complexity : O(nlogK)
 #space complexity : O(K)  for the heap 
 
+
+#merge k sorted lists
+#Given heads of k sorted linked lists as an array called heads, merge them into one single sorted linked list and return the head of that list.
+class Nnode:
+    def __init__(self,val,next=None): #here val represents the value of the node
+        self.next =next
+        self.val = val 
+class MergeKlist:     
+    def buildlinkedlist(array):  #this functions is used for building the linked list and this function returns the head of the linked list
+        dummy=Nnode(0,None)
+        current = dummy
+        for num in array:
+            current.next=Nnode(num,None)
+            current=current.next
+        return dummy.next         
+    def mergelinkedlist(array):  #here array represents the  linked list inside a parent list
+        dummy=Nnode(0,None)
+        current = dummy
+        heap = []
+        for i,node in enumerate(array):
+            if node:
+             heapq.heappush(heap,(node.val,i,node))  #here we are pushing the nodes based on the node value first then the index
+        while heap:
+                val,i,node=heapq.heappop(heap)
+                current.next = node
+                current=current.next
+                if node.next:
+                    heapq.heappush(heap,(node.next.val,i,node.next))
+        a=[]
+        itr=dummy.next
+        while itr:
+            a.append(str(itr.val))
+            itr=itr.next
+
+        return '->'.join(a)     
+          
+list1=MergeKlist.buildlinkedlist([1,2,3,4])
+list2=MergeKlist.buildlinkedlist([-4,-3])
+list3=MergeKlist.buildlinkedlist([ -5 , -3 , 1 , 2 , 3 , 4])    
+totallist=[list1,list2,list3]
+print(MergeKlist.mergelinkedlist(totallist))
+#time complexity : O(NlogK)  N is the total number of nodes in all the child lists and K is the number of such list in parent list
+#space complexity : O(K)  due to heap
