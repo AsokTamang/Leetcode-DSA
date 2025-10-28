@@ -264,3 +264,22 @@ def taskscheduler(array,n):
 print(taskscheduler( ["A","A","A","B","B","B"], 2))          
 #time complexity : O(N)
 #space complexity : O(K)  number of distinct elements in a given array     
+
+
+#hand of straights
+from collections import Counter
+def handofstraights(hand,n):  #here n is the size of a group consisting of consecutive cards
+    m=Counter(hand)
+    for num in sorted(m.keys()):
+        count = m[num]  
+        if count>0:
+            for i in range(n):
+                if m[num + i] < count:
+                    return False  #we return false as soon as the frequency of the next coming number of the current card number is less than the count or freq of the current card number, cause if the condition is like this then
+                m[num + i]-=count
+                #we cannot form a group of size n with the consecutive numbers
+    return True
+print(handofstraights( [1,2,3,4,5],  4))        
+#time complexity : O(N)
+#space complexity : O(M) number of distinct elements from a given array
+
