@@ -43,3 +43,20 @@ t.posttwitt(1,7)  #time complexity : O(1)
 print(t.getnewsfeed(1))
                     
 
+#minimum cost to connect sticks
+def minimumcost(sticks):
+    heap = []
+    for num in sticks:
+        heapq.heappush(heap,num)
+    totalcost=0    
+    while len(heap)>1:
+        firstcost = heapq.heappop(heap)  
+        secondcost = heapq.heappop(heap)
+        cost = firstcost+secondcost
+        totalcost+=cost
+        heapq.heappush(heap,cost)
+    return totalcost    
+
+print(minimumcost([1, 8, 3, 5]))
+#time complexity : O(NlogN) 
+#space complexity : O(N)
