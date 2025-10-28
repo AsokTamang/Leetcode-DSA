@@ -213,3 +213,54 @@ totallist=[list1,list2,list3]
 print(MergeKlist.mergelinkedlist(totallist))
 #time complexity : O(NlogK)  N is the total number of nodes in all the child lists and K is the number of such list in parent list
 #space complexity : O(K)  due to heap
+
+
+#Replace elements by its rank in the array
+#Given an array of N integers, the task is to replace each element of the array by its rank in the array.
+def replaceelements(array):
+    n=len(array)
+    ans = [0] * n
+    heap = []
+    for i in range(n):
+        heapq.heappush(heap,(array[i],i))
+    index = 1
+    while heap:
+        val,i = heapq.heappop(heap)  #here i represents the original index of the number in a given original array
+        ans[i] = index  #as the very first element's index must be 1 so we start by 1 
+        #and this loop goes on
+        index+=1  
+    return ans
+print(replaceelements([4, 2, 4]))        
+#time complexity : O(NlogN)
+#space complexity : O(N)
+
+
+#task scheduler
+#the question is asking us to return the most possible total minimum time interval ,as two different task can be done just next to each other but for the identical tasks the,they must be separated by n intervals
+def taskscheduler(array,n):
+    freqarray = [0] * 26
+    for i in range(len(array)):
+        freqarray[ord(array[i])-ord('A')]+=1   #counting the frequency of task from a given array
+    heap = []
+    for i in range(26):
+        if freqarray[i] > 0:
+         heapq.heappush(heap,-freqarray[i])  #here we must store in the negative form cause python heapq returns the minimum value or smallest value while popping
+    totaltime = 0
+    while heap:
+        temp = []  #this stores the number of task left for each iteration 
+        for i in range(n+1):
+            if heap:
+                count = heapq.heappop(heap)
+                count+=1  #reducing the value which means we are using the task
+                temp.append(count)
+        for num in temp:
+            if num < 0:
+                heapq.heappush(heap,num)
+        if heap:  #if the heap still exists then it means we have successfully completed n+1 task in the current cycle maintaining n interval between identical tasks if there is sufficient number of task else remained idle if needed
+            totaltime+=n+1
+        else:
+            totaltime+=len(temp)
+    return totaltime     
+print(taskscheduler( ["A","A","A","B","B","B"], 2))          
+#time complexity : O(N)
+#space complexity : O(K)  number of distinct elements in a given array     

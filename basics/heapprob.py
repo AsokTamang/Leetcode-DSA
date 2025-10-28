@@ -227,7 +227,7 @@ def replaceleem(array):
         ans[i] = index  #here index denotes the rank
         index+=1
     return ans
-print(replaceleem([20, 15, 26, 2, 98, 6]))
+print(replaceleem([4,2,4]))
 #time complexity : O(NlogN)  logN is for the insertion of datas and their index in heap
 #space complexity : O(N)
 
@@ -308,6 +308,8 @@ def optimalhandstraight(array,n):  #here we must make n size ordered group from 
 print(optimalhandstraight([1,2,3,4,5],  4))    
 #time complexity : O(k)
 #space complexity : O(k) number of distinct elements from the given array   
+
+
 
 
 
