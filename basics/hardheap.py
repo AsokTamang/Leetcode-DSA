@@ -206,3 +206,38 @@ def optimalmaxsumcomb(a,b,k):
 print(optimalmaxsumcomb([7, 3], [1, 6],2))        
 #time complexity : O(klogk)
 #space complexity : O(k)
+
+
+#find Median from Data Stream
+# Implement a class that finds the median from a data stream. The median is the middle value in an ordered integer list. If the size of the list is even, there is no middle value, and the median is the mean of the two middle values.
+#Implement the MedianFInder class as follows:
+#MedianFinder() initializes the MedianFinder object.
+#void addNum(int num) adds the integer num to the data structure.
+#double findMedian() returns the median of all elements so far. Answers within 10-5 of the actual answer will be accepted. 
+
+class MedianFinder:
+    def __init__(self):
+        self.array = []
+    def addnum(self,num):
+             self.array.append(num)
+    def findMedian(self):
+        self.array.sort()
+        n=len(self.array)
+        if n%2 !=0:
+            median = self.array[n//2]
+        else:
+            firstvalue = self.array[(n//2)-1]
+            secondvalue = self.array[(n//2)]
+            median=(firstvalue + secondvalue) / 2
+        return median
+brutemf=MedianFinder()
+brutemf.addnum(1)
+brutemf.addnum(2)
+brutemf.addnum(3)
+print(brutemf.findMedian())
+#time complexity : O(nlogn)
+#space complexity : O(n)  number of elements in an array
+
+
+
+                     
