@@ -64,7 +64,7 @@ print(minimumcost([1, 8, 3, 5]))
 
 #Kth largest element in a stream of running integers
 class Kthlargest:
-    def inkthlargest(self,k,nums):
+    def __init__(self,k,nums):
         self.k=k
         self.nums = nums
     def maxheapify(self,i,size,array):  #this function is used for designing the maxheapify tree
@@ -81,7 +81,7 @@ class Kthlargest:
 
     def add(self,val): #here val is jsut a random number and we must add this val in our nums array and then return the kth largest number
         self.nums.append(val)
-        a=sorted(self.nums)
+        a=self.nums[:] #here we are making a copy of the self.nums array
         n=len(a)
         size = n
         for i in range((n//2) - 1,-1,-1):  #here we are designing the maxheap tree using the heapify function
@@ -92,11 +92,32 @@ class Kthlargest:
 
             self.maxheapify(0,size,a)
         return a[0]
-k=Kthlargest()
-k.inkthlargest(2, [5, 5, 5, 5])
+k=Kthlargest(2, [5, 5, 5, 5])
 print(k.add(6))
-print(k.add(2))
 print(k.add(60))
-#time complexity : O(klogN)
-#space complexity : O(1)
+print(k.add(2))
+
+#time complexity : O(N+klogN) as we are making a copy of a self.nums
+#space complexity : O(N)
+
+
+class Optkthlargest:
+    def __init__(self,k,nums):
+        self.k= k
+        self.nums = nums
+        heapq.heapify(self.nums)  #here we are designing a min-heap tree
+        while len(self.nums) >  self.k:   #so the logic behind this is that whenever the heap tree's size goes beyound the k then we start popping the most minimum element in the tree
+            heapq.heappop(self.nums)   
+    def add(self,val):
+        heapq.heappush(self.nums,val)
+        while len(self.nums)>self.k:
+            heapq.heappop(self.nums)
+        return self.nums[0]   #as we have removed the most minimum numbers while the length of the nums is greater than k , the remaining number at the root after this operation is the kth largest number in an array
+ok=Optkthlargest(2, [5, 5, 5, 5])
+print(ok.add(6))  
+print(ok.add(60))
+print(ok.add(2))    
+#time complexity : O(logK)
+#space complexity : O(K)  as we are always storing at most k number of elements ,cause we are popping the number from our array whenever the size of an array goes beyound k              
+        
 
