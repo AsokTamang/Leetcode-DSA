@@ -282,4 +282,53 @@ def handofstraights(hand,n):  #here n is the size of a group consisting of conse
 print(handofstraights( [1,2,3,4,5],  4))        
 #time complexity : O(N)
 #space complexity : O(M) number of distinct elements from a given array
+from collections import defaultdict
+#design a twitter
+class Twitter:
+    def __init__(self):
+        self.time = 1 #here self.time represents the time during which the tweet was posted as the question has asked us to return the 10 most recent tweets based on the user
+        self.followinglist = defaultdict(set)  #here the default dict represents the set of the users followed by the specific users example userid->[user1,user2,user3]
+        self.tweet=defaultdict(list)    #here defaultdict represents the list of the tweets posted by the specific user example: userid->[t1,t2,t3]
+    def posttweet(self,userid,tweetid):
+        self.tweet[userid].append((self.time,tweetid))  #here we are appending the tweet with given id in the list of the user represented by userid
+        self.time+=1
+    def follow(self,followerid,followeeid):
+        self.followinglist[followerid].add(followeeid)
+    def unfollow(self,followerid,followeeid):
+        self.followinglist[followerid].discard(followeeid)
+    def getnewsfeed(self,userid):  #as the most recent tweets have the higher time , so we must use heapq method to remove the old tweets as they have the lesser time
+        heap = []
+        ans = []
+        for t in self.tweet[userid]:
+            heapq.heappush(heap,t)
+            if len(heap) > 10:
+                heapq.heappop(heap)  #here the pop is based on the time
+        for followee in self.followinglist[userid]:
+            for t in self.tweet[followee]:
+                heapq.heappush(heap,t)
+                if len(heap)>10:
+                    heapq.heappop(heap)
+        while heap:
+            ans.append(heapq.heappop(heap)[1])
+        return ans[::-1]  #as the most recent must come before , we are reversing the heap as the tweet goes from most recent to least recent
+tw=Twitter()
+tw.posttweet(1,2)
+tw.posttweet(2,6)
+print(tw.getnewsfeed(1))
+tw.follow(1,2)
+print(tw.getnewsfeed(1))
+tw.unfollow(1, 2)
+tw.posttweet(1,7)
+print(tw.getnewsfeed(1))
+#time complexity: O(N)  N is the total  number of tweets
+#space complexity : O(N) 
+
+                        
+
+
+                 
+
+
+
+
 
