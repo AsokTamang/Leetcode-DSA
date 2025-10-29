@@ -323,6 +323,25 @@ print(tw.getnewsfeed(1))
 #time complexity: O(N)  N is the total  number of tweets
 #space complexity : O(N) 
 
+
+#Minimum Cost to Connect Sticks
+def minimumcost(sticks):
+    heap=[]
+    totalcost = 0
+    for num in sticks:
+        heapq.heappush(heap,num)
+    while len(heap)>1:
+        firstsmall = heapq.heappop(heap)
+        secondsmall = heapq.heappop(heap)
+        pair = firstsmall + secondsmall
+        totalcost+=pair
+        heapq.heappush(heap,pair)
+    return totalcost
+print(minimumcost( [1, 8, 3, 5]))    
+#time complexity : O(N)
+#space complexity : O(N)
+
+
                         
 
 
