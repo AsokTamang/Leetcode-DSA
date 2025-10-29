@@ -60,3 +60,43 @@ def minimumcost(sticks):
 print(minimumcost([1, 8, 3, 5]))
 #time complexity : O(NlogN) 
 #space complexity : O(N)
+
+
+#Kth largest element in a stream of running integers
+class Kthlargest:
+    def inkthlargest(self,k,nums):
+        self.k=k
+        self.nums = nums
+    def maxheapify(self,i,size,array):  #this function is used for designing the maxheapify tree
+        leftind = 2 * i + 1
+        rightind = 2*i + 2
+        maximum = i
+        if leftind<size and array[leftind] > array[maximum]:
+            maximum=leftind
+        if rightind<size and array[rightind] > array[maximum]:
+            maximum=rightind 
+        if maximum!=i:
+            array[maximum],array[i] = array[i],array[maximum]
+            self.maxheapify(maximum,size,array)       
+
+    def add(self,val): #here val is jsut a random number and we must add this val in our nums array and then return the kth largest number
+        self.nums.append(val)
+        a=sorted(self.nums)
+        n=len(a)
+        size = n
+        for i in range((n//2) - 1,-1,-1):  #here we are designing the maxheap tree using the heapify function
+            self.maxheapify(i,n,a)
+        for i in range(1,self.k):
+            a[0] = a[size-1]
+            size-=1
+
+            self.maxheapify(0,size,a)
+        return a[0]
+k=Kthlargest()
+k.inkthlargest(2, [5, 5, 5, 5])
+print(k.add(6))
+print(k.add(2))
+print(k.add(60))
+#time complexity : O(klogN)
+#space complexity : O(1)
+
