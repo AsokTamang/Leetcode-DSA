@@ -179,3 +179,30 @@ def brutemaxsumcomb(a, b, k):
 print(brutemaxsumcomb([7, 3], [1, 6], 2))
 # time complexity : O(N**2 + logN)  here logN is due to the sorting and n**2 is due to the for loop
 # space complexity : O(1)
+
+
+#optimal approach
+def optimalmaxsumcomb(a,b,k):
+    a=sorted(a)
+    b=sorted(b)
+    n=len(a)  #as the length of a and b is same, we can take length of any of the array
+    heap = []
+    heapq.heappush(heap,(-(a[n-1] + b[n-1]),n-1,n-1))  #here we are appending the negative value of the sum as well as the indices in a heap
+    seen = set()
+    seen.add((n-1,n-1))
+    ans = []
+    while k>0 and heap:
+        currentsum,i,j = heapq.heappop(heap)  #as we have stored the sum,as well as the indices , 
+        ans.append(-currentsum)  #here we are appending the current sum directly cause 
+        #we have sorted the arrays and pushed the sum of the last numbers from each array which are the greater numbers along with their indices
+        k-=1   
+        if i-1>=0 and (i-1,j) not in seen:
+            heapq.heappush(heap , (-(a[i-1]+b[j]),i-1,j))
+            seen.add((i-1,j))
+        if j-1>=0 and (i,j-1) not in seen:
+            heapq.heappush(heap,(-(a[i]+b[j-1]),i,j-1))
+            seen.add((i,j-1))    
+    return ans
+print(optimalmaxsumcomb([7, 3], [1, 6],2))        
+#time complexity : O(klogk)
+#space complexity : O(k)
