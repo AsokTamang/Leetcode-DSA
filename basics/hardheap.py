@@ -238,6 +238,47 @@ print(brutemf.findMedian())
 #time complexity : O(nlogn)
 #space complexity : O(n)  number of elements in an array
 
-
+#so in the optimal solution what we do is , we make two heaps ,
+#one of them is maxheap which consists of the numbers smaller than or equal to the numbers in the other heap, which is the minheap
+#and if this condition is not met , then we pop from this first half which is maxheap and then push that popped number in the minheap half
+#also of the length of any of the heap is greater than the other half's length +1 then we pop from the longer half and push it into the smaller half
+#and to find the  median , if the lenght of one half is greater than the other half then the median is the first value of that longer half,
+#i.e minimum value of the minheap half or maximum value of the maxheap half,
+#but if the length is same then the median is the sum of first values of both half,
+#which is maximum value of the maxheap and minimum value of the minheap
+class Medianf:
+    def __init__(self):
+        self.maxheap = []  #this is our first half where the values must be smaller than or equal to the value of the second half
+        self.minheap=[]    #this is our second half where the values must be greater than the values of first half
+    def addnum(self,val):
+        heapq.heappush(self.maxheap,-val)  #here we must store in negative sign for designing the maxheap tree
+        #if the values are small, for this we must cehck if both half heaps exist or not
+        if self.maxheap and self.minheap and -self.maxheap[0]>self.minheap[0]:
+            v=heapq.heappop(self.maxheap)  
+            heapq.heappush(self.minheap,-v)  #as the value was stored in the negative sign in the minheap
+        #now the condition of length,which states that the length of both heaps must be approximately equal
+        if len(self.minheap) > len(self.maxheap)+1:
+            v=heapq.heappop(self.minheap)
+            heapq.heappush(self.maxheap,-v)  #we must store the value in negative form in our maxheap half
+        if len(self.maxheap) > len(self.minheap)+1:
+            v=heapq.heappop(self.maxheap)
+            heapq.heappush(self.minheap,-v)  #we must store the value in negative form in our maxheap half    
+    def findmedian(self):
+        if len(self.maxheap)>len(self.minheap):
+            return -self.maxheap[0]
+        if len(self.minheap)>len(self.maxheap):
+            return self.minheap[0]
+        return (self.minheap[0] + (-self.maxheap[0]) )/ 2  
+opt=Medianf()
+opt.addnum(1)
+opt.addnum(2)
+opt.addnum(3)
+print(opt.findmedian())    
+#time complexity:
+#addnum : O(logN)
+#findmedian: O(1)
+#space complexity : O(N)
+      
+#the logic is length must be approximately equal and the values in the left half or small half must be lesser than or equal to the values of the right half
 
                      
