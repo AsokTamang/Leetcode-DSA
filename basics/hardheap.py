@@ -301,7 +301,7 @@ print(brutetopk( [4,4,6,6,7], k = 2))
 
 
 #optimal approach'
-def opttopk(nums,k):
+def bettertopk(nums,k):
     m=[0] * (max(nums)+1)
     for num in nums:
         m[num]+=1    #here in m[num] num is the index and m[num]'s value is the frequency
@@ -315,9 +315,29 @@ def opttopk(nums,k):
         ans.append(value)
         c+=1
     return ans    
-print(opttopk( [1,1,1,2,2,3], k = 2))
+print(bettertopk( [1,1,1,2,2,3], k = 2))
 #time complexity : O(n)  or O(max(nums)
 #space complexity : O(max(nums))  as we have used the heap
+
+
+#optimal solution
+def opttopk(nums,k):
+    m={}
+    for num in nums:
+        m[num] = m.get(num,0)+1
+    heap =[]
+    for key,value in m.items():
+        heapq.heappush(heap,(value,key))
+        if len(heap) > k:
+            heapq.heappop(heap)    
+    ans=[]
+    while heap:
+        value,num=heapq.heappop(heap)   
+        ans.append(num)  
+    return ans
+print(opttopk([4,4,6,6,7], k = 2))  
+#time complexity : O(NlogK)
+#space complexity : O(K)  k is the length of heap
             
 
         
