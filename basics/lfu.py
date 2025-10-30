@@ -342,6 +342,19 @@ print(minimumcost( [1, 8, 3, 5]))
 #space complexity : O(N)
 
 
+        
+#maximum sum combination
+#brute approach
+def brutemaximumsum(nums1,nums2,k):
+    ans=[]
+    for i in range(len(nums1)):
+        for j in range(len(nums2)):
+            ans.append(nums1[i]+nums2[j])
+    ans.sort(reverse=True)
+    return ans[:k]
+print(brutemaximumsum([7, 3],  [1, 6],  2))
+#time complexity : O(N**2logN)
+#space complexity : O(N)
                         
 
 
