@@ -281,4 +281,22 @@ print(opt.findmedian())
       
 #the logic is length must be approximately equal and the values in the left half or small half must be lesser than or equal to the values of the right half
 
-                     
+
+#Top K Frequent Elements
+#Given an integer array nums and an integer k, return any order list of the k most frequent elements in nums.
+#Your solution must run in better than O(n log n) time, where n = nums.length.                     
+#brute approach
+def brutetopk(nums,k):
+    m={}  #this stores the freq of a number from a given array
+    for i in range(len(nums)):
+        m[nums[i]]=m.get(nums[i],0) + 1
+    m=(sorted(m.items(),key=lambda item:item[1],reverse=True))  #here we are sorting the keys of m based on the values but in reverse order
+    ans = []
+    for item in m[:k]:
+        ans.append(item[0])
+    return ans    
+print(brutetopk( [4,4,6,6,7], k = 2))    
+#time complexity : O(N+logN)
+#space complexity : O(N)
+
+
