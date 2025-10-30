@@ -384,6 +384,10 @@ print(optsumcombination( [3, 4, 5],  [2, 6, 3], 2))
 #space complexity : O(k+N)  K denotes the heap and N denotes the total number of values in both of these lists      
 
 
+
+
+
+
 #Find Median from Data Stream
 class MedianFInder:
     def __init__(self):
@@ -417,10 +421,42 @@ print(mf.findmedian())
 #time complexity : 
 #addnum- O(logN)
 #findmedian - O(1)
-
 #space complexity : O(N)
 
-                            
+
+
+#Kth largest element in a stream of running integers   
+#so in this question we have to find the kth ranked larger element from our given array
+#for this we can use the min-heap , and inorder to find the kth largest element, we can pop elment if the length of our array becomes greater than k
+#so the root element in our array is the kth ranked larger element      
+class Kthlargest:
+    def __init__(self,array,k):  #here we have to return the kth largest element from the given array
+        self.array =array
+        self.k=k   
+        heapq.heapify(self.array)   
+    
+    def add(self,val):
+        heapq.heappush(self.array,val)
+        if len(self.array)>self.k:
+            heapq.heappop(self.array)
+    def findkthlargest(self): 
+        return self.array[0]
+    
+kl=Kthlargest([1, 2, 3, 4],3)
+(kl.add(5))
+(kl.add(2))
+(kl.add(7))
+print(kl.findkthlargest())
+#time complexity :
+# add: O(logk)
+#findkthalargest : O(1) 
+
+
+
+
+
+
+
 
 
                  
