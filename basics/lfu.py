@@ -384,6 +384,42 @@ print(optsumcombination( [3, 4, 5],  [2, 6, 3], 2))
 #space complexity : O(k+N)  K denotes the heap and N denotes the total number of values in both of these lists      
 
 
+#Find Median from Data Stream
+class MedianFInder:
+    def __init__(self):
+      self.small = []  #this array stores the smaller half of the array and it uses maxheap property 
+      self.large = []  #this array stores the larger half of the array and it uses minheap property
+    def addnum(self,val):
+        heapq.heappush(self.small,-val)
+        if self.small and self.large and -self.small[0] > self.large[0]:  #the elements in the smaller half must be smaller than or equal to the elements in the larger half
+            v=heapq.heappop(self.small)
+            heapq.heappush(self.large,-v)
+        if len(self.small) > len(self.large) + 1:
+            v=heapq.heappop(self.small)   
+            heapq.heappush(self.large,-v)
+        if len(self.large) > len(self.small)+1:
+            v=heapq.heappop(self.large)
+            heapq.heappush(self.small,-v)     
+
+
+
+    def findmedian(self):
+        if len(self.small) > len(self.large):
+            return -self.small[0]
+        if len(self.large) > len(self.small):
+            return self.large[0]
+        return (-self.small[0] + self.large[0]) / 2   #as in the smaller half array or heap , we have stored the number in a negative form
+mf=MedianFInder()
+mf.addnum(1)
+mf.addnum(2)
+mf.addnum(3)
+print(mf.findmedian())
+#time complexity : 
+#addnum- O(logN)
+#findmedian - O(1)
+
+#space complexity : O(N)
+
                             
 
 
