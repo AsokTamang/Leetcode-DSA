@@ -452,6 +452,22 @@ print(kl.findkthlargest())
 #findkthalargest : O(1) 
 
 
+#minimum cost to connect sticks
+def minimumcost(sticks):
+    heap = []
+    for num in sticks:
+        heapq.heappush(heap,num)
+    total=0
+    while len(heap)>1:  #as long as we are not forming one total stick , we continue this loop
+        stick1=heapq.heappop(heap)
+        stick2=heapq.heappop(heap)
+        formedstick = stick1+stick2  #this is the stick formed from the minimum length possible from every sticks
+        heapq.heappush(heap,formedstick)
+        total+=formedstick
+    return total
+print(minimumcost([1, 8, 3, 5]))
+#time complexity :  O(NlogN)
+#space complexity : O(N)
 
 
 
