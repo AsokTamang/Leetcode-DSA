@@ -357,6 +357,35 @@ print(brutemaximumsum([7, 3],  [1, 6],  2))
 #space complexity : O(N)
                         
 
+#optimal solution
+def optsumcombination(nums1,nums2,k):
+    n=len(nums1)
+    nums1.sort()
+    nums2.sort()
+    heap = []
+    ans = []
+    seen=set()
+    heapq.heappush(heap,(-(nums1[n-1]+nums2[n-1]),n-1,n-1))
+    seen.add((n-1,n-1))
+    c=0
+    while heap and c<k:
+        s,i,j = heapq.heappop(heap)
+        ans.append(-s)
+        c+=1
+        if (i-1,j) not in seen:
+            heapq.heappush(heap,(-(nums1[i-1]+nums2[j]),i-1,j))
+            seen.add((i-1,j))
+        if (i,j-1) not in seen:
+            heapq.heappush(heap,(-(nums1[i]+nums2[j-1]),i,j-1))
+            seen.add((i,j-1))
+    return ans
+print(optsumcombination( [3, 4, 5],  [2, 6, 3], 2))    
+#time complexity : O(NlogN + klogK) here NlogN is for sorting the given array and KlogK is for the heaping as well as appending the sum 
+#space complexity : O(k+N)  K denotes the heap and N denotes the total number of values in both of these lists      
+
+
+                            
+
 
                  
 
