@@ -13,3 +13,21 @@ def assigncookes(student,cookie):
 print(assigncookes( [1, 2, 3] , [1, 1]))    
 #time complexity : O(max(n,m))  due to recursion as we are going into only one way of recursion depth,either through cookies or through both students and cookies
 #space complexity : O(max(n,m))  due to the recursion
+
+
+#optimal approach
+def optimalassigncookies(student,cookie):
+    student.sort()
+    cookie.sort()
+    n=len(student)
+    m=len(cookie)
+    i=0
+    j=0
+    while i<n and j<m:
+        if cookie[j]>=student[i]:
+            i+=1  #we only move to the next index of student when the current student is satisfied
+        j+=1  #here we move to the next index of cookie whether the current cookie satisfies the current student or not
+    return i
+print(optimalassigncookies([1, 2] ,  [1, 2, 3]))    
+#time complexity : O(logN+logM+max(N,M)) here we are writing max(N,M) at last cause we are using the while loop until the max value between N and M
+#space complexity : O(1)    
