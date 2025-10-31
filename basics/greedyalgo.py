@@ -88,3 +88,28 @@ def lemonadechange(bills):
 print(lemonadechange( [5, 5, 10, 10, 20]))
 #time complexity : O(N**2+logN)
 #space complexity : O(N)  number of cash we have in store approx N
+
+#optimal  approach or lets say for the problem where the customers only pay in maximum 20 dollar cash
+def optimallemonadechange(bills):
+    five=ten=0
+    for bill in bills:
+        if bill==5:
+            five+=1
+        elif bill == 10:
+            ten+=1
+            if not five:
+                return False
+            five-=1
+        else:#if the customer gave us 20 bucks cash then
+            if  not ten or not five:return False
+            elif ten>0 and five>0:
+                ten-=1
+                five-=1
+            elif five>=3:
+                five-=3
+            else:
+                return False
+    return True                
+print(optimallemonadechange( [5, 5, 10, 5, 20]))
+#time complexity : O(N)
+#space complexity : O(1)
