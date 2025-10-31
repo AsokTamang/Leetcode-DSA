@@ -52,3 +52,18 @@ def fracknapsack(val,wt,k): #k is the capacity
 print(fracknapsack( [60,100,120],  [10,20,30],  50))   
 #time complexity : O(NlogN)
 #space complexity : O(N)  
+
+#minimum coins
+def minimumcoins(coins,amount):
+   n=len(coins)
+   count = 0
+   for i in range(n-1,-1,-1):
+       while amount>=coins[i]:
+           count+=1
+           amount-=coins[i]
+   return count
+print(minimumcoins( [1, 2, 5],  11))        
+#time complexity : O(amount)
+#space complexity : O(1) M is the number of coins that are used to make the total amount given
+    
+
