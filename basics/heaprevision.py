@@ -303,7 +303,20 @@ print(medkthsmallest( [10, 5, 4, 3, 48, 6, 2, 33, 53, 10], k = 4))
 #time complexity : O(NlogK)
 #space complexity : O(K)
 
-
+#sort k sorted array
+def sortksortedarray(arr,k):
+    heap = []
+    ans = []
+    for i in range(k):
+        heapq.heappush(heap,arr[i])
+    for i in range(k+1,len(arr)):
+        heapq.heappush(heap,arr[i])
+    while heap:
+        ans.append(heapq.heappop(heap))
+    return ans
+print(sortksortedarray([1, 4, 5, 2, 3, 6, 7, 8, 9, 10], k = 2))
+#time complexity : O(NlogN)
+#space complexity : O(N)        
 
 
 
