@@ -318,6 +318,61 @@ print(sortksortedarray([1, 4, 5, 2, 3, 6, 7, 8, 9, 10], k = 2))
 #time complexity : O(NlogN)
 #space complexity : O(N)        
 
+#merge k sorted lists
+class Node:
+    def __init__(self,val,next=None):
+        self.val=val
+        self.next=next
+
+
+class MergeKsortedLists:
+    def __init__(self,array,k):
+        self.k=k
+        self.array=array
+    @staticmethod
+    def buildlinkedlist(list):
+        dummy=Node(0,None)
+        current = dummy
+        for num in list:
+            current.next=Node(num,None)
+            current=current.next
+        return dummy.next  #returning the head
+    def finalmerge(self):
+        dummy=Node(0,None)
+        current=dummy
+        heap = []
+        for i,node in enumerate(self.array):
+            if node:
+                heapq.heappush(heap,(node.val,i,node))
+        while heap:
+            val,i,node = heapq.heappop(heap)
+            current.next=node
+            current=current.next
+            if node.next:
+                heapq.heappush(heap,(node.next.val,i,node.next))
+        final = []
+        itr=dummy.next
+        while itr:
+            final.append(str(itr.val))
+            itr=itr.next
+        return final
+
+
+                
+
+
+
+
+l1=MergeKsortedLists.buildlinkedlist([1,2,3,4])
+l2=MergeKsortedLists.buildlinkedlist([-4,-3])
+l3=MergeKsortedLists.buildlinkedlist([ -5 , -3 , 1 , 2 , 3 , 4])
+L=[l1,l2,l3]
+mks=MergeKsortedLists(L,3)   
+print(mks.finalmerge())
+
+
+
+
 
 
 
