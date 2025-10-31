@@ -291,8 +291,17 @@ print(medkthlargest( [-5, 4, 1, 2, -3], k = 5))
 #time complexity : O(NlogK)  logk is for popping the elements until the length of the heap is equal to k
 #space complexity : O(k)
 
-
-
+#kth smallest element in an array
+def medkthsmallest(nums,k):
+    heap=[]
+    for num in nums:
+        heapq.heappush(heap,-num)
+        if len(heap)>k:
+            heapq.heappop(heap)
+    return -heap[0] 
+print(medkthsmallest( [10, 5, 4, 3, 48, 6, 2, 33, 53, 10], k = 4))       
+#time complexity : O(NlogK)
+#space complexity : O(K)
 
 
 
