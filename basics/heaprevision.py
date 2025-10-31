@@ -385,7 +385,37 @@ print(repl([20,15,26,2,98,6]))
 #space complexity : O(N)
     
                 
+#task scheduler
+def taskscheduler(array,n):
+    totalintervals=0
+    freq=[0] * 26
+    for num in (array):  #this loop is for storing the frequency of a given array in our freq variable
+        freq[ord(num)-ord('A')]+=1                   
+    heap = []
+    for i in range(26):
+        if freq[i]>0: 
+         heapq.heappush(heap,-freq[i])
+    while heap:
+        temp = []
+        for i in range(n+1):
+           if heap: 
+            value=heapq.heappop(heap)
+            value=value+1  #here +1 means we are decreasing the character by 1 which means we have already used this character
+            temp.append(value)
+        for num in temp:
+            if num<0:
+             heapq.heappush(heap,num)
+        if heap:
+            totalintervals+=n+1#and this +1 calculates the idle interval
+              #if the heap exists then we have used n+1 cpu intervals for one complete cycle for the operation of certain part of the given tasks
+        else:
+            totalintervals+=len(temp)  #here if the heap doesnot exists then it means the value at the temp is not less than 0 , so there is still task left to be completed which is in the temp, so we add the length of the temp    
+    return totalintervals
+print(taskscheduler(["A","A","A","B","B","B"], n = 2))                  
+#time complexity : O(N)  N is the total number of tasks given
+#space complexity : O(logN)
 
+                      
 
 
 
