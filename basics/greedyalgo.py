@@ -54,6 +54,8 @@ print(fracknapsack( [60,100,120],  [10,20,30],  50))
 #space complexity : O(N)  
 
 #minimum coins
+#so the logic behind this solution is that as we are finding the most minimum possible number of coins, we must iterate from the last index of coins and as long as the current index satisfies to make the amount  ,we use this current indexed coin
+#only if the current indexed coin fails to satisfy we move to the next coin
 def minimumcoins(coins,amount):
    n=len(coins)
    count = 0
@@ -66,4 +68,23 @@ print(minimumcoins( [1, 2, 5],  11))
 #time complexity : O(amount)
 #space complexity : O(1) M is the number of coins that are used to make the total amount given
     
-
+#lemonade change
+#brute approach
+def lemonadechange(bills):
+    n=len(bills)
+    m={}
+    for i in range(n):
+        m[bills[i]]=m.get(bills[i],0)+1  #here we are storing the freq of money that we are getting from a customer
+        if bills[i] > 5:  #if the customer gave us more than 5 dollar then we must given them change
+            changereq=bills[i] - 5  #this is the change we must give to the customers
+            for num in sorted(m.keys(),reverse=True):  #here we are sorting in ascending order so that the change can be found soon
+                while changereq>=num and m[num]>0:
+                    changereq-=num  #reducing the change by the money we have in our store m
+                    m[num]-=1    #also we must reduce the freq of cash that we used from our store
+            if changereq>0:   
+                #even after this while loop , if we still have change to give then it means we dont have enough money or req exact money for the change so we return false
+                return False
+    return True        
+print(lemonadechange( [5, 5, 10, 10, 20]))
+#time complexity : O(N**2+logN)
+#space complexity : O(N)  number of cash we have in store approx N
