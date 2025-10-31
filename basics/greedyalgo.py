@@ -31,3 +31,24 @@ def optimalassigncookies(student,cookie):
 print(optimalassigncookies([1, 2] ,  [1, 2, 3]))    
 #time complexity : O(logN+logM+max(N,M)) here we are writing max(N,M) at last cause we are using the while loop until the max value between N and M
 #space complexity : O(1)    
+
+
+#fractional Knapsack
+#as the question is asking us to return the maximum value possible that can be places in a knackpack
+#so we gonna reverse the value per unit for each weight from given arrays of value and weight
+def fracknapsack(val,wt,k): #k is the capacity
+    array = sorted(zip(val,wt),key=lambda x:x[0]/x[1],reverse=True)   
+    totalvalue = 0
+    totalwt = 0
+    for val,wt in array:
+        if totalwt+wt<=k:  #if the total weight after including the current weight is within the weight range then
+            #we add this weigth and its value to
+            totalwt+=wt
+            totalvalue+=val
+        else:
+            remainingwt = k-totalwt
+            totalvalue+=remainingwt * (val/wt)  #here we are multipolying the value of one unit of current wt with the remaining wt inorder to add the remianing value
+    return f'{totalvalue:.6f}'  
+print(fracknapsack( [60,100,120],  [10,20,30],  50))   
+#time complexity : O(NlogN)
+#space complexity : O(N)  
