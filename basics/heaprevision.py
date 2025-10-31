@@ -343,7 +343,7 @@ class MergeKsortedLists:
         heap = []
         for i,node in enumerate(self.array):
             if node:
-                heapq.heappush(heap,(node.val,i,node))
+                heapq.heappush(heap,(node.val,i,node))  #as we must sort the given list of arrays in ascending order, we are pushing the node value first then the index and the node at last, so that push and pop will help us to sort the given array
         while heap:
             val,i,node = heapq.heappop(heap)
             current.next=node
@@ -356,19 +356,40 @@ class MergeKsortedLists:
             final.append(str(itr.val))
             itr=itr.next
         return final
-
-
-                
-
-
-
-
 l1=MergeKsortedLists.buildlinkedlist([1,2,3,4])
 l2=MergeKsortedLists.buildlinkedlist([-4,-3])
 l3=MergeKsortedLists.buildlinkedlist([ -5 , -3 , 1 , 2 , 3 , 4])
 L=[l1,l2,l3]
 mks=MergeKsortedLists(L,3)   
-print(mks.finalmerge())
+print(mks.finalmerge())    
+
+#replace elements by its rank in the array
+#Given an array of N integers, the task is to replace each element of the array by its rank in the array.
+import heapq
+def repl(array):
+    m={}
+    ans = [0] * len(array)
+    for i in range(len(array)):
+        m[array[i]]=i
+    index = 1
+    heap=[]
+    for num in array:
+        heapq.heappush(heap,num)
+    while heap:
+        number=heapq.heappop(heap)  
+        ans[m[number]]=index
+        index+=1
+    return ans
+print(repl([20,15,26,2,98,6]))      
+#time complexity : O(NlogN)
+#space complexity : O(N)
+    
+                
+
+
+
+
+
 
 
 

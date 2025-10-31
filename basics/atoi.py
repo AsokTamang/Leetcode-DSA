@@ -197,3 +197,19 @@ def optimalcountgoodnumbers(n):
 
 print(powerxn(2.0000, -2))
 print(optimalcountgoodnumbers(2))
+import heapq
+def repl(array):
+    m={}
+    ans = [0] * len(array)
+    for i in range(len(array)):
+        m[array[i]]=i
+    index = 1
+    heap=[]
+    for num in array:
+        heapq.heappush(heap,num)
+    while heap:
+        number=heapq.heappop(heap)  
+        ans[m[number]]=index
+        index+=1
+    return ans
+print(repl([20,15,26,2,98,6]))
