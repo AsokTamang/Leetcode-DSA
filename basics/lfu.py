@@ -470,6 +470,56 @@ print(minimumcost([1, 8, 3, 5]))
 #space complexity : O(N)
 
 
+#design twitter
+class Tweeter:
+    def __init__(self):
+      self.tweets=defaultdict(list)   #this list is of the tweets having their own unique ids uploaded by the specific users having their own id ,
+      #example : user1:[t1,t2,t3]
+      self.following  =defaultdict(set)
+      #this is the set of all the users represented by their own unique ids followed by the specific user id 
+      #example: user1:[u1,u2,u3]
+      self.time = 0  #we have initialized this time just for the clarification of finding the recent tweets
+    def posttweet(self,userid,tweetid):
+        self.tweets[userid].append((self.time,tweetid))
+        self.time+=1
+    def followe(self,followerid,followeeid):
+        self.following[followerid].add(followeeid)
+    def unfollowe(self,followerid,followeeid):
+        self.following[followerid].discard(followeeid)
+    def getnewsfeed(self,userid):
+        ans = []
+        heap=[]
+        for t in self.tweets[userid]:
+            heapq.heappush(heap,t)
+            while len(ans)>10:
+                heapq.heappop(heap)  #this will pop the old tweets which is based on the smaller time or earlier times
+        for user in self.following[userid]:
+            for t in self.tweets[user]:
+                heapq.heappush(heap,t)
+                while len(heap)>10:
+                    heapq.heappop(heap)
+        while heap:
+            ans.append(heapq.heappop(heap)[1])  #here we are only appending the value only not the time 
+             #as the actual tweet id is the second indexed value cause the first indexed value is the time of insertion
+        return ans[::-1]     #and we are reversing the ans cause we need to return the 10 most recent tweets 
+tw=Tweeter()
+tw.posttweet(1,2)
+tw.posttweet(2,6)
+print(tw.getnewsfeed(1))    
+#time complexity :
+#follow,unfollow,posttweet:O(1)
+#getnewsfeed : O(NlogN)  N is the total number of tweets
+#space complexity : O(1)  cause it is always constant as we are storing at most 10 number of tweets in our heap as well as ans
+
+      
+
+
+
+
+
+
+
+
 
 
 
