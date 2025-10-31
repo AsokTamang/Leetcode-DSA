@@ -415,6 +415,23 @@ print(taskscheduler(["A","A","A","B","B","B"], n = 2))
 #time complexity : O(N)  N is the total number of tasks given
 #space complexity : O(logN)
 
+
+#hand of straights
+def handofstraights(hand,groupsize):
+    m={}
+    for num in hand:
+        m[num]=m.get(num,0) + 1
+    for hand in sorted(m.keys()):
+        if m[hand]>0:
+            currentfreq=m[hand]   #here we are only going to the next greater number incomparison to the current number only if the current number's frequency is greater than 0 otherwise it might also be used earlier
+            for i in range(groupsize):
+                if m.get(hand+i,0)<currentfreq:
+                    return False
+                m[hand+i]-=currentfreq
+    return True            
+print(handofstraights([1,2,3,4,5],groupsize= 4))
+#time complexity : O(NlogN)
+#space complexity : O(N)
                       
 
 
