@@ -181,3 +181,26 @@ def validparenthesischecker(s):
 print(validparenthesischecker("(*))"))
 # time complexity: O(3**N)
 # space complexity : O(N)
+
+
+#optimal approach
+def optimalparenthesischecker(s):
+    minopen=0  
+    maxopen=0
+    for char in s:
+        if char =='(':
+            minopen+=1
+            maxopen+=1
+        elif char ==')':
+            minopen=max(minopen-1,0)
+            maxopen-=1
+        else:
+            minopen=max(minopen-1,0)  #assuming * as )
+            maxopen+=1  #assuming * as (
+        if maxopen<0:  #here if the maxopen becomes negative then it means there is more closing brackets than the opening brackets
+            return False    
+    return minopen==0  
+print(optimalparenthesischecker('*(()'))   
+#time complexity : O(N)
+#space complexity : O(1)  
+         
