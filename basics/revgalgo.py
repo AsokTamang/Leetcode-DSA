@@ -103,7 +103,26 @@ print(optimallemonadechange([5, 5, 10, 5, 20]))
 #space complexity : O(N)
 
 
-
+#valid parenthesis
+def brutevalidparenthesis(s):
+    n=len(s)
+    def recursivevalidparenthesis(index,count):  #index indicates the index of a given string s and count indicates the measure based on which we determine whether the given string is valid or not
+     if count<0:
+         return False
+     if index==n:   #if we already went through all the characters from a given string, we check the value of count
+         return count==0
+     char = s[index]
+     if char=='(':
+        return recursivevalidparenthesis(index+1,count+1)
+     elif char == ')':
+        return recursivevalidparenthesis(index+1,count-1)
+     else:  #if the char is * then we can assume this * as ( or ) or empty character
+         return recursivevalidparenthesis(index+1,count) or recursivevalidparenthesis(index+1,count+1) or recursivevalidparenthesis(index+1,count-1)         
+        
+    return recursivevalidparenthesis(0,0)
+print(brutevalidparenthesis('*(()'))
+#time complexity : O(3**N)
+#space complexity : O(N)
  
 
 
