@@ -125,4 +125,30 @@ print(brutevalidparenthesis('*(()'))
 #space complexity : O(N)
  
 
+#optimal approach
+def optimalvalidparenthesis(s):
+    minopen=0   #here minopen means we are assuming * as ) so the number of openings will be minimum
+    maxopen=0   #here maxopen means we are assuming * as ( so the number of openings will be maximum
+    for char in s:
+        if char == '(':
+            minopen+=1
+            maxopen+=1
+        elif char ==')':
+            minopen=max(minopen-1,0) 
+            maxopen-=1
+        else:
+            minopen=max(minopen-1,0)  #here we are using max between 0 and minopen-1 cause the minopen mustnot be 0 , as we use this value to return the answer and minopen-1 reduces the count as we are assuming * as )
+            maxopen+=1  #here we are assuming * as (
+        if maxopen<0:
+            return False
+    return minopen==0
+print(optimalvalidparenthesis('(*))'))
+#time complexity : O(N)
+#space complexity : O(1)
+
+        
+
+
+ 
+
 
