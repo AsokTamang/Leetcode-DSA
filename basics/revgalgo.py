@@ -49,11 +49,40 @@ def minimumcoins(coins,amount):
             amount-=coins[i] #1
             count+=1
        
-    if count!=0 and amount==0:  #here amount = 0 means we have the required quantity of coins in a given list of coins inorder to make the given quantity of amount
+    if amount==0:  #here amount = 0 means we have the required quantity of coins in a given list of coins inorder to make the given quantity of amount
      return count
     return -1
 print(minimumcoins( [2, 5],  3))    
 #time complexity : O(NlogN)
 #space complexity : O(1)    
+
+#lemonade change
+#brute approach which means the bills consists of only 5,10, and 20
+def lemonadechange(bills):
+    n=len(bills)
+    fives,tens = 0,0
+    for num in bills:
+        if num == 5:
+            fives+=1
+        elif num == 10:
+            tens+=1
+            if fives:
+                fives-=1
+            else:
+                return False        
+        else:  #if the number is 20
+            if tens and fives:
+                tens-=1
+                fives-=1
+            elif fives>=3:
+                fives-=3
+            else: #which means we have no change
+                return False
+    return True
+print(lemonadechange([5, 5, 10, 20]))      
+#time complexity : O(N)
+#space complexity : O(1)       
+                
+ 
 
 
