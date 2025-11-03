@@ -35,3 +35,25 @@ def fractionalknapsack(val,wt,k):
 print(fractionalknapsack([60,100,120],  [10,20,30],  50)) 
 #time complexity : O(NlogN)
 #space complexity : O(N)  
+
+
+#minimum coins
+def minimumcoins(coins,amount):
+    n=len(coins)
+    coins.sort()
+    count = 0
+    s=0
+    for i in range(n-1,-1,-1):
+        while coins[i]<=amount:
+            s+=coins[i]  #10
+            amount-=coins[i] #1
+            count+=1
+       
+    if count!=0 and amount==0:  #here amount = 0 means we have the required quantity of coins in a given list of coins inorder to make the given quantity of amount
+     return count
+    return -1
+print(minimumcoins( [2, 5],  3))    
+#time complexity : O(NlogN)
+#space complexity : O(1)    
+
+
