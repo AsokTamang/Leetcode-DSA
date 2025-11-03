@@ -83,6 +83,27 @@ print(lemonadechange([5, 5, 10, 20]))
 #time complexity : O(N)
 #space complexity : O(1)       
                 
+
+#for the bills containing more than 20 
+def optimallemonadechange(bills):
+    m={}
+    for num in bills:
+        m[num]=m.get(num,0) + 1  
+        if num > 5:
+            changerequired = num - 5
+            for bill in sorted(m.keys(),reverse=True):  #this loop is for checking the cash we have in our box, and here we are reversing the keys so that we can find the cash for change as soon as possible
+                if  bill<=changerequired and m[bill]>0:
+                    changerequired=changerequired-bill
+                    m[bill]-=1
+            if changerequired>0:  #if we still have change to given even after that for bill loop, then it means we dont have the required cash to give as a change for a customer
+                return False      
+    return True
+print(optimallemonadechange([5, 5, 10, 5, 20]))          
+#time complexity : O(N**2+logN)
+#space complexity : O(N)
+
+
+
  
 
 
