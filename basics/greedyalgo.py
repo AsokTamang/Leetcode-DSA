@@ -113,3 +113,24 @@ def optimallemonadechange(bills):
 print(optimallemonadechange( [5, 5, 10, 5, 20]))
 #time complexity : O(N)
 #space complexity : O(1)
+
+#Valid Paranthesis Checker
+def validparenthesischecker(s):
+    c=0
+    for char in s:
+        if char==')' and c==0:  #if the c is 0 and char is ) which means there is no opening character for this ) character
+            return False
+        elif char == ')':
+            c-=1
+        elif char == '*' and c==0:  #here we are making this * '('
+            c+=1    
+        else:  #here else means the current char is (
+            c+=1    
+    if c>0:
+        return False
+    return True
+print(validparenthesischecker(' (**()))'))
+#time complexity: O(N)
+#space complexity : O(1)
+
+        
