@@ -227,7 +227,21 @@ print(Nmeetings( [10, 12, 20] ,  [20, 25, 30]))
 #space complexity : O(N)
       
 
-        
+
+
+#jump game -I
+def jumpgame(input):
+    n=len(input)
+    maxindex = 0  #here maxindex stores the index or a position in a given array which can be reached by the maximum jump
+    for i in range(n):
+        if i > maxindex:   #if the current index is greater than the maxindex then it means this current index cannot be reached so we return false
+            return False
+        maxindex = max(maxindex,i+input[i])  
+    return True   
+print(jumpgame( [3, 2, 1, 0, 4]))
+#time complexity : O(N)
+#space complexity : O(1)
+
 
 
 
