@@ -204,3 +204,30 @@ print(optimalparenthesischecker('*(()'))
 #time complexity : O(N)
 #space complexity : O(1)  
          
+
+#N meetings in one room
+#so the logic behind the solution of this problem is that , inorder for the meeting to be included in a room,its starting time must be after the ending time of last meeting,
+#and the question is asking us to return the maximum number of meetings that can be held , so for this we must sort the meetings based on their end time, 
+#so that we can include the meetings with less ending time or quick ending time as soon as possible
+#which results in the increase number of meetings
+def Nmeetings(start,end):
+    meetings = list(zip(start,end))
+    meetings=sorted(meetings,key=lambda x:x[1])  #based on the meeting time
+    lastendtime = meetings[0][1]  #here the first ending time of last meeting will be the ending time of first meeting
+    n=len(start)
+    count = 1  #as we can always include the first count
+    for i in range(1,n):
+        if meetings[i][0]>lastendtime:  #if the start time comes after the ending time of last meeting,then this current meeting can be held so we increase the count as well as change the ending time of last meeting
+            count+=1
+            lastendtime=meetings[i][1]
+
+    return count
+print(Nmeetings( [10, 12, 20] ,  [20, 25, 30]))
+#time complexity : O(NlogN)
+#space complexity : O(N)
+      
+
+        
+
+
+
