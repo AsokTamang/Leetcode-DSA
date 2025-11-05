@@ -161,6 +161,24 @@ print(jumpgamei( [3, 2, 1, 0, 4]))
 #time complexity : O(N)
 #space complexity : O(1)
 
+
+#jump game II
+#brute approach using recursion
+def brutejumpgameii(nums):
+    n=len(nums)
+    def recurjump(index , jump):
+        if index>=n:
+            return jump
+        minjump=float('inf')
+        for i in range(1,nums[index]+1):  
+            minjump=min(minjump,recurjump(index+i,jump+1))  #with this loop , we go through every possible indices that can reached by jumping from the current passed 'index'
+        return minjump     
+    return recurjump(0,0)  #initially we start from the root index and ofcourse 0 jump
+print(brutejumpgameii([2,3,1,1,4]))
+#time complexity : O(N**N)
+#space complexity : O(N)
+
+
  
 
 
