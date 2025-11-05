@@ -229,6 +229,8 @@ print(Nmeetings( [10, 12, 20] ,  [20, 25, 30]))
 
 
 
+
+
 #jump game -I
 def jumpgame(input):
     n=len(input)
@@ -241,6 +243,29 @@ def jumpgame(input):
 print(jumpgame( [3, 2, 1, 0, 4]))
 #time complexity : O(N)
 #space complexity : O(1)
+
+
+#jump game -II
+#for the minimum number of jumps,we must use the maximum number of steps from each index
+def jumpgameii(nums):
+    maxindex = 0
+    n=len(nums)
+    currentend = 0  #this current end means the position which can be reached from the given indices using the farthest distance 
+    count = 0
+    for i in range(n):
+        maxindex=max(maxindex,i+nums[i])
+        if i == currentend:  #if we reach the current end position , which is found after jumping to the farthest position  then it means we must make jump to this current index
+         count+=1
+         currentend=maxindex   #then we also update the currentend position
+    return count
+print(jumpgameii( [5,9,3,2,1,0,2,3,3,1,0,0]))    
+
+
+#minimum number of platforms required for a railway
+def minimumnumber(arrival,departure):
+    array = sorted(zip(arrival,departure),key=lambda x:x[1],reverse= True)
+    
+
 
 
 

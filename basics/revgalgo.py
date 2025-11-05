@@ -148,6 +148,18 @@ print(optimalvalidparenthesis('(*))'))
 
         
 
+#jump game - I
+def jumpgamei(input):
+    n=len(input)
+    maxindex = 0  #this maxindex stores the position or the index which can be reached by the maximum jump that is available in the index
+    for i in range(n):
+        if i > maxindex:  #here i > maxindex means this i cannot be reached even with the maxindex until this index , which means we are unable to reach this index which proves that we can never reach the last index or final end
+            return False  
+        maxindex=max(maxindex,input[i]+i)
+    return True
+print(jumpgamei( [3, 2, 1, 0, 4]))    
+#time complexity : O(N)
+#space complexity : O(1)
 
  
 
