@@ -166,11 +166,11 @@ print(jumpgamei( [3, 2, 1, 0, 4]))
 #brute approach using recursion
 def brutejumpgameii(nums):
     n=len(nums)
-    def recurjump(index , jump):
+    def recurjump(index, jump):
         if index>=n:
             return jump
         minjump=float('inf')
-        for i in range(1,nums[index]+1):  
+        for i in range(1,nums[index]+1):   #we are exeperimenting every possible jumps that can be done from the current index 
             minjump=min(minjump,recurjump(index+i,jump+1))  #with this loop , we go through every possible indices that can reached by jumping from the current passed 'index'
         return minjump     
     return recurjump(0,0)  #initially we start from the root index and ofcourse 0 jump
@@ -179,6 +179,22 @@ print(brutejumpgameii([2,3,1,1,4]))
 #space complexity : O(N)
 
 
- 
+#optimal approach
+#as the question is asking us to return the minimum number of jumps to reach the last index , what we do is take a currentend ,which is the end that can be reached by obtaining the maximum reach found till the current index
+def optjumpgameii(nums):
+    maxreach = 0
+    n=len(nums)
+    currentend = 0
+    jumps=0 
+    for i in range(n):
+        maxreach=max(maxreach,nums[i]+i)
+        if i == currentend:  #if the current index is the last currentend which was obtained with the help of maxreach then to move to the next we index , we must jump ,
+            jumps+=1
+            currentend=maxreach
+    return jumps  
+print(optjumpgameii([2,3,1,1,4]))      
+#time complexity : O(n)
+#space complexity : O(1)
+
 
 
