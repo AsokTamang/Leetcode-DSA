@@ -308,7 +308,7 @@ def jobsequence(jobs):
     for i in range(n):
         maxday=max(maxday,jobs[i][1])  #as the second index or index 1 in the jobs represent the days when this current job can be scheduled
     scheduled = [0] * maxday  #here we are maintaining the days upto the highest maxday or slot available in the jobs list
-    total=0
+    totalprofit=0
     for job in jobs:
         id,deadline,profit=job
         #only if the slot is available , we are adding the profit of the current job
@@ -316,9 +316,9 @@ def jobsequence(jobs):
             if scheduled[d-1]==0:  #as the index of the list is 0-based we are subtracting 1 from job[1]
                 #checking if the slot or the particular day is available or not,if its -1 then it means this particular slot or day is available
                 scheduled[d-1]=deadline  #and inserting the slot of the current job as scheduled
-                total+=profit  #adding the profit
+                totalprofit+=profit  #adding the profit
                 break  #after inserting this job , we break out of the loop
-    return total        
+    return totalprofit        
 
     
 print(jobsequence( [ [1, 4, 20] , [2, 1, 10] , [3, 1, 40] , [4, 1, 30] ]))
@@ -326,7 +326,20 @@ print(jobsequence( [ [1, 4, 20] , [2, 1, 10] , [3, 1, 40] , [4, 1, 30] ]))
 #space complexity : O(M)  max slot available in the job lists
 
 
-
+#candy
+def brutecandy(ratings):
+    n=len(ratings)
+    total = [1] * n #as atleast one candy must be assinged to each and every children
+    for i in range(1,n):
+        if ratings[i]>ratings[i-1]:
+            total[i]=total[i-1]+1
+    for i in range(n-2,-1,-1):  #traversing from right to left
+        if ratings[i]>ratings[i+1]:
+            total[i] = max(total[i],total[i+1]+1)          #this addition of 1 to total[i+1] is cause we have already assigned the appropriate candies to the students having higher ranks compared to the preceding one
+    return sum(total)        
+print(brutecandy([1, 2, 2]))  
+#time complexity : O(N)
+#space complexity : O(N)
 
 
 
