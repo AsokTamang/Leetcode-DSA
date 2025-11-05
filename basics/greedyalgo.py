@@ -267,7 +267,7 @@ def bruteminplaotform(arr,dep): #here arr represents array and dep represents de
     n=len(arr)
     ans =1  #the initial number of platform required is ofcourse 1
     for i in range(n):
-        count = 0
+        count = 1
         for j in range(i+1,n):
             if arr[i]>=arr[j] and arr[i]<=dep[j] or arr[j]>=arr[i] and arr[j]<=dep[i]:  #if the arrival and departure of the aeroplanes mismatch then we increase the number of platform
                 count+=1
@@ -276,6 +276,55 @@ def bruteminplaotform(arr,dep): #here arr represents array and dep represents de
 print(bruteminplaotform( [900, 940, 950, 1100, 1500, 1800] , [910, 1200, 1120, 1130, 1900, 2000]))   
 #time complexity : O(N**2)
 #space complexity : O(1) 
+
+#optimal approach
+def optimalminplatform(arr,dep):
+    arr.sort()
+    dep.sort()
+    i,j=0,0
+    n=len(arr)
+    count=0  #initially the number of platform required is ofcourse one as for the first plane to land and depart
+    maxcount = 0
+    while i<n and j<n:
+        if arr[i]<=dep[j]:  #if the arrival of the next plane is within the departure of the previously arrived plane then we increase the count of platforms and also the index of arrival for comparison
+            i+=1
+            count+=1
+        else:  #if the arrival of next plane is outside the departure of the previously arrived plane then we dont need another platform and we increase the index of departure
+            j+=1
+            count-=1   
+        maxcount=max(maxcount,count)    
+    return maxcount
+print(optimalminplatform( [900, 1100, 1235] , [1000, 1200, 1240]))    
+#time complexity : O(NlogN)
+#space complexity : O(1)     
+
+
+#Job sequencing Problem
+#so the question is asking us to return the maximum profit which can be obtained by scheduling the jobs in the right way
+def jobsequence(jobs):
+    jobs=sorted(jobs,key=lambda x:x[2],reverse=True)  #here we are sorting the jobs based on the profits in the descending order, so that the job with high profit will be scheduled as soon as possible
+    maxday=1
+    n=len(jobs)
+    for i in range(n):
+        maxday=max(maxday,jobs[i][1])  #as the second index or index 1 in the jobs represent the days when this current job can be scheduled
+    scheduled = [0] * maxday  #here we are maintaining the days upto the highest maxday or slot available in the jobs list
+    total=0
+    for job in jobs:
+        id,deadline,profit=job
+        #only if the slot is available , we are adding the profit of the current job
+        for d in range(deadline,0,-1):  #as the earlier days from the current slot are also available so we run this loop
+            if scheduled[d-1]==0:  #as the index of the list is 0-based we are subtracting 1 from job[1]
+                #checking if the slot or the particular day is available or not,if its -1 then it means this particular slot or day is available
+                scheduled[d-1]=deadline  #and inserting the slot of the current job as scheduled
+                total+=profit  #adding the profit
+                break  #after inserting this job , we break out of the loop
+    return total        
+
+    
+print(jobsequence( [ [1, 4, 20] , [2, 1, 10] , [3, 1, 40] , [4, 1, 30] ]))
+#time complexity: O(N+logN)
+#space complexity : O(M)  max slot available in the job lists
+
 
 
 
