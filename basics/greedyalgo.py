@@ -261,10 +261,22 @@ def jumpgameii(nums):
 print(jumpgameii( [5,9,3,2,1,0,2,3,3,1,0,0]))    
 
 
-#minimum number of platforms required for a railway
-def minimumnumber(arrival,departure):
-    array = sorted(zip(arrival,departure),key=lambda x:x[1],reverse= True)
-    
+#minimum number of platforms
+#brute approach
+def bruteminplaotform(arr,dep): #here arr represents array and dep represents departure
+    n=len(arr)
+    ans =1  #the initial number of platform required is ofcourse 1
+    for i in range(n):
+        count = 0
+        for j in range(i+1,n):
+            if arr[i]>=arr[j] and arr[i]<=dep[j] or arr[j]>=arr[i] and arr[j]<=dep[i]:  #if the arrival and departure of the aeroplanes mismatch then we increase the number of platform
+                count+=1
+        ans=max(ans,count)
+    return ans
+print(bruteminplaotform( [900, 940, 950, 1100, 1500, 1800] , [910, 1200, 1120, 1130, 1900, 2000]))   
+#time complexity : O(N**2)
+#space complexity : O(1) 
+
 
 
 
