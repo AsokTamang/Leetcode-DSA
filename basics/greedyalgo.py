@@ -341,6 +341,18 @@ print(brutecandy([1, 2, 2]))
 #time complexity : O(N)
 #space complexity : O(N)
 
-
+#shortest job first
+import math
+def shortestjob(bt):
+    bt=sorted(bt)   #inorder to complete the shortest bursting job first
+    n=len(bt)
+    total = 0
+    for i in range(1,n):
+        total+=sum(bt[0:i])   #inorder for the current job to be started, all of the preceding jobs must be executed at first which has their own waiting time.
+    return math.floor(total / n) 
+print(shortestjob([9, 3, 1, 8, 2]))  
+#time complexity : O(NlogN)
+#space complexity : O(1)
+     
 
 

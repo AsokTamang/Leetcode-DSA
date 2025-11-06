@@ -254,7 +254,21 @@ print(jobsequence( [ [1, 4, 20] , [2, 1, 10] , [3, 1, 40] , [4, 1, 30] ]))
 #time complexity : O(NlogN)
 #space complexity : O(M) max available deadline 
 
-
+#candy
+def candychild(ratings):
+    n=len(ratings)
+    total = [1] * n  #atleast one candy must be served to every children
+    for i in range(1,n):
+        if ratings[i]>ratings[i-1]:
+            total[i]=total[i-1] + 1  #as the higher rated child must have greater number of candy than the one with the lower candy
+    for i in range(n-2,-1,-1):
+        if ratings[i]>ratings[i+1]:
+            total[i] = max(total[i+1]+1,total[i])  #here we are using max cause we have already assigned the required number of candies to students by comparing with the ranking of previous students,
+            #so for the comparison of next students, we must use the max
+    return sum(total)                 
+print(candychild([1, 2, 2]))
+#time complexity : O(N)
+#space complexity : O(N)
 
 
 
