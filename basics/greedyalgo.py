@@ -369,6 +369,83 @@ print(shortestjobfirst([4, 1, 3, 7, 2]))
 #space complexity : O(1)
 
 
+#LRU
+
+class LRU:
+    class Node:
+        def __init__(self,key,value,next=None,prev=None):
+            self.key=key
+            self.value=value
+            self.next=next
+            self.prev=prev
+    def __init__(self,capacity):
+        self.capacity = capacity
+        self.head = self.Node(-1,-1)
+        self.tail=self.Node(-1,-1)
+        self.head.next=self.tail
+        self.tail.prev=self.head
+        self.m={}  #this stores the key and the corresponding node
+    def add(self,node):
+       
+        self.m[node.key]=node  #adding the key and node as key-value pair in m   
+        nextone=self.head.next
+        node.next=nextone
+        nextone.prev=node
+        self.head.next=node 
+        node.prev=self.head    
+
+        if len(self.m)>self.capacity:
+            delnode=self.tail.prev
+            self.deletenode(delnode)  #deleting the least recently used node
+            del self.m[delnode.key]     #also deleting the node from m dictionary
+
+
+    def deletenode(self,node):
+        previous = node.prev
+        nextone=node.next
+        previous.next=nextone
+        nextone.prev=previous
+    def get(self,k):
+        if k in self.m:
+            Node = self.m[k]
+            self.deletenode(Node)  #deleting the node
+            self.add(Node)
+            return Node.value
+        return -1 #if the key doesnot exists
+    def put(self,k,v):
+        if k in self.m:
+            Node=self.m[k]
+            self.deletenode(Node)  #deleting the node
+            del self.m[k]  #as well as from m dictionary
+           
+            
+        newNode=self.Node(k,v)
+        self.add(newNode)   
+        return -1
+    def printdatas(self):
+        itr=self.head.next
+        a=[]
+        while itr!=self.tail:
+            a.append(str(itr.value))
+            itr=itr.next
+        return a    
+
+    
+lru=LRU(5)
+lru.put(1,1)
+lru.put(2,2)
+lru.put(3,3)
+lru.put(4,4)
+lru.put(1,6)
+lru.put(5,5)
+lru.put(5,5)
+lru.put(8,8)
+lru.put(10,10)
+print(lru.printdatas())
+#time complexity : O(1) for both get() and put()
+#space complexity : O(N)
+
+
 
 
      
