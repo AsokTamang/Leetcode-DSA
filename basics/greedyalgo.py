@@ -355,7 +355,18 @@ print(shortestjob([9, 3, 1, 8, 2]))
 #space complexity : O(1)
 
 
-
+def shortestjobfirst(bt):
+    bt=sorted(bt)
+    n=len(bt)
+    waitingtime =0
+    totaltime = 0
+    for i in range(1,n):
+        waitingtime+=bt[i-1]  #this stores the waiting time of all the tasks till the current task
+        totaltime+=waitingtime
+    return math.floor(totaltime/ n)
+print(shortestjobfirst([4, 1, 3, 7, 2]))    
+#time complexity : O(NlogN)
+#space complexity : O(1)
 
 
 
