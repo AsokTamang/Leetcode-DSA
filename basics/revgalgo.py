@@ -197,4 +197,21 @@ print(optjumpgameii([2,3,1,1,4]))
 #space complexity : O(1)
 
 
+#minimum number of  platforms required for a railway
+#brute approach
+def bruteminimumplatform(arr,dep):  #here arr represents the arrival of the aeroplane and dep represents the departure of the plane
+    n=len(arr)
+    minim = 0
+    for i in range(n):
+        count = 1
+        for j in range(i+1,n):
+            if arr[i]<=dep[j] and dep[i]>=arr[j]:  #if the arrival of one plane is smaller than the  departure of another plane and the departure of that plane also must be smaller than the arrival of that second plane , for these two planes to be overlapped
+                 count+=1
+        minim=max(minim,count)
+    return minim
+print(bruteminimumplatform( [900, 940, 950, 1100, 1500, 1800] ,  [910, 1200, 1120, 1130, 1900, 2000]))            
+#time complexity : O(N**2)
+#space complexity : O(1)
+
+
 
