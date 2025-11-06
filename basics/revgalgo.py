@@ -214,4 +214,27 @@ print(bruteminimumplatform( [900, 940, 950, 1100, 1500, 1800] ,  [910, 1200, 112
 #space complexity : O(1)
 
 
+#optimal approach
+def optminiplatoform(arr,dep):
+    n=len(arr)
+    i=j=0
+    minim = 0
+    count = 0
+    while i<n and j<n:
+        if arr[i]<=dep[j]:
+            i+=1
+            count+=1
+        else:
+            j+=1
+            count-=1
+        minim=max(minim,count)
+    return minim     
+print(optminiplatoform( [900, 1100, 1235] , [1000, 1200, 1240]))   
+#time complexity : O(N)
+#space complexity : O(1)
+
+
+
+
+
 
