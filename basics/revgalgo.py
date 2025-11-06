@@ -221,7 +221,7 @@ def optminiplatoform(arr,dep):
     minim = 0
     count = 0
     while i<n and j<n:
-        if arr[i]<=dep[j]:
+        if arr[i]<=dep[j]:  #only if the arrival of the plane is smaller than the departure of the another plane , we inrease the count of trainstation
             i+=1
             count+=1
         else:
@@ -233,6 +233,26 @@ print(optminiplatoform( [900, 1100, 1235] , [1000, 1200, 1240]))
 #time complexity : O(N)
 #space complexity : O(1)
 
+
+#job sequencing problem
+def jobsequence(jobs):
+    jobs=sorted(jobs,key=lambda x:x[2],reverse=True)
+    maxim = 0
+    for job in jobs:
+        maxim=max(maxim,job[1])
+    availabledeadline=[0] * maxim
+    totalprofit = 0
+    for job in jobs:
+        id,deadlinelimit,profit = job
+        for i in range(deadlinelimit,0,-1):  #we must check the whole preceding days from the given deadline day of the current job
+            if availabledeadline[i-1]==0:  #only if the day is available or anyother job is not used in this current day , we place this job in this day
+                availabledeadline[i-1]=i
+                totalprofit+=profit
+                break  #and we must break after inserting this job as we can only take this job only one time per day
+    return totalprofit
+print(jobsequence( [ [1, 4, 20] , [2, 1, 10] , [3, 1, 40] , [4, 1, 30] ]))
+#time complexity : O(NlogN)
+#space complexity : O(M) max available deadline 
 
 
 
