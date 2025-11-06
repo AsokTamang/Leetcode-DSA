@@ -353,6 +353,13 @@ def shortestjob(bt):
 print(shortestjob([9, 3, 1, 8, 2]))  
 #time complexity : O(NlogN)
 #space complexity : O(1)
+
+
+
+
+
+
+
      
 
 
