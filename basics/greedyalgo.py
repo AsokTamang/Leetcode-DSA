@@ -428,9 +428,7 @@ class LRU:
         while itr!=self.tail:
             a.append(str(itr.value))
             itr=itr.next
-        return a    
-
-    
+        return a        
 lru=LRU(5)
 lru.put(1,1)
 lru.put(2,2)
@@ -446,8 +444,31 @@ print(lru.printdatas())
 #space complexity : O(N)
 
 
+#insert interval
+def insertinterval(intervals,newinterval):
+    i =0
+    n=len(intervals)
+    ans = []
+    while i<n and  intervals[i][1] < newinterval[0]:  #if the ending of the current interval is smaller than the starting of the new interval then it measn it isnot included in the overlapping array :
+       
+        ans.append(intervals[i])
+        i+=1
+    while i<n and (intervals[i][0]<=newinterval[1]):
+        newinterval[0] = min(newinterval[0],intervals[i][0])  #the minimum between the starting of the comparing intervals
+        newinterval[1] = max(intervals[i][1],newinterval[1])
+        i+=1
+    ans.append(newinterval)  #appending the correctly merged arrays
+    while i<n:
+        ans.append(intervals[i])
+        i+=1
+    return ans    
+print(insertinterval([ [1, 2] , [3, 5] , [6, 7] , [8,10] ] ,  [4, 8]))
+#time complexity : O(N)
+#space complexity : O(N)
 
 
+
+ 
      
 
 
