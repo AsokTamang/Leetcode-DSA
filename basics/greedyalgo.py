@@ -466,6 +466,20 @@ print(insertinterval([ [1, 2] , [3, 5] , [6, 7] , [8,10] ] ,  [4, 8]))
 #time complexity : O(N)
 #space complexity : O(N)
 
+#merge the intervals
+def mergeintervals(intervals):
+   merged = [intervals[0]]  #the very first array from the given intervals will be the first comparing array
+   for array in intervals[1:]:
+       lastone = merged[-1]
+       if lastone[1] >=array[0]:  #if the ending of the last array in the merged list is greater than the starting of the current array , then it means they overlap with eachother
+           lastone[1] = max(lastone[1],array[1])
+       else:
+           merged.append(array)  #if they dont overlap then we just append this array in our merged list
+   return merged
+print(mergeintervals( [[1,3],[2,6],[8,10],[15,18]]))    
+#time complexity : O(N)
+#space complexity : O(N)
+         
 
 
  
