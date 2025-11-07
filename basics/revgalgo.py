@@ -367,3 +367,24 @@ print(optminiplatoform([900, 1100, 1235] ,  [1000, 1200, 1240]))
 #time complexity : O(N)
 #space complexity : O(1)
 
+#job sequencing problem
+def jobsequence(jobs):
+    jobs=sorted(jobs , key=lambda x:x[2],reverse=True)  #here are sorting the jobs based on the profit but in descending order
+    maxdeadlinelimit = 0
+    for job in jobs:
+        maxdeadlinelimit=max(maxdeadlinelimit,job[1])  #using the max function we are calculating the maximum deadline limit given in a jobs array
+    availabledays = [0] * maxdeadlinelimit   #this stores the days available for the particular jobs to be scheduled
+    totalprofit = 0  
+    count =0  #number of scheduled jobs 
+    for job in jobs:
+        id,d,profit = job  #d represents the deadline of this particular job
+        for i in range(d,0,-1):  
+            if availabledays[i-1] == 0:  #here we are checking if the days from this deadline are available or not for this job to be scheduled
+                count +=1 
+                availabledays[i-1] = id  #if yes then we schedule this job in this particular day
+                totalprofit+=profit      #and we also add the profit of this job to the total
+                break 
+    return count,totalprofit
+print(jobsequence([[1, 2, 100] , [2, 1, 19] , [3, 2, 27] , [4, 1, 25] , [5, 1, 15]]))        
+#time complexity : O(N*M)  M represents the maximum deadline given in a array
+#space complexity : O(M)
