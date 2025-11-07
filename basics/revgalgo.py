@@ -388,3 +388,19 @@ def jobsequence(jobs):
 print(jobsequence([[1, 2, 100] , [2, 1, 19] , [3, 2, 27] , [4, 1, 25] , [5, 1, 15]]))        
 #time complexity : O(N*M)  M represents the maximum deadline given in a array
 #space complexity : O(M)
+
+
+#candy
+def candy(ratings):
+    n=len(ratings)
+    total = [1] * n  #as atleast one candy is to be given to every children
+    for i in range(1,n):  #comparing the ratings of the children on the preceding manner
+        if ratings[i]>ratings[i-1]:
+            total[i]=total[i-1] + 1
+    for i in range(n-2,-1,-1):  #comparing the ratings of the children but with the next children
+        if ratings[i]>ratings[i+1]:
+            total[i] = max(total[i],total[i+1]+1)
+    return sum(total)                
+print(candy([1, 2, 1, 4, 5]))
+#time complexity : O(N)
+#space complexity : O(N)
