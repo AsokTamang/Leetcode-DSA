@@ -419,3 +419,73 @@ def sjf(bt):
 print(sjf( [1, 2, 3, 4]))
 #time complexity : O(NlogN)
 #space complexity : O(1)
+
+#LRU cache
+#LRU cache algorithm follows the logic of having a head and tail node and the least recently node or data will at the tail and the most recently used node or data will be at the head
+#and whenever any node or data is accessed , we put this node in the head
+class LRU:
+    def __init__(self,capacity):
+        self.capacity = capacity
+        self.m={}  #this is our data storage which stores key of the node and the node as key-value pair
+        self.head=self.Node(-1,-1)
+        self.tail=self.Node(-1,-1)
+        self.head.next=self.tail
+        self.tail.prev=self.head
+    class Node:
+        def __init__(self,key,value,next=None,prev=None):
+            self.key=key
+            self.value=value
+            self.next=next
+            self.prev=prev
+    #in this data stuctue we have given the function of adding and deleting the node in our data storage m in both add and delete function respectively   
+    def add(self,node):
+        self.m[node.key] = node  
+        nxt = self.head.next
+        self.head.next=node
+        node.next=nxt
+        node.prev=self.head
+        nxt.prev=node
+        if len(self.m)> self.capacity:
+            
+            self.delete(self.tail.prev)  #deleting the least recently used node
+    def delete(self,node):
+        del self.m[node.key]
+        prv=node.prev
+        nxt=node.next
+        prv.next=nxt
+        nxt.prev=prv
+    def put(self,k,v):
+        if k in self.m:
+            delnode = self.m[k]
+            self.delete(delnode)
+        newnode=self.Node(k,v)
+        self.add(newnode)
+        return self.m[k].value
+
+    def get(self,k):
+        if k in self.m:
+            nnode=self.m[k]
+            self.delete(nnode)  #we are deleting the node from its original position 
+            self.add(nnode)  #then we are adding this node in the head of the linked list
+            return nnode.value  #and we return the value
+        return -1    
+    def printdatas(self):
+        ans=[]
+        itr=self.head.next
+        while itr!=self.tail:
+            ans.append(str(itr.value))
+            itr=itr.next
+        return ans
+lru=LRU(5)
+lru.put(1,1)
+lru.put(2,2)
+lru.put(3,3)
+lru.put(4,4)
+lru.put(5,5)
+lru.put(6,6)
+print(lru.put(6,7))
+print(lru.get(2))
+print(lru.printdatas())
+#time complexity : O(1) for both get and put
+#space complexity : O(N)
+
