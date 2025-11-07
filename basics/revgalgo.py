@@ -437,19 +437,13 @@ class LRU:
             self.value=value
             self.next=next
             self.prev=prev
-    #in this data stuctue we have given the function of adding and deleting the node in our data storage m in both add and delete function respectively   
     def add(self,node):
-        self.m[node.key] = node  
         nxt = self.head.next
         self.head.next=node
         node.next=nxt
         node.prev=self.head
         nxt.prev=node
-        if len(self.m)> self.capacity:
-            
-            self.delete(self.tail.prev)  #deleting the least recently used node
     def delete(self,node):
-        del self.m[node.key]
         prv=node.prev
         nxt=node.next
         prv.next=nxt
@@ -457,9 +451,15 @@ class LRU:
     def put(self,k,v):
         if k in self.m:
             delnode = self.m[k]
-            self.delete(delnode)
+            del self.m[k]
+            self.delete(delnode)  
         newnode=self.Node(k,v)
+        self.m[k]=newnode  
         self.add(newnode)
+        if len(self.m)>self.capacity:
+            delnode = self.tail.prev
+            del self.m[delnode.key]
+            self.delete(delnode)
         return self.m[k].value
 
     def get(self,k):
@@ -489,3 +489,25 @@ print(lru.printdatas())
 #time complexity : O(1) for both get and put
 #space complexity : O(N)
 
+#insert interval
+def insertinterval(intervals,newinterval):
+    i = 0
+    n=len(intervals)
+    ans = []
+    while i<n and intervals[i][1]<newinterval[0]:  #if the current interval's ending is smaller than the starting of the new interval then it means they dont overlap with eachother
+     ans.append(intervals[i])
+     i+=1
+     #as we have already checked for the ending of the intervals smaller than the starting of newinterval
+    while i<n and intervals[i][1]>=newinterval[0] and  intervals[i][0]<=newinterval[1]:  #if the ending of current interval is greater than or equal the starting of newinterval  and the starting of the current interval is samller or equal to the ending of the new interval then it means they overlap with eachother
+        current=intervals[i]
+        newinterval[0]=min(current[0],newinterval[0])  #then based on the values of starting and ending , we change the value of new interval
+        newinterval[1]=max(current[1],newinterval[1])
+        i+=1
+    ans.append(newinterval)
+    while i<n:
+        ans.append(intervals[i])
+        i+=1
+    return ans
+print(insertinterval( [ [1, 3] , [6, 9] ] ,  [2, 5]))        
+#time complexity : O(N)
+#space complexity : O(N) in worst case
