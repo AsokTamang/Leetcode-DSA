@@ -479,6 +479,23 @@ def mergeintervals(intervals):
 print(mergeintervals( [[1,3],[2,6],[8,10],[15,18]]))    
 #time complexity : O(N)
 #space complexity : O(N)
+
+
+#non-overlapping intervals
+#so the logic behind sorting the given intervals based on ending time is inorder to increase the number of non-overlapping intervals which results to minimum number of removed overlappoing intervals
+def nonoverlapping(intervals):
+    intervals=sorted(intervals,key=lambda x:x[1]) #here we are sorting the intervals based on the ending
+    end =float('-inf')
+    count = 0
+    for start,finish in intervals:
+        if start>=end:  #if the start of the current interval is greater than or equal to the ending of previous interval then they dont overlap with eachother
+            end=finish
+        else:
+            count+=1
+    return count        
+print(nonoverlapping( [ [1, 3] , [1, 4] , [3, 5] , [3, 4] , [4, 5] ]))            
+#time complexity : O(NlogN)
+#space complexity : O(1)
          
 
 
