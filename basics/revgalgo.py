@@ -404,3 +404,18 @@ def candy(ratings):
 print(candy([1, 2, 1, 4, 5]))
 #time complexity : O(N)
 #space complexity : O(N)
+
+#shortest job first
+import math
+def sjf(bt):
+    bt=sorted(bt)
+    total = 0
+    waitingtime = 0
+    n=len(bt)
+    for i in range(n-1):  #here we are looping only until the second last cause for the last jop , its waiting time is sum of all previous jobs and there's no point to calculate the last job's waiting time,as there are no jobs beyound this job
+        waitingtime+=bt[i]
+        total+=waitingtime
+    return math.floor(total / n)    
+print(sjf( [1, 2, 3, 4]))
+#time complexity : O(NlogN)
+#space complexity : O(1)
