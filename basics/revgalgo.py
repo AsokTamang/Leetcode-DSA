@@ -347,3 +347,23 @@ print(minimumplatform( [900, 1100, 1235] ,  [1000, 1200, 1240]))
 #time complexity : O(N**2)
 #space complexity : O(1)
 
+
+#optimal approach
+def optminimumplatform(arrival,dep):
+    n=len(arrival)
+    i=j=0
+    count = 0
+    ans = 0
+    while i<n and j<n:
+        if arrival[i]<dep[j]:
+            count+=1
+            i+=1
+        else:
+            j+=1
+            count-=1
+        ans=max(ans,count)
+    return ans        
+print(optminiplatoform([900, 1100, 1235] ,  [1000, 1200, 1240]))
+#time complexity : O(N)
+#space complexity : O(1)
+
