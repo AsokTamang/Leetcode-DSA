@@ -313,3 +313,37 @@ def jumpgamei(array):
 print(jumpgamei(  [5, 3, 2, 1, 0]))    
 #time complexity : O(N)
 #space complexity : O(1)
+
+#jump game II
+def jumpgameii(nums):
+    maxjummpindex = 0 #this represents the position that can be reached by using the maximum jump capacity found till the current loop
+    n=len(nums)
+    number=0
+    endofrange=0
+    for i in range(n-1): 
+        maxjummpindex=max(maxjummpindex,i+nums[i])
+        if i == endofrange:  #if the current position is the end of the range produced from the maxjumpindex till now then it means we need one more jump to go beyound this position and we also change the endofrange with the new or current maxjumpindex depending upon the current indexed value
+            number+=1
+            endofrange=maxjummpindex
+        
+    return number
+print(jumpgameii( [2,3,0,1,4]))    
+#time complexity : O(N)
+#space complexity : O(1)
+
+#minimum number of platforms
+#brute approach
+def minimumplatform(arrival,dep):
+    n=len(arrival)
+    ans = 0
+    for i in range(n):
+        count =1  #we need one platfrom initially
+        for j in range(i+1,n):  
+            if arrival[j]<=dep[i]:  #if the arrival of the next plane is withint the departure of the last plane , then ofcourse we need extra railway platform
+                count+=1
+        ans=max(ans,count)
+    return ans
+print(minimumplatform( [900, 1100, 1235] ,  [1000, 1200, 1240]))            
+#time complexity : O(N**2)
+#space complexity : O(1)
+
