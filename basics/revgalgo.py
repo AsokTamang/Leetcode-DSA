@@ -271,4 +271,18 @@ print(candychild([1, 2, 2]))
 #space complexity : O(N)
 
 
+#merge intervals
+def mergeintervals(intervals):
+    ans = [intervals[0]]  #storing the first array of the intervals initially
+    for array in intervals[1:]:
+        last = ans[-1]
+        if last[1]>=array[0]:  #if the ending of the last array in our ans is greater than or equal to the starting of current array then
+         last[1] = max(last[1],array[1])
+        else:
+            ans.append(array)
+    return ans
+print(mergeintervals( [[1,4],[4,5]]))    
+#time complexity : O(N)
+#space complexity : O(N) in the worst case        
+
 
