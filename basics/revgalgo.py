@@ -286,3 +286,17 @@ print(mergeintervals( [[1,4],[4,5]]))
 #space complexity : O(N) in the worst case        
 
 
+#N meetings in one room
+def nmeetings(start,end):
+    array=sorted(zip(start,end),key=lambda x:x[1])  #here we are sorting the pair of starting and ending of a room based on their ending time , so that as long as the meetings are finished earlier we can increase the number of meetings that can be held in a room
+    lastmeeting = array[0]  #here it the last meeting which was held in a room
+    count=1  #as the very first meeting is already held
+    for meeting in array[1:]:
+        if meeting[0]>lastmeeting[1]:  #if the starting of the current meeting is greater than the ending of last meeting then this meeting can be held
+         count+=1
+         lastmeeting=meeting  #then as this current meeting is held , we change the lastmeeting to current meeting
+    return count     
+print(nmeetings( [1, 3, 0, 5, 8, 5] ,  [2, 4, 6, 7, 9, 9]))      
+#time complexity : O(N)
+#space complexity : O(N)       
+
