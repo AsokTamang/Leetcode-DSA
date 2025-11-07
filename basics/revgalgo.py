@@ -297,6 +297,19 @@ def nmeetings(start,end):
          lastmeeting=meeting  #then as this current meeting is held , we change the lastmeeting to current meeting
     return count     
 print(nmeetings( [1, 3, 0, 5, 8, 5] ,  [2, 4, 6, 7, 9, 9]))      
-#time complexity : O(N)
+#time complexity : O(NlogN)
 #space complexity : O(N)       
 
+#jump game I
+#the given array represents the maximum jump of positions that can be done from given number of indices
+def jumpgamei(array):
+    n=len(array)
+    maxjumptill=0
+    for i in range(n):
+        if i > maxjumptill:  #if the index or the current position i is greater than the maxjump till then it means we cannot reach this current position i anyhow, so ofcourse we cannot reach the last index without the maxjumptill 
+            return False
+        maxjumptill=max(maxjumptill,i+array[i])
+    return True
+print(jumpgamei(  [5, 3, 2, 1, 0]))    
+#time complexity : O(N)
+#space complexity : O(1)
