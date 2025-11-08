@@ -528,3 +528,18 @@ def mergeintervals(intervals):
 print(mergeintervals( [[1,4],[4,5]]))   
 #time complexity : O(N)
 #space complexity : O(N)  in worst case         
+
+#non-overlapping intervals
+def nonoverlap(intervals):
+    intervals=sorted(intervals,key=lambda x:x[1])  #sorting the intervals based on the ending point inorder to get the minimum number of intervals to be removed , as we first compare with the smaller ending points
+    last=intervals[0]
+    count = 0
+    for interval in intervals[1:]:
+        if last[1]>interval[0]:  #if the ending point of the last interval is greater than the starting point of the current interval then it means we need to remove the current interval
+         count+=1
+        else:
+            last=interval
+    return count
+print(nonoverlap([ [1, 2] , [2, 3] , [3, 4] ,[1, 3] ]))     
+#time complexity : O(NlogN)
+#space complexity : O(1)    
