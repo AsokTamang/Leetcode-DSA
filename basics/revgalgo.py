@@ -511,3 +511,20 @@ def insertinterval(intervals,newinterval):
 print(insertinterval( [ [1, 3] , [6, 9] ] ,  [2, 5]))        
 #time complexity : O(N)
 #space complexity : O(N) in worst case
+
+
+#merge intervals
+def mergeintervals(intervals):
+    ans = []
+    ans.append(intervals[0]) #appending the very first interval
+    for interval in intervals[1:]:
+        last = ans[-1]
+        if last[1] >=interval[0] and last[0]<=interval[1]:
+            last[0] = min(last[0],interval[0])
+            last[1]=max(last[1],interval[1])
+        else:
+            ans.append(interval)
+    return ans
+print(mergeintervals( [[1,4],[4,5]]))   
+#time complexity : O(N)
+#space complexity : O(N)  in worst case         
