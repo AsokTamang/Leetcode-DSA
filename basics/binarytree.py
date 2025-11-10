@@ -129,7 +129,33 @@ print(p.makepostorder(po,[]))
 #space complexity : O(N)
     
                  
-           
+#level order traversal
+def levelorder(root):
+   n=len(root)
+   i=0
+   ans=[]
+   queue=deque([0])  #here we are storing the root index in our queue
+   while queue:
+      levelsize = len(queue)
+      levelvalues = []
+      for _ in range(levelsize):
+         index = queue.popleft()  #as we are going from left to right of every level of given tree, we are usign the popleft here to get the left index first
+         #as we have appended the left index in our queue storage first
+         if index < n and root[index] is not None:
+            levelvalues.append(root[index])
+            leftind=2*index + 1
+            rightind = 2*index + 2
+            queue.append(leftind)  #here we are storing the left index and right index
+            queue.append(rightind)
+      if len(levelvalues)>0:
+          ans.append(levelvalues)       
+   return ans         
+print(levelorder([3, 9, 20, None, None, 15, 7]))       
+#time complexity : O(N)
+#space compelxity : O(N)   
+
+      
+                 
     
 
 
