@@ -49,8 +49,48 @@ print(s.preorder(r,[]))
 #time complexity : O(N)
 #space complexity : O(N)
 
+from collections import deque
+#Inorder Traversal
+class Inorder:
+    class Node:
+       def __init__(self,data=0,left=None,right=None):
+          self.data=data
+          self.left=left
+          self.right=right
+    def __init__(self):
+      pass
+    def buildtree(self,array):
+       root = self.Node(array[0])
+       queue=deque([root])  #creating the root element by using node and storing it in a queue
+       i = 1  #starting from the index 1
+       while i<len(array):
+          current = queue.popleft()  #this is the main logic of popping the element which was just appended 
+          if i<len(array) and array[i] is not None:
+             current.left=self.Node(array[i])
+             queue.append(current.left)
+          i+=1
+          if i<len(array) and array[i] is not None:
+             current.right=self.Node(array[i])
+             queue.append(current.right)
+          i+=1
 
+       return root
+       
 
+       
+       
+    def inorder(self,root,arr):
+        if root is None:
+           return 
+        self.inorder(root.left,arr)  #first we are visiting the left subtree based on the current root node
+        arr.append(root.data)        #then only we append the roots data after all the left nodes or subtrees are visisted and their datas are appended
+        self.inorder(root.right,arr)
+        return arr
+i = Inorder()
+mainroot = i.buildtree([1, None, 2, 3])
+print(i.inorder(mainroot,[]))    
+
+   
 
     
 
