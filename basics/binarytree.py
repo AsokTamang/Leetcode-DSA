@@ -89,9 +89,47 @@ class Inorder:
 i = Inorder()
 mainroot = i.buildtree([1, None, 2, 3])
 print(i.inorder(mainroot,[]))    
+#time complexity : O(N)
+#space complexity : O(N)
 
    
-
+#postorder traversal
+class Postorder:
+    class Node:
+      def __init__(self,data,left=None,right=None):
+         self.data=data
+         self.left=left
+         self.right=right
+    def buildtree(self,array):
+       root = self.Node(array[0])  #first element of an array is the root element of our tree for now
+       queue=deque([root])
+       i = 1
+       while i<len(array):
+          current = queue.popleft()
+          if i<len(array) and array[i] is not None:
+             current.left=self.Node(array[i])
+             queue.append(current.left)
+          i+=1
+          if i<len(array) and array[i] is not None:
+             current.right = self.Node(array[i])
+             queue.append(current.right)
+          i+=1
+       return root
+    def makepostorder(self,root,arr):
+       if root is None:
+          return
+       self.makepostorder(root.left,arr)  #we first go with the left node 
+       self.makepostorder(root.right,arr) #then we go with the right node
+       arr.append(root.data)  #then at last we append the root's data
+       return arr
+p=Postorder()
+po=p.buildtree( [1, 4, None, 4, 2]) 
+print(p.makepostorder(po,[]))   
+#time complexity : O(N)
+#space complexity : O(N)
+    
+                 
+           
     
 
 
