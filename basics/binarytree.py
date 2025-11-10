@@ -154,7 +154,27 @@ print(levelorder([3, 9, 20, None, None, 15, 7]))
 #time complexity : O(N)
 #space compelxity : O(N)   
 
-      
+
+#Preorder Traversal using stack
+def preorderstack(root):
+   stack =[]
+   stack.append(0)
+   result = []
+   n=len(root)
+   
+   while stack :
+      index = stack.pop()   
+      if index<n and root[index] is not None:
+         result.append(root[index])
+         stack.append(2*index+2)  #first we append the right index based on the current index
+         stack.append(2*index+1)  #then we append the left index based on the current index
+   
+   return result
+print(preorderstack( [5, 1, 2, 8, None, 4, 5, None, 6])) 
+#time complexity : O(N)
+#space complexity : O(N)  
+
+
                  
     
 
