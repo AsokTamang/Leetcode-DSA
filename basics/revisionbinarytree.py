@@ -23,6 +23,24 @@ print(levelorder([3, 9, 20, None, None, 15, 7]))
 #time complexity : O(N)
 #space complexity : O(N)
 
+#preorder traversal
+#preorder means the root comes before the left and right respectively
+def preordertraversal(root):
+    n=len(root)
+    stack=[]
+    stack.append(0)  #storing the first index initially
+    ans = []
+    while stack:
+        index = stack.pop()
+        if index<n and root[index] is not None:
+            ans.append(root[index])
+            stack.append(2*index + 2)  #storing the right index first
+            stack.append(2*index + 1)  #then storing the left index
+    return ans 
+print(preordertraversal([1, 4, None, 4, 2]))      
+#time complexity : O(N)
+#space complexity : O(N)  
+            
 
 
     
