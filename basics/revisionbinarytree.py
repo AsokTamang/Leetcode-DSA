@@ -42,5 +42,50 @@ print(preordertraversal([1, 4, None, 4, 2]))
 #space complexity : O(N)  
             
 
+#revision of inorder traversal using stack
+class Iterativeinorder:
+    def __init__(self):
+        pass
+    class Node:
+        def __init__(self,data,left=None,right=None):
+            self.data=data
+            self.left=left
+            self.right=right
+    def maketree(self,array):  #this function is used for making a binary tree
+        root=self.Node(array[0])
+        queue=deque([root])   #storing the very first index
+        n=len(array)
+        i=1
+        while queue:
+            current = queue.popleft()
+            if i<n and array[i] is not None:
+                current.left=self.Node(array[i])
+                queue.append(current.left)
+            i+=1
+            if i<n and array[i] is not None:
+                current.right=self.Node(array[i])
+                queue.append(current.right)
+            i+=1
+        return root
+    def solveinordertraversal(self,root):
+        stack = []
+        ans = []
+        current = root
+        while stack or current:
+            while current:   #as long as we have the left of the current root , we append its left to the stack
+                stack.append(current)
+                current=current.left
+            current=stack.pop()
+            ans.append(current.data)
+            current=current.right   #then we move towards the right of that root whose left nodes are done going through
+        return ans    
+ii=Iterativeinorder()
+a=ii.maketree( [1, None, 2, 3])
+print(ii.solveinordertraversal(a))
+#time complexity : O(N)
+#space complexity : O(N)
+
+  
+
 
     
