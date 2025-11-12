@@ -66,11 +66,11 @@ class Inorder:
        while i<len(array):
           current = queue.popleft()  #this is the main logic of popping the element which was just appended 
           if i<len(array) and array[i] is not None:
-             current.left=self.Node(array[i])
+             current.left=self.Node(array[i])   #only when the i indexed element is not none we make it left
              queue.append(current.left)
           i+=1
           if i<len(array) and array[i] is not None:
-             current.right=self.Node(array[i])
+             current.right=self.Node(array[i])  #only when the i indexed element is not none we make it right 
              queue.append(current.right)
           i+=1
 
@@ -175,8 +175,51 @@ print(preorderstack( [5, 1, 2, 8, None, 4, 5, None, 6]))
 #space complexity : O(N)  
 
 
-                 
-    
+from collections import deque
+class Iterativeinorder:
+   class Node:
+      def __init__(self,data=0,left=None,right=None):
+         self.data=data
+         self.left=left
+         self.right=right
+   def __init__(self):
+      pass    
+   def buildtree(self,array):
+      root=self.Node(array[0])   #this will be the root element
+      queue=deque([root])
+      n=len(array)
+      i=1
+      while queue:
+         current = queue.popleft()   #popping the value that was stored first in a queue
+         if i<n and array[i] is not None:
+            current.left = self.Node(array[i])
+            queue.append(current.left)
+         i+=1
+         if i<n and array[i] is not None:
+            current.right = self.Node(array[i])
+            queue.append(current.right)
+         i+=1
+      return root  #we must return the root element after building the tree      
+   def getinorder(self,root):
+      ans=[]
+      stack = []
+      current = root
+      while stack or current:
+         while current:  #this loop is for storing all the left node datas a every nodes
+            stack.append(current)
+            current=current.left
+         #once we reach a node that has no left node then we append its value
+         current=stack.pop()
+         ans.append(current.data)  #then we append this major node which is the root at a time 
+         current=current.right   #then we go to the right
+      return ans
+io=Iterativeinorder()
+a=io.buildtree([1, None, 2, 3])      
+print(io.getinorder(a))
+#time complexity : O(N)
+#space complexity : O(N)
+
+
 
 
        
