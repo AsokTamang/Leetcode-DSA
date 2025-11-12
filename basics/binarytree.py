@@ -288,10 +288,30 @@ class allorder:
                stack.append((element.right,1))
          else:  #if its already visited 3 times then it means it must be in the postorder and there's no need of exploring the left node and right node
             postorder.append(element.data)
-      return [preorder,inorder,postorder]            
+      return [preorder,inorder,postorder]     
+   
+   #Maximum Depth in BT
+   def maxdep(self,root):
+      queue=deque([root])
+      depth = 0
+      while queue:
+         for _ in range(len(queue)):  #this for loop is for checking the left as well as right nodes of a parent node at every level in a binary tree
+            node=queue.popleft()
+            
+            if node.left:
+               queue.append(node.left)
+            if node.right:
+               queue.append(node.right)
+         depth+=1
+      return depth
+             
+
+
+
 all=allorder()
 v=all.buildtree([1, 3, 4, 5, 2, 7, 6 ])
 print(all.solveallorder(v))
+print(all.maxdep(v)) #TC-O(N) and SC-O(N)
 #time complexity : O(N)
 #space complexity : O(N)
 
