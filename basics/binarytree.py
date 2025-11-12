@@ -213,6 +213,7 @@ class Iterativeinorder:
          ans.append(current.data)  #then we append this major node which is the root at a time 
          current=current.right   #then we go to the right
       return ans
+   #postorder traversal using one stack
    def postorder(self,root):  #post order usign the only one stack
       #the logic behind this solution is we start going to the left most end of the current root ,
       #then if we find its null then we go towards right end , then
@@ -236,10 +237,6 @@ class Iterativeinorder:
                   temp=stack.pop() 
                   ans.append(temp.data)
       return ans           
-
-               
-
-
 io=Iterativeinorder()
 a=io.buildtree([1, 4, None, 4, 2])      
 print(io.getinorder(a))
@@ -247,7 +244,59 @@ print(io.postorder(a))
 #time complexity : O(N)
 #space complexity : O(N)
 
-#postorder traversal using one stack
+
+#preorder,postorder and inorder in one traversal
+class allorder:
+   def __init__(self):
+      pass
+   class Node:
+      def __init__(self,data,left=None,right=None):
+         self.data=data
+         self.left=left
+         self.right=right
+   def buildtree(self,array):
+      root=self.Node(array[0])   #this will be the root element
+      queue=deque([root])
+      n=len(array)
+      i=1
+      while queue:
+         current = queue.popleft()   #popping the value that was stored first in a queue
+         if i<n and array[i] is not None:
+            current.left = self.Node(array[i])
+            queue.append(current.left)
+         i+=1
+         if i<n and array[i] is not None:
+            current.right = self.Node(array[i])
+            queue.append(current.right)
+         i+=1
+      return root       
+   def solveallorder(self,root):
+      preorder,inorder,postorder = [],[],[] 
+      stack = []
+      stack.append((root,1))  #here we start with appending the root element and the index 1 which means the loop will start from preorder function
+      while stack:
+         element,state=stack.pop()
+         if state == 1:  #here state represents how many time we have visited this current node
+            preorder.append(element.data)  #if its first time then it means it is in the preorder array
+            stack.append((element,2))   #then we increase its count of visited time
+            if element.left:  #as th preoder means root is at first then comes left-right  ,and as we have already appended the root element
+               stack.append((element.left,1))      #we then append the left of element in the stack
+         elif state==2:  #if the state is 2 then it means the element must be in the inorder and also we must explore its right node
+            inorder.append(element.data)
+            stack.append((element,3))   
+            if element.right:
+               stack.append((element.right,1))
+         else:  #if its already visited 3 times then it means it must be in the postorder and there's no need of exploring the left node and right node
+            postorder.append(element.data)
+      return [preorder,inorder,postorder]            
+all=allorder()
+v=all.buildtree([1, 3, 4, 5, 2, 7, 6 ])
+print(all.solveallorder(v))
+#time complexity : O(N)
+#space complexity : O(N)
+
+
+
 
 
 
