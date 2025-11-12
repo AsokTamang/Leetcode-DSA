@@ -67,6 +67,24 @@ class Iterativeinorder:
                 queue.append(current.right)
             i+=1
         return root
+    #post order traversal
+    #the logic behind the postorder traversal is that , we do the loop of pushing root,then right then left in our stack 2 from stack 1 ,
+    #then at last we reverse the stack 2 which gives us left,right and root which is the final post order traversal
+    def iterativepostorder(self,root):   
+        temp = []
+        temp.append(root)
+        ans = []
+        stack = []
+        while temp:
+            current = temp.pop()  #this is the root
+            stack.append((current.data))
+            if current.left:      #this is the left
+                temp.append(current.left)
+            if current.right:      #this is the right
+                temp.append(current.right)
+        while stack:
+            ans.append(stack.pop())
+        return ans     
     def solveinordertraversal(self,root):
         stack = []
         ans = []
@@ -75,17 +93,19 @@ class Iterativeinorder:
             while current:   #as long as we have the left of the current root , we append its left to the stack
                 stack.append(current)
                 current=current.left
-            current=stack.pop()
-            ans.append(current.data)
+            current=stack.pop()   #this will be the root which doesnot has any left children node 
+            ans.append(current)
             current=current.right   #then we move towards the right of that root whose left nodes are done going through
         return ans    
 ii=Iterativeinorder()
 a=ii.maketree( [1, None, 2, 3])
 print(ii.solveinordertraversal(a))
+print(ii.iterativepostorder(a))
 #time complexity : O(N)
 #space complexity : O(N)
 
   
+           
 
 
     
