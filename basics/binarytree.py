@@ -304,14 +304,24 @@ class allorder:
                queue.append(node.right)
          depth+=1
       return depth
-             
-
-
-
+   def checkbalanced(self,root):
+      if root is None: #if there is no root then ofcourse there is no tree and the height is balanced
+         return True
+      leftheight = self.getheight(root.left)
+      rightheight = self.getheight(root.right)
+      if abs(leftheight-rightheight)>1:   
+         return False
+      return self.checkbalanced(root.left) and self.checkbalanced(root.right)
+   
+   def getheight(self,root):
+      if root is None:
+         return 0
+      return max(self.getheight(root.left),self.getheight(root.right)) + 1  #this gives us the height of left as well as right subtree
 all=allorder()
-v=all.buildtree([1, 3, 4, 5, 2, 7, 6 ])
+v=all.buildtree( [1, 2, None, None, 3])
 print(all.solveallorder(v))
 print(all.maxdep(v)) #TC-O(N) and SC-O(N)
+print(all.checkbalanced(v))  #TC-O(N**2) and SC-O(N)
 #time complexity : O(N)
 #space complexity : O(N)
 
