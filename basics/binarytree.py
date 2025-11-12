@@ -213,11 +213,41 @@ class Iterativeinorder:
          ans.append(current.data)  #then we append this major node which is the root at a time 
          current=current.right   #then we go to the right
       return ans
+   def postorder(self,root):  #post order usign the only one stack
+      #the logic behind this solution is we start going to the left most end of the current root ,
+      #then if we find its null then we go towards right end , then
+      #when it also becomes empty then we append it to the ans which is the right most end,
+      #otherwise if we go to the left most of this right node
+      current = root
+      stack = []
+      ans =[ ]
+      while stack or current:
+         if current:       #when the current element is not null which means it has the left node child then we append it to the stack and we keep on going to the left
+            stack.append(current)
+            current=current.left
+         else:  #but if there is no more left node then we try to go to the right
+            temp = stack[-1].right   #we go to the right
+            if temp:  #if the right node exists then we change the current to temp
+               current=temp
+            else:
+               temp=stack.pop()
+               ans.append(temp.data)   #otherwise we add this right most node
+               while stack and temp == stack[-1].right:  #if the popped element is the right node of the top most element of a stack then we  change the temp to stack.pop() and add to the ans
+                  temp=stack.pop() 
+                  ans.append(temp.data)
+      return ans           
+
+               
+
+
 io=Iterativeinorder()
-a=io.buildtree([1, None, 2, 3])      
+a=io.buildtree([1, 4, None, 4, 2])      
 print(io.getinorder(a))
+print(io.postorder(a))
 #time complexity : O(N)
 #space complexity : O(N)
+
+#postorder traversal using one stack
 
 
 
