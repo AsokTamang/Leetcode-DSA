@@ -107,5 +107,59 @@ print(ii.iterativepostorder(a))
   
            
 
+#post order traversal using one stack
+class Iterativepostorder:
+    class Node:
+        def __init__(self,data,left=None,right=None):
+            self.data=data
+            self.left=left
+            self.right=right
+    def __init__(self):
+        pass
+    def buildtree(self,array):
+        root=self.Node(array[0])  #first of all we are making a node with the first element from an array
+        queue=deque([root])
+        i=1
+        n=len(array)
+        while queue:
+            current = queue.popleft()
+            if i<n and array[i] is not None:
+                current.left=self.Node(array[i])
+                queue.append(current.left)
+            i+=1
+            if i<n and array[i] is not None:
+                current.right = self.Node(array[i])
+                queue.append(current.right)
+            i+=1        
+        return root
+    def solveiterativepostorder(self,root):
+        #the logic behind this iterative postorder is that , we go towards the left end ofthe binary tree , and then after reaching a point where there is no left end,
+        #we check the right end of the top element in a stack which is the last or recently touched node, then we check its right, if true then we again go towards its left end by using the same loop with current
+        #if no then it means this is our first left end node to be appended in our answer , and if its the right node of the new top node in our stack , then
+        ans = []
+        stack = []
+        current = root
+        while stack or current:
+            if current:  #this condition of a loop is for going to the left end of the node first
+                stack.append(current)
+                current=current.left
+            else:
+                temp=stack[-1].right  #then if there is no more left , we move towards the right end of the top element in a tree
+                if temp:   #if there is the right end then we change current to temp so that we can again move towards the left end of this current node which lies at the right end of the previous node
+                    current=temp
+                else: #here this else part is reached only when the whole right subtree is reached from the current parent node which is the top most element in a stack currently
+                    temp=stack.pop()     
+                    ans.append(temp.data) #here we are doing this cause it means now we have the left most children node of a binary tree
+                    while stack and temp==stack[-1].right:  #and if this is the right child node of the parent node in a stack,which is the top most element in a stack then it means we have also finished with the right subtree of this current parent node or top element in a stack
+                        #so we can safely pop this and append this in our ans as we have already appended the left as well as right subtree nodes of this parent node
+                        temp=stack.pop()
+                        ans.append(temp.data)
+        return ans                
+ip=Iterativepostorder()
+p=ip.buildtree( [1, 4, None, 4, 2])
+print(ip.solveiterativepostorder(p))
+#time complexity : O(N)
+#space complexity : O(N)
+
 
     
