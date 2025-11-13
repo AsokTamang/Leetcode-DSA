@@ -302,11 +302,24 @@ class Allsolution:
                     stack.append((node.right,1))
             else:
                 po.append(node.data)     
-        return pre,ino,po                   
+        return pre,ino,po   
+    #maximum depth in a binary tree    
+    def maximumdepth(self,root):
+        d=0  
+        queue=deque([root])
+        while queue:
+            for _ in range(len(queue)):  #this for loop checks the whole left and right child nodes at the current level
+                current = queue.popleft()
+                if current.left:
+                    queue.append(current.left)
+                if current.right:
+                    queue.append(current.right)
+            d+=1
+        return d    
 
 
 pr=Allsolution()
-z=pr.buildtree( [1, 3, 4, 5, 2, 7, 6 ])  
+z=pr.buildtree([3, 9, 20, None, None, 15 , 7])  
 l=pr.buildtree( [3, 9, 20, None, None, 15, 7])
 print(pr.levelorder(l))
 print(pr.solvepostorder(z,[]))  #time complexity : O(N)  #space complexity : O(N)
@@ -315,11 +328,14 @@ print(pr.inordertraversal(z))
 print(pr.iterativepostorder(z))  #time complexity : O(N) + O(logN) as we are also using the reverse method
 print(pr.onepostorder(z)) #time complexity : O(N) space complexity : O(N)
 print(pr.preinpo(z))
+print(pr.maximumdepth(z))
 
 
 
 #level order traversal
 #in the level order traversal , we are tasked to return the node values in each level in their own array in a final ans variable
+
+
 
 
 
