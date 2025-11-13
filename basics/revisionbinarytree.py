@@ -341,9 +341,21 @@ class Allsolution:
             return -1
         return max(lh,rh) + 1 
       return check(root)!=-1  #here we are checking if the check function returns -1 or not
-           
+    def diameterbinarytree(self,root):
+        self.diameter=0
+        def calculatediameter(root):
+            if root is None:
+                return 0
+            leftheight=calculatediameter(root.left)
+            rightheight=calculatediameter(root.right)
+            self.diameter=max(self.diameter,leftheight+rightheight)  #diameter is the sum of the leftsubtree and rightsubtree at every parent node at every level
+            return max(leftheight,rightheight) + 1  
+            
+            
+        calculatediameter(root)   
+        return self.diameter     
 pr=Allsolution()
-z=pr.buildtree([3, 9, 20, None, None, 15, 7])  
+z=pr.buildtree(  [1, 2, 3, None, 4, None, 5])  
 l=pr.buildtree( [3, 9, 20, None, None, 15, 7])
 print(pr.levelorder(l))
 print(pr.solvepostorder(z,[]))  #time complexity : O(N)  #space complexity : O(N)
@@ -355,6 +367,8 @@ print(pr.preinpo(z))
 print(pr.maximumdepth(z))
 print(pr.checkbalanced(z))
 print(pr.optimalcheckbalanced(z))
+print(pr.diameterbinarytree(z))
+
 
 
 
@@ -362,7 +376,7 @@ print(pr.optimalcheckbalanced(z))
 #in the level order traversal , we are tasked to return the node values in each level in their own array in a final ans variable
 
 
-
+           
 
 
 
