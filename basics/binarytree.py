@@ -306,7 +306,8 @@ class allorder:
       return depth
    def checkbalanced(self,root):
       if root is None: #if there is no root then ofcourse there is no tree and the height is balanced
-         return True
+         #and we reach this condition only when all the left and right nodes from the top root node is reached and until this point we dont hvae a condition of false
+         return True   
       leftheight = self.getheight(root.left)
       rightheight = self.getheight(root.right)
       if abs(leftheight-rightheight)>1:   
@@ -324,9 +325,6 @@ print(all.maxdep(v)) #TC-O(N) and SC-O(N)
 print(all.checkbalanced(v))  #TC-O(N**2) and SC-O(N)
 #time complexity : O(N)
 #space complexity : O(N)
-
-
-
 
 
 

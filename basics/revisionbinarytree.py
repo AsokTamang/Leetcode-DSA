@@ -316,10 +316,21 @@ class Allsolution:
                     queue.append(current.right)
             d+=1
         return d    
-
+    def checkheight(self,root):
+        if root is None:
+            return 0
+        return max(self.checkheight(root.left),self.checkheight(root.right)) + 1   #here +1 represents the addition of this current node
+    def checkbalanced(self,root):
+        if root is None:  #if there is no root or we reach a point of no nodes as all the above level condition of balance is true,then finally we return true
+            return True
+        leftheight = self.checkheight(root.left)
+        rightheight=self.checkheight(root.right)
+        if abs(leftheight-rightheight) > 1:  #if the difference in height between leftsubtree and right subtree from current node is greater than 1 then we return false
+            return False
+        return self.checkbalanced(root.left) and self.checkbalanced(root.right)  #checking for both left and right subtree
 
 pr=Allsolution()
-z=pr.buildtree([3, 9, 20, None, None, 15 , 7])  
+z=pr.buildtree( [1, 2, None, None, 3])  
 l=pr.buildtree( [3, 9, 20, None, None, 15, 7])
 print(pr.levelorder(l))
 print(pr.solvepostorder(z,[]))  #time complexity : O(N)  #space complexity : O(N)
@@ -329,6 +340,7 @@ print(pr.iterativepostorder(z))  #time complexity : O(N) + O(logN) as we are als
 print(pr.onepostorder(z)) #time complexity : O(N) space complexity : O(N)
 print(pr.preinpo(z))
 print(pr.maximumdepth(z))
+print(pr.checkbalanced(z))
 
 
 
