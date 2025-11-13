@@ -284,8 +284,29 @@ class Allsolution:
                     ans.append(lastvisited.data)    
 
         return ans
+    def preinpo(self,root):
+        stack = []
+        pre,po,ino=[],[],[]
+        stack.append((root,1))  #initially we always start with root node and as it is being visited for the very first time , we start with 1
+        while stack:
+            node,time=stack.pop()
+            if time == 1:
+                pre.append(node.data)
+                stack.append((node,2))
+                if node.left:
+                    stack.append((node.left,1))  #as its left node is also being visited for the very first time
+            elif time == 2:
+                ino.append(node.data)
+                stack.append((node,3))
+                if node.right:
+                    stack.append((node.right,1))
+            else:
+                po.append(node.data)     
+        return pre,ino,po                   
+
+
 pr=Allsolution()
-z=pr.buildtree([1, 4, None, 4, 2])  
+z=pr.buildtree( [1, 3, 4, 5, 2, 7, 6 ])  
 l=pr.buildtree( [3, 9, 20, None, None, 15, 7])
 print(pr.levelorder(l))
 print(pr.solvepostorder(z,[]))  #time complexity : O(N)  #space complexity : O(N)
@@ -293,6 +314,7 @@ print(pr.preorderiteration(z))  #time complexity : O(N)  #space complexity : O(N
 print(pr.inordertraversal(z))
 print(pr.iterativepostorder(z))  #time complexity : O(N) + O(logN) as we are also using the reverse method
 print(pr.onepostorder(z)) #time complexity : O(N) space complexity : O(N)
+print(pr.preinpo(z))
 
 
 
