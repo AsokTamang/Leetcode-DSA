@@ -265,13 +265,25 @@ class Allsolution:
             if current.right:
                 stack1.append(current.right)    
         return stack2[::-1]     
+    #post traversal using one stack
+    def onepostorder(self,root):
+        stack = []
+        ans = []
+        current=root
+        lastvisited = None
+        while stack or current:
+            if current:
+                stack.append(current)
+                current=current.left
+            else:
+                peeknode=stack[-1]
+                if peeknode.right and peeknode.right !=lastvisited:  #if the right child node of the current peeknode exists then we go to the left subtree from this right child node
+                    current=peeknode.right
+                else:
+                    lastvisited=stack.pop()
+                    ans.append(lastvisited.data)    
 
-
-
-
-
-                    
-
+        return ans
 pr=Allsolution()
 z=pr.buildtree([1, 4, None, 4, 2])  
 l=pr.buildtree( [3, 9, 20, None, None, 15, 7])
@@ -279,7 +291,9 @@ print(pr.levelorder(l))
 print(pr.solvepostorder(z,[]))  #time complexity : O(N)  #space complexity : O(N)
 print(pr.preorderiteration(z))  #time complexity : O(N)  #space complexity : O(N)
 print(pr.inordertraversal(z))
-print(pr.iterativepostorder(z))
+print(pr.iterativepostorder(z))  #time complexity : O(N) + O(logN) as we are also using the reverse method
+print(pr.onepostorder(z)) #time complexity : O(N) space complexity : O(N)
+
 
 
 #level order traversal
