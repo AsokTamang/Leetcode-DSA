@@ -367,13 +367,8 @@ print(pr.preinpo(z))
 print(pr.maximumdepth(z))
 print(pr.checkbalanced(z))
 print(pr.optimalcheckbalanced(z))
-print(pr.diameterbinarytree(z))
+print(pr.diameterbinarytree(z))  #time complexity : O(N)  #space complexity : O(N)
 
-
-
-
-#level order traversal
-#in the level order traversal , we are tasked to return the node values in each level in their own array in a final ans variable
 
 
            
