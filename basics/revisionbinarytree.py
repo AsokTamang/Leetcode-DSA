@@ -328,9 +328,22 @@ class Allsolution:
         if abs(leftheight-rightheight) > 1:  #if the difference in height between leftsubtree and right subtree from current node is greater than 1 then we return false
             return False
         return self.checkbalanced(root.left) and self.checkbalanced(root.right)  #checking for both left and right subtree
-
+    #optimal approach
+    def optimalcheckbalanced(self,root):
+      def check(root):
+        if root is None:
+            return 0
+        lh=check(root.left)
+        rh=check(root.right)
+        if lh==-1 or rh == -1:
+            return -1
+        if abs(lh-rh)>1:  #whenever we find that the difference between left height and right height is greater than 1 we return -1
+            return -1
+        return max(lh,rh) + 1 
+      return check(root)!=-1  #here we are checking if the check function returns -1 or not
+           
 pr=Allsolution()
-z=pr.buildtree( [1, 2, None, None, 3])  
+z=pr.buildtree([3, 9, 20, None, None, 15, 7])  
 l=pr.buildtree( [3, 9, 20, None, None, 15, 7])
 print(pr.levelorder(l))
 print(pr.solvepostorder(z,[]))  #time complexity : O(N)  #space complexity : O(N)
@@ -341,6 +354,7 @@ print(pr.onepostorder(z)) #time complexity : O(N) space complexity : O(N)
 print(pr.preinpo(z))
 print(pr.maximumdepth(z))
 print(pr.checkbalanced(z))
+print(pr.optimalcheckbalanced(z))
 
 
 
