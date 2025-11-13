@@ -252,7 +252,20 @@ class Allsolution:
             ans.append(current.data)  
             current=current.right   #and we change into the right subree
         return ans
-    
+    #post order traversal using 2 stacks
+    def iterativepostorder(self,root):
+        stack1=[]
+        stack2=[]
+        stack1.append(root)
+        while stack1:
+            current=stack1.pop()
+            stack2.append(current.data)
+            if current.left:
+                stack1.append(current.left)
+            if current.right:
+                stack1.append(current.right)    
+        return stack2[::-1]     
+
 
 
 
@@ -260,12 +273,13 @@ class Allsolution:
                     
 
 pr=Allsolution()
-z=pr.buildtree( [1, 4, None, 4, 2])  
+z=pr.buildtree([1, 4, None, 4, 2])  
 l=pr.buildtree( [3, 9, 20, None, None, 15, 7])
 print(pr.levelorder(l))
 print(pr.solvepostorder(z,[]))  #time complexity : O(N)  #space complexity : O(N)
 print(pr.preorderiteration(z))  #time complexity : O(N)  #space complexity : O(N)
 print(pr.inordertraversal(z))
+print(pr.iterativepostorder(z))
 
 
 #level order traversal
