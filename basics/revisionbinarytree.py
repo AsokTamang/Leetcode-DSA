@@ -162,4 +162,59 @@ print(ip.solveiterativepostorder(p))
 #space complexity : O(N)
 
 
+
+#preorder traversal of a binary tree
+class Preorder:
+    def __init__(self):
+        pass
+    class Node:
+        def __init__(self,data,left=None,right=None):
+            self.data=data
+            self.left=left
+            self.right=right
+    def buildtree(self,array):
+        root=self.Node(array[0])
+        queue=deque([root])
+        n=len(array)
+        i=1
+        while queue:
+            current=queue.popleft()
+            if i<n and array[i] is not None:
+                current.left=self.Node(array[i])
+                queue.append(current.left)
+            i+=1
+            if i<n and array[i] is not None:
+                current.right=self.Node(array[i])
+                queue.append(current.right)
+            i+=1
+        return root
+    def solvepreorder(self,root,ans):
+        if root is None:
+            return
+        ans.append(root.data)
+        self.solvepreorder(root.left,ans)
+        self.solvepreorder(root.right,ans)
+        return ans
+    def solveinorder(self,root,ans):
+        if root is None:
+            return
+        self.solveinorder(root.left,ans)
+        ans.append(root.data)
+        self.solveinorder(root.right,ans)
+        return ans
+    def solvepostorder(self,root,ans):
+        if root is None:
+            return
+        #in the post order first we go to the left subtree then we go right subtree
+        self.solvepostorder(root.left,ans)   
+        self.solvepostorder(root.right,ans)
+        ans.append(root.data)
+        return ans
+pr=Preorder()
+z=pr.buildtree( [1, 4, None, 4, 2])  
+print(pr.solvepostorder(z,[]))  #time complexity : O(N)  #space complexity : O(N)
+
+
+
+
     
