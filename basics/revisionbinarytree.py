@@ -164,7 +164,7 @@ print(ip.solveiterativepostorder(p))
 
 
 #preorder traversal of a binary tree
-class Preorder:
+class Allsolution:
     def __init__(self):
         pass
     class Node:
@@ -210,9 +210,33 @@ class Preorder:
         self.solvepostorder(root.right,ans)
         ans.append(root.data)
         return ans
-pr=Preorder()
+    def levelorder(self,root):
+        queue=deque([root])
+        ans = []
+        while queue:
+            levelvalues = []
+
+            for _ in range(len(queue)):  #this for loop is for storing the node values at the current level 
+                #And also storing the left as well as right nodes of every nodes at the current level
+                current = queue.popleft()
+                levelvalues.append(current.data) 
+                if current.left:
+                    queue.append(current.left)
+                if current.right:
+                    queue.append(current.right)
+            if len(levelvalues)>0:
+                ans.append(levelvalues)            
+        return ans        
+
+pr=Allsolution()
 z=pr.buildtree( [1, 4, None, 4, 2])  
+l=pr.buildtree( [3, 9, 20, None, None, 15, 7])
+print(pr.levelorder(l))
 print(pr.solvepostorder(z,[]))  #time complexity : O(N)  #space complexity : O(N)
+
+
+#level order traversal
+#in the level order traversal , we are tasked to return the node values in each level in their own array in a final ans variable
 
 
 
