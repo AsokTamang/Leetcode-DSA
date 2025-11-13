@@ -226,17 +226,31 @@ class Allsolution:
                     queue.append(current.right)
             if len(levelvalues)>0:
                 ans.append(levelvalues)            
-        return ans        
+        return ans   
+        #preorder traversal using iteration
+    def preorderiteration(self,root):
+        ans=[]
+        queue=deque([root])
+        while queue:
+            current=queue.popleft()
+            ans.append(current.data)
+            if current.left:
+                queue.append(current.left)
+            if current.right:
+                queue.append(current.right)
+        return ans            
 
 pr=Allsolution()
 z=pr.buildtree( [1, 4, None, 4, 2])  
 l=pr.buildtree( [3, 9, 20, None, None, 15, 7])
 print(pr.levelorder(l))
 print(pr.solvepostorder(z,[]))  #time complexity : O(N)  #space complexity : O(N)
+print(pr.preorderiteration(z))  #time complexity : O(N)  #space complexity : O(N)
 
 
 #level order traversal
 #in the level order traversal , we are tasked to return the node values in each level in their own array in a final ans variable
+
 
 
 
