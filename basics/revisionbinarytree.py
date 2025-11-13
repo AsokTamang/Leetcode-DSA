@@ -238,7 +238,26 @@ class Allsolution:
                 queue.append(current.left)
             if current.right:
                 queue.append(current.right)
-        return ans            
+        return ans    
+    def inordertraversal(self,root):
+        current = root
+        stack=[]
+        ans=[]
+        while stack or current:
+            while current:   #first we go all the way to the left subtree
+                stack.append(current)
+                current=current.left
+                
+            current=stack.pop()    #then we append this leftest node value
+            ans.append(current.data)  
+            current=current.right   #and we change into the right subree
+        return ans
+    
+
+
+
+
+                    
 
 pr=Allsolution()
 z=pr.buildtree( [1, 4, None, 4, 2])  
@@ -246,6 +265,7 @@ l=pr.buildtree( [3, 9, 20, None, None, 15, 7])
 print(pr.levelorder(l))
 print(pr.solvepostorder(z,[]))  #time complexity : O(N)  #space complexity : O(N)
 print(pr.preorderiteration(z))  #time complexity : O(N)  #space complexity : O(N)
+print(pr.inordertraversal(z))
 
 
 #level order traversal
