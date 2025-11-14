@@ -366,20 +366,67 @@ class allorder:
       return ans1==ans2
    #time complexity : O(N)
    #space complexity : O(N)
-   
+
+
+   #optimal approach
+   def optimalchecktwo(self,root1,root2):
+      if not root1 and not root2:  #if both the root values are none we return true
+         return True
+      elif not root1 or not root2:  #if one of the root value is none we return false
+         return False
+      return root1.data == root2.data and self.optimalchecktwo(root1.left,root2.left) and self.optimalchecktwo(root1.right,root2.right)
+   #time complexity : O(N)
+   #space complexity : O(N)
    def getheight(self,root):
       if root is None:
          return 0
       return max(self.getheight(root.left),self.getheight(root.right)) + 1  #this gives us the height of left as well as right subtree
+   #zigzag traversal so the zigzag traversal means we are going from left to right in one level then right to left in another level and we do this as we go to the end of the binary tree
+   def spiraltraversal(self,root):
+      ans = []
+      queuq=deque([root])
+      level = 1
+      while queuq:
+         values = []
+         if level % 2 !=0:
+          level+=1
+          for _ in range(len(queuq)):
+             c=queuq.pop()
+             values.append(c.data)
+             if c.right:
+                queuq.append(c.right)
+             
+             if c.left:
+                queuq.append(c.left)
+             
+
+         else:
+            level+=1
+            for _ in range(len(queuq)):
+             c=queuq.popleft()
+             values.append(c.data)
+             if c.right:
+                queuq.append(c.right)
+             if c.left:
+                queuq.append(c.left)
+         if len(values) > 0:
+            ans.append(values)
+      return ans             
+
+   #time complexity : O(N)
+   #space complexity : O(N)
+             
+
 all=allorder()
-v=all.buildtree( [1, 2, 1]) #O(N) for both
+v=all.buildtree(  [3, 9, 20, None, None, 15, 7]) #O(N) for both
 w=all.buildtree( [1, 2, 3])
 print(all.solveallorder(v))
 print(all.maximumdepth(v))
 print(all.optimalcheckbalanced(v))  #TC-O(N**2) and SC-O(N)
 print(all.diameterbinarytree(v))
 print(all.maximumpathsum(v))
-print(all.checktwotrees(v,w))
+print(all.optimalchecktwo(v,w))
+print(all.spiraltraversal(v))
 #time complexity : O(N)
 #space complexity : O(N)
 
