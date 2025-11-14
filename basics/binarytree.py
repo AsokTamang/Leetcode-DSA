@@ -291,19 +291,19 @@ class allorder:
       return [preorder,inorder,postorder]     
    
    #Maximum Depth in BT
-   def maxdep(self,root):
-      queue=deque([root])
+   def maximumdepth(self,root):
       depth = 0
+      queue=deque([root])
       while queue:
-         for _ in range(len(queue)):  #this for loop is for checking the left as well as right nodes of a parent node at every level in a binary tree
-            node=queue.popleft()
-            
-            if node.left:
-               queue.append(node.left)
-            if node.right:
-               queue.append(node.right)
+         for _ in range(len(queue)):
+            current = queue.popleft()
+            if current.left:
+               queue.append(current.left)
+            if current.right:
+               queue.append(current.right)
          depth+=1
-      return depth
+      return depth            
+   
    def checkbalanced(self,root):
       if root is None: #if there is no root then ofcourse there is no tree and the height is balanced
          #and we reach this condition only when all the left and right nodes from the top root node is reached and until this point we dont hvae a condition of false
@@ -321,7 +321,7 @@ class allorder:
 all=allorder()
 v=all.buildtree( [1, 2, None, None, 3])
 print(all.solveallorder(v))
-print(all.maxdep(v)) #TC-O(N) and SC-O(N)
+print(all.maximumdepth(v))
 print(all.checkbalanced(v))  #TC-O(N**2) and SC-O(N)
 #time complexity : O(N)
 #space complexity : O(N)
