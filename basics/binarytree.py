@@ -330,17 +330,31 @@ class allorder:
       #and as the height of the subtree is the longest path
       a=check(root)
       return a != -1
+   #maximum path sum
+   def maximumpathsum(self,root):
+      self.maxpathsum=0
+      def checksum(root):
+         if root is None:
+            return 0
+         lh = checksum(root.left)
+         rh = checksum(root.right)
+         self.maxpathsum=max(self.maxpathsum,lh+rh+root.data)  #and in every recursuin level we add the current node's data for calculating the maximum path sum
+         return max(lh,rh) + root.data  #here we are adding the current node's value with the max between the value of left subtree and right subtree from this current node
+      checksum(root)
+      return self.maxpathsum
+
    
    def getheight(self,root):
       if root is None:
          return 0
       return max(self.getheight(root.left),self.getheight(root.right)) + 1  #this gives us the height of left as well as right subtree
 all=allorder()
-v=all.buildtree([1, 2, 3, None, 4, None, 5]) #O(N) for both
+v=all.buildtree( [-10, 9, 20, None, None, 15, 7]) #O(N) for both
 print(all.solveallorder(v))
 print(all.maximumdepth(v))
 print(all.optimalcheckbalanced(v))  #TC-O(N**2) and SC-O(N)
 print(all.diameterbinarytree(v))
+print(all.maximumpathsum(v))
 #time complexity : O(N)
 #space complexity : O(N)
 
