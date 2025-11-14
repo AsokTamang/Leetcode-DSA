@@ -303,7 +303,19 @@ class allorder:
                queue.append(current.right)
          depth+=1
       return depth            
-   
+   #diameter of a binary tree
+   def diameterbinarytree(self,root):
+      self.diameter = float('-inf')
+      def checkdiameter(root):
+         if root is None:
+            return 0
+         lh=checkdiameter(root.left)
+         rh=checkdiameter(root.right)
+         self.diameter=max(self.diameter,lh+rh)   
+         return max(lh,rh,0) + 1    #and as to find the longest path from the current node , we must check the max between its left subtree and right subtree
+      checkdiameter(root)
+      return self.diameter    
+      
    def optimalcheckbalanced(self,root):
       def check(root):
          if root is None:  #if there is no root element then we just return 0
@@ -324,10 +336,11 @@ class allorder:
          return 0
       return max(self.getheight(root.left),self.getheight(root.right)) + 1  #this gives us the height of left as well as right subtree
 all=allorder()
-v=all.buildtree([3, 9, 20, None, None, 15, 7])
+v=all.buildtree([1, 2, 3, None, 4, None, 5]) #O(N) for both
 print(all.solveallorder(v))
 print(all.maximumdepth(v))
 print(all.optimalcheckbalanced(v))  #TC-O(N**2) and SC-O(N)
+print(all.diameterbinarytree(v))
 #time complexity : O(N)
 #space complexity : O(N)
 
