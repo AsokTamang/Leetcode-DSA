@@ -415,6 +415,30 @@ class allorder:
 
    #time complexity : O(N)
    #space complexity : O(N)
+
+   #optimal approach
+   def optimalspiraltraversal(self,root):
+      queue=deque([root])
+      ans = []
+      ltr = True  #left to right
+      while queue:
+         values =[]
+         for _ in range(len(queue)):
+            c=queue.popleft()
+            values.append(c.data)
+            if c.left:
+               queue.append(c.left)
+            if c.right:
+               queue.append(c.right)
+         if ltr:
+            ans.append(values) #if the condition of left to right is true then we just append the values as it is in our ans variable
+         else:
+            values.reverse()    #so we must reverse the values first then we can append it to our answer
+            ans.append(values)  #otherwise we just append the values but in a reverse way
+         ltr=not ltr
+      return ans                  
+            
+
              
 
 all=allorder()
@@ -427,6 +451,7 @@ print(all.diameterbinarytree(v))
 print(all.maximumpathsum(v))
 print(all.optimalchecktwo(v,w))
 print(all.spiraltraversal(v))
+print(all.optimalspiraltraversal(v))
 #time complexity : O(N)
 #space complexity : O(N)
 
