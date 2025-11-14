@@ -342,19 +342,44 @@ class allorder:
          return max(lh,rh) + root.data  #here we are adding the current node's value with the max between the value of left subtree and right subtree from this current node
       checksum(root)
       return self.maxpathsum
-
+   #Check if two trees are identical or not
+   #brute approach
+   def checktwotrees(self,root1,root2):
+      ans1 = []
+      ans2=[]
+      queue1=deque([root1])
+      queue2=deque([root2])
+      while queue1:
+         current = queue1.popleft()
+         ans1.append(current.data)
+         if current.left:
+            queue1.append(current.left)
+         if current.right:
+            queue1.append(current.right)
+      while queue2:
+         current=queue2.popleft()
+         ans2.append(current.data)
+         if current.left:
+            queue2.append(current.left)
+         if current.right:
+            queue2.append(current.right)
+      return ans1==ans2
+   #time complexity : O(N)
+   #space complexity : O(N)
    
    def getheight(self,root):
       if root is None:
          return 0
       return max(self.getheight(root.left),self.getheight(root.right)) + 1  #this gives us the height of left as well as right subtree
 all=allorder()
-v=all.buildtree( [-10, 9, 20, None, None, 15, 7]) #O(N) for both
+v=all.buildtree( [1, 2, 1]) #O(N) for both
+w=all.buildtree( [1, 2, 3])
 print(all.solveallorder(v))
 print(all.maximumdepth(v))
 print(all.optimalcheckbalanced(v))  #TC-O(N**2) and SC-O(N)
 print(all.diameterbinarytree(v))
 print(all.maximumpathsum(v))
+print(all.checktwotrees(v,w))
 #time complexity : O(N)
 #space complexity : O(N)
 
