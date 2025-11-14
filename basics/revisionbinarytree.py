@@ -354,8 +354,22 @@ class Allsolution:
             
         calculatediameter(root)   
         return self.diameter     
+    def maximumpathsum(self,root):
+        self.maxim=0
+        def calculatesum(root):
+            if root is None:
+                return 0
+            leftvalue=calculatesum(root.left)
+            rightvalue=calculatesum(root.right)
+            self.maxim=max(self.maxim,leftvalue+rightvalue+root.data)   #this code is for calculating the maximum pathsum
+             
+            return max(leftvalue,rightvalue) + root.data #while this code is for determining which path to be taken for getting the maximum path sum 
+          #this determines the maximum value between left child node and rightchild node and then add the maximum value to the node value
+        calculatesum(root)
+        return self.maxim
+
 pr=Allsolution()
-z=pr.buildtree(  [1, 2, 3, None, 4, None, 5])  
+z=pr.buildtree( [1, 2, None, None, 3])  
 l=pr.buildtree( [3, 9, 20, None, None, 15, 7])
 print(pr.levelorder(l))
 print(pr.solvepostorder(z,[]))  #time complexity : O(N)  #space complexity : O(N)
@@ -368,6 +382,7 @@ print(pr.maximumdepth(z))
 print(pr.checkbalanced(z))
 print(pr.optimalcheckbalanced(z))
 print(pr.diameterbinarytree(z))  #time complexity : O(N)  #space complexity : O(N)
+print(pr.maximumpathsum(z)) 
 
 
 
