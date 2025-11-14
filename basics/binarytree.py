@@ -304,25 +304,30 @@ class allorder:
          depth+=1
       return depth            
    
-   def checkbalanced(self,root):
-      if root is None: #if there is no root then ofcourse there is no tree and the height is balanced
-         #and we reach this condition only when all the left and right nodes from the top root node is reached and until this point we dont hvae a condition of false
-         return True   
-      leftheight = self.getheight(root.left)
-      rightheight = self.getheight(root.right)
-      if abs(leftheight-rightheight)>1:   
-         return False
-      return self.checkbalanced(root.left) and self.checkbalanced(root.right)
+   def optimalcheckbalanced(self,root):
+      def check(root):
+         if root is None:  #if there is no root element then we just return 0
+            return 0
+         lh=check(root.left)
+         rh=check(root.right)
+         if lh==-1 or rh ==-1:  
+            return -1     #and at any level of nodes we find -1,we return -1 ending this check function
+         if abs(lh-rh)>1:  #as soon as the difference in height of subtree is greater than 1 we return -1
+            return -1
+         return max(lh,rh) + 1   #here +1 means the current node itself is counted for calculating the height and max between lh and rh means we determing the longest path from this node
+      #and as the height of the subtree is the longest path
+      a=check(root)
+      return a != -1
    
    def getheight(self,root):
       if root is None:
          return 0
       return max(self.getheight(root.left),self.getheight(root.right)) + 1  #this gives us the height of left as well as right subtree
 all=allorder()
-v=all.buildtree( [1, 2, None, None, 3])
+v=all.buildtree([3, 9, 20, None, None, 15, 7])
 print(all.solveallorder(v))
 print(all.maximumdepth(v))
-print(all.checkbalanced(v))  #TC-O(N**2) and SC-O(N)
+print(all.optimalcheckbalanced(v))  #TC-O(N**2) and SC-O(N)
 #time complexity : O(N)
 #space complexity : O(N)
 
