@@ -49,7 +49,7 @@ print(s.preorder(r,[]))
 #time complexity : O(N)
 #space complexity : O(N)
 
-from collections import deque
+from collections import defaultdict, deque
 #Inorder Traversal
 class Inorder:
     class Node:
@@ -438,7 +438,7 @@ class allorder:
          ltr=not ltr  #then in each iteration we just switch the direction to the opposite of the current direction in a current loop
       return ans        
    
-   
+  
    def boundarytraversal(self,root):
      ans = []
      ans.append(root.data)
@@ -473,17 +473,24 @@ class allorder:
      addleaves(root)     #then we add the leaf node values
      rightboundary(root)  #then we must add the right boundary nonleaf node values
      return ans
-              
+   
 
-     
-
-      
-               
-
-             
-
+    #so the logic for this problem is that based on the column index we must obtain the node datas ,and for this we are using the deque method as we must go from left to right while going top to bottom vertically
+   from collections import defaultdict,deque
+   def verticalordertraversal(self,root):
+      q=deque([])
+      q.append((root,0))
+      verticalmapdict=defaultdict(list)  #here we are making a map structure of the column indices as key and the list of node values in this sepcific index as value, and they act as key-value pair
+      while q:
+         node,column=q.popleft()
+         verticalmapdict[column].append(node.data)  #here based on the column value , we are appending the node's data in the list
+         if node.left:
+            q.append((node.left,column-1))
+         if node.right:
+            q.append((node.right,column+1))
+      return [(verticalmapdict[col]) for col in sorted(verticalmapdict.keys())]      #here we are returning the list of node values in their own specific parent list based on the column values in a sorted valuemap dictionary     
 all=allorder()
-v=all.buildtree(  [1, 2, 3, 4, 5, 6, 7, None, None, 8, 9]) #O(N) for both
+v=all.buildtree([1, 2, 3, 4, 5, 6, 7]) #O(N) for both
 w=all.buildtree( [1, 2, 3])
 print(all.solveallorder(v))
 print(all.maximumdepth(v))
@@ -494,6 +501,7 @@ print(all.optimalchecktwo(v,w))
 print(all.spiraltraversal(v))
 print(all.optimalspiraltraversal(v))
 print(all.boundarytraversal(v))
+print(all.verticalordertraversal(v))
 #time complexity : O(N)
 #space complexity : O(N)
 
