@@ -523,8 +523,7 @@ class allorder:
 
    #right/left view of a binary tree
    def rightview(self,root):
-      q=deque([])
-      q.append(root)
+      q=deque([root])
       ans=[]
       while q:
          levelsize = len(q)
@@ -532,12 +531,28 @@ class allorder:
             curr=q.popleft()
             if i ==levelsize - 1:  #only if the i is at last index , which is the rigt most , we append its value and also we append its left as well as right in the q
                ans.append(curr.data)
-               if curr.left:
-                  q.append(curr.left)
-               if curr.right:
-                  q.append(curr.right)
-      return ans            
+            if curr.left:
+               q.append(curr.left)
+            if curr.right:
+               q.append(curr.right)
+        
+      return ans      
 
+   def leftview(self,root):
+      q=deque([root])      
+      ans = []
+      while q:
+         levelsize=len(q)
+         for i in range(levelsize): 
+            curr=q.popleft()
+            if i == 0:  #as we are viewing from the left side , only when the current index or position is the first one or 0, we append the data of this current node in our ans
+               ans.append(curr.data)
+            if curr.left:
+               q.append(curr.left)
+            if curr.right:
+               q.append(curr.right)
+                  #as soon as we are the very first index , we append its value in our ans variable and also the left as well as right node in q and then we break out of the loop  
+      return ans
         
       
 
@@ -560,6 +575,7 @@ print(all.verticalordertraversal(v))
 print(all.topview(v))
 print(all.bottomview(v))
 print(all.rightview(v))
+print(all.leftview(v))
 #time complexity : O(N)
 #space complexity : O(N)
 
