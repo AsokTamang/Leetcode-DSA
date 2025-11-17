@@ -518,13 +518,34 @@ class allorder:
             q.append((node.left,distance-1))
          if node.right:
             q.append((node.right,distance+1))
-      return [m[distance] for distance in sorted(m.keys())]                      
+      return [m[distance] for distance in sorted(m.keys())]        
+
+
+   #right/left view of a binary tree
+   def rightview(self,root):
+      q=deque([])
+      q.append(root)
+      ans=[]
+      while q:
+         levelsize = len(q)
+         for i in range(levelsize):
+            curr=q.popleft()
+            if i ==levelsize - 1:  #only if the i is at last index , which is the rigt most , we append its value and also we append its left as well as right in the q
+               ans.append(curr.data)
+               if curr.left:
+                  q.append(curr.left)
+               if curr.right:
+                  q.append(curr.right)
+      return ans            
+
+        
+      
 
 
 
 
 all=allorder()
-v=all.buildtree( [20, 8, 22, 5, 3, 4, 25, None, None, 10 ,14]) #O(N) for both
+v=all.buildtree( [1, 2, 3, 6, 5, 8, 4]) #O(N) for both
 w=all.buildtree( [1, 2, 3])
 print(all.solveallorder(v))
 print(all.maximumdepth(v))
@@ -538,6 +559,7 @@ print(all.boundarytraversal(v))
 print(all.verticalordertraversal(v))
 print(all.topview(v))
 print(all.bottomview(v))
+print(all.rightview(v))
 #time complexity : O(N)
 #space complexity : O(N)
 
