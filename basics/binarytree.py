@@ -553,14 +553,33 @@ class allorder:
                q.append(curr.right)
                   #as soon as we are the very first index , we append its value in our ans variable and also the left as well as right node in q and then we break out of the loop  
       return ans
-        
+
+   #check for symmetrical binary trees
+   def checksymmetrical(self,root):
+         q=deque([])
+         q.append((root.left,root.right))
+         while q:
+            left,right = q.popleft()
+            if not left and not right:
+               continue
+            if not left or not right: #if any one of the node lying at the opposite adjacent positions is missing, then the half tree is not mirror of the other half
+               return False
+            if left.data!=right.data:
+               return False
+            q.append((left.left,right.right))
+            q.append((left.right,right.left))
+         return True   
+             
+   
+
+
       
 
 
 
 
 all=allorder()
-v=all.buildtree( [1, 2, 3, 6, 5, 8, 4]) #O(N) for both
+v=all.buildtree( [1, 2, 2, None, 3, None, 3]) #O(N) for both
 w=all.buildtree( [1, 2, 3])
 print(all.solveallorder(v))
 print(all.maximumdepth(v))
@@ -576,6 +595,7 @@ print(all.topview(v))
 print(all.bottomview(v))
 print(all.rightview(v))
 print(all.leftview(v))
+print(all.checksymmetrical(v))
 #time complexity : O(N)
 #space complexity : O(N)
 
