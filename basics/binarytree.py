@@ -569,9 +569,21 @@ class allorder:
             q.append((left.left,right.right))
             q.append((left.right,right.left))
          return True   
-             
-   
+   #recursive nature
+   def recurchecksymmetrical(self,root):
+      def checksymmetric(left,right):
+         if not left and not right:
+            return True
+         if not left or not right:
+            return False
+         if left.data!=right.data:
+            return False
+         return checksymmetric(left.left,right.right) and checksymmetric(left.right,right.left)
+      return checksymmetric(root.left,root.right)
 
+
+   
+   
 
       
 
@@ -579,7 +591,7 @@ class allorder:
 
 
 all=allorder()
-v=all.buildtree( [1, 2, 2, None, 3, None, 3]) #O(N) for both
+v=all.buildtree([1, 2, 2, 3, 4, 4, 3]) #O(N) for both
 w=all.buildtree( [1, 2, 3])
 print(all.solveallorder(v))
 print(all.maximumdepth(v))
@@ -596,6 +608,7 @@ print(all.bottomview(v))
 print(all.rightview(v))
 print(all.leftview(v))
 print(all.checksymmetrical(v))
+print(all.recurchecksymmetrical(v))
 #time complexity : O(N)
 #space complexity : O(N)
 
