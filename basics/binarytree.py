@@ -435,14 +435,55 @@ class allorder:
          else:
             values.reverse()    #so we must reverse the values first then we can append it to our answer
             ans.append(values)  #otherwise we just append the values but in a reverse way
-         ltr=not ltr
-      return ans                  
-            
+         ltr=not ltr  #then in each iteration we just switch the direction to the opposite of the current direction in a current loop
+      return ans        
+   
+   
+   def boundarytraversal(self,root):
+     ans = []
+     ans.append(root.data)
+     def isleafnode(node):
+        if not node.left and not node.right:  #for the node to be leafnode, it mustnot have a left as well as right child node
+           return True
+        return False
+     def addleaves(node):
+        if node is None:
+           return 
+        if isleafnode(node):
+           ans.append(node.data)
+           return
+        addleaves(node.left)   #recursively going towards the left subtree
+        addleaves(node.right)  #then to the right subtree
+     def leftboundary(node):
+        current=node.left 
+        while current:
+           if not isleafnode(current):
+              ans.append(current.data)
+           current=current.left if current.left else current.right
+
+     def rightboundary(node):
+        current=node.right
+        temp=[]
+        while current:
+           if not isleafnode(current):
+              temp.append(current.data)
+           current=current.right if current.right else current.left
+        ans.extend(reversed(temp))      
+     leftboundary(root)  #first we must add the left boundary nonleaf node values
+     addleaves(root)     #then we add the leaf node values
+     rightboundary(root)  #then we must add the right boundary nonleaf node values
+     return ans
+              
+
+     
+
+      
+               
 
              
 
 all=allorder()
-v=all.buildtree(  [3, 9, 20, None, None, 15, 7]) #O(N) for both
+v=all.buildtree(  [1, 2, 3, 4, 5, 6, 7, None, None, 8, 9]) #O(N) for both
 w=all.buildtree( [1, 2, 3])
 print(all.solveallorder(v))
 print(all.maximumdepth(v))
@@ -452,8 +493,13 @@ print(all.maximumpathsum(v))
 print(all.optimalchecktwo(v,w))
 print(all.spiraltraversal(v))
 print(all.optimalspiraltraversal(v))
+print(all.boundarytraversal(v))
 #time complexity : O(N)
 #space complexity : O(N)
+
+
+   
+     
 
 
 
