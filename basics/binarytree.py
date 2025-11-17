@@ -506,13 +506,25 @@ class allorder:
             q.append((node.right,distance+1))
       return [m[distance] for distance in sorted(m.keys())]           #as we have stored the distance as key 
 
-            
+   #bottom view of a binary tree
+   def bottomview(self,root):
+      m={}
+      q=deque([])
+      q.append((root,0))  #the second index value is the horizontal distance from the root
+      while q:
+         node,distance = q.popleft()
+         m[distance] = node.data  #as we are viewing from the bottom , we can override the previous nodes with the later ones
+         if node.left:
+            q.append((node.left,distance-1))
+         if node.right:
+            q.append((node.right,distance+1))
+      return [m[distance] for distance in sorted(m.keys())]                      
 
 
 
 
 all=allorder()
-v=all.buildtree( [10, 20, 30, 40, 60, 90, 100]) #O(N) for both
+v=all.buildtree( [20, 8, 22, 5, 3, 4, 25, None, None, 10 ,14]) #O(N) for both
 w=all.buildtree( [1, 2, 3])
 print(all.solveallorder(v))
 print(all.maximumdepth(v))
@@ -525,6 +537,7 @@ print(all.optimalspiraltraversal(v))
 print(all.boundarytraversal(v))
 print(all.verticalordertraversal(v))
 print(all.topview(v))
+print(all.bottomview(v))
 #time complexity : O(N)
 #space complexity : O(N)
 
