@@ -367,9 +367,50 @@ class Allsolution:
           #this determines the maximum value between left child node and rightchild node and then add the maximum value to the node value
         calculatesum(root)
         return self.maxim
+    def boundarytraversal(self,root):
+        ans = []
+        ans.append(root.data)
+        def isleafnode(node):
+            if not node.left and not node.right:
+                return True
+            return False
+        def addleftboundary(node):
+            if node is None:
+                return
+            curr=node.left
+            while curr:
+                if not isleafnode(curr):  #if the current node isnot a leafnode in the left subtree, then only we can append it to our ans
+                 ans.append(curr.data)
+                curr=curr.left if curr.left else curr.right 
+
+        def addrightboundary(node):
+            if node is None:
+                return
+            curr=node.right
+            temp=[]
+            while curr:
+                if not isleafnode(curr):  #if the current node isnot a leafnode in the right subtree, then only we can append it to our ans
+                 temp.append(curr.data)
+                curr=curr.right if curr.right else curr.left
+            ans.extend(reversed(temp))    
+        def addleaves(node):
+            if node is None:
+                return
+            if isleafnode(node):  #here as we are adding the leafnodes 
+                ans.append(node.data)
+                return
+            addleaves(node.left)  #then we recursively go to the left subtree
+            addleaves(node.right) #and then to the right subtree
+        addleftboundary(root)
+        addleaves(root)
+        addrightboundary(root)
+        return ans
+
+            
+
 
 pr=Allsolution()
-z=pr.buildtree( [1, 2, None, None, 3])  
+z=pr.buildtree( [1, 2, 3, 4, 5, 6, 7, None, None, 8, 9])  
 l=pr.buildtree( [3, 9, 20, None, None, 15, 7])
 print(pr.levelorder(l))
 print(pr.solvepostorder(z,[]))  #time complexity : O(N)  #space complexity : O(N)
@@ -383,6 +424,7 @@ print(pr.checkbalanced(z))
 print(pr.optimalcheckbalanced(z))
 print(pr.diameterbinarytree(z))  #time complexity : O(N)  #space complexity : O(N)
 print(pr.maximumpathsum(z)) 
+print(pr.boundarytraversal(z))
 
 
 
