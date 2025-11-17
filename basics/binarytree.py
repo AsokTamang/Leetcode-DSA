@@ -489,8 +489,30 @@ class allorder:
          if node.right:
             q.append((node.right,column+1))
       return [(verticalmapdict[col]) for col in sorted(verticalmapdict.keys())]      #here we are returning the list of node values in their own specific parent list based on the column values in a sorted valuemap dictionary     
+
+   #top view of BT
+   #so the logic behind this top view solution is that we calculate the horinzontal distance and we store the horizontal distance of the node from the top view and the node as the key value pair in our dict only if there are no any nodes at the same horizontal distance 
+   def topview(self,root):
+      m={} #this dict stores the horizontal distance and the node value as the key-value pair
+      q=deque([])
+      q.append((root,0))  #as the root index is 0,0
+      while q:
+         node,distance = q.popleft()
+         if distance not in m:   #here only if the current node is not covered by another node which lies at the same horizontal distance from the top view, we store this current node
+            m[distance] = node.data
+         if node.left:
+            q.append((node.left,distance-1))
+         if node.right:
+            q.append((node.right,distance+1))
+      return [m[distance] for distance in sorted(m.keys())]           #as we have stored the distance as key 
+
+            
+
+
+
+
 all=allorder()
-v=all.buildtree([1, 2, 3, 4, 5, 6, 7]) #O(N) for both
+v=all.buildtree( [10, 20, 30, 40, 60, 90, 100]) #O(N) for both
 w=all.buildtree( [1, 2, 3])
 print(all.solveallorder(v))
 print(all.maximumdepth(v))
@@ -502,6 +524,7 @@ print(all.spiraltraversal(v))
 print(all.optimalspiraltraversal(v))
 print(all.boundarytraversal(v))
 print(all.verticalordertraversal(v))
+print(all.topview(v))
 #time complexity : O(N)
 #space complexity : O(N)
 
