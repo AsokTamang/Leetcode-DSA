@@ -316,32 +316,22 @@ class Allsolution:
                     q.append(curr.right)
             depth+=1   
         return depth             
+    def checkheightbalanced(self,root):
+        def checkheight(node):
+            if node is None:
+                return 0
+            lh=checkheight(node.left)
+            rh=checkheight(node.right)
+            if lh==-1 or rh == -1:  #if from any side of the subtree we get -1 , we just return -1
+                return -1
+            if abs(lh-rh)>1:
+                return -1
+            return max(lh,rh) + 1   #here +1 means we are also assuming this current node in the height
+            
+        return checkheight(root)!=-1
 
-    def checkheight(self,root):
-        if root is None:
-            return 0
-        return max(self.checkheight(root.left),self.checkheight(root.right)) + 1   #here +1 represents the addition of this current node
-    def checkbalanced(self,root):
-        if root is None:  #if there is no root or we reach a point of no nodes as all the above level condition of balance is true,then finally we return true
-            return True
-        leftheight = self.checkheight(root.left)
-        rightheight=self.checkheight(root.right)
-        if abs(leftheight-rightheight) > 1:  #if the difference in height between leftsubtree and right subtree from current node is greater than 1 then we return false
-            return False
-        return self.checkbalanced(root.left) and self.checkbalanced(root.right)  #checking for both left and right subtree
-    #optimal approach
-    def optimalcheckbalanced(self,root):
-      def check(root):
-        if root is None:
-            return 0
-        lh=check(root.left)
-        rh=check(root.right)
-        if lh==-1 or rh == -1:
-            return -1
-        if abs(lh-rh)>1:  #whenever we find that the difference between left height and right height is greater than 1 we return -1
-            return -1
-        return max(lh,rh) + 1 
-      return check(root)!=-1  #here we are checking if the check function returns -1 or not
+     
+  
     def diameterbinarytree(self,root):
         self.diameter=0
         def calculatediameter(root):
@@ -450,7 +440,7 @@ class Allsolution:
 
 
 pr=Allsolution()
-z=pr.buildtree([1, 2, 3, None, None, None , 6])  
+z=pr.buildtree( [1, 2, None, None, 3])  
 l=pr.buildtree( [3, 9, 20, None, None, 15, 7])
 print(pr.levelorder(l))
 print(pr.solvepostorder(z,[]))  #time complexity : O(N)  #space complexity : O(N)
@@ -460,6 +450,7 @@ print(pr.iterativepostorder(z))  #time complexity : O(N) + O(logN) as we are als
 print(pr.onepostorder(z)) #time complexity : O(N) space complexity : O(N)
 print(pr.preinpo(z))
 print(pr.maxdepth(z))
+print(pr.checkheightbalanced(z))
 
 
 
