@@ -329,22 +329,31 @@ class Allsolution:
             return max(lh,rh) + 1   #here +1 means we are also assuming this current node in the height
             
         return checkheight(root)!=-1
-
-     
-  
-    def diameterbinarytree(self,root):
+    def diameterofbt(self,root):
         self.diameter=0
-        def calculatediameter(root):
-            if root is None:
+        def checkdiameter(node):
+            if node is None:
                 return 0
-            leftheight=calculatediameter(root.left)
-            rightheight=calculatediameter(root.right)
-            self.diameter=max(self.diameter,leftheight+rightheight)  #diameter is the sum of the leftsubtree and rightsubtree at every parent node at every level
-            return max(leftheight,rightheight) + 1  
-            
-            
-        calculatediameter(root)   
-        return self.diameter     
+            lh=checkdiameter(node.left)
+            rh=checkdiameter(node.right)
+            self.diameter=max(self.diameter,lh+rh)  #as the diameter means the sum of height of left subtree as well as right subtree
+            return  max(lh,rh) + 1  #+1 means the current node is also counted
+        checkdiameter(root)
+        return self.diameter
+    def maximpathsum(self,root):
+        self.maximsum = 0
+        def checksum(node):
+            if node is None:
+                return 0
+            lh=checksum(node.left)
+            rh=checksum(node.right)
+            self.maximsum=max(self.maximsum,lh+rh+node.data)    
+            return max(lh,rh) + node.data  #we only take the path from where we can get the maximum sum
+        checksum(root)
+        return self.maximsum   
+  
+   
+        
     def maximumpathsum(self,root):
         self.maxim=0
         def calculatesum(root):
@@ -440,7 +449,7 @@ class Allsolution:
 
 
 pr=Allsolution()
-z=pr.buildtree( [1, 2, None, None, 3])  
+z=pr.buildtree( [-10, 9, 20, None, None, 15, 7])  
 l=pr.buildtree( [3, 9, 20, None, None, 15, 7])
 print(pr.levelorder(l))
 print(pr.solvepostorder(z,[]))  #time complexity : O(N)  #space complexity : O(N)
@@ -451,6 +460,8 @@ print(pr.onepostorder(z)) #time complexity : O(N) space complexity : O(N)
 print(pr.preinpo(z))
 print(pr.maxdepth(z))
 print(pr.checkheightbalanced(z))
+print(pr.diameterofbt(z))
+print(pr.maximpathsum(z))
 
 
 
