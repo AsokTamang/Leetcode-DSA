@@ -1,6 +1,6 @@
 #level order traversal
 #in the level order traversal,we traverse from left to right of every level in a binary tree
-from collections import deque
+from collections import defaultdict, deque
 def levelorder(root):
     n=len(root)
     queue=deque([0])  #storing the very first index
@@ -491,10 +491,28 @@ class Allsolution:
         addleavesnode(root)
         addrightboundary(root.right)
         return ans
+    
+    from collections import defaultdict
+    def vordertraversal(self,root):
+        q=deque([(root,0)])
+        distancemap =defaultdict(list)  #we must make a default dict having the distance as a key and the list of node values appearing at that distance as values
+        ans = []
+        while q:
+            curr,index = q.popleft()
+            distancemap[index].append(curr.data)
+            if curr.left:
+                q.append((curr.left,index-1))
+            if curr.right:
+                q.append((curr.right,index+1))
+        for distance in sorted(distancemap.keys()):  #and inorder to return the answer from leftmost , we are using sorting the keys of default dict
+            ans.append(distancemap[distance])
+        return ans    
 
+      
+        
 
 pr=Allsolution()
-z=pr.buildtree(  [1, 2, 3, 4, 5, 6, 7, None, None, 8, 9])  
+z=pr.buildtree( [3, 9, 20, None, None, 15, 7])  
 l=pr.buildtree( [1,2,2])
 print(pr.levelorder(l))
 print(pr.solvepostorder(z,[]))  #time complexity : O(N)  #space complexity : O(N)
@@ -510,6 +528,7 @@ print(pr.maximpathsum(z))
 print(pr.checkidentical(z,l))
 print(pr.spiraltraversal(z))
 print(pr.btraversal(z))
+print(pr.vordertraversal(z))
 
 
 
