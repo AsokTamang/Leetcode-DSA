@@ -440,12 +440,31 @@ class Allsolution:
             return checkone(first.left,second.left) and checkone(first.right,second.right)
             
         return checkone(p,q)    
-
+    def spiraltraversal(self,root):
+        q=deque([root])
+        ans = []
+        ltr = True
+        while q:
+            levelvalues = []
+            for _ in range(len(q)):
+                current = q.popleft()
+                levelvalues.append(current.data)
+                if current.left:
+                    q.append(current.left)
+                if current.right:
+                    q.append(current.right)    
+            if not ltr:
+                levelvalues.reverse()
+                ans.append(levelvalues)
+            else:
+                ans.append(levelvalues)
+            ltr=not ltr  #just switching the ltr condition in each while loop
+        return ans                
             
 
 
 pr=Allsolution()
-z=pr.buildtree( [1,2,3])  
+z=pr.buildtree( [3, 9, 20, None, None, 15, 7])  
 l=pr.buildtree( [1,2,2])
 print(pr.levelorder(l))
 print(pr.solvepostorder(z,[]))  #time complexity : O(N)  #space complexity : O(N)
@@ -459,6 +478,7 @@ print(pr.checkheightbalanced(z))
 print(pr.diameterofbt(z))
 print(pr.maximpathsum(z))
 print(pr.checkidentical(z,l))
+print(pr.spiraltraversal(z))
 
 
 
