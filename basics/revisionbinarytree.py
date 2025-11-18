@@ -419,6 +419,31 @@ class Allsolution:
                 return False
             return checksymmetric(left.left,right.right) and checksymmetric(left.right,right.left)
         return checksymmetric(root.left,root.right)
+    def iterativechecksymmetric(self,root):
+        def checksymmetric(left,right):
+            q=deque([])
+            q.append(left)
+            q.append(right)
+            while q:
+                curr1 = q.popleft()
+                curr2=q.popleft()
+                if not curr1 and not curr2:
+                    continue
+                if not curr1 or not curr2:
+                    return False
+                if curr1.data!=curr2.data:
+                    return False
+                if curr1.left:
+                    q.append(curr1.left)
+                if curr2.right:
+                    q.append(curr2.right)  
+                if curr1.right:
+                    q.append(curr1.right)
+                if curr2.left:
+                    q.append(curr2.left)    
+            return True            
+
+        return checksymmetric(root.left,root.right)            
 
             
 
@@ -440,6 +465,7 @@ print(pr.diameterbinarytree(z))  #time complexity : O(N)  #space complexity : O(
 print(pr.maximumpathsum(z)) 
 print(pr.boundarytraversal(z))
 print(pr.recurchecksymmetric(z)) #O(N) for both
+print(pr.iterativechecksymmetric(z))
 
 
 
