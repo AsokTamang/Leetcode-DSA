@@ -460,11 +460,41 @@ class Allsolution:
                 ans.append(levelvalues)
             ltr=not ltr  #just switching the ltr condition in each while loop
         return ans                
-            
+    #boundary traversal
+    def btraversal(self,root):
+        ans = []
+        def isnotleaf(node):
+            if node.left and node.right or node.left or node.right: 
+                return True
+            return False
+        def addleftboundary(node):
+            if node is None:
+                return
+            if isnotleaf(node):
+                ans.append(node.data)
+            addleftboundary(node.left)    
+        def addrightboundary(node):
+            if node is None:
+                return
+            if isnotleaf(node):
+                ans.append(node.data)
+            addrightboundary(node.right)    
+        def addleavesnode(node):
+            if node is None:
+                return
+            if not isnotleaf(node):
+                ans.append(node.data)
+            addleavesnode(node.left)  #first we go from left side
+            addleavesnode(node.right) #then we go to the right subtree   
+        ans.append(root.data)
+        addleftboundary(root.left)
+        addleavesnode(root)
+        addrightboundary(root.right)
+        return ans
 
 
 pr=Allsolution()
-z=pr.buildtree( [3, 9, 20, None, None, 15, 7])  
+z=pr.buildtree(  [1, 2, 3, 4, 5, 6, 7, None, None, 8, 9])  
 l=pr.buildtree( [1,2,2])
 print(pr.levelorder(l))
 print(pr.solvepostorder(z,[]))  #time complexity : O(N)  #space complexity : O(N)
@@ -479,6 +509,7 @@ print(pr.diameterofbt(z))
 print(pr.maximpathsum(z))
 print(pr.checkidentical(z,l))
 print(pr.spiraltraversal(z))
+print(pr.btraversal(z))
 
 
 
