@@ -405,12 +405,26 @@ class Allsolution:
         addleaves(root)
         addrightboundary(root)
         return ans
+    
+
+    #check whether the given binary tree is symmetrical or not
+    ##recursion method
+    def recurchecksymmetric(self,root):
+        def checksymmetric(left,right):
+            if not left and not right:  #if both of the left and right nodes are none then its true for this first recursion depth
+                return True
+            if not left or not right:
+                return False
+            if left.data!=right.data:
+                return False
+            return checksymmetric(left.left,right.right) and checksymmetric(left.right,right.left)
+        return checksymmetric(root.left,root.right)
 
             
 
 
 pr=Allsolution()
-z=pr.buildtree( [1, 2, 3, 4, 5, 6, 7, None, None, 8, 9])  
+z=pr.buildtree([1, 2, 2, 3, 4, 4, 3])  
 l=pr.buildtree( [3, 9, 20, None, None, 15, 7])
 print(pr.levelorder(l))
 print(pr.solvepostorder(z,[]))  #time complexity : O(N)  #space complexity : O(N)
@@ -425,6 +439,7 @@ print(pr.optimalcheckbalanced(z))
 print(pr.diameterbinarytree(z))  #time complexity : O(N)  #space complexity : O(N)
 print(pr.maximumpathsum(z)) 
 print(pr.boundarytraversal(z))
+print(pr.recurchecksymmetric(z)) #O(N) for both
 
 
 

@@ -519,8 +519,6 @@ class allorder:
          if node.right:
             q.append((node.right,distance+1))
       return [m[distance] for distance in sorted(m.keys())]        
-
-
    #right/left view of a binary tree
    def rightview(self,root):
       q=deque([root])
@@ -580,16 +578,6 @@ class allorder:
             return False
          return checksymmetric(left.left,right.right) and checksymmetric(left.right,right.left)
       return checksymmetric(root.left,root.right)
-
-
-   
-   
-
-      
-
-
-
-
 all=allorder()
 v=all.buildtree([1, 2, 2, 3, 4, 4, 3]) #O(N) for both
 w=all.buildtree( [1, 2, 3])
