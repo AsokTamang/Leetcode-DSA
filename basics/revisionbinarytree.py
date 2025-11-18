@@ -304,18 +304,19 @@ class Allsolution:
                 po.append(node.data)     
         return pre,ino,po   
     #maximum depth in a binary tree    
-    def maximumdepth(self,root):
-        d=0  
-        queue=deque([root])
-        while queue:
-            for _ in range(len(queue)):  #this for loop checks the whole left and right child nodes at the current level
-                current = queue.popleft()
-                if current.left:
-                    queue.append(current.left)
-                if current.right:
-                    queue.append(current.right)
-            d+=1
-        return d    
+    def maxdepth(self,root):
+        q=deque([root])
+        depth=0
+        while q:
+            for _ in range(len(q)):  #this for loop appends the left as well as right child of every nodes at the current level
+                curr=q.popleft()
+                if curr.left:
+                    q.append(curr.left)
+                if curr.right:
+                    q.append(curr.right)
+            depth+=1   
+        return depth             
+
     def checkheight(self,root):
         if root is None:
             return 0
@@ -449,7 +450,7 @@ class Allsolution:
 
 
 pr=Allsolution()
-z=pr.buildtree([1, 2, 2, 3, 4, 4, 3])  
+z=pr.buildtree([1, 2, 3, None, None, None , 6])  
 l=pr.buildtree( [3, 9, 20, None, None, 15, 7])
 print(pr.levelorder(l))
 print(pr.solvepostorder(z,[]))  #time complexity : O(N)  #space complexity : O(N)
@@ -458,14 +459,8 @@ print(pr.inordertraversal(z))
 print(pr.iterativepostorder(z))  #time complexity : O(N) + O(logN) as we are also using the reverse method
 print(pr.onepostorder(z)) #time complexity : O(N) space complexity : O(N)
 print(pr.preinpo(z))
-print(pr.maximumdepth(z))
-print(pr.checkbalanced(z))
-print(pr.optimalcheckbalanced(z))
-print(pr.diameterbinarytree(z))  #time complexity : O(N)  #space complexity : O(N)
-print(pr.maximumpathsum(z)) 
-print(pr.boundarytraversal(z))
-print(pr.recurchecksymmetric(z)) #O(N) for both
-print(pr.iterativechecksymmetric(z))
+print(pr.maxdepth(z))
+
 
 
 
