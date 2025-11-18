@@ -350,23 +350,7 @@ class Allsolution:
             self.maximsum=max(self.maximsum,lh+rh+node.data)    
             return max(lh,rh) + node.data  #we only take the path from where we can get the maximum sum
         checksum(root)
-        return self.maximsum   
-  
-   
-        
-    def maximumpathsum(self,root):
-        self.maxim=0
-        def calculatesum(root):
-            if root is None:
-                return 0
-            leftvalue=calculatesum(root.left)
-            rightvalue=calculatesum(root.right)
-            self.maxim=max(self.maxim,leftvalue+rightvalue+root.data)   #this code is for calculating the maximum pathsum
-             
-            return max(leftvalue,rightvalue) + root.data #while this code is for determining which path to be taken for getting the maximum path sum 
-          #this determines the maximum value between left child node and rightchild node and then add the maximum value to the node value
-        calculatesum(root)
-        return self.maxim
+        return self.maximsum 
     def boundarytraversal(self,root):
         ans = []
         ans.append(root.data)
@@ -443,14 +427,26 @@ class Allsolution:
                     q.append(curr2.left)    
             return True            
 
-        return checksymmetric(root.left,root.right)            
+        return checksymmetric(root.left,root.right)          
+    #check if two trees are identical or not
+    def checkidentical(self,p,q):
+        def checkone(first,second):
+            if not first and not second:
+                return True
+            if not first or not second:
+                return False
+            if first.data!=second.data:
+                return False
+            return checkone(first.left,second.left) and checkone(first.right,second.right)
+            
+        return checkone(p,q)    
 
             
 
 
 pr=Allsolution()
-z=pr.buildtree( [-10, 9, 20, None, None, 15, 7])  
-l=pr.buildtree( [3, 9, 20, None, None, 15, 7])
+z=pr.buildtree( [1,2,3])  
+l=pr.buildtree( [1,2,2])
 print(pr.levelorder(l))
 print(pr.solvepostorder(z,[]))  #time complexity : O(N)  #space complexity : O(N)
 print(pr.preorderiteration(z))  #time complexity : O(N)  #space complexity : O(N)
@@ -462,6 +458,7 @@ print(pr.maxdepth(z))
 print(pr.checkheightbalanced(z))
 print(pr.diameterofbt(z))
 print(pr.maximpathsum(z))
+print(pr.checkidentical(z,l))
 
 
 
