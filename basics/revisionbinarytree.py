@@ -500,19 +500,39 @@ class Allsolution:
         while q:
             curr,index = q.popleft()
             distancemap[index].append(curr.data)
-            if curr.left:
+            if curr.left:  #in the left side , the node index will always be decreasing by 1 as we go more to the left side
                 q.append((curr.left,index-1))
-            if curr.right:
+            if curr.right:  #where as towards the right side, the node index will go on increasing by 1 , as we move more towards the right side
                 q.append((curr.right,index+1))
         for distance in sorted(distancemap.keys()):  #and inorder to return the answer from leftmost , we are using sorting the keys of default dict
             ans.append(distancemap[distance])
         return ans    
 
-      
+   #top view of a binary tree
+    def topviewofbt(self,root):
+        q=deque([(root,0)])
+        m={}
+        while q:
+            curr,index = q.popleft()
+            if index not in m:
+                m[index] = curr.data#storing the index and the node data as key-value pair
+            if curr.left:
+                q.append((curr.left,index-1))
+            if curr.right:
+                q.append((curr.right,index+1))
+        ans = []
+        for position in sorted(m.keys()):  #here we are using sorted inorder to move from left to right
+            ans.append(m[position])
+        return ans    
+    
+                
+
+
+
         
 
 pr=Allsolution()
-z=pr.buildtree( [3, 9, 20, None, None, 15, 7])  
+z=pr.buildtree([1, 2, 3, 4, 5, 6, 7])  
 l=pr.buildtree( [1,2,2])
 print(pr.levelorder(l))
 print(pr.solvepostorder(z,[]))  #time complexity : O(N)  #space complexity : O(N)
@@ -529,6 +549,7 @@ print(pr.checkidentical(z,l))
 print(pr.spiraltraversal(z))
 print(pr.btraversal(z))
 print(pr.vordertraversal(z))
+print(pr.topviewofbt(z))
 
 
 
