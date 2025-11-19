@@ -569,10 +569,20 @@ class Allsolution:
                 if curr.right:
                     q.append(curr.right)
         return ans                    
-
+    #check for symmetrical BTs
+    def checksymmetric(self,root):
+        def check(left,right):
+            if not left and not right:
+                return True
+            if not left or not right:
+                return False
+            if left.data!=right.data:
+                return False
+            return check(left.left,right.right) and check(left.right,right.left)
+        return check(root.left,root.right)
 
 pr=Allsolution()
-z=pr.buildtree([1, 2, 3, None, 5, None, 4])  
+z=pr.buildtree( [1, 2, 2, None, 3, None, 3])  
 l=pr.buildtree( [1,2,2])
 print(pr.levelorder(l))
 print(pr.solvepostorder(z,[]))  #time complexity : O(N)  #space complexity : O(N)
@@ -593,6 +603,7 @@ print(pr.topviewofbt(z))
 print(pr.bottomviewofbt(z))
 print(pr.rightview(z))
 print(pr.leftview(z))
+print(pr.checksymmetric(z))
 
 
 
