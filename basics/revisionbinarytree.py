@@ -539,8 +539,40 @@ class Allsolution:
         for position in sorted(m.keys()):
             ans.append(m[position])
         return ans
+    #right view of a binary tree
+    def rightview(self,root):
+        q=deque([root])
+        ans= [ ]
+        while q:
+            size = len(q)
+            for i in range(size):
+                curr = q.popleft()
+                if i == size -1:  #as we  are viewing from the right side , the index or the position of the targeted node must be the last index
+                    ans.append(curr.data)
+                if curr.left:
+                    q.append(curr.left)
+                if curr.right:
+                    q.append(curr.right)
+        return ans 
+    #left view of a binary tree
+    def leftview(self,root):
+        q=deque([root])
+        ans = []
+        while q:
+            size = len(q)
+            for i in range(size):
+                curr=q.popleft()
+                if i == 0:
+                    ans.append(curr.data)
+                if curr.left:
+                    q.append(curr.left)
+                if curr.right:
+                    q.append(curr.right)
+        return ans                    
+
+
 pr=Allsolution()
-z=pr.buildtree( [20, 8, 22, 5, 3, None, 25, None, None, 10 ,14])  
+z=pr.buildtree([1, 2, 3, None, 5, None, 4])  
 l=pr.buildtree( [1,2,2])
 print(pr.levelorder(l))
 print(pr.solvepostorder(z,[]))  #time complexity : O(N)  #space complexity : O(N)
@@ -559,6 +591,8 @@ print(pr.btraversal(z))
 print(pr.vordertraversal(z))
 print(pr.topviewofbt(z))
 print(pr.bottomviewofbt(z))
+print(pr.rightview(z))
+print(pr.leftview(z))
 
 
 
