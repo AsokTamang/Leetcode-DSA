@@ -524,15 +524,23 @@ class Allsolution:
         for position in sorted(m.keys()):  #here we are using sorted inorder to move from left to right
             ans.append(m[position])
         return ans    
-    
-                
-
-
-
-        
-
+    #bottom view of a binary tree
+    def bottomviewofbt(self,root):
+        q=deque([(root,0)])
+        m={}
+        ans=[]
+        while q:
+            curr,index  = q.popleft()
+            m[index]=curr.data   #storing the index and node data as key-value pair
+            if curr.left:
+                q.append((curr.left,index-1))
+            if curr.right:
+                q.append((curr.right,index+1)) 
+        for position in sorted(m.keys()):
+            ans.append(m[position])
+        return ans
 pr=Allsolution()
-z=pr.buildtree([1, 2, 3, 4, 5, 6, 7])  
+z=pr.buildtree( [20, 8, 22, 5, 3, None, 25, None, None, 10 ,14])  
 l=pr.buildtree( [1,2,2])
 print(pr.levelorder(l))
 print(pr.solvepostorder(z,[]))  #time complexity : O(N)  #space complexity : O(N)
@@ -550,7 +558,7 @@ print(pr.spiraltraversal(z))
 print(pr.btraversal(z))
 print(pr.vordertraversal(z))
 print(pr.topviewofbt(z))
-
+print(pr.bottomviewofbt(z))
 
 
 
