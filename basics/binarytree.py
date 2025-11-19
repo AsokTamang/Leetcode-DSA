@@ -739,10 +739,29 @@ class allorder:
 
         dfs(root)
         return ans
+   #LCA in binary tree
+    def lca(self,root,p,q):
+        if root is None:
+            return 
+        if root.data==p or root.data==q:  #whenever we find the node's data equal to p or q then it means this current node might be our answer
+            return root.data
+        #if both p and q are not found then we recursively move towards left as well as right subtree
+        left = self.lca(root.left,p,q)  
+        right=self.lca(root.right,p,q)
+        if not left:
+            return right
+        elif not right:
+            return left
+        else:
+            return root.data
+        
+        #time complexity : O(N)
+        #space complexity : O(N)
 
+        
 
 all = allorder()
-v = all.buildtree([1, 2, 3, None, 5, None, 4])  # O(N) for both
+v = all.buildtree( [3, 5, 1, 6, 2, 0, 8, None, None, 7, 4])  # O(N) for both
 w = all.buildtree([1, 2, 3])
 print(all.solveallorder(v))
 print(all.maximumdepth(v))
@@ -761,5 +780,6 @@ print(all.leftview(v))
 print(all.checksymmetrical(v))
 print(all.recurchecksymmetrical(v))
 print(all.printroottonode(v))
+print(all.lca(v,5,4))
 # time complexity : O(N)
 # space complexity : O(N)
