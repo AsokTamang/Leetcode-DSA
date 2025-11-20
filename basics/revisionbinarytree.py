@@ -718,10 +718,24 @@ class Allsolution:
 
         dfs(root)
         return ans
-
+    #LCA of a binary tree
+    def lcabt(self,root,p,q):
+        if root is None:
+            return None
+        if root.data==p or root.data==q:
+            return root.data
+        l=self.lcabt(root.left,p,q)  #then we go in the left subtree 
+        r=self.lcabt(root.right,p,q)  #and then in right subtree
+        if not l:  #if we donot find any of p and q in left subtree then it must be in the right subtree
+            return r
+        elif not r:  #otherwise in the left subtree
+            return l
+        else:    #if we have found in both then the current root is the LCA
+            return root.data  #
+        
 
 pr = Allsolution()
-z = pr.buildtree([1, 2, 3, None, 5, None, 4])
+z = pr.buildtree( [3, 5, 1, 6, 2, 0, 8, None, None, 7, 4])
 l = pr.buildtree([1, 2, 2])
 print(pr.levelorder(l))
 print(pr.solvepostorder(z, []))  # time complexity : O(N)  #space complexity : O(N)
@@ -746,3 +760,4 @@ print(pr.rightview(z))
 print(pr.leftview(z))
 print(pr.checksymmetric(z))
 print(pr.printroottonode(z))
+print(pr.lcabt(z,5,1))
