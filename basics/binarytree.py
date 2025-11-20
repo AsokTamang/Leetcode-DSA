@@ -18,6 +18,11 @@
 
 # Preorder Traversal
 # Given root of binary tree, return the preorder traversal of the binary tree.
+class Node:
+        def __init__(self, data=0, left=None, right=None):
+            self.data = data
+            self.left = left
+            self.right = right
 class Solution:
     class Node:
         def __init__(self, data=0, left=None, right=None):
@@ -800,12 +805,79 @@ class allorder:
                 q.append(curr.right)
             
         return True           
+    #binary tree after the children sum
+    def btaftersum(self,root):
+        if root is None:
+            return
+        ans = [ ]
+        q=deque([root])
+        while q:
+            curr=q.popleft()
+            if not curr.left and not curr.right:  #if we reach the leaf node then we continue with another iteration
+                ans.append(curr.data)  #we also must append the leaf node while changing the bt after the children sum
+                continue   
+            childsum = 0
+            l=curr.left.data if curr.left else 0
+            r=curr.right.data if curr.right else 0
+            childsum = l+r
+            if childsum>=curr.data:  #if the child sum is greater than or equal to the current node's data then we change the current node's data to child sum
+                curr.data = childsum 
+            else:  #if the child sum is smaller then
+                if curr.left:
+                    curr.left.data = curr.data
+                if curr.right:
+                    curr.right.data=curr.data
+            ans.append(curr.data)  #here we are just appending the node with newly modified or unmodified data 
+            if curr.left:
+                q.append(curr.left)
+            if curr.right:
+                q.append(curr.right)
+        return ans
+
+    #print all nodes at a distance of K in BT
+    def printallnodes(self,root,target,k):
+        m={}
+        def mappingparentchild(root):  #this function is used for storing the parent and children nodes as key-value pair where the children are stored as key and the parent nodes are stored as value
+            q=deque([root])
+            while q:
+                curr=q.popleft()
+                if curr.left:
+                    m[curr.left] = curr
+                    q.append(curr.left)
+                if curr.right:
+                    m[curr.right]=curr
+                    q.append(curr.right)
+        mappingparentchild(root)    
+        iteration = 0
+        seen = set()
+        seen.add(target)
+        q=deque([target])
+        while q:
+            if iteration==k: #at k distance
+                break
+            levelsize = len(q)
+            for _ in range(levelsize):
+                curr=q.popleft()
+                if curr.left and curr.left not in seen:
+                    seen.add(curr.left)
+                    q.append(curr.left)
+                if curr.right and curr.right not in seen:
+                    seen.add(curr.right)
+                    q.append(curr.right)
+                if curr in m and m[curr] not in seen:
+                    seen.add(m[curr]) #here we are storing the parent in our set data storage
+                    q.append(m[curr]) 
+            iteration+=1    
+        return [node.data for node in q]
+                      
+
 
 
         
-
+                 
+    
 all = allorder()
-v = all.buildtree([10,4,6,1,3,2,4])  # O(N) for both
+v = all.buildtree( [3, 5, 1, 6, 2, 0, 8, None, None, 7, 4])  # O(N) for both
 w = all.buildtree([1, 2, 3])
 print(all.solveallorder(v))
 print(all.maximumdepth(v))
@@ -827,5 +899,16 @@ print(all.printroottonode(v))
 print(all.lca(v,5,4))
 print(all.maxmwidth(v))
 print(all.childrensum(v))
+print(all.btaftersum(v))
+root = Node(3)
+root.left = Node(5)
+root.right = Node(1)
+root.left.left = Node(6)
+root.left.right = Node(2)
+root.left.right.left = Node(7)
+root.left.right.right = Node(4)
+root.right.left = Node(0)
+root.right.right = Node(8)
+print(all.printallnodes(root,root.left,2))
 # time complexity : O(N)
 # space complexity : O(N)
