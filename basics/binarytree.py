@@ -779,13 +779,33 @@ class allorder:
                     newq.append((node.right,(2*index)+2))
             q=newq
         return ans
+
+    #children sum property
+    def childrensum(self,root):
+        if root is None:
+            return
+        q=deque([root])
+        while q:
+            curr=q.popleft()
+            if not curr.left and not curr.right:  #if both the left child and the right child is null then it means we are at the leaf node
+                continue #so we continue with another iteration
+            l=curr.left.data if curr.left else 0
+            r=curr.right.data if curr.right else 0
             
+            if curr.data!= l + r:
+                return False
+            if curr.left:
+                q.append(curr.left)
+            if curr.right:
+                q.append(curr.right)
+            
+        return True           
 
 
         
 
 all = allorder()
-v = all.buildtree( [1, 3, 2, 5, 3, None, 9])  # O(N) for both
+v = all.buildtree([10,4,6,1,3,2,4])  # O(N) for both
 w = all.buildtree([1, 2, 3])
 print(all.solveallorder(v))
 print(all.maximumdepth(v))
@@ -806,5 +826,6 @@ print(all.recurchecksymmetrical(v))
 print(all.printroottonode(v))
 print(all.lca(v,5,4))
 print(all.maxmwidth(v))
+print(all.childrensum(v))
 # time complexity : O(N)
 # space complexity : O(N)
