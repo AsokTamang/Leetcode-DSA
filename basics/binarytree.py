@@ -836,6 +836,8 @@ class allorder:
 
     #print all nodes at a distance of K in BT
     def printallnodes(self,root,target,k):
+        if root is None:
+            return
         m={}
         def mappingparentchild(root):  #this function is used for storing the parent and children nodes as key-value pair where the children are stored as key and the parent nodes are stored as value
             q=deque([root])
@@ -870,6 +872,50 @@ class allorder:
             iteration+=1    
         return [node.data for node in q]
                       
+    
+    #minimum time taken to burn the BT from a given Node
+    def minimumtime(self,root,target):
+        if root is None:
+            return
+        m={}
+        def mapparentchild(root):
+            q=deque([root])
+            while q:
+                curr=q.popleft()
+                if curr.left:
+                    m[curr.left]=curr
+                    q.append(curr.left)
+                if curr.right:
+                    m[curr.right]=curr
+                    q.append(curr.right)
+        mapparentchild(root)
+        q=deque([target])
+        totaltime = 0
+        seen = set()
+        seen.add(target)
+        while q:
+            levelsize = len(q)
+            burned=False
+            for _ in range(levelsize):
+                curr=q.popleft()
+                if curr.left and curr.left not in seen:
+                    seen.add(curr.left)
+                    q.append(curr.left)
+                    burned=True
+                if curr.right and curr.right not in seen:
+                    seen.add(curr.right)
+                    q.append(curr.right)  
+                    burned=True 
+                if curr in m and m[curr] not in seen:
+                    seen.add(m[curr])
+                    q.append(m[curr])
+                    burned=True
+            if burned:
+             totaltime+=1
+        return totaltime #as the node which was set on fire is already burned , so we only calculate the time for the remaining nodes of a binary tree to be burned            
+
+
+
 
 
 
@@ -910,5 +956,6 @@ root.left.right.right = Node(4)
 root.right.left = Node(0)
 root.right.right = Node(8)
 print(all.printallnodes(root,root.left,2))
+print(all.minimumtime(root,root.left))
 # time complexity : O(N)
 # space complexity : O(N)
