@@ -757,11 +757,35 @@ class allorder:
         
         #time complexity : O(N)
         #space complexity : O(N)
+    
+
+    #maximum width of a binary tree
+    #so the logic behind this code is that we traverse the bt in a level order and calculate the width using rigthidnex-leftindex + 1 where we calculate the leftindex by 2*index+1 and right index by 2*i+2 which are of the next nodes from the current node
+    def maxmwidth(self,root):
+        if root is None:
+            return
+        q=[(root,0)]  #for the root element , we store with the index 0
+        ans = float('-inf')
+        while q:
+            leftmostindex = q[0][1]  #as the left most index is always at the first index
+            rightmostindex = q[-1][1]  #where as the right most index is always at the last
+            ans = max(ans,rightmostindex-leftmostindex+1)  #rightmost-leftmost+1 is the formula for calculating the width
+            newq=[]
+            for node,index in q:
+                index-=leftmostindex  #here we are doing this inorder to prevernt the overflow of the data if the numbers or the indices are way too big
+                if node.left:
+                    newq.append((node.left,(2*index) + 1))
+                if node.right:
+                    newq.append((node.right,(2*index)+2))
+            q=newq
+        return ans
+            
+
 
         
 
 all = allorder()
-v = all.buildtree( [3, 5, 1, 6, 2, 0, 8, None, None, 7, 4])  # O(N) for both
+v = all.buildtree( [1, 3, 2, 5, 3, None, 9])  # O(N) for both
 w = all.buildtree([1, 2, 3])
 print(all.solveallorder(v))
 print(all.maximumdepth(v))
@@ -781,5 +805,6 @@ print(all.checksymmetrical(v))
 print(all.recurchecksymmetrical(v))
 print(all.printroottonode(v))
 print(all.lca(v,5,4))
+print(all.maxmwidth(v))
 # time complexity : O(N)
 # space complexity : O(N)
