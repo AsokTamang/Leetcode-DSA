@@ -732,10 +732,29 @@ class Allsolution:
             return l
         else:    #if we have found in both then the current root is the LCA
             return root.data  #
-        
+
+    #children sum property in a binary tree
+    def childrensum(self,root):
+        q=deque([root])
+        while q:
+            levelsize = len(q)   
+            for i in range(levelsize):  #the logic of loop behind this solution is level order traversal
+                curr=q.popleft()
+                l=curr.left.data  if curr.left else 0
+                r=curr.right.data if curr.right else 0
+                if not curr.left and not curr.right:  #if we are at the leaf nodes then the leaf nodes automatically sastisfy the condition of children sum
+                    continue
+                if (l+r) !=curr.data:
+                    return False
+                if curr.left:
+                    q.append(curr.left)
+                if curr.right:
+                    q.append(curr.right)    
+        return True        
+                     
 
 pr = Allsolution()
-z = pr.buildtree( [3, 5, 1, 6, 2, 0, 8, None, None, 7, 4])
+z = pr.buildtree( [1,4,3,5])
 l = pr.buildtree([1, 2, 2])
 print(pr.levelorder(l))
 print(pr.solvepostorder(z, []))  # time complexity : O(N)  #space complexity : O(N)
@@ -761,3 +780,4 @@ print(pr.leftview(z))
 print(pr.checksymmetric(z))
 print(pr.printroottonode(z))
 print(pr.lcabt(z,5,1))
+print(pr.childrensum(z))
