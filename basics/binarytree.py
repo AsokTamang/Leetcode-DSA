@@ -914,16 +914,23 @@ class allorder:
              totaltime+=1
         return totaltime #as the node which was set on fire is already burned , so we only calculate the time for the remaining nodes of a binary tree to be burned            
 
-
-
-
-
-
-        
-                 
     
+    #Count total nodes in a complete BT
+    def counttotalnodes(self,root):
+        q=deque([root])
+        total = 0
+        while q:
+            levelsize = len(q)
+            for i in range(levelsize):
+                curr=q.popleft()
+                if curr.left:
+                    q.append(curr.left)
+                if curr.right:
+                    q.append(curr.right)
+                total+=1  #here for each loop , we increase the total , which is the number of nodes in the level
+        return total                
 all = allorder()
-v = all.buildtree( [3, 5, 1, 6, 2, 0, 8, None, None, 7, 4])  # O(N) for both
+v = all.buildtree( [1, 2, 3, 4, 5, 6,7,8,9])  # O(N) for both
 w = all.buildtree([1, 2, 3])
 print(all.solveallorder(v))
 print(all.maximumdepth(v))
@@ -946,6 +953,7 @@ print(all.lca(v,5,4))
 print(all.maxmwidth(v))
 print(all.childrensum(v))
 print(all.btaftersum(v))
+print(all.counttotalnodes(v))
 root = Node(3)
 root.left = Node(5)
 root.right = Node(1)
@@ -957,5 +965,6 @@ root.right.left = Node(0)
 root.right.right = Node(8)
 print(all.printallnodes(root,root.left,2))
 print(all.minimumtime(root,root.left))
+print(all.counttotalnodes(v))
 # time complexity : O(N)
 # space complexity : O(N)
