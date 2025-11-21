@@ -956,6 +956,41 @@ class allorder:
         return ans      
         #time complexity : O(N**2)
         #space complexity : O(N)      
+    #optimized version
+    #so the logic behind this solution is that
+    #we use the preorder list for finding the root and 
+    #then we use the inorder list for finding the left and right subtree for this obtained root
+    #and for the indices we use the map to store the index of every elements in an inorder list
+    #and depending upon the index , we assign left and right variable
+    def optpreorderinorder(self,preorder,inorder):
+        indexofroot=[0]  #here we are assuming the index of the root element
+        m={val:index for index,val in enumerate(inorder)} #here we are storing the value as well as index of the numbers from an inorder list 
+        def calculatetheroot(preorder,inorder,left,right):
+            if left>right:  #if the left index is greater than the right index
+                return None
+            rootvalue = preorder[indexofroot[0]]     #as the very first element in the preorder array is always the root
+            indexofroot[0]+=1   #we are using list instead of the numbers cause if we use the integer or number variabe then the variable won't be global
+            i=m[rootvalue]  #this is the index of the current root element
+            root=self.Node(rootvalue)
+            root.left = calculatetheroot(preorder,inorder,left,i-1)
+            root.right = calculatetheroot(preorder,inorder,i+1,right)
+            return root
+        root=calculatetheroot(preorder,inorder,0,len(preorder)-1)   
+        ans = []
+        q=deque([root])
+        ans.append(root.data)
+        while q:
+            curr=q.popleft()
+            if curr.left:
+                q.append(curr.left)
+                ans.append(curr.left.data)  
+            if curr.right:
+                q.append(curr.right)
+                ans.append(curr.right.data)
+        return ans        
+            
+
+
 
 all = allorder()
 v = all.buildtree( [1, 2, 3, 4, 5, 6,7,8,9])  # O(N) for both
@@ -995,5 +1030,6 @@ print(all.printallnodes(root,root.left,2))
 print(all.minimumtime(root,root.left))
 print(all.counttotalnodes(v))
 print(all.preorderinorder([3, 9, 20, 15, 7] , [9, 3, 15, 20, 7]))
+print(all.optpreorderinorder([3, 9, 20, 15, 7] , [9, 3, 15, 20, 7]))
 # time complexity : O(N)
 # space complexity : O(N)
