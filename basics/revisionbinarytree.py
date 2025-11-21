@@ -1,6 +1,11 @@
 # level order traversal
 # in the level order traversal,we traverse from left to right of every level in a binary tree
 from collections import defaultdict, deque
+class Node:
+        def __init__(self, data, left=None, right=None):
+            self.data = data
+            self.left = left
+            self.right = right
 
 
 def levelorder(root):
@@ -751,10 +756,51 @@ class Allsolution:
                 if curr.right:
                     q.append(curr.right)    
         return True        
-                     
+
+    #Print all nodes at a distance of K in BT
+    def printallnodesatk(self,root,target,k):
+        m={}
+        def childparentdict(root):  #this function is used for making a child-parent as key-value pair in a dictionary
+            q=deque([root])
+            while q:
+                curr=q.popleft()
+                #in this if else condition, we are using the children as key and the parent node as value
+                if curr.left:
+                    q.append(curr.left)
+                    m[curr.left] = curr
+                if curr.right:
+                    q.append(curr.right)
+                    m[curr.right]=curr  
+        childparentdict(root)
+        q=deque([target])
+        seen=set()
+        seen.add(target)
+        s=0
+        while q:
+            if s==k:
+                break
+            levelsize = len(q)
+            for i in range(levelsize):
+                curr=q.popleft()
+                if curr.left and curr.left not in seen:
+                    q.append(curr.left)
+                    seen.add(curr.left)
+                if curr.right and curr.right not in seen:  #here we are using not in seen inorder to prevent the duplicate values' use
+                    q.append(curr.right)
+                    seen.add(curr.right)    
+                if curr in m and m[curr] not in seen:  #if the parent of this current node is not in seen then.....
+                    seen.add(m[curr])
+                    q.append(m[curr])
+            s+=1    
+        return [node.data for node in q]
+     
+
+
+
+
 
 pr = Allsolution()
-z = pr.buildtree( [1,4,3,5])
+z = pr.buildtree( [3, 5, 1, 6, 2, 0, 8, None, None, 7, 4])
 l = pr.buildtree([1, 2, 2])
 print(pr.levelorder(l))
 print(pr.solvepostorder(z, []))  # time complexity : O(N)  #space complexity : O(N)
@@ -781,3 +827,13 @@ print(pr.checksymmetric(z))
 print(pr.printroottonode(z))
 print(pr.lcabt(z,5,1))
 print(pr.childrensum(z))
+root = Node(3)
+root.left = Node(5)
+root.right = Node(1)
+root.left.left = Node(6)
+root.left.right = Node(2)
+root.left.right.left = Node(7)
+root.left.right.right = Node(4)
+root.right.left = Node(0)
+root.right.right = Node(8)
+print(pr.printallnodesatk(root,root.left,2))
