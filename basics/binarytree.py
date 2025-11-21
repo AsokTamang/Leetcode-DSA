@@ -988,8 +988,42 @@ class allorder:
                 q.append(curr.right)
                 ans.append(curr.right.data)
         return ans        
-            
 
+    #Construction of  a BT from Postorder and Inorder   
+    def postinorderbt(self,postorder,inorder):
+        lastpointer = len(postorder) - 1 #this is the last index
+        m={val:index for index,val in enumerate(inorder)}
+        rootindex = [lastpointer]
+        def calculate(postorder,inorder,left,right):
+            if left>right:
+                return None
+            rootvalue = postorder[rootindex[0]]  #as the root index has only one data inside the list, we must use 0
+            rootindex[0]-=1
+            root=self.Node(rootvalue)
+            i=m[rootvalue]
+            #and for the postorder , we must recurse for the right then for the left
+            root.right = calculate(postorder,inorder,i+1,right)
+            root.left = calculate(postorder,inorder,left,i-1)
+            
+            return root
+
+            
+        r=calculate(postorder,inorder,0,lastpointer)
+        q=deque([r])
+        ans=[]
+        ans.append(r.data)
+        while q:
+            curr=q.popleft()
+            if curr.left:
+                q.append(curr.left)
+                ans.append(curr.left.data)  
+            if curr.right:
+                q.append(curr.right)
+                ans.append(curr.right.data)
+        return ans
+
+
+    
 
 
 all = allorder()
@@ -1031,5 +1065,6 @@ print(all.minimumtime(root,root.left))
 print(all.counttotalnodes(v))
 print(all.preorderinorder([3, 9, 20, 15, 7] , [9, 3, 15, 20, 7]))
 print(all.optpreorderinorder([3, 9, 20, 15, 7] , [9, 3, 15, 20, 7]))
+print(all.postinorderbt([9, 15, 7, 20, 3] ,  [9, 3, 15, 20, 7]))
 # time complexity : O(N)
 # space complexity : O(N)
