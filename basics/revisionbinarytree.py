@@ -793,7 +793,52 @@ class Allsolution:
                     q.append(m[curr])
             s+=1    
         return [node.data for node in q]
-     
+
+    #Minimum time taken to burn the BT from a given Node
+    def minimumtime(self,root,target):
+        m={}
+        def childparentdict(root):  #this function is used for making a child-parent as key-value pair in a dictionary
+            q=deque([root])
+            while q:
+                curr=q.popleft()
+                #in this if else condition, we are using the children as key and the parent node as value
+                if curr.left:
+                    q.append(curr.left)
+                    m[curr.left] = curr
+                if curr.right:
+                    q.append(curr.right)
+                    m[curr.right]=curr  
+        childparentdict(root)
+        q=deque([target])
+        totaltime = 0
+        seen=set()  #seen stores the nodes which are already burned
+        seen.add(target)
+        while q:
+            levelsize = len(q)
+            isburned = False
+            for _ in range(levelsize):
+                curr=q.popleft()
+                if curr.left and curr.left not in seen:
+                    q.append(curr.left)
+                    isburned=True
+                    seen.add(curr.left)
+                if curr.right and curr.right not in seen:
+                    q.append(curr.right)
+                    isburned=True
+                    seen.add(curr.right)  
+                if curr in m and m[curr] not in seen:
+                    q.append(m[curr])
+                    isburned=True
+                    seen.add(m[curr])
+            if isburned:  #if any of the connected node is burned then we increase the time
+                totaltime+=1    
+        return totaltime            
+
+
+
+
+
+
 
 
 
@@ -827,13 +872,12 @@ print(pr.checksymmetric(z))
 print(pr.printroottonode(z))
 print(pr.lcabt(z,5,1))
 print(pr.childrensum(z))
-root = Node(3)
-root.left = Node(5)
-root.right = Node(1)
-root.left.left = Node(6)
-root.left.right = Node(2)
-root.left.right.left = Node(7)
-root.left.right.right = Node(4)
-root.right.left = Node(0)
-root.right.right = Node(8)
+root = Node(1)
+root.left = Node(2)
+root.right = Node(3)
+root.left.left = Node(4)
+root.right.left = Node(5)
+root.right.right = Node(6)
+root.left.left.right = Node(7)
 print(pr.printallnodesatk(root,root.left,2))
+print(pr.minimumtime(root,root))
