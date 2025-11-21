@@ -928,7 +928,35 @@ class allorder:
                 if curr.right:
                     q.append(curr.right)
                 total+=1  #here for each loop , we increase the total , which is the number of nodes in the level
-        return total                
+        return total       
+
+    #construct a bt from preorder and inorder traversal\
+    def preorderinorder(self,preorder,inorder):
+        def calculate(preorder,inorder):
+            if not preorder or not inorder:
+                return None
+            root = self.Node(preorder[0])  #as the very first element from a preorder list is the root
+            i = inorder.index(preorder[0])  #here we are finding the index of the root inside a inorder array
+            root.left = calculate(preorder[1:i+1],inorder[:i])
+            root.right = calculate(preorder[i+1:],inorder[i+1:])
+            return root
+        root= calculate(preorder,inorder)  #as the function is returning root
+        q=deque([root])
+        ans = []
+        ans.append(root.data)
+        while q:
+            curr=q.popleft()
+            if curr.left:
+                q.append(curr.left)
+                ans.append(curr.left.data)  
+            if curr.right:
+                q.append(curr.right)
+                ans.append(curr.right.data)
+              
+        return ans      
+        #time complexity : O(N**2)
+        #space complexity : O(N)      
+
 all = allorder()
 v = all.buildtree( [1, 2, 3, 4, 5, 6,7,8,9])  # O(N) for both
 w = all.buildtree([1, 2, 3])
@@ -966,5 +994,6 @@ root.right.right = Node(8)
 print(all.printallnodes(root,root.left,2))
 print(all.minimumtime(root,root.left))
 print(all.counttotalnodes(v))
+print(all.preorderinorder([3, 9, 20, 15, 7] , [9, 3, 15, 20, 7]))
 # time complexity : O(N)
 # space complexity : O(N)
