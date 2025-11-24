@@ -24,7 +24,7 @@ class Node:
         self.left = left
         self.right = right
 
-
+from collections import deque
 class Solution:
     class Node:
         def __init__(self, data=0, left=None, right=None):
@@ -41,8 +41,17 @@ class Solution:
         root = self.Node(
             array[i]
         )  # here we are creating a node with the value of element at index i of the given array
-        root.left = self.buildtree(array, 2 * i + 1)
-        root.right = self.buildtree(array, 2 * i + 2)
+        q=deque([root])
+        i=1
+        while q:
+            curr=q.popleft()
+            if i<len(array) and array[i] is not None:
+                curr.left = self.Node(array[i])
+            i+=1
+            if i<len(array) and array[i] is not None:
+                curr.right = self.Node(array[i])
+            i+=1
+
         return root
 
     def preorder(self, root, arr):
@@ -1134,48 +1143,39 @@ class allorder:
 
         return desirialize(s)  # here s means the serialized data
 
+        #so the logic behind the solution of morris inorder traversal is that we first find the predecessor of the root , which is the right most node of the left subtree
+        #and then we create a thread between this predecessor and the root element, which helps us to go back to the root for appending the data
+    def morrisinorder(self,root):
+        curr = root
+        inorder=[]
+        while curr:
+            if curr.left is None:
+                inorder.append(curr.data)
+                curr=curr.right  #here we are moving the current to current.right cause of the thread
+            else:
+                predecessor = curr.left
+                while predecessor.right and predecessor.right!=curr:  #this loop is for taking us to the right most node of the leftsubtree of the current root
+                    predecessor=predecessor.right
+                if predecessor.right==None:
+                    predecessor.right=curr  #creating the thread
+                    curr=curr.left   
+                else:  #if the thread has been already created then we remove the thread and append the current data and move the current to current.right
+                    predecessor.right=None  
+                    inorder.append(curr.data)
+                    curr=curr.right
+                    
+        return inorder            
+
+
+
+                    
+
+
+
 
 all = allorder()
-v = all.buildtree([1, 2, 3, 4, 5, 6, 7, 8, 9])  # O(N) for both
-w = all.buildtree([1, 2, 3])
-print(all.solveallorder(v))
-print(all.maximumdepth(v))
-print(all.optimalcheckbalanced(v))  # TC-O(N**2) and SC-O(N)
-print(all.diameterbinarytree(v))
-print(all.maximumpathsum(v))
-print(all.optimalchecktwo(v, w))
-print(all.spiraltraversal(v))
-print(all.optimalspiraltraversal(v))
-print(all.boundarytraversal(v))
-print(all.verticalordertraversal(v))
-print(all.topview(v))
-print(all.bottomview(v))
-print(all.rightview(v))
-print(all.leftview(v))
-print(all.checksymmetrical(v))
-print(all.recurchecksymmetrical(v))
-print(all.printroottonode(v))
-print(all.lca(v, 5, 4))
-print(all.maxmwidth(v))
-print(all.childrensum(v))
-print(all.btaftersum(v))
-print(all.counttotalnodes(v))
-root = Node(3)
-root.left = Node(5)
-root.right = Node(1)
-root.left.left = Node(6)
-root.left.right = Node(2)
-root.left.right.left = Node(7)
-root.left.right.right = Node(4)
-root.right.left = Node(0)
-root.right.right = Node(8)
-print(all.printallnodes(root, root.left, 2))
-print(all.minimumtime(root, root.left))
-print(all.counttotalnodes(v))
-print(all.preorderinorder([3, 9, 20, 15, 7], [9, 3, 15, 20, 7]))
-print(all.optpreorderinorder([3, 9, 20, 15, 7], [9, 3, 15, 20, 7]))
-print(all.postinorderbt([9, 15, 7, 20, 3], [9, 3, 15, 20, 7]))
-z = all.buildtree([7, 3, 15, None, None, 9, 20])
-print(all.serializedesirialize(z))
+v = all.buildtree( [1, 4, None, 4 ,2])  # O(N) for both
+print(all.morrisinorder(v))
+
 # time complexity : O(N)
 # space complexity : O(N)
