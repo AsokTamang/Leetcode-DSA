@@ -834,16 +834,32 @@ class Allsolution:
                 totaltime+=1    
         return totaltime            
 
-
-
-
-
-
-
-
-
-
-
+#Construct a BT from Preorder and Inorder
+    def constructbt(self,preorder,inorder):
+        m={val:index for index,val in enumerate(inorder)}  #storing the val:index as key-value pair of the list inorder
+        rootindex = [0]
+        def makebt(left,right):
+            if left>right: #base case
+                return
+            rootelem = (preorder[rootindex[0]])   #as the main root element is always the very first element which is in the preorder list
+            root=self.Node(rootelem)
+            rootindex[0]+=1  #then the later elements in the preorder list are the root elements
+            i=m[rootelem]   #here we are finding the index of the root element based on the inorder list inorder to find its left subtree and right subtree
+            root.left=makebt(left,i-1)
+            root.right=makebt(i+1,right)
+            return root
+        root=makebt(0,len(preorder)-1)
+        ans =[]
+        q=deque([root])
+        while q:
+            curr=q.popleft()
+            ans.append(curr.data)
+            if curr.left:
+                q.append(curr.left)
+            if curr.right:
+                q.append(curr.right)
+        return ans            
+#time complexity : O(N) and space complexity : O(N)
 pr = Allsolution()
 z = pr.buildtree( [3, 5, 1, 6, 2, 0, 8, None, None, 7, 4])
 l = pr.buildtree([1, 2, 2])
@@ -881,3 +897,4 @@ root.right.right = Node(6)
 root.left.left.right = Node(7)
 print(pr.printallnodesatk(root,root.left,2))
 print(pr.minimumtime(root,root))
+print(pr.constructbt( [3, 9, 20, 15, 7] ,  [9, 3, 15, 20, 7]))
