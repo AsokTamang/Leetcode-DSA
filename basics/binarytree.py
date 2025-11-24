@@ -19,10 +19,12 @@
 # Preorder Traversal
 # Given root of binary tree, return the preorder traversal of the binary tree.
 class Node:
-        def __init__(self, data=0, left=None, right=None):
-            self.data = data
-            self.left = left
-            self.right = right
+    def __init__(self, data=0, left=None, right=None):
+        self.data = data
+        self.left = left
+        self.right = right
+
+
 class Solution:
     class Node:
         def __init__(self, data=0, left=None, right=None):
@@ -733,10 +735,14 @@ class allorder:
         ans = []
 
         def dfs(node):
-            if node is None:  #if the node is empty , we return from the reursion level
+            if node is None:  # if the node is empty , we return from the reursion level
                 return
-            path.append(node.data) #we keep on appending the node data as long as the node is not empty  
-            if not node.left and not node.right:  #this means we have reached the leaf node , so the path has been made
+            path.append(
+                node.data
+            )  # we keep on appending the node data as long as the node is not empty
+            if (
+                not node.left and not node.right
+            ):  # this means we have reached the leaf node , so the path has been made
                 ans.append(path.copy())
             dfs(node.left)
             dfs(node.right)
@@ -744,122 +750,145 @@ class allorder:
 
         dfs(root)
         return ans
-   #LCA in binary tree
-    def lca(self,root,p,q):
+
+    # LCA in binary tree
+    def lca(self, root, p, q):
         if root is None:
-            return 
-        if root.data==p or root.data==q:  #whenever we find the node's data equal to p or q then it means this current node might be our answer
+            return
+        if (
+            root.data == p or root.data == q
+        ):  # whenever we find the node's data equal to p or q then it means this current node might be our answer
             return root.data
-        #if both p and q are not found then we recursively move towards left as well as right subtree
-        left = self.lca(root.left,p,q)  
-        right=self.lca(root.right,p,q)
+        # if both p and q are not found then we recursively move towards left as well as right subtree
+        left = self.lca(root.left, p, q)
+        right = self.lca(root.right, p, q)
         if not left:
             return right
         elif not right:
             return left
         else:
             return root.data
-        
-        #time complexity : O(N)
-        #space complexity : O(N)
-    
 
-    #maximum width of a binary tree
-    #so the logic behind this code is that we traverse the bt in a level order and calculate the width using rigthidnex-leftindex + 1 where we calculate the leftindex by 2*index+1 and right index by 2*i+2 which are of the next nodes from the current node
-    def maxmwidth(self,root):
+        # time complexity : O(N)
+        # space complexity : O(N)
+
+    # maximum width of a binary tree
+    # so the logic behind this code is that we traverse the bt in a level order and calculate the width using rigthidnex-leftindex + 1 where we calculate the leftindex by 2*index+1 and right index by 2*i+2 which are of the next nodes from the current node
+    def maxmwidth(self, root):
         if root is None:
             return
-        q=[(root,0)]  #for the root element , we store with the index 0
-        ans = float('-inf')
+        q = [(root, 0)]  # for the root element , we store with the index 0
+        ans = float("-inf")
         while q:
-            leftmostindex = q[0][1]  #as the left most index is always at the first index
-            rightmostindex = q[-1][1]  #where as the right most index is always at the last
-            ans = max(ans,rightmostindex-leftmostindex+1)  #rightmost-leftmost+1 is the formula for calculating the width
-            newq=[]
-            for node,index in q:
-                index-=leftmostindex  #here we are doing this inorder to prevernt the overflow of the data if the numbers or the indices are way too big
+            leftmostindex = q[0][
+                1
+            ]  # as the left most index is always at the first index
+            rightmostindex = q[-1][
+                1
+            ]  # where as the right most index is always at the last
+            ans = max(
+                ans, rightmostindex - leftmostindex + 1
+            )  # rightmost-leftmost+1 is the formula for calculating the width
+            newq = []
+            for node, index in q:
+                index -= leftmostindex  # here we are doing this inorder to prevernt the overflow of the data if the numbers or the indices are way too big
                 if node.left:
-                    newq.append((node.left,(2*index) + 1))
+                    newq.append((node.left, (2 * index) + 1))
                 if node.right:
-                    newq.append((node.right,(2*index)+2))
-            q=newq
+                    newq.append((node.right, (2 * index) + 2))
+            q = newq
         return ans
 
-    #children sum property
-    def childrensum(self,root):
+    # children sum property
+    def childrensum(self, root):
         if root is None:
             return
-        q=deque([root])
+        q = deque([root])
         while q:
-            curr=q.popleft()
-            if not curr.left and not curr.right:  #if both the left child and the right child is null then it means we are at the leaf node
-                continue #so we continue with another iteration
-            l=curr.left.data if curr.left else 0
-            r=curr.right.data if curr.right else 0
-            
-            if curr.data!= l + r:
+            curr = q.popleft()
+            if (
+                not curr.left and not curr.right
+            ):  # if both the left child and the right child is null then it means we are at the leaf node
+                continue  # so we continue with another iteration
+            l = curr.left.data if curr.left else 0
+            r = curr.right.data if curr.right else 0
+
+            if curr.data != l + r:
                 return False
             if curr.left:
                 q.append(curr.left)
             if curr.right:
                 q.append(curr.right)
-            
-        return True           
-    #binary tree after the children sum
-    def btaftersum(self,root):
+
+        return True
+
+    # binary tree after the children sum
+    def btaftersum(self, root):
         if root is None:
             return
-        ans = [ ]
-        q=deque([root])
+        ans = []
+        q = deque([root])
         while q:
-            curr=q.popleft()
-            if not curr.left and not curr.right:  #if we reach the leaf node then we continue with another iteration
-                ans.append(curr.data)  #we also must append the leaf node while changing the bt after the children sum
-                continue   
+            curr = q.popleft()
+            if (
+                not curr.left and not curr.right
+            ):  # if we reach the leaf node then we continue with another iteration
+                ans.append(
+                    curr.data
+                )  # we also must append the leaf node while changing the bt after the children sum
+                continue
             childsum = 0
-            l=curr.left.data if curr.left else 0
-            r=curr.right.data if curr.right else 0
-            childsum = l+r
-            if childsum>=curr.data:  #if the child sum is greater than or equal to the current node's data then we change the current node's data to child sum
-                curr.data = childsum 
-            else:  #if the child sum is smaller then
+            l = curr.left.data if curr.left else 0
+            r = curr.right.data if curr.right else 0
+            childsum = l + r
+            if (
+                childsum >= curr.data
+            ):  # if the child sum is greater than or equal to the current node's data then we change the current node's data to child sum
+                curr.data = childsum
+            else:  # if the child sum is smaller then
                 if curr.left:
                     curr.left.data = curr.data
                 if curr.right:
-                    curr.right.data=curr.data
-            ans.append(curr.data)  #here we are just appending the node with newly modified or unmodified data 
+                    curr.right.data = curr.data
+            ans.append(
+                curr.data
+            )  # here we are just appending the node with newly modified or unmodified data
             if curr.left:
                 q.append(curr.left)
             if curr.right:
                 q.append(curr.right)
         return ans
 
-    #print all nodes at a distance of K in BT
-    def printallnodes(self,root,target,k):
+    # print all nodes at a distance of K in BT
+    def printallnodes(self, root, target, k):
         if root is None:
             return
-        m={}
-        def mappingparentchild(root):  #this function is used for storing the parent and children nodes as key-value pair where the children are stored as key and the parent nodes are stored as value
-            q=deque([root])
+        m = {}
+
+        def mappingparentchild(
+            root,
+        ):  # this function is used for storing the parent and children nodes as key-value pair where the children are stored as key and the parent nodes are stored as value
+            q = deque([root])
             while q:
-                curr=q.popleft()
+                curr = q.popleft()
                 if curr.left:
                     m[curr.left] = curr
                     q.append(curr.left)
                 if curr.right:
-                    m[curr.right]=curr
+                    m[curr.right] = curr
                     q.append(curr.right)
-        mappingparentchild(root)    
+
+        mappingparentchild(root)
         iteration = 0
         seen = set()
         seen.add(target)
-        q=deque([target])
+        q = deque([target])
         while q:
-            if iteration==k: #at k distance
+            if iteration == k:  # at k distance
                 break
             levelsize = len(q)
             for _ in range(levelsize):
-                curr=q.popleft()
+                curr = q.popleft()
                 if curr.left and curr.left not in seen:
                     seen.add(curr.left)
                     q.append(curr.left)
@@ -867,168 +896,247 @@ class allorder:
                     seen.add(curr.right)
                     q.append(curr.right)
                 if curr in m and m[curr] not in seen:
-                    seen.add(m[curr]) #here we are storing the parent in our set data storage
-                    q.append(m[curr]) 
-            iteration+=1    
+                    seen.add(
+                        m[curr]
+                    )  # here we are storing the parent in our set data storage
+                    q.append(m[curr])
+            iteration += 1
         return [node.data for node in q]
-                      
-    
-    #minimum time taken to burn the BT from a given Node
-    def minimumtime(self,root,target):
+
+    # minimum time taken to burn the BT from a given Node
+    def minimumtime(self, root, target):
         if root is None:
             return
-        m={}
+        m = {}
+
         def mapparentchild(root):
-            q=deque([root])
+            q = deque([root])
             while q:
-                curr=q.popleft()
+                curr = q.popleft()
                 if curr.left:
-                    m[curr.left]=curr
+                    m[curr.left] = curr
                     q.append(curr.left)
                 if curr.right:
-                    m[curr.right]=curr
+                    m[curr.right] = curr
                     q.append(curr.right)
+
         mapparentchild(root)
-        q=deque([target])
+        q = deque([target])
         totaltime = 0
         seen = set()
         seen.add(target)
         while q:
             levelsize = len(q)
-            burned=False
+            burned = False
             for _ in range(levelsize):
-                curr=q.popleft()
+                curr = q.popleft()
                 if curr.left and curr.left not in seen:
                     seen.add(curr.left)
                     q.append(curr.left)
-                    burned=True
+                    burned = True
                 if curr.right and curr.right not in seen:
                     seen.add(curr.right)
-                    q.append(curr.right)  
-                    burned=True 
+                    q.append(curr.right)
+                    burned = True
                 if curr in m and m[curr] not in seen:
                     seen.add(m[curr])
                     q.append(m[curr])
-                    burned=True
+                    burned = True
             if burned:
-             totaltime+=1
-        return totaltime #as the node which was set on fire is already burned , so we only calculate the time for the remaining nodes of a binary tree to be burned            
+                totaltime += 1
+        return totaltime  # as the node which was set on fire is already burned , so we only calculate the time for the remaining nodes of a binary tree to be burned
 
-    
-    #Count total nodes in a complete BT
-    def counttotalnodes(self,root):
-        q=deque([root])
+    # Count total nodes in a complete BT
+    def counttotalnodes(self, root):
+        q = deque([root])
         total = 0
         while q:
             levelsize = len(q)
             for i in range(levelsize):
-                curr=q.popleft()
+                curr = q.popleft()
                 if curr.left:
                     q.append(curr.left)
                 if curr.right:
                     q.append(curr.right)
-                total+=1  #here for each loop , we increase the total , which is the number of nodes in the level
-        return total       
+                total += 1  # here for each loop , we increase the total , which is the number of nodes in the level
+        return total
 
-    #construct a bt from preorder and inorder traversal\
-    def preorderinorder(self,preorder,inorder):
-        def calculate(preorder,inorder):
+    # construct a bt from preorder and inorder traversal\
+    def preorderinorder(self, preorder, inorder):
+        def calculate(preorder, inorder):
             if not preorder or not inorder:
                 return None
-            root = self.Node(preorder[0])  #as the very first element from a preorder list is the root
-            i = inorder.index(preorder[0])  #here we are finding the index of the root inside a inorder array
-            root.left = calculate(preorder[1:i+1],inorder[:i])
-            root.right = calculate(preorder[i+1:],inorder[i+1:])
+            root = self.Node(
+                preorder[0]
+            )  # as the very first element from a preorder list is the root
+            i = inorder.index(
+                preorder[0]
+            )  # here we are finding the index of the root inside a inorder array
+            root.left = calculate(preorder[1 : i + 1], inorder[:i])
+            root.right = calculate(preorder[i + 1 :], inorder[i + 1 :])
             return root
-        root= calculate(preorder,inorder)  #as the function is returning root
-        q=deque([root])
+
+        root = calculate(preorder, inorder)  # as the function is returning root
+        q = deque([root])
         ans = []
         ans.append(root.data)
         while q:
-            curr=q.popleft()
+            curr = q.popleft()
             if curr.left:
                 q.append(curr.left)
-                ans.append(curr.left.data)  
+                ans.append(curr.left.data)
             if curr.right:
                 q.append(curr.right)
                 ans.append(curr.right.data)
-              
-        return ans      
-        #time complexity : O(N**2)
-        #space complexity : O(N)      
-    #optimized version
-    #so the logic behind this solution is that
-    #we use the preorder list for finding the root and 
-    #then we use the inorder list for finding the left and right subtree for this obtained root
-    #and for the indices we use the map to store the index of every elements in an inorder list
-    #and depending upon the index , we assign left and right variable
-    def optpreorderinorder(self,preorder,inorder):
-        indexofroot=[0]  #here we are assuming the index of the root element based on the preorder list
-        m={val:index for index,val in enumerate(inorder)} #here we are storing the value as well as index of the numbers from an inorder list 
-        def calculatetheroot(preorder,inorder,left,right):
-            if left>right:  #if the left index is greater than the right index
+
+        return ans
+        # time complexity : O(N**2)
+        # space complexity : O(N)
+
+    # optimized version
+    # so the logic behind this solution is that
+    # we use the preorder list for finding the root and
+    # then we use the inorder list for finding the left and right subtree for this obtained root
+    # and for the indices we use the map to store the index of every elements in an inorder list
+    # and depending upon the index , we assign left and right variable
+    def optpreorderinorder(self, preorder, inorder):
+        indexofroot = [
+            0
+        ]  # here we are assuming the index of the root element based on the preorder list
+        m = {
+            val: index for index, val in enumerate(inorder)
+        }  # here we are storing the value as well as index of the numbers from an inorder list
+
+        def calculatetheroot(preorder, inorder, left, right):
+            if left > right:  # if the left index is greater than the right index
                 return None
-            rootvalue = preorder[indexofroot[0]]     #as the very first element in the preorder array is always the root
-            indexofroot[0]+=1   #we are using list instead of the numbers cause if we use the integer or number variabe then the variable won't be global
-            i=m[rootvalue]  #this is the index of the current root element
-            root=self.Node(rootvalue)
-            root.left = calculatetheroot(preorder,inorder,left,i-1)  #this is the way of finding the leftsubtree recursively
-            root.right = calculatetheroot(preorder,inorder,i+1,right) #this is the way of finding the right subtree recursively
+            rootvalue = preorder[
+                indexofroot[0]
+            ]  # as the very first element in the preorder array is always the root
+            indexofroot[
+                0
+            ] += 1  # we are using list instead of the numbers cause if we use the integer or number variabe then the variable won't be global
+            i = m[rootvalue]  # this is the index of the current root element
+            root = self.Node(rootvalue)
+            root.left = calculatetheroot(
+                preorder, inorder, left, i - 1
+            )  # this is the way of finding the leftsubtree recursively
+            root.right = calculatetheroot(
+                preorder, inorder, i + 1, right
+            )  # this is the way of finding the right subtree recursively
             return root
-        root=calculatetheroot(preorder,inorder,0,len(preorder)-1)   
+
+        root = calculatetheroot(preorder, inorder, 0, len(preorder) - 1)
         ans = []
-        q=deque([root])
+        q = deque([root])
         ans.append(root.data)
         while q:
-            curr=q.popleft()
+            curr = q.popleft()
             if curr.left:
                 q.append(curr.left)
-                ans.append(curr.left.data)  
-            if curr.right:
-                q.append(curr.right)
-                ans.append(curr.right.data)
-        return ans        
-
-    #Construction of  a BT from Postorder and Inorder   
-    def postinorderbt(self,postorder,inorder):
-        lastpointer = len(postorder) - 1 #this is the last index
-        m={val:index for index,val in enumerate(inorder)}
-        rootindex = [lastpointer]
-        def calculate(postorder,inorder,left,right):
-            if left>right:
-                return None
-            rootvalue = postorder[rootindex[0]]  #as the root index has only one data inside the list, we must use 0
-            rootindex[0]-=1
-            root=self.Node(rootvalue)
-            i=m[rootvalue]
-            #and for the postorder , we must recurse for the right then for the left
-            #cause the post order format is leftrightroot, which makes root then right then left
-            root.right = calculate(postorder,inorder,i+1,right)
-            root.left = calculate(postorder,inorder,left,i-1)
-            
-            return root
-
-            
-        r=calculate(postorder,inorder,0,lastpointer)
-        q=deque([r])
-        ans=[]
-        ans.append(r.data)
-        while q:
-            curr=q.popleft()
-            if curr.left:
-                q.append(curr.left)
-                ans.append(curr.left.data)  
+                ans.append(curr.left.data)
             if curr.right:
                 q.append(curr.right)
                 ans.append(curr.right.data)
         return ans
 
+    # Construction of  a BT from Postorder and Inorder
+    def postinorderbt(self, postorder, inorder):
+        lastpointer = len(postorder) - 1  # this is the last index
+        m = {val: index for index, val in enumerate(inorder)}
+        rootindex = [lastpointer]
 
-    
+        def calculate(postorder, inorder, left, right):
+            if left > right:
+                return None
+            rootvalue = postorder[
+                rootindex[0]
+            ]  # as the root index has only one data inside the list, we must use 0
+            rootindex[0] -= 1
+            root = self.Node(rootvalue)
+            i = m[rootvalue]
+            # and for the postorder , we must recurse for the right then for the left
+            # cause the post order format is leftrightroot, which makes root then right then left
+            root.right = calculate(postorder, inorder, i + 1, right)
+            root.left = calculate(postorder, inorder, left, i - 1)
+
+            return root
+
+        r = calculate(postorder, inorder, 0, lastpointer)
+        q = deque([r])
+        ans = []
+        ans.append(r.data)
+        while q:
+            curr = q.popleft()
+            if curr.left:
+                q.append(curr.left)
+                ans.append(curr.left.data)
+            if curr.right:
+                q.append(curr.right)
+                ans.append(curr.right.data)
+        return ans
+
+    # serialize and deserialize a binary tree
+    def serializedesirialize(self, root):
+        def serialize(root):
+            q = deque([root])
+            ans = []
+            while q:
+                curr = q.popleft()
+                if curr:
+                    ans.append(curr.data)
+                    if curr.left:
+                        q.append(curr.left)
+                    else:
+                        q.append(None)
+                    if curr.right:
+                        q.append(curr.right)
+                    else:
+                        q.append(None)
+                else:
+                    ans.append("#")
+            return ans
+
+        s = serialize(root)  #here we are storing the array returned by the serialize function in s
+ 
+        def desirialize(array):
+            i = 0
+            if array[0] is None or len(array)==0:
+                return
+            root = self.Node(array[0])
+            
+            q = deque([root])
+            i=1
+            n=len(array)
+            while q and i<n:
+                curr = q.popleft()
+                #these left and right are the indices
+                if i<n and array[i]!='#':
+                    curr.left = self.Node(array[i])
+                    q.append(curr.left)
+                i+=1
+                if i<n and array[i]!='#':
+                    curr.right=self.Node(array[i])
+                    q.append(curr.right)
+                i+=1        
+               
+            ans = []
+            q = deque([root])
+            while q:
+                curr = q.popleft()
+                if curr:
+                 ans.append(curr.data)
+                 q.append(curr.left)
+                 q.append(curr.right) 
+                 
+                    
+            return ans
+
+        return desirialize(s)  # here s means the serialized data
 
 
 all = allorder()
-v = all.buildtree( [1, 2, 3, 4, 5, 6,7,8,9])  # O(N) for both
+v = all.buildtree([1, 2, 3, 4, 5, 6, 7, 8, 9])  # O(N) for both
 w = all.buildtree([1, 2, 3])
 print(all.solveallorder(v))
 print(all.maximumdepth(v))
@@ -1047,7 +1155,7 @@ print(all.leftview(v))
 print(all.checksymmetrical(v))
 print(all.recurchecksymmetrical(v))
 print(all.printroottonode(v))
-print(all.lca(v,5,4))
+print(all.lca(v, 5, 4))
 print(all.maxmwidth(v))
 print(all.childrensum(v))
 print(all.btaftersum(v))
@@ -1061,11 +1169,13 @@ root.left.right.left = Node(7)
 root.left.right.right = Node(4)
 root.right.left = Node(0)
 root.right.right = Node(8)
-print(all.printallnodes(root,root.left,2))
-print(all.minimumtime(root,root.left))
+print(all.printallnodes(root, root.left, 2))
+print(all.minimumtime(root, root.left))
 print(all.counttotalnodes(v))
-print(all.preorderinorder([3, 9, 20, 15, 7] , [9, 3, 15, 20, 7]))
-print(all.optpreorderinorder([3, 9, 20, 15, 7] , [9, 3, 15, 20, 7]))
-print(all.postinorderbt([9, 15, 7, 20, 3] ,  [9, 3, 15, 20, 7]))
+print(all.preorderinorder([3, 9, 20, 15, 7], [9, 3, 15, 20, 7]))
+print(all.optpreorderinorder([3, 9, 20, 15, 7], [9, 3, 15, 20, 7]))
+print(all.postinorderbt([9, 15, 7, 20, 3], [9, 3, 15, 20, 7]))
+z = all.buildtree([7, 3, 15, None, None, 9, 20])
+print(all.serializedesirialize(z))
 # time complexity : O(N)
 # space complexity : O(N)
