@@ -963,7 +963,7 @@ class allorder:
     #and for the indices we use the map to store the index of every elements in an inorder list
     #and depending upon the index , we assign left and right variable
     def optpreorderinorder(self,preorder,inorder):
-        indexofroot=[0]  #here we are assuming the index of the root element
+        indexofroot=[0]  #here we are assuming the index of the root element based on the preorder list
         m={val:index for index,val in enumerate(inorder)} #here we are storing the value as well as index of the numbers from an inorder list 
         def calculatetheroot(preorder,inorder,left,right):
             if left>right:  #if the left index is greater than the right index
@@ -972,8 +972,8 @@ class allorder:
             indexofroot[0]+=1   #we are using list instead of the numbers cause if we use the integer or number variabe then the variable won't be global
             i=m[rootvalue]  #this is the index of the current root element
             root=self.Node(rootvalue)
-            root.left = calculatetheroot(preorder,inorder,left,i-1)
-            root.right = calculatetheroot(preorder,inorder,i+1,right)
+            root.left = calculatetheroot(preorder,inorder,left,i-1)  #this is the way of finding the leftsubtree recursively
+            root.right = calculatetheroot(preorder,inorder,i+1,right) #this is the way of finding the right subtree recursively
             return root
         root=calculatetheroot(preorder,inorder,0,len(preorder)-1)   
         ans = []
@@ -1002,6 +1002,7 @@ class allorder:
             root=self.Node(rootvalue)
             i=m[rootvalue]
             #and for the postorder , we must recurse for the right then for the left
+            #cause the post order format is leftrightroot, which makes root then right then left
             root.right = calculate(postorder,inorder,i+1,right)
             root.left = calculate(postorder,inorder,left,i-1)
             
