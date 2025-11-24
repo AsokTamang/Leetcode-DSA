@@ -858,7 +858,37 @@ class Allsolution:
                 q.append(curr.left)
             if curr.right:
                 q.append(curr.right)
+        return ans          
+    #Construct a BT from Postorder and Inorder
+    def btfrompostin(self,postorder,inorder):
+        m={val:index for index,val in enumerate(inorder)}
+        rootindex = [len(postorder)-1] #as the very last index in the postorder is the root element
+        def calculate(left,right):
+            if left>right:
+                return
+            rootelem=postorder[rootindex[0]]
+            rootindex[0]-=1
+            root=self.Node(rootelem)
+            i=m[rootelem]
+            root.right=calculate(i+1,right)  #here as the right subtree lies in the right side of the current root
+            #so the right subtree's boundary is between i+1 and right
+            root.left = calculate(left,i-1)  #as the left subtree lies in the left side of the current root,
+            #so the boundary lies between left and i-1
+            #i is the index of the current root
+            return root
+        root = calculate(0,len(postorder)-1)
+        q=deque([root])
+        ans = []
+        while q:
+            curr=q.popleft()
+            ans.append(curr.data)
+            if curr.left:
+                q.append(curr.left)
+            if curr.right:
+                q.append(curr.right)
         return ans            
+
+
 #time complexity : O(N) and space complexity : O(N)
 pr = Allsolution()
 z = pr.buildtree( [3, 5, 1, 6, 2, 0, 8, None, None, 7, 4])
@@ -898,3 +928,4 @@ root.left.left.right = Node(7)
 print(pr.printallnodesatk(root,root.left,2))
 print(pr.minimumtime(root,root))
 print(pr.constructbt( [3, 9, 20, 15, 7] ,  [9, 3, 15, 20, 7]))
+print(pr.btfrompostin([9, 15, 7, 20, 3] ,  [9, 3, 15, 20, 7]))
