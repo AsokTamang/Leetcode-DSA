@@ -61,7 +61,7 @@ print(preordertraversal([1, 4, None, 4, 2]))
 # revision of inorder traversal using stack
 class Iterativeinorder:
     def __init__(self):
-        pass
+        self.prev=None
 
     class Node:
         def __init__(self, data, left=None, right=None):
@@ -208,7 +208,7 @@ print(ip.solveiterativepostorder(p))
 # preorder traversal of a binary tree
 class Allsolution:
     def __init__(self):
-        pass
+        self.prev=None
 
     class Node:
         def __init__(self, data, left=None, right=None):
@@ -980,14 +980,36 @@ class Allsolution:
                 q.append(curr.left)
             if curr.right:
                 q.append(curr.right)
-        return ans               
+        return ans      
+    #flatten a binary tree
+    def flattenbttolinkedlist(self,root):  
+        def flatten(self,node):
+            if not node:
+                return
+            flatten(self,node.right)
+            flatten(self,node.left)
+            node.right=self.prev
+            node.left=None
+            self.prev=node
+        flatten(self,root)
+        a=[]
+        stack=[root]
+        while stack:
+            curr=stack.pop()
+            a.append(curr.data)
+            if curr.right:
+                stack.append(curr.right)
+        return a    
+    #time complexity : O(N)
+    #space complexity : O(N)        
+         
 
 
 
 
 #time complexity : O(N) and space complexity : O(N)
 pr = Allsolution()
-z = pr.buildtree( [2, 1, 3])
+z = pr.buildtree( [1,2,5,3,4,None,6])
 l = pr.buildtree([1, 2, 2])
 print(pr.levelorder(l))
 print(pr.solvepostorder(z, []))  # time complexity : O(N)  #space complexity : O(N)
@@ -1026,4 +1048,4 @@ print(pr.minimumtime(root,root))
 print(pr.constructbt( [3, 9, 20, 15, 7] ,  [9, 3, 15, 20, 7]))
 print(pr.btfrompostin([9, 15, 7, 20, 3] ,  [9, 3, 15, 20, 7]))
 print(pr.morrisinorder(z))
-print(pr.serialziedeserialize(z))
+print(pr.flattenbttolinkedlist(z))
