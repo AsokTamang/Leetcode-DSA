@@ -909,6 +909,27 @@ class Allsolution:
                     ans.append(curr.data)  
                     curr=curr.right     
         return ans            
+    #morris preorder traversal
+    def morrispreorder(self,root):
+        curr=root
+        ans =[]
+        while curr:
+            if curr.left is None:  #if the left of the current is none then it is the root itself
+                ans.append(curr.data)
+                curr=curr.right
+            else:
+                pre=curr.left
+                while pre.right and pre.right!=curr:
+                    pre=pre.right
+                if pre.right is None:  #if the thread hasnot been made then , we need to make thread but before that we need to also print the root,as its preorder root->left->right
+                    ans.append(curr.data)
+                    pre.right=curr
+                    curr=curr.left  #then we go to the left subtree
+                else:  #if the thread has been made then it means the left subtree is done
+                    pre.right=None   #so we remove the thread
+                    curr=curr.right  #then we move towards the right subtree
+        return ans               
+
 
 
 
@@ -954,3 +975,4 @@ print(pr.minimumtime(root,root))
 print(pr.constructbt( [3, 9, 20, 15, 7] ,  [9, 3, 15, 20, 7]))
 print(pr.btfrompostin([9, 15, 7, 20, 3] ,  [9, 3, 15, 20, 7]))
 print(pr.morrisinorder(z))
+print(pr.morrispreorder(z))
