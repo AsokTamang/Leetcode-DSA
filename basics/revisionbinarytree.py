@@ -1022,6 +1022,29 @@ class Allsolution:
             if curr.right:
                 s.append(curr.right)
         return ans        
+    #Print root to node path in BT
+    def printroottonode(self, root):
+        ans = []
+        path = []
+
+        def calculatethepath(node):
+            if node is None:
+                return
+            
+            path.append(node.data)
+
+            # Correct leaf node check
+            if not node.left and not node.right:
+                ans.append(path.copy())
+
+            calculatethepath(node.left)
+            calculatethepath(node.right)
+
+            path.pop()   # backtracking
+
+        calculatethepath(root)
+        return ans
+
 
 
          
@@ -1031,7 +1054,7 @@ class Allsolution:
 
 #time complexity : O(N) and space complexity : O(N)
 pr = Allsolution()
-z = pr.buildtree( [1,2,5,3,4,None,6])
+z = pr.buildtree([1, 2, 3, None, 5, None, 4])
 l = pr.buildtree([1, 2, 2])
 print(pr.levelorder(l))
 print(pr.solvepostorder(z, []))  # time complexity : O(N)  #space complexity : O(N)
@@ -1072,3 +1095,4 @@ print(pr.btfrompostin([9, 15, 7, 20, 3] ,  [9, 3, 15, 20, 7]))
 print(pr.morrisinorder(z))
 print(pr.flattenbttolinkedlist(z))
 print(pr.optimalflattening(z))
+print(pr.printroottonode(z))
