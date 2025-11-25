@@ -1001,7 +1001,29 @@ class Allsolution:
                 stack.append(curr.right)
         return a    
     #time complexity : O(N)
-    #space complexity : O(N)        
+    #space complexity : O(N)     
+    #optimal solution
+    def optimalflattening(self,root):
+        stack = [root]
+        while stack:
+            curr=stack.pop()
+            if curr.right:
+                stack.append(curr.right)
+            if curr.left:
+                stack.append(curr.left)
+            if stack:
+                curr.right = stack[-1]   #the right of the current node will be the top most node in a stack
+            curr.left=None 
+        ans=[]
+        s=[root]
+        while s:
+            curr=s.pop()
+            ans.append(curr.data)
+            if curr.right:
+                s.append(curr.right)
+        return ans        
+
+
          
 
 
@@ -1049,3 +1071,4 @@ print(pr.constructbt( [3, 9, 20, 15, 7] ,  [9, 3, 15, 20, 7]))
 print(pr.btfrompostin([9, 15, 7, 20, 3] ,  [9, 3, 15, 20, 7]))
 print(pr.morrisinorder(z))
 print(pr.flattenbttolinkedlist(z))
+print(pr.optimalflattening(z))
