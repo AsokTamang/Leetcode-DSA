@@ -887,11 +887,35 @@ class Allsolution:
             if curr.right:
                 q.append(curr.right)
         return ans            
+    #morris inorder traversal
+    #morris inorder traversal is a type of traversal which is done without using stacks or any other extra storage and without using the recursion
+    #the logic behind the morris traversal is connecting the temporary thread between the root elmenet at every iteration with the rightmost end of current left subtree
+    def morrisinorder(self,root):
+        curr=root
+        ans = []
+        while curr:
+            if curr.left is None:  
+                ans.append(curr.data)
+                curr=curr.right  #here curr.right takes us to the root which is possible through the thread
+            else:
+                pre=curr.left  #here pre means the predecessor
+                while pre.right and pre.right!=curr:
+                    pre=pre.right
+                if pre.right is None: #if the thread has not been made then 
+                    pre.right = curr   #we make the connecting thread between the root element and the right most element of left subtree
+                    curr=curr.left
+                else: #if the thread has already been made then we need to remove the thread 
+                    pre.right=None 
+                    ans.append(curr.data)  
+                    curr=curr.right     
+        return ans            
+
+
 
 
 #time complexity : O(N) and space complexity : O(N)
 pr = Allsolution()
-z = pr.buildtree( [3, 5, 1, 6, 2, 0, 8, None, None, 7, 4])
+z = pr.buildtree( [1, 4, None, 4, 2])
 l = pr.buildtree([1, 2, 2])
 print(pr.levelorder(l))
 print(pr.solvepostorder(z, []))  # time complexity : O(N)  #space complexity : O(N)
@@ -929,3 +953,4 @@ print(pr.printallnodesatk(root,root.left,2))
 print(pr.minimumtime(root,root))
 print(pr.constructbt( [3, 9, 20, 15, 7] ,  [9, 3, 15, 20, 7]))
 print(pr.btfrompostin([9, 15, 7, 20, 3] ,  [9, 3, 15, 20, 7]))
+print(pr.morrisinorder(z))
