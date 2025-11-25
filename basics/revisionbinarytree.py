@@ -929,14 +929,65 @@ class Allsolution:
                     pre.right=None   #so we remove the thread
                     curr=curr.right  #then we move towards the right subtree
         return ans               
-
+    #serialize and deserialize of a binary tree
+    def serialziedeserialize(self,root):
+        def serialize(root):
+            ans = []
+            q=deque([root])
+            while q:
+                curr=q.popleft()
+                if curr:
+                    ans.append(curr.data)
+                    if curr.left:
+                     q.append(curr.left)
+                    else:
+                     q.append(None)
+                    if curr.right:
+                     q.append(curr.right)
+                    else:
+                        q.append(None) 
+                
+                else:
+                    ans.append('#')    
+            return ''.join(str(x) for x in ans)         #first of all we are converting every ints of ans in string then we are joining them 
+        s=serialize(root)  #here s is the string which is serialized
+        def deserialize(array):  #here array means the string
+            if not array:
+                return
+            root=self.Node(int(array[0]))
+            q=deque([root])
+            n=len(array)
+            i=1
+            while q:
+                curr=q.popleft()
+    
+                if i<n and array[i]!='#':
+                    curr.left=self.Node(int(array[i]))
+                    q.append(array[i])
+                i+=1
+                if i<n and array[i]!='#':
+                    curr.right=self.Node(int(array[i]))
+                    q.append(array[i])
+                i+=1  
+            return root
+        root=deserialize(s)         
+        ans=[]
+        q=deque([root])
+        while q:
+            curr=q.popleft()
+            ans.append(curr.data)
+            if curr.left:
+                q.append(curr.left)
+            if curr.right:
+                q.append(curr.right)
+        return ans               
 
 
 
 
 #time complexity : O(N) and space complexity : O(N)
 pr = Allsolution()
-z = pr.buildtree( [1, 4, None, 4, 2])
+z = pr.buildtree( [2, 1, 3])
 l = pr.buildtree([1, 2, 2])
 print(pr.levelorder(l))
 print(pr.solvepostorder(z, []))  # time complexity : O(N)  #space complexity : O(N)
@@ -975,4 +1026,4 @@ print(pr.minimumtime(root,root))
 print(pr.constructbt( [3, 9, 20, 15, 7] ,  [9, 3, 15, 20, 7]))
 print(pr.btfrompostin([9, 15, 7, 20, 3] ,  [9, 3, 15, 20, 7]))
 print(pr.morrisinorder(z))
-print(pr.morrispreorder(z))
+print(pr.serialziedeserialize(z))
